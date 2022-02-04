@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Asuransi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -73,13 +74,37 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function nonActive(Request $request, $id)
+    public function nonActive($id)
     {
+        $data           = User::findOrFail($id);
+        $data->status   = 'non active';
+        $berhasil       = $data->save();
+        if ($berhasil) {
+            return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Non Aktif Pegawai Berhasil');
+        } else {
+            return redirect()->route('pegawai.show', $data['id'])->with('error', 'Gagal Menonaktifkan Pegawai');
+        }
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function active($id)
+    {
+        $data           = User::findOrFail($id);
+        $data->status   = 'active';
+        $berhasil       = $data->save();
+        if ($berhasil) {
+            return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Aktivasi Pegawai Berhasil');
+        } else {
+            return redirect()->route('pegawai.show', $data['id'])->with('error', 'Gagal Aktivasi Pegawai');
+        }
     }
 
     /**
@@ -91,6 +116,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = User::findOrFail($id);
+        // dd($data);
         return view('admin.staff.edit', ['data' => $data]);
     }
 
@@ -103,18 +129,55 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input            = $request->all();
-        $data             = User::findOrFail($id);
-        $data->nama       = $input['nama'];
-        $data->username   = $input['username'];
-        $data->email      = $input['email'];
-        $data->phone      = $input['phone'];
-        $data->company    = $input['company'];
-        $data->alamat     = $input['alamat'];
-        $data->tanggungan = $input['tanggungan'];
-        $berhasil         = $data->save();
+        $input                      = $request->all();
+        $data                       = User::findOrFail($id);
+        // data diri
+        $data->nip                  = $input['nip'];
+        $data->nama                 = $input['nama'];
+        $data->tanggal_mulaiKerja   = $input['tanggal_mulaiKerja'];
+        $data->gender               = $input['gender'];
+        $data->phone                = $input['phone'];
+        $data->email                = $input['email'];
+        $data->tanggungan           = $input['tanggungan'];
+        $data->alamat               = $input['alamat'];
+        // akun
+        $data->username             = $input['username'];
+        $data->status               = $input['status'];
+        $data->id_divisi            = $input['id_divisi'];
+        $data->id_jabatan           = $input['id_jabatan'];
+        $data->id_cabang            = $input['id_cabang'];
+        $data->company              = $input['company'];
+        $data->no_rek               = $input['no_rek'];
+        $berhasil                   = $data->save();
         if ($berhasil) {
-            return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Update Data Pegawai Berhasil'); }
+            // asuransi
+            $dataAsuransi                   = Asuransi::where('id_user', '=', $id)->first();
+            if ($dataAsuransi != null) {
+                $dataAsuransi->status_nakes = $input['status_nakes'];
+                $dataAsuransi->nomor_nakes  = $input['nomor_nakes'];
+                $dataAsuransi->pot_nakes    = $input['pot_nakes'];
+                $dataAsuransi->status_naker = $input['status_naker'];
+                $dataAsuransi->nomor_naker  = $input['nomor_naker'];
+                $dataAsuransi->pot_naker    = $input['pot_naker'];
+                $berhasilAsuransi           = $dataAsuransi->save();
+            }
+            else {
+                $dataAsuransi               = new Asuransi;
+                $dataAsuransi->id_user      = $id;
+                $dataAsuransi->status_nakes = $input['status_nakes'];
+                $dataAsuransi->nomor_nakes  = $input['nomor_nakes'];
+                $dataAsuransi->pot_nakes    = $input['pot_nakes'];
+                $dataAsuransi->status_naker = $input['status_naker'];
+                $dataAsuransi->nomor_naker  = $input['nomor_naker'];
+                $dataAsuransi->pot_naker    = $input['pot_naker'];
+                $berhasilAsuransi           = $dataAsuransi->save();
+            }
+            if ($berhasilAsuransi) {
+                return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Update Data Pegawai Berhasil'); }
+            else {
+                return view('admin.staff.edit', ['data' => $data])->with('error', 'Berhasil Mengupdate Data Pegawai'); }
+            // tunjangan
+        }
         else {
             return view('admin.staff.edit', ['data' => $data])->with('error', 'Berhasil Mengupdate Data Pegawai'); }
     }

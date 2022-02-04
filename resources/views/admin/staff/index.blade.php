@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item active">Pegawai</li>
                     </ol>
                     <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Pegawai</h4>
-                    <p class="text-muted text-opacity-50">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, doloribus.</p>
+                    <p class="text-muted mt-1 text-opacity-50">Berikut adalah daftar semua data diri pegawai Anda</p>
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
@@ -159,7 +159,6 @@
                             <th width="">NIP</th>
                             <th>Nama Lengkap</th>
                             <th>Lokasi</th>
-                            {{-- <th width="">Email</th> --}}
                             <th width="">No. HP</th>
                             <th width="">Username</th>
                             <th width="">Status</th>
@@ -172,15 +171,15 @@
                                 <td class='text-primary font-weight-bolder'>{{ $i->nip }}</td>
                                 <td>{{ $i->nama }}</td>
                                 <td><span class="font-weight-boldest">{{ $i->cabang->cabang_nama }}</span></td>
-                                {{-- <td>{{ $i->email }}</td> --}}
                                 <td>{{ $i->phone }}</td>
                                 <td>{{ $i->username }}</td>
-                                <td><span class="badge rounded-pill
-                                        @if ($i->status == 'active')
-                                            bg-success
-                                        @else
-                                            bg-danger
-                                        @endif">{{ $i->status }}</span></td>
+                                <td>
+                                    @if ($i->status == 'active')
+                                        &nbsp; <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                    @else
+                                        &nbsp; <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

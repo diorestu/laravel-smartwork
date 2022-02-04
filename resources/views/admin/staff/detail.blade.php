@@ -4,6 +4,12 @@
     Detail Informasi Pegawai
 @endsection
 
+@push('addon-style')
+    <style>
+        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+    </style>
+@endpush
+
 @section('content')
     <div class="main-content mx-0">
         <div class="page-content mt-0 pt-0">
@@ -44,29 +50,17 @@
                                 <div>
                                     <a href="{{ route('pegawai.edit', $data->id) }}" class="btn btn-soft-primary me-2"><i data-feather="edit-3"
                                             class="me-1"></i> Edit Data</a>
-                                    <a href="{{ route('pegawai.nonactive', $data->id) }}" class="btn btn-danger"><i data-feather="x-circle" class="font-size-14 me-1"></i>
-                                        Nonaktifkan</a>
+                                    @if ($data->status == 'active')
+                                        <a href="{{ route('pegawai.nonactive', $data->id) }}" class="btn btn-danger"><i data-feather="x-circle" class="font-size-14 me-1"></i> Nonaktifkan</a>
+                                    @else
+                                        <a href="{{ route('pegawai.active', $data->id) }}" class="btn btn-success"><i data-feather="check" class="font-size-14 me-1"></i> Aktifkan</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @if (Session::has('success'))
-                <div id="alert" class="mt-5">
-                    <div class="alert alert-success py-4 fade-message alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-                        <i class="fa fa-check-circle"></i>
-                        <strong>Berhasil!</strong> - {{ \Session::get('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <script>
-                    $(function(){
-                        setTimeout(function() {$('.fade-message').close();}, 2000);
-                    });
-                    </script>
-                </div>
-            @endif
 
             <div class="row">
                 <div class="col-lg-12">
@@ -98,12 +92,12 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <div class="tab-content">
+                        <!-- DATA DIRI -->
                         <div class="tab-pane active" id="overview" role="tabpanel">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Data Diri Pegawai</h5>
+                                    <h5 class="card-title text-white mb-0">Data Diri Pegawai</h5>
                                 </div>
-
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table">
@@ -117,6 +111,21 @@
                                                     <td>NIP</td>
                                                     <td>:</td>
                                                     <td><b>{{ $data->nip }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Divisi</td>
+                                                    <td>:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mulai Kerja</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->tanggal_mulaiKerja }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Masa Kerja</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->tanggal_mulaiKerja }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Jenis Kelamin</td>
@@ -144,11 +153,11 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- DATA AKUN -->
                         <div class="tab-pane" id="akun" role="tabpanel">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Data Akun Pegawai</h5>
+                                    <h5 class="text-white card-title mb-0">Data Akun Pegawai</h5>
                                 </div>
 
                                 <div class="card-body">
@@ -171,11 +180,127 @@
                                                     <td><b>{{ $data->company }}</b></td>
                                                 </tr>
                                                 <tr>
+                                                    <td>Nomor Rekening</td>
+                                                    <td>:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
                                                     <td>Status Akun</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->status }}</b></td>
+                                                    <td>
+                                                        @if ($data->status == 'active')
+                                                            <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                                        @else
+                                                            <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                                        @endif
+                                                    </td>
                                                 </tr>
 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DATA ASURANSI -->
+                        <div class="tab-pane" id="asuransi" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="text-white card-title mb-0">Data Asuransi Pegawai</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3"><h5>Kesehatan</h5></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Status</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Nomor Terdaftar</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Potongan</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><br><h5>Ketengakerjaan</h5></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Status</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Nomor Terdaftar</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 15%;">Potongan</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DATA TUNJANGAN -->
+                        <div class="tab-pane" id="tunjangan" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="text-white card-title mb-0">Data Tunjangan Pegawai</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Jabatan</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Sertifikasi</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Transport</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Kosmetik</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Makan</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Masa Kerja</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Status Kawin</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b></b></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -188,3 +313,16 @@
         </div>
     </div>
 @endsection
+
+@push('addon-script')
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+        </script>
+    @endif
+@endpush

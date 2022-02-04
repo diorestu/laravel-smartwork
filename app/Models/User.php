@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Cabang;
+use App\Models\Divisi;
+use App\Models\Jabatan;
 use App\Models\Absensi;
 use App\Models\UserConfig;
 use Laravel\Passport\HasApiTokens;
@@ -29,6 +31,16 @@ class User extends Authenticatable
     public function cabang(): BelongsTo
     {
         return $this->belongsTo(Cabang::class, 'id_cabang', 'id');
+    }
+
+    public function divisi(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class, 'id_divisi', 'div_id');
+    }
+
+    public function jabatan(): BelongsTo
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan', 'jabatan_id');
     }
 
     public function absensi(): HasMany

@@ -53,7 +53,8 @@ use App\Http\Controllers\Admin\UserConfigController;
         // Master Data
         Route::prefix('master')->group(function () {
             Route::resource('pegawai', UserController::class);
-            Route::post('nonActive', [UserController::class, 'nonActive'])->name('pegawai.nonactive');
+            Route::get('nonActive/{id}', [UserController::class, 'nonActive'])->name('pegawai.nonactive');
+            Route::get('active/{id}', [UserController::class, 'active'])->name('pegawai.active');
             Route::resource('cabang', CabangController::class);
             Route::resource('upah', UserSalaryController::class);
         });
