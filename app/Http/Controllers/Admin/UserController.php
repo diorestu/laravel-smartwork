@@ -68,7 +68,8 @@ class UserController extends Controller
     public function show($id)
     {
         $data = User::findOrFail($id);
-        return view('admin.staff.detail', ['data' => $data]);
+        $dataAsuransi = Asuransi::where('id_user', '=', $id)->first();
+        return view('admin.staff.detail', ['data' => $data, 'dataAsuransi' => $dataAsuransi,]);
     }
 
     /**
@@ -116,8 +117,14 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = User::findOrFail($id);
+        $dataAsuransi = Asuransi::where('id_user', '=', $id)->first();
+        if ($dataAsuransi == null) { $dataAsuransi = ""; }
         // dd($data);
-        return view('admin.staff.edit', ['data' => $data]);
+        return view('admin.staff.edit',
+            [
+              'data' => $data,
+              'dataAsuransi' => $dataAsuransi,
+            ]);
     }
 
     /**

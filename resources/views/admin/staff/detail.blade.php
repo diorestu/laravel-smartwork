@@ -112,15 +112,11 @@
                                                     <td>:</td>
                                                     <td><b>{{ $data->nip }}</b></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Divisi</td>
-                                                    <td>:</td>
-                                                    <td><b></b></td>
-                                                </tr>
+
                                                 <tr>
                                                     <td>Mulai Kerja</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->tanggal_mulaiKerja }}</b></td>
+                                                    <td><b>{{ tanggalIndo($data->tanggal_mulaiKerja) }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Masa Kerja</td>
@@ -131,6 +127,11 @@
                                                     <td>Jenis Kelamin</td>
                                                     <td>:</td>
                                                     <td><b>{{ $data->gender }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status Perkawinan</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->tanggungan }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>No. HP</td>
@@ -170,7 +171,28 @@
                                                     <td><b>{{ $data->username }}</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Lokasi Kantor</td>
+                                                    <td>Status Akun</td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        @if ($data->status == 'active')
+                                                            <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                                        @else
+                                                            <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Divisi</td>
+                                                    <td>:</td>
+                                                    <td><b>@if ($data->id_divisi != null) {{ $data->divisi->div_title }} @endif</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jabatan</td>
+                                                    <td>:</td>
+                                                    <td><b>@if ($data->id_jabatan != null) {{ $data->jabatan->jabatan_title }} @endif</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Lokasi Absensi Kantor</td>
                                                     <td>:</td>
                                                     <td><b>{{ $data->cabang->cabang_nama }}</b></td>
                                                 </tr>
@@ -182,20 +204,8 @@
                                                 <tr>
                                                     <td>Nomor Rekening</td>
                                                     <td>:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>{{ $data->no_rek }}</b></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Status Akun</td>
-                                                    <td>:</td>
-                                                    <td>
-                                                        @if ($data->status == 'active')
-                                                            <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
-                                                        @else
-                                                            <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
-                                                        @endif
-                                                    </td>
-                                                </tr>
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -218,17 +228,25 @@
                                                 <tr>
                                                     <td style="width: 15%;">Status</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td>
+                                                        @if ($dataAsuransi != '')
+                                                            @if ($dataAsuransi->status_nakes == 'y')
+                                                                <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                                            @else
+                                                                <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                                            @endif
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 15%;">Nomor Terdaftar</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_nakes }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 15%;">Potongan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"><br><h5>Ketengakerjaan</h5></td>
@@ -236,17 +254,25 @@
                                                 <tr>
                                                     <td style="width: 15%;">Status</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td>
+                                                        @if ($dataAsuransi != '')
+                                                            @if ($dataAsuransi->status_naker == 'y')
+                                                                <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                                            @else
+                                                                <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                                            @endif
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 15%;">Nomor Terdaftar</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_naker }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 15%;">Potongan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_naker }} @endif</b></td>
                                                 </tr>
 
 

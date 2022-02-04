@@ -193,36 +193,36 @@
                                             <div class="form-group mb-4">
                                                 <label for="bpjs_kes" class="font-weight-bolder">Asuransi Kesehatan</label>
                                                 <select id="bpjs_kes" class="form-select" name="status_nakes">
-                                                    <option value='y'>Aktif</option>
-                                                    <option value='n'>Tidak Aktif</option>
+                                                    <option @if ($dataAsuransi != '' && $dataAsuransi->status_nakes == 'y') selected @endif value='y'>Aktif</option>
+                                                    <option @if ($dataAsuransi != '' && $dataAsuransi->status_nakes == 'n') selected @endif value='n'>Tidak Aktif</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="bpjs_naker" class="font-weight-bolder">Asuransi Ketenagakerjaan</label>
                                                 <select id="bpjs_naker" class="form-select" name="status_naker">
-                                                    <option value='y'>Aktif</option>
-                                                    <option value='n'>Tidak Aktif</option>
+                                                    <option @if ($dataAsuransi != '' && $dataAsuransi->status_naker == 'y') selected @endif value='y'>Aktif</option>
+                                                    <option @if ($dataAsuransi != '' && $dataAsuransi->status_naker == 'n') selected @endif value='n'>Tidak Aktif</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
                                                 <label for="nomor_nakes" class="font-weight-bolder">Nomor Asuransi Kesehatan</label>
-                                                <input class='form-control' type="text" name="nomor_nakes" id="nomor_nakes" value="">
+                                                <input class='form-control' type="text" name="nomor_nakes" id="nomor_nakes" value="@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_nakes }} @endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="nomor_naker" class="font-weight-bolder">Nomor Asuransi Ketenagakerjaan</label>
-                                                <input class='form-control' type="text" name="nomor_naker" id="nomor_naker" value="">
+                                                <input class='form-control' type="text" name="nomor_naker" id="nomor_naker" value="@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_naker }} @endif">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
                                                 <label for="pot_nakes" class="font-weight-bolder">Potongan Asuransi Kesehatan</label>
-                                                <input class='form-control' type="number" name="pot_nakes" id="pot_nakes" value="">
+                                                <input class='form-control' type="number" name="pot_nakes" id="pot_nakes" value="@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="pot_naker" class="font-weight-bolder">Potongan Asuransi Ketenagakerjaan</label>
-                                                <input class='form-control' type="number" name="pot_naker" id="pot_naker" value="">
+                                                <input class='form-control' type="number" name="pot_naker" id="pot_naker" value="@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif">
                                             </div>
                                         </div>
                                     </div>
