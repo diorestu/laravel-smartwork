@@ -27,6 +27,16 @@ function hapusTitikAngka($int)
     return $a;
 }
 
+function rupiah($nilai, $pecahan = 0)
+{
+    return "Rp. " . number_format($nilai, $pecahan, ',', '.');
+}
+
+function pecahTanpaRp($nilai, $pecahan = 0)
+{
+    return number_format($nilai, $pecahan, ',', '.');
+}
+
 function ubahAngka($str)
 {
     $a = (int) $str;
@@ -89,4 +99,27 @@ function tglIndo2($date)
 function TampilJamMenit($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('HH:mm');
+}
+
+function masaKerja($tanggal)
+{
+    $awal  = new DateTime($tanggal);
+    $akhir = new DateTime();
+    $diff  = $awal->diff($akhir);
+    $tahun = $diff->y . ' tahun, ';
+    $bulan = $diff->m . ' bulan';
+    $hari  = $diff->d . ' hari, ';
+    $jam   = $diff->h . ' jam, ';
+    $menit = $diff->i . ' menit, ';
+    $detik = $diff->s . ' detik, ';
+    $masakerja = $tahun . $bulan;
+    return $masakerja;
+}
+function getTahunKerja($tanggal)
+{
+    $awal  = new DateTime($tanggal);
+    $akhir = new DateTime();
+    $diff  = $awal->diff($akhir);
+    $tahun = $diff->y;
+    return $tahun;
 }

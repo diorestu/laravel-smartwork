@@ -121,7 +121,7 @@
                                                 <tr>
                                                     <td>Masa Kerja</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->tanggal_mulaiKerja }}</b></td>
+                                                    <td><b>{{ masaKerja($data->tanggal_mulaiKerja) }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Jenis Kelamin</td>
@@ -131,7 +131,7 @@
                                                 <tr>
                                                     <td>Status Perkawinan</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->tanggungan }}</b></td>
+                                                    <td><b>{{ $data->status_kawin->status_kawin }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>No. HP</td>
@@ -166,7 +166,7 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td style="width: 15%;">Username</td>
+                                                    <td style="width: 18%;">Username</td>
                                                     <td style="width: 5%;">:</td>
                                                     <td><b>{{ $data->username }}</b></td>
                                                 </tr>
@@ -190,6 +190,11 @@
                                                     <td>Jabatan</td>
                                                     <td>:</td>
                                                     <td><b>@if ($data->id_jabatan != null) {{ $data->jabatan->jabatan_title }} @endif</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sertifikasi</td>
+                                                    <td>:</td>
+                                                    <td><b>@if ($data->id_sertifikasi != null) {{ $data->sertifikasi->sertifikasi_title }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Lokasi Absensi Kantor</td>
@@ -246,7 +251,7 @@
                                                 <tr>
                                                     <td style="width: 15%;">Potongan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif</b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }}% dari gaji pokok @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"><br><h5>Ketengakerjaan</h5></td>
@@ -272,7 +277,7 @@
                                                 <tr>
                                                     <td style="width: 15%;">Potongan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_naker }} @endif</b></td>
+                                                    <td><b>@if ($dataAsuransi != '') {{ $dataAsuransi->pot_naker }}% dari gaji pokok @endif</b></td>
                                                 </tr>
 
 
@@ -295,37 +300,37 @@
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Jabatan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_jabatan) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Sertifikasi</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_sertifikasi) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Transport</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_transport) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Kosmetik</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_kosmetik) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Makan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_makan) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Masa Kerja</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_masaKerja) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Status Kawin</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b></b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_statusKawin) }} @endif</b></td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Models\Cabang;
 use App\Models\Divisi;
 use App\Models\Jabatan;
+use App\Models\Sertifikasi;
+use App\Models\StatusKawin;
+use App\Models\MasaKerja;
 use App\Models\Absensi;
 use App\Models\UserConfig;
 use Laravel\Passport\HasApiTokens;
@@ -41,6 +44,21 @@ class User extends Authenticatable
     public function jabatan(): BelongsTo
     {
         return $this->belongsTo(Jabatan::class, 'id_jabatan', 'jabatan_id');
+    }
+
+    public function sertifikasi(): BelongsTo
+    {
+        return $this->belongsTo(Sertifikasi::class, 'id_sertifikasi', 'id');
+    }
+
+    public function status_kawin(): BelongsTo
+    {
+        return $this->belongsTo(StatusKawin::class, 'tanggungan', 'id');
+    }
+
+    public function masa_kerja(): BelongsTo
+    {
+        return $this->belongsTo(MasaKerja::class, 'id_masaKerja', 'id');
     }
 
     public function absensi(): HasMany

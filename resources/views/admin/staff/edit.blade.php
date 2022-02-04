@@ -23,7 +23,7 @@
     </div>
     <div class="page-content mt-0 pt-0">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 p-0">
                 <div class="card bg-transparent shadow-none">
                     <div class="card-body">
                         <ul class="nav nav-tabs-custom card-header-tabs border-top mt-2" id="pills-tab" role="tablist">
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-12 col-lg-12">
+            <div class="col-xl-12 col-lg-12 p-0">
                 <form action="{{ route('pegawai.update', $data->id) }}" method="post" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
@@ -78,11 +78,12 @@
                                             <div class="form-group mb-4">
                                                 <label for="tanggungan" class="font-weight-bolder">Status Perkawinan</label>
                                                 <select id="tanggungan" class="form-select" name="tanggungan">
-                                                    <option @if ($data->tanggungan == "TK/0") selected @endif value='TK/0'>Tidak Kawin</option>
-                                                    <option @if ($data->tanggungan == "K/0") selected @endif value='K/0'>Kawin</option>
-                                                    <option @if ($data->tanggungan == "K/1") selected @endif value='K/1'>Kawin Anak 1</option>
-                                                    <option @if ($data->tanggungan == "K/2") selected @endif value='K/2'>Kawin Anak 2</option>
-                                                    <option @if ($data->tanggungan == "K/3") selected @endif value='K/3'>Kawin Anak 3</option>
+                                                    @php
+                                                        $q_sk = App\Models\StatusKawin::where('id_admin', auth()->user()->id)->get();
+                                                    @endphp
+                                                    @foreach ($q_sk as $r_sk)
+                                                    <option @if ($data->tanggungan == $r_sk->id) selected @endif value='{{ $r_sk->id }}'>{{ $r_sk->status_kawin }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -173,6 +174,17 @@
                                                 <label for="company" class="font-weight-bolder">Company</label>
                                                 <input class='form-control' type="text" name="company" id="company" value="{{ $data->company }}">
                                             </div>
+                                            <div class="form-group mb-4">
+                                                <label for="sertifikasi" class="font-weight-bolder">Sertifikasi</label>
+                                                <select id="sertifikasi" class="form-select" name="id_sertifikasi">
+                                                    @php
+                                                        $q_sertif = App\Models\Sertifikasi::where('id_admin', auth()->user()->id)->get();
+                                                    @endphp
+                                                    @foreach ($q_sertif as $r_sertif)
+                                                    <option @if ($data->id_sertifikasi == $r_sertif->id) selected @endif value='{{ $r_sertif->id }}'>{{ $r_sertif->sertifikasi_title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
@@ -208,21 +220,21 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
                                                 <label for="nomor_nakes" class="font-weight-bolder">Nomor Asuransi Kesehatan</label>
-                                                <input class='form-control' type="text" name="nomor_nakes" id="nomor_nakes" value="@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_nakes }} @endif">
+                                                <input class='form-control' type="text" name="nomor_nakes" id="nomor_nakes" value="@if ($dataAsuransi != ''){{ $dataAsuransi->nomor_nakes }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="nomor_naker" class="font-weight-bolder">Nomor Asuransi Ketenagakerjaan</label>
-                                                <input class='form-control' type="text" name="nomor_naker" id="nomor_naker" value="@if ($dataAsuransi != '') {{ $dataAsuransi->nomor_naker }} @endif">
+                                                <input class='form-control' type="text" name="nomor_naker" id="nomor_naker" value="@if ($dataAsuransi != ''){{ $dataAsuransi->nomor_naker }}@else{{ 0 }}@endif">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
                                                 <label for="pot_nakes" class="font-weight-bolder">Potongan Asuransi Kesehatan</label>
-                                                <input class='form-control' type="number" name="pot_nakes" id="pot_nakes" value="@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif">
+                                                <input class='form-control' type="number" name="pot_nakes" id="pot_nakes" value="@if ($dataAsuransi != ''){{ $dataAsuransi->pot_nakes }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="pot_naker" class="font-weight-bolder">Potongan Asuransi Ketenagakerjaan</label>
-                                                <input class='form-control' type="number" name="pot_naker" id="pot_naker" value="@if ($dataAsuransi != '') {{ $dataAsuransi->pot_nakes }} @endif">
+                                                <input class='form-control' type="number" name="pot_naker" id="pot_naker" value="@if ($dataAsuransi != ''){{ $dataAsuransi->pot_naker }}@else{{ 0 }}@endif">
                                             </div>
                                         </div>
                                     </div>
@@ -242,38 +254,39 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Jabatan</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_jabatan" class="font-weight-bolder">Tunjangan Jabatan</label>
+                                                <input class='form-control' type="text" name="tj_jabatan" id="tj_jabatan" value="{{ $data->jabatan->jabatan_tunjangan }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Sertifikasi</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_sertifikasi" class="font-weight-bolder">Tunjangan Sertifikasi</label>
+                                                <input class='form-control' type="text" name="tj_sertifikasi" id="tj_sertifikasi" value="{{ $data->sertifikasi->sertifikasi_tunjangan }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Makan</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_masaKerja" class="font-weight-bolder">Tunjangan Masa Kerja</label>
+                                                <input class='form-control' type="text" name="tj_masaKerja" id="tj_masaKerja" value="{{ $data->masa_kerja->masa_kerja_tunjangan }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Status Kawin</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_statusKawin" class="font-weight-bolder">Tunjangan Status Kawin</label>
+                                                <input class='form-control' type="text" name="tj_statusKawin" id="tj_statusKawin" value="{{ $data->status_kawin->status_kawin_tunjangan }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Transport</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_makan" class="font-weight-bolder">Tunjangan Makan</label>
+                                                <input class='form-control' type="text" name="tj_makan" id="tj_makan" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_makan }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Kosmetik</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_transport" class="font-weight-bolder">Tunjangan Transport</label>
+                                                <input class='form-control' type="text" name="tj_transport" id="tj_transport" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_transport }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Masa Kerja</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_kosmetik" class="font-weight-bolder">Tunjangan Kosmetik</label>
+                                                <input class='form-control' type="text" name="tj_kosmetik" id="tj_kosmetik" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_kosmetik }}@else{{ 0 }}@endif">
                                             </div>
+
                                             <div class="form-group mb-4">
-                                                <label for="my-select" class="font-weight-bolder">Tunjangan Lainnya</label>
-                                                <input class='form-control' type="text" name="" id="" value="">
+                                                <label for="tj_lain" class="font-weight-bolder">Tunjangan Lainnya</label>
+                                                <input class='form-control' type="text" name="tj_lain" id="tj_lain" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_lain }}@else{{ 0 }}@endif">
                                             </div>
                                         </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
@@ -307,5 +320,7 @@
         const choice6  = new Choices(element6);
         const element7 = document.querySelector('#jabatan');
         const choice7  = new Choices(element7);
+        const element8 = document.querySelector('#sertifikasi');
+        const choice8  = new Choices(element8);
     </script>
 @endpush

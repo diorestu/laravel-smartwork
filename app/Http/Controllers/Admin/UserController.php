@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Asuransi;
+use App\Models\MasaKerja;
+use App\Models\UserTunjangan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -67,9 +69,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::findOrFail($id);
-        $dataAsuransi = Asuransi::where('id_user', '=', $id)->first();
-        return view('admin.staff.detail', ['data' => $data, 'dataAsuransi' => $dataAsuransi,]);
+        $data           = User::findOrFail($id);
+        $dataAsuransi   = Asuransi::where('id_user', '=', $id)->first();
+        $dataTunjangan  = UserTunjangan::where('id_user', '=', $id)->first();
+        return view('admin.staff.detail',
+        [
+            'data' => $data,
+            'dataAsuransi' => $dataAsuransi,
+            'dataTunjangan' => $dataTunjangan,
+        ]);
     }
 
     /**
@@ -116,14 +124,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $data = User::findOrFail($id);
-        $dataAsuransi = Asuransi::where('id_user', '=', $id)->first();
+        $data           = User::findOrFail($id);
+        $dataAsuransi   = Asuransi::where('id_user', '=', $id)->first();
+        $dataTunjangan  = UserTunjangan::where('id_user', '=', $id)->first();
         if ($dataAsuransi == null) { $dataAsuransi = ""; }
         // dd($data);
         return view('admin.staff.edit',
             [
               'data' => $data,
               'dataAsuransi' => $dataAsuransi,
+              'dataTunjangan' => $dataTunjangan,
             ]);
     }
 
@@ -136,12 +146,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id_admin                   = Auth::user()->id;
         $input                      = $request->all();
         $data                       = User::findOrFail($id);
         // data diri
         $data->nip                  = $input['nip'];
         $data->nama                 = $input['nama'];
         $data->tanggal_mulaiKerja   = $input['tanggal_mulaiKerja'];
+        $tahun_kerja                = getTahunKerja($input['tanggal_mulaiKerja']);
+        $masa_kerja                 = MasaKerja::where('id_admin', '=', $id_admin)->where('masa_kerja', '=', $tahun_kerja)->first();
+        if ($masa_kerja != null) {
+            $data->id_masaKerja     = $masa_kerja->id; }
+        else {
+            if ($tahun_kerja != 0) {
+                // masa kerja kurang dari 1 tahun
+                $data->id_masaKerja = 0; }
+            else {
+                // cari id masa kerja paling lama
+                $masa_kerja_last    = MasaKerja::where('id_admin', '=', $id_admin)->orderBy('masa_kerja', 'desc')->limit(1)->first();
+                $data->id_masaKerja = $masa_kerja_last->id; }
+        }
         $data->gender               = $input['gender'];
         $data->phone                = $input['phone'];
         $data->email                = $input['email'];
@@ -155,6 +179,7 @@ class UserController extends Controller
         $data->id_cabang            = $input['id_cabang'];
         $data->company              = $input['company'];
         $data->no_rek               = $input['no_rek'];
+        $data->id_sertifikasi       = $input['id_sertifikasi'];
         $berhasil                   = $data->save();
         if ($berhasil) {
             // asuransi
@@ -180,13 +205,41 @@ class UserController extends Controller
                 $berhasilAsuransi           = $dataAsuransi->save();
             }
             if ($berhasilAsuransi) {
-                return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Update Data Pegawai Berhasil'); }
+                // tunjangan
+                $dataTunjangan                      = UserTunjangan::where('id_user', '=', $id)->first();
+                if ($dataTunjangan != null) {
+                    $dataTunjangan->tj_jabatan      = $input['tj_jabatan'];
+                    $dataTunjangan->tj_sertifikasi  = $input['tj_sertifikasi'];
+                    $dataTunjangan->tj_statusKawin  = $input['tj_statusKawin'];
+                    $dataTunjangan->tj_masaKerja    = $input['tj_masaKerja'];
+                    $dataTunjangan->tj_makan        = $input['tj_makan'];
+                    $dataTunjangan->tj_transport    = $input['tj_transport'];
+                    $dataTunjangan->tj_kosmetik     = $input['tj_kosmetik'];
+                    $dataTunjangan->tj_lain         = $input['tj_lain'];
+                    $berhasilTunjangan              = $dataTunjangan->save();
+                } else {
+                    $dataTunjangan                  = new UserTunjangan;
+                    $dataTunjangan->id_user         = $id;
+                    $dataTunjangan->tj_jabatan      = $input['tj_jabatan'];
+                    $dataTunjangan->tj_sertifikasi  = $input['tj_sertifikasi'];
+                    $dataTunjangan->tj_statusKawin  = $input['tj_statusKawin'];
+                    $dataTunjangan->tj_masaKerja    = $input['tj_masaKerja'];
+                    $dataTunjangan->tj_makan        = $input['tj_makan'];
+                    $dataTunjangan->tj_transport    = $input['tj_transport'];
+                    $dataTunjangan->tj_kosmetik     = $input['tj_kosmetik'];
+                    $dataTunjangan->tj_lain         = $input['tj_lain'];
+                    $berhasilTunjangan              = $dataTunjangan->save();
+                }
+                if ($berhasilTunjangan) {
+                    return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Update Data Pegawai Berhasil'); }
+                else {
+                    return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
+            }
             else {
-                return view('admin.staff.edit', ['data' => $data])->with('error', 'Berhasil Mengupdate Data Pegawai'); }
-            // tunjangan
+                return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
         }
         else {
-            return view('admin.staff.edit', ['data' => $data])->with('error', 'Berhasil Mengupdate Data Pegawai'); }
+            return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
     }
 
     /**
