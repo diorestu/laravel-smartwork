@@ -251,13 +251,13 @@ class UserController extends Controller
                 if ($berhasilTunjangan) {
                     return redirect()->route('pegawai.show', $data['id'])->with('success', 'Proses Update Data Pegawai Berhasil'); }
                 else {
-                    return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
+                    return redirect()->route('pegawai.edit', $id)->with('error', 'Gagal Mengupdate Data Pegawai'); }
             }
             else {
-                return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
+                return redirect()->route('pegawai.edit', $id)->with('error', 'Gagal Mengupdate Data Pegawai'); }
         }
         else {
-            return view('admin.staff.edit', ['data' => $data])->with('error', 'Gagal Mengupdate Data Pegawai'); }
+            return redirect()->route('pegawai.edit', $id)->with('error', 'Gagal Mengupdate Data Pegawai'); }
     }
 
     /**

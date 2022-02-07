@@ -16,7 +16,7 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tunjangan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("jabatan.index") }}">Tunjangan</a></li>
                         <li class="breadcrumb-item active">Jabatan</li>
                     </ol>
                     <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Jabatan</h4>
@@ -45,11 +45,11 @@
                                                     <div class="col-12">
                                                         <div class="mb-4">
                                                             <label for="jabatan_title">Nama Jabatan <span class="text-danger">*</span></label>
-                                                            <input id="jabatan_title" class="form-control" type="text" name="jabatan_title">
+                                                            <input required id="jabatan_title" class="form-control" type="text" name="jabatan_title">
                                                         </div>
                                                         <div class="mb-4">
                                                             <label for="jabatan_tunjangan">Jumlah Tunjangan <span class="text-danger">*</span></label>
-                                                            <input id="jabatan_tunjangan" class="form-control" type="number" name="jabatan_tunjangan">
+                                                            <input required id="jabatan_tunjangan" class="form-control" type="number" name="jabatan_tunjangan">
                                                         </div>
                                                     </div>
                                                 </div>

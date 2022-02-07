@@ -63,6 +63,7 @@ class JabatanController extends Controller
     public function show($id)
     {
         //
+        return redirect()->back();
     }
 
     /**
@@ -73,7 +74,10 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data           = Jabatan::findOrFail($id);
+        return view(
+            'admin.jabatan.edit', ['data' => $data]
+        );
     }
 
     /**
@@ -85,7 +89,23 @@ class JabatanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id_admin                   = Auth::user()->id;
+        $input                      = $request->all();
+        $data                       = Jabatan::findOrFail($id);
+        $data->jabatan_title        = $input['jabatan_title'];
+        $data->jabatan_tunjangan    = $input['jabatan_tunjangan'];
+        $cekJudul                   = Jabatan::where('jabatan_title', '=', $input['jabatan_title'])->where('id_admin', '=', $id_admin)->where('jabatan_id', '!=', $id)->first();
+        if ($cekJudul != null) {
+            return redirect()->route('jabatan.edit', $id)->with('error', 'Nama jabatan sudah tersedia');
+        }
+        else {
+            $berhasilSimpan             = $data->save();
+            if ($berhasilSimpan) {
+                return redirect()->route('jabatan.index')->with('success', 'Proses update data jabatan berhasil');
+            } else {
+                return redirect()->route('jabatan.edit', $id)->with('error', 'Gagal mengupdate data jabatan');
+            }
+        }
     }
 
     /**
