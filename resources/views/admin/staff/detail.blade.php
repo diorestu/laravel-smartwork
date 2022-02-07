@@ -131,7 +131,7 @@
                                                 <tr>
                                                     <td>Status Perkawinan</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->status_kawin->status_kawin }}</b></td>
+                                                    <td><b>@if ($data->tanggungan != null){{ $data->status_kawin->status_kawin }}@endif</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>No. HP</td>
@@ -300,12 +300,22 @@
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Jabatan</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_jabatan) }} @endif</b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_jabatan) }} @endif</b> &nbsp;<a href="javascript:void(0);" data-toggle="tooltip" data-placement="right" title="Tunjangan jabatan dihitung secara otomatis melalui jabatan pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Sertifikasi</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_sertifikasi) }} @endif</b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_sertifikasi) }} @endif</b> &nbsp;<a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan sertifikasi dihitung secara otomatis melalui sertifikasi pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Masa Kerja</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_masaKerja) }} @endif</b> &nbsp;<a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan masa kerja dihitung secara otomatis dari tanggal mulai kerja pegawai" class="fas fa-info-circle text-primary"></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20%;">Tunjangan Status Kawin</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_statusKawin) }} @endif</b> &nbsp;<a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan status kawin dihitung secara otomatis melalui status perkawinan pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 20%;">Tunjangan Transport</td>
@@ -323,14 +333,9 @@
                                                     <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_makan) }} @endif</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="width: 20%;">Tunjangan Masa Kerja</td>
+                                                    <td style="width: 20%;">Tunjangan Lainnya</td>
                                                     <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_masaKerja) }} @endif</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width: 20%;">Tunjangan Status Kawin</td>
-                                                    <td style="width: 5%;">:</td>
-                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_statusKawin) }} @endif</b></td>
+                                                    <td><b>@if ($dataTunjangan != '') {{ rupiah($dataTunjangan->tj_lain) }} @endif</b></td>
                                                 </tr>
                                             </tbody>
                                         </table>

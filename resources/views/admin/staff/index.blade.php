@@ -50,67 +50,35 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="mb-4">
-                                                            <label for="my-input">Nama Pegawai</label>
-                                                            <input id="my-input" class="form-control" type="text" name="nama">
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="my-input">Nomor Induk Pegawai</label>
+                                                            <label for="my-input">Nomor Induk Pegawai <span class="text-danger">*</span></label>
                                                             <input id="my-input" class="form-control" type="text" name="nip">
                                                         </div>
                                                         <div class="mb-4">
-                                                            <label for="cabang">Lokasi Kerja</label>
+                                                            <label for="my-input">Nama Pegawai <span class="text-danger">*</span></label>
+                                                            <input id="my-input" class="form-control" type="text" name="nama">
+                                                        </div>
+                                                        <div class="form-group mb-4">
+                                                            <label for="cabang" class="font-weight-bolder">Lokasi Absensi Kantor <span class="text-danger">*</span></label>
                                                             <select id="cabang" class="form-select" name="id_cabang">
-                                                                @foreach (App\Models\Cabang::where('id_admin', auth()->user()->id)->get() as $i)
-                                                                    <option value='{{ $i->id }}'>{{ $i->cabang_nama }}</option>
+                                                                @php $query = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
+                                                                @foreach ($query as $r)
+                                                                <option value='{{ $r->id }}'>{{ $r->cabang_nama }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group mb-4">
+                                                            <label for="phone" class="font-weight-bolder">No. HP <span class="text-danger">*</span></label>
+                                                            <input class='form-control' type="text" name="phone" id="phone" value="">
+                                                        </div>
                                                         <div class="mb-4">
-                                                            <label for="my-input">Username Pegawai</label>
+                                                            <label for="my-input">Username <span class="text-danger">*</span></label>
                                                             <input id="my-input" class="form-control" type="text" name="username">
                                                         </div>
                                                         <div class="mb-4">
-                                                            <label for="my-input">Kata Sandi Pegawai</label>
+                                                            <label for="my-input">Kata Sandi <span class="text-danger">*</span></label>
                                                             <input id="my-input" class="form-control" type="text" name="password">
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="my-input">Jenis Kelamin Pegawai</label>
-                                                            <select id="my-select" class="form-select" name="gender">
-                                                                <option value='Pria'>Pria</option>
-                                                                <option value='Wanita'>Wanita</option>
-                                                            </select>
-                                                        </div>
-                                                        {{-- <div class="mb-2">
-                                                        <label for="my-input">Username Pegawai</label>
-                                                        <input id="my-input" class="form-control" type="text" name="password">
-                                                    </div> --}}
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-4">
-                                                            <label for="my-input">E-mail Pegawai</label>
-                                                            <input id="my-input" class="form-control" type="text" name="email">
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="my-input">Alamat Pegawai</label>
-                                                            <textarea id="my-textarea" class="form-control" name="alamat" rows="1"></textarea>
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="my-input">No. HP Pegawai</label>
-                                                            <input id="my-input" class="form-control" type="text" name="phone">
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="tanggungan">Tanggungan Pegawai</label>
-                                                            <select id="tanggungan" class="form-select" name="tanggungan">
-                                                                <option value='TK/0'>TK/0</option>
-                                                                <option value='K/0'>K/0</option>
-                                                                <option value='K/1'>K/1</option>
-                                                                <option value='K/2'>K/2</option>
-                                                                <option value='K/3'>K/3</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-4">
-                                                            <label for="my-input">Tanggal Mulai Kerja</label>
-                                                            <input id="my-input" class="form-control" type="date" name="tanggal_mulaiKerja">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,9 +87,9 @@
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light-danger font-weight-bold"
                                                 data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-danger font-weight-bolder">
+                                            <button type="submit" class="btn btn-success font-weight-bolder">
                                                 <i class="fa fa-plus icon-sm"></i>
-                                                Simpan Data Pegawai</button>
+                                                Tambah Data Pegawai</button>
                                         </div>
                                     </form>
                                 </div>
@@ -132,27 +100,9 @@
             </div>
         </div>
     </div>
-    <div id="alert">
-        @if (Session::has('success'))
-        <div class="alert alert-success py-4 fade-message alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-            <i class="fa fa-info-circle"></i>
-            <strong>Berhasil!</strong> - {{ \Session::get('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-            <script>
-            $(function(){
-                setTimeout(function() {
-                    $('.fade-message').close();
-                }, 2000);
-            });
-            </script>
-        @endif
-    </div>
     <div class="card card-custom gutter-b rounded-sm shadow-sm">
         <div class="card-body p-4">
             <div class="table-responsive">
-
                 <table class="table table-hover" id="myTable">
                     <thead class="table-dark">
                         <tr>
@@ -190,14 +140,15 @@
                                                 <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;
                                                 Detail
                                             </a></li>
-                                            <li><form action="{{ route('pegawai.destroy', $i->id) }}" method="post">
+                                            <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
+                                            {{-- <li><form action="{{ route('pegawai.destroy', $i->id) }}" method="post">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="dropdown-item text-danger">
                                                     <i class="fa fa-trash text-danger me-2"></i>
                                                     <b>Hapus</b>
                                                 </button>
-                                            </form></li>
+                                            </form></li> --}}
                                         </ul>
                                     </div>
                                 </td>
@@ -213,14 +164,9 @@
 @push('addon-script')
     {{-- <script src="{{ asset('backend-assets/js/pages/form-advanced.init.js') }}"></script> --}}
     <script>
-        const element = document.querySelector('#tanggungan');
-        const choices = new Choices(element);
-    </script>
-    <script>
         const element2 = document.querySelector('#cabang');
         const choices2 = new Choices(element2);
     </script>
-    <!-- Required datatable js -->
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
@@ -234,6 +180,55 @@
                   ],
                   order: [[0, 'asc']]
             });
-        })
+            $('#myTable').on('click', '.remove', function() {
+                var table = $('#myTable').DataTable();
+                var row_index = table.row($(this).closest('tr'));
+                var idStaff = $(this).attr("id");
+                Swal.fire({
+                    title: 'Konfirmasi Hapus Data',
+                    text: 'Apakah Anda yakin ingin menghapus pegawai ini? Data yang sudah dihapus tidak bisa dikembalikan.',
+                    icon: 'question',
+                    confirmButtonText: '<i class="fas fa-trash"></i>&nbsp; Hapus',
+                    confirmButtonColor: '{{ btnDelete(); }}',
+                    showConfirmButton: 'true',
+                    showCancelButton: 'true',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var url = "{{ route('pegawai.destroy', $i->id) }}";
+                        $.ajax({
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            type: 'DELETE',
+                            url: url,
+                            beforeSend: function(){
+                                Swal.showLoading()
+                            },
+                            success: function(result)
+                            {
+                                if (result == "ok") {
+                                    row_index.remove().draw();
+                                    Swal.fire('Berhasil', 'Berhasil menghapus staff', 'success')
+                                } else {
+                                    Swal.fire('Gagal',result,'error')
+                                }
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
+                    }
+                });
+            });
+        });
     </script>
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+        </script>
+    @endif
 @endpush

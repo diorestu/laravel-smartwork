@@ -16073,4 +16073,10 @@ body[data-layout-mode=dark] .progress {
   }
 }
 
+.swal2-html-container {
+    font-size: 0.9em !important;
+    line-height: 1.5em !important;
+    font-weight: 300 !important;
+}
+
 /*# sourceMappingURL=bootstrap.min.css.map */

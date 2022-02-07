@@ -2,6 +2,10 @@
 
 use Carbon\Carbon;
 
+function btnDelete() {
+    return "#e34b4b";
+}
+
 function nomorUrut($int)
 {
     $no = 1;

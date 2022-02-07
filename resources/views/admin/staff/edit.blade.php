@@ -76,20 +76,20 @@
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
-                                                <label for="nip" class="font-weight-bolder">Nomor Induk Pegawai</label>
-                                                <input class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
+                                                <label for="nip" class="font-weight-bolder">Nomor Induk Pegawai <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tanggal_mulaiKerja">Tanggal Mulai Kerja</label>
-                                                <input id="tanggal_mulaiKerja" class="form-control" type="date" name="tanggal_mulaiKerja" value="{{ $data->tanggal_mulaiKerja }}">
+                                                <label for="tanggal_mulaiKerja">Tanggal Mulai Kerja <span class="text-danger">*</span></label>
+                                                <input required id="tanggal_mulaiKerja" class="form-control" type="date" name="tanggal_mulaiKerja" value="{{ $data->tanggal_mulaiKerja }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="phone" class="font-weight-bolder">No. HP</label>
-                                                <input class='form-control' type="text" name="phone" id="phone" value="{{ $data->phone }}">
+                                                <label for="phone" class="font-weight-bolder">No. HP <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="phone" id="phone" value="{{ $data->phone }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tanggungan" class="font-weight-bolder">Status Perkawinan</label>
-                                                <select id="tanggungan" class="form-select" name="tanggungan">
+                                                <label for="tanggungan" class="font-weight-bolder">Status Perkawinan <span class="text-danger">*</span></label>
+                                                <select required id="tanggungan" class="form-select" name="tanggungan">
                                                     @php
                                                         $q_sk = App\Models\StatusKawin::where('id_admin', auth()->user()->id)->get();
                                                     @endphp
@@ -101,19 +101,19 @@
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="nama" class="font-weight-bolder">Nama Lengkap</label>
-                                                <input class='form-control' type="text" name="nama" id="nama" value="{{ $data->nama }}">
+                                                <label for="nama" class="font-weight-bolder">Nama Lengkap <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="nama" id="nama" value="{{ $data->nama }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="gender" class="font-weight-bolder">Jenis Kelamin</label>
-                                                <select id="gender" class="form-select" name="gender">
+                                                <label for="gender" class="font-weight-bolder">Jenis Kelamin <span class="text-danger">*</span></label>
+                                                <select required id="gender" class="form-select" name="gender">
                                                     <option @if ($data->gender == "Pria") selected @endif value='Pria'>Pria</option>
                                                     <option @if ($data->gender == "Wanita") selected @endif value='Wanita'>Wanita</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="email" class="font-weight-bolder">Email</label>
-                                                <input class='form-control' type="text" name="email" id="email" value="{{ $data->email }}">
+                                                <label for="email" class="font-weight-bolder">Email <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="email" id="email" value="{{ $data->email }}">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="alamat" class="font-weight-bolder">Alamat</label>
@@ -137,12 +137,12 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="username" class="font-weight-bolder">Username</label>
-                                                <input class='form-control' type="text" name="username" id="" value="{{ $data->username }}">
+                                                <label for="username" class="font-weight-bolder">Username <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="username" id="" value="{{ $data->username }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="divisi" class="font-weight-bolder">Divisi</label>
-                                                <select id="divisi" class="form-select" name="id_divisi">
+                                                <label for="divisi" class="font-weight-bolder">Divisi <span class="text-danger">*</span></label>
+                                                <select required id="divisi" class="form-select" name="id_divisi">
                                                     @php
                                                         $q_div = App\Models\Divisi::where('id_admin', auth()->user()->id)->get();
                                                     @endphp
@@ -152,8 +152,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="cabang" class="font-weight-bolder">Lokasi Absensi Kantor</label>
-                                                <select id="cabang" class="form-select" name="id_cabang">
+                                                <label for="cabang" class="font-weight-bolder">Lokasi Absensi Kantor <span class="text-danger">*</span></label>
+                                                <select required id="cabang" class="form-select" name="id_cabang">
                                                     @php $query = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
                                                     @foreach ($query as $r)
                                                     <option @if ($data->id_cabang == $r->id) selected @endif value='{{ $r->id }}'>{{ $r->cabang_nama }}</option>
@@ -161,21 +161,21 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="no_rek" class="font-weight-bolder">Nomor Rekening Pegawai</label>
-                                                <input class='form-control' type="text" name="no_rek" id="no_rek" value="{{ $data->no_rek }}">
+                                                <label for="no_rek" class="font-weight-bolder">Nomor Rekening Pegawai <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="no_rek" id="no_rek" value="{{ $data->no_rek }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="status" class="font-weight-bolder">Status Akun</label>
-                                                <select id="status" class="form-select" name="status">
+                                                <label for="status" class="font-weight-bolder">Status Akun <span class="text-danger">*</span></label>
+                                                <select required id="status" class="form-select" name="status">
                                                     <option @if ($data->status == "active") selected @endif value='active'>Aktif</option>
                                                     <option @if ($data->status == "not active") selected @endif value='not active'>Tidak Aktif</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="jabatan" class="font-weight-bolder">Jabatan</label>
-                                                <select id="jabatan" class="form-select" name="id_jabatan">
+                                                <label for="jabatan" class="font-weight-bolder">Jabatan <span class="text-danger">*</span></label>
+                                                <select required id="jabatan" class="form-select" name="id_jabatan">
                                                     @php $q_jab = App\Models\Jabatan::where('id_admin', auth()->user()->id)->get(); @endphp
                                                     @foreach ($q_jab as $r_jab)
                                                     <option @if ($data->id_jabatan == $r_jab->jabatan_id) selected @endif value='{{ $r_jab->jabatan_id }}'>{{ $r_jab->jabatan_title }}</option>
@@ -187,8 +187,8 @@
                                                 <input class='form-control' type="text" name="company" id="company" value="{{ $data->company }}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="sertifikasi" class="font-weight-bolder">Sertifikasi</label>
-                                                <select id="sertifikasi" class="form-select" name="id_sertifikasi">
+                                                <label for="sertifikasi" class="font-weight-bolder">Sertifikasi <span class="text-danger">*</span></label>
+                                                <select required id="sertifikasi" class="form-select" name="id_sertifikasi">
                                                     @php
                                                         $q_sertif = App\Models\Sertifikasi::where('id_admin', auth()->user()->id)->get();
                                                     @endphp
@@ -266,38 +266,38 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="tj_jabatan" class="font-weight-bolder">Tunjangan Jabatan</label>
-                                                <input class='form-control' type="text" name="tj_jabatan" id="tj_jabatan" value="@if ($data->id_jabatan != ''){{ $data->jabatan->jabatan_tunjangan }}@endif">
+                                                <label for="tj_jabatan" class="font-weight-bolder">Tunjangan Jabatan <a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan jabatan dihitung secara otomatis melalui jabatan pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></label>
+                                                <input readonly class='form-control' type="text" name="tj_jabatan" id="tj_jabatan" value="@if ($data->id_jabatan != ''){{ $data->jabatan->jabatan_tunjangan }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tj_sertifikasi" class="font-weight-bolder">Tunjangan Sertifikasi</label>
-                                                <input class='form-control' type="text" name="tj_sertifikasi" id="tj_sertifikasi" value="@if ($data->id_sertifikasi != ''){{ $data->sertifikasi->sertifikasi_tunjangan }}@endif">
+                                                <label for="tj_sertifikasi" class="font-weight-bolder">Tunjangan Sertifikasi <a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan sertifikasi dihitung secara otomatis melalui sertifikasi pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></label>
+                                                <input readonly class='form-control' type="text" name="tj_sertifikasi" id="tj_sertifikasi" value="@if ($data->id_sertifikasi != ''){{ $data->sertifikasi->sertifikasi_tunjangan }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tj_masaKerja" class="font-weight-bolder">Tunjangan Masa Kerja</label>
-                                                <input class='form-control' type="text" name="tj_masaKerja" id="tj_masaKerja" value="@if ($data->id_masaKerja != ''){{ $data->masa_kerja->masa_kerja_tunjangan }}@endif">
+                                                <label for="tj_masaKerja" class="font-weight-bolder">Tunjangan Masa Kerja <a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan masa kerja dihitung secara otomatis dari tanggal mulai kerja pegawai" class="fas fa-info-circle text-primary"></a></label>
+                                                <input readonly class='form-control' type="text" name="tj_masaKerja" id="tj_masaKerja" value="@if ($data->id_masaKerja != ''){{ $data->masa_kerja->masa_kerja_tunjangan }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tj_statusKawin" class="font-weight-bolder">Tunjangan Status Kawin</label>
-                                                <input class='form-control' type="text" name="tj_statusKawin" id="tj_statusKawin" value="@if ($data->tanggungan != ''){{ $data->status_kawin->status_kawin_tunjangan }}@endif">
+                                                <label for="tj_statusKawin" class="font-weight-bolder">Tunjangan Status Kawin <a href="javascript:void(0);" data-toggle="tooltip" title="Tunjangan status kawin dihitung secara otomatis melalui status perkawinan pegawai yang dipilih" class="fas fa-info-circle text-primary"></a></label>
+                                                <input readonly class='form-control' type="text" name="tj_statusKawin" id="tj_statusKawin" value="@if ($data->tanggungan != ''){{ $data->status_kawin->status_kawin_tunjangan }}@else{{ 0 }}@endif">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
-                                                <label for="tj_makan" class="font-weight-bolder">Tunjangan Makan</label>
+                                                <label for="tj_makan" class="font-weight-bolder">Tunjangan Makan <span class="text-danger">*</span></label>
                                                 <input class='form-control' type="text" name="tj_makan" id="tj_makan" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_makan }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tj_transport" class="font-weight-bolder">Tunjangan Transport</label>
+                                                <label for="tj_transport" class="font-weight-bolder">Tunjangan Transport <span class="text-danger">*</span></label>
                                                 <input class='form-control' type="text" name="tj_transport" id="tj_transport" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_transport }}@else{{ 0 }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="tj_kosmetik" class="font-weight-bolder">Tunjangan Kosmetik</label>
+                                                <label for="tj_kosmetik" class="font-weight-bolder">Tunjangan Kosmetik <span class="text-danger">*</span></label>
                                                 <input class='form-control' type="text" name="tj_kosmetik" id="tj_kosmetik" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_kosmetik }}@else{{ 0 }}@endif">
                                             </div>
 
                                             <div class="form-group mb-4">
-                                                <label for="tj_lain" class="font-weight-bolder">Tunjangan Lainnya</label>
+                                                <label for="tj_lain" class="font-weight-bolder">Tunjangan Lainnya <span class="text-danger">*</span></label>
                                                 <input class='form-control' type="text" name="tj_lain" id="tj_lain" value="@if ($dataTunjangan != ''){{ $dataTunjangan->tj_lain }}@else{{ 0 }}@endif">
                                             </div>
                                         </div>
@@ -351,7 +351,6 @@
         const choice7  = new Choices(element7);
         const element8 = document.querySelector('#sertifikasi');
         const choice8  = new Choices(element8);
-
         $(document).ready(function() {
             image_crop = $('#image_demo').croppie({
             enableExif: true,

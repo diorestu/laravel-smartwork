@@ -45,20 +45,38 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $id                 = Auth::user()->id;
+        $idAdmin            = Auth::user()->id;
         $data               = $request->all();
-        $data['id_admin']   = $id;
-        $data['roles']      = 'user';
-        $data['status']     = 'active';
-        $data['is_admin']   = false;
         $data['password']   = bcrypt($request->password);
         // dd($data);
-        try {
-            $send = User::create($data);
-            return redirect()->back()->with('success', 'Berhasil');
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th);
-        }
+        $tambah_baru                        = new User;
+	    $tambah_baru->id_admin              = $idAdmin;
+	    $tambah_baru->id_cabang             = $data['id_cabang'];
+	    $tambah_baru->id_divisi             = 0;
+	    $tambah_baru->id_jabatan            = 0;
+	    $tambah_baru->id_sertifikasi        = 0;
+	    $tambah_baru->nama                  = $data['nama'];
+	    $tambah_baru->nip                   = $data['nip'];
+	    $tambah_baru->username              = $data['username'];
+	    $tambah_baru->gender                = "Pria";
+	    $tambah_baru->status                = "active";
+	    $tambah_baru->tanggungan            = 0;
+	    $tambah_baru->tanggal_mulaiKerja    = date("Y-m-d");
+	    $tambah_baru->id_masaKerja          = 0;
+	    $tambah_baru->roles                 = "user";
+	    $tambah_baru->alamat                = "";
+	    $tambah_baru->email                 = "";
+	    $tambah_baru->phone                 = $data['phone'];
+	    $tambah_baru->no_rek                = 0;
+	    $tambah_baru->company               = "";
+	    $tambah_baru->company_logo          = "";
+	    $tambah_baru->is_admin              = false;
+	    $tambah_baru->password              = $data['password'];
+        $berhasilTambah                     = $tambah_baru->save();
+        if ($berhasilTambah) {
+            return redirect()->route('pegawai.edit', $tambah_baru->id)->with('success', 'Pegawai baru berhasil ditambahkan'); }
+        else {
+            return redirect()->back()->with('error', "Gagal menambahkan pegawai baru"); }
     }
 
     /**
@@ -252,9 +270,11 @@ class UserController extends Controller
     {
         try {
             User::findOrFail($id)->delete();
-            return redirect()->route('pegawai.index')->with('success', 'Berhasil Hapus Data');
+            return "ok";
+            // return redirect()->route('pegawai.index')->with('success', 'Berhasil Hapus Data');
         } catch (\Throwable $th) {
-            return redirect()->route('pegawai.index')->with('error', $th);
+            return $th;
+            // return redirect()->route('pegawai.index')->with('error', $th);
         }
     }
 
