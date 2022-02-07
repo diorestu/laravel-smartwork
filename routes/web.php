@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ViewAdminController;
 use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\SertifikasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,7 @@ use App\Http\Controllers\JabatanController;
             Route::resource('cabang', CabangController::class);
             Route::resource('upah', UserSalaryController::class);
             Route::resource('tunjangan/jabatan', JabatanController::class);
+            Route::resource('tunjangan/sertifikasi', SertifikasiController::class);
         });
 
         // Manajemen
