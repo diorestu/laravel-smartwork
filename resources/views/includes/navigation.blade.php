@@ -26,12 +26,12 @@
                             <a href="apps-calendar.html" class="dropdown-item" data-key="t-divisi">Divisi</a>
                             <a href="{{ route('upah.index') }}" class="dropdown-item" data-key="t-upah">Nilai Upah</a>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-tunjangan" role="button">
+                                <a class="dropdown-item {{ request()->is('master/tunjangan*') ? 'active' : ''}} dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-tunjangan" role="button">
                                     <span data-key="t-email">Tunjangan</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-tunjangan">
-                                    <a href="#" class="dropdown-item">Jabatan</a>
+                                    <a href="{{ route('jabatan.index') }}" class="dropdown-item">Jabatan</a>
                                     <a href="#" class="dropdown-item">Sertifikasi</a>
                                     <a href="#" class="dropdown-item">Masa Kerja</a>
                                     <a href="#" class="dropdown-item">Status Kawin</a>

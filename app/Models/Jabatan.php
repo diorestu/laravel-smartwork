@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Jabatan extends Model
 {
     use HasFactory;
-    protected $guarded = ['div_id'];
+    protected $guarded = ['jabatan_id'];
+    protected $primaryKey = "jabatan_id";
 }

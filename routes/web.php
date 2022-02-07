@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ViewAbsenController;
 use App\Http\Controllers\Admin\ViewAdminController;
 use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
+use App\Http\Controllers\JabatanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ use App\Http\Controllers\Admin\UserConfigController;
             Route::post('pegawai/upload-image-pegawai', [UserController::class, 'uploadFotoPegawai'])->name('pegawai.uploadImage');
             Route::resource('cabang', CabangController::class);
             Route::resource('upah', UserSalaryController::class);
+            Route::resource('tunjangan/jabatan', JabatanController::class);
         });
 
         // Manajemen
