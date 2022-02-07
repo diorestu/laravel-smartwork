@@ -26,7 +26,7 @@
                             <div class="d-flex align-items-end mt-3 mt-sm-0">
                                 <div class="flex-shrink-0">
                                     <div class="avatar-xxl me-3">
-                                        <img src="{{ $data->company_logo == '' ? asset('backend-assets/images/no-image.png') : asset('storage/logo/' . Auth::user()->company_logo) }}"
+                                        <img src="{{ $data->company_logo == '' ? asset('backend-assets/images/no-staff.jpg') : asset('storage/uploads/'. $data->company_logo) }}"
                                             alt="" class="img-fluid rounded-circle d-block img-thumbnail">
                                     </div>
                                 </div>

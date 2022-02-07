@@ -53,8 +53,9 @@ use App\Http\Controllers\Admin\UserConfigController;
         // Master Data
         Route::prefix('master')->group(function () {
             Route::resource('pegawai', UserController::class);
-            Route::get('nonActive/{id}', [UserController::class, 'nonActive'])->name('pegawai.nonactive');
-            Route::get('active/{id}', [UserController::class, 'active'])->name('pegawai.active');
+            Route::get('pegawai/nonActive/{id}', [UserController::class, 'nonActive'])->name('pegawai.nonactive');
+            Route::get('pegawai/active/{id}', [UserController::class, 'active'])->name('pegawai.active');
+            Route::post('pegawai/upload-image-pegawai', [UserController::class, 'uploadFotoPegawai'])->name('pegawai.uploadImage');
             Route::resource('cabang', CabangController::class);
             Route::resource('upah', UserSalaryController::class);
         });

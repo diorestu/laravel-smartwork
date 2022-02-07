@@ -5,6 +5,7 @@
 @endsection
 
 @push('addon-style')
+    <link href="{{ asset('backend-assets/libs/croppie/croppie.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
     </style>
@@ -62,7 +63,18 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-6">
+                                        <div class="col-md-2">
+                                            <div id="uploaded_image">
+                                                @if ($data->company_logo == "")
+                                                    <img src="{{ asset('backend-assets/images/no-staff.jpg') }}" class="d-block w-100" />
+                                                @else
+                                                    <img src="{{ asset('storage/uploads/'. $data->company_logo) }}" class="d-block w-100" />
+                                                @endif
+                                            </div>
+                                            <input type="file" class="inputfile inputfile-1" name="image" id="upload_image" accept="image/*" />
+                                            <label for="upload_image"><i class="fas fa-camera"></i>&nbsp; Ganti Foto Profil</label>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
                                                 <label for="nip" class="font-weight-bolder">Nomor Induk Pegawai</label>
                                                 <input class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
@@ -255,19 +267,19 @@
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
                                                 <label for="tj_jabatan" class="font-weight-bolder">Tunjangan Jabatan</label>
-                                                <input class='form-control' type="text" name="tj_jabatan" id="tj_jabatan" value="{{ $data->jabatan->jabatan_tunjangan }}">
+                                                <input class='form-control' type="text" name="tj_jabatan" id="tj_jabatan" value="@if ($data->id_jabatan != ''){{ $data->jabatan->jabatan_tunjangan }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="tj_sertifikasi" class="font-weight-bolder">Tunjangan Sertifikasi</label>
-                                                <input class='form-control' type="text" name="tj_sertifikasi" id="tj_sertifikasi" value="{{ $data->sertifikasi->sertifikasi_tunjangan }}">
+                                                <input class='form-control' type="text" name="tj_sertifikasi" id="tj_sertifikasi" value="@if ($data->id_sertifikasi != ''){{ $data->sertifikasi->sertifikasi_tunjangan }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="tj_masaKerja" class="font-weight-bolder">Tunjangan Masa Kerja</label>
-                                                <input class='form-control' type="text" name="tj_masaKerja" id="tj_masaKerja" value="{{ $data->masa_kerja->masa_kerja_tunjangan }}">
+                                                <input class='form-control' type="text" name="tj_masaKerja" id="tj_masaKerja" value="@if ($data->id_masaKerja != ''){{ $data->masa_kerja->masa_kerja_tunjangan }}@endif">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="tj_statusKawin" class="font-weight-bolder">Tunjangan Status Kawin</label>
-                                                <input class='form-control' type="text" name="tj_statusKawin" id="tj_statusKawin" value="{{ $data->status_kawin->status_kawin_tunjangan }}">
+                                                <input class='form-control' type="text" name="tj_statusKawin" id="tj_statusKawin" value="@if ($data->tanggungan != ''){{ $data->status_kawin->status_kawin_tunjangan }}@endif">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
@@ -301,10 +313,27 @@
         </div>
     </div>
 </div>
+<div id="uploadimageModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 center-block text-center">
+            <div class="center-block" id="image_demo" style="width:100%; margin-top:30px"></div>
+          </div>
+          <div class="col-md-12" style="padding-top:30px;">
+            <button class="btn btn-block btn-success crop_image">Crop & Upload Image</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @push('addon-script')
     {{-- <script src="{{ asset('backend-assets/js/pages/form-advanced.init.js') }}"></script> --}}
+    <script src="{{ asset('backend-assets/libs/croppie/croppie.js') }}"></script>
     <script>
         const element = document.querySelector('#tanggungan');
         const choices = new Choices(element);
@@ -322,5 +351,55 @@
         const choice7  = new Choices(element7);
         const element8 = document.querySelector('#sertifikasi');
         const choice8  = new Choices(element8);
+
+        $(document).ready(function() {
+            image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 300,
+                type:'square' //circle
+            },
+            boundary: {
+                width: 450,
+                height: 450
+            }
+            });
+            $('#upload_image').on('change', function() {
+                var reader = new FileReader();
+                var base64data = reader.result;
+                reader.onload = function(event) {
+                    image_crop.croppie('bind', {
+                    url: event.target.result
+                    }).then(function() {
+                    console.log('jQuery bind complete');
+                    });
+                }
+                reader.readAsDataURL(this.files[0]);
+                $('#uploadimageModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#uploadimageModal').modal('show');
+            });
+            $('.crop_image').click(function(event) {
+                image_crop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(response) {
+                    var url = '{{ route('pegawai.uploadImage') }}';
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        url: url,
+                        type: "POST",
+                        data: {'_token': $('meta[name="_token"]').attr('content'), 'image': response, 'id': {{ $data->id }} },
+                        success: function(data) {
+                            $('#uploadimageModal').modal('hide');
+                            $('#uploaded_image').html(data);
+                        }
+                    });
+                })
+            });
+        });
     </script>
 @endpush

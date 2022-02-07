@@ -257,4 +257,32 @@ class UserController extends Controller
             return redirect()->route('pegawai.index')->with('error', $th);
         }
     }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadFotoPegawai(Request $request)
+    {
+        $folderPath     = storage_path('app/public/uploads/');
+        $image_parts    = explode(";base64,", $request->image);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type     = $image_type_aux[1];
+        $image_base64   = base64_decode($image_parts[1]);
+        $imageName      = uniqid() . '.png';
+        $imageFullPath  = $folderPath . $imageName;
+        file_put_contents($imageFullPath, $image_base64);
+        $id                         = $request->id;
+        $data                       = User::findOrFail($id);
+        $data->company_logo         = $imageName;
+        $berhasil                   = $data->save();
+        if ($berhasil) {
+            return '<img src="'. asset("storage/uploads/$imageName") .'" class="d-block w-100" />'; }
+        else {
+            return "gagal"; }
+    }
 }
