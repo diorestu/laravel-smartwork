@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Data Sertifikasi
+    Data Masa Kerja
 @endsection
 
 @push('addon-style')
@@ -16,11 +16,11 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("sertifikasi.index") }}">Tunjangan</a></li>
-                        <li class="breadcrumb-item active">Sertifikasi</li>
+                        <li class="breadcrumb-item"><a href="{{ route("masa-kerja.index") }}">Tunjangan</a></li>
+                        <li class="breadcrumb-item active">Masa Kerja</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Sertifikasi</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Berikut adalah daftar semua data sertifikasi</p>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Masa Kerja</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Berikut adalah daftar semua data masa kerja</p>
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
@@ -28,30 +28,30 @@
                         {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}
                         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="fa fa-plus icon-sm text-white"></i>
-                            Tambah Sertifikasi&nbsp;
+                            Tambah Masa Kerja&nbsp;
                         </button>
                         <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <form action="{{ route('sertifikasi.store') }}" method="post">
+                                    <form action="{{ route('masa-kerja.store') }}" method="post">
                                         @method('POST')
                                         @csrf
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Tambah Sertifikasi</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Tambah Masa Kerja</h5>
                                         </div>
                                         <div class="modal-body p-4">
                                             <div data-scroll="true" data-height="400">
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="mb-4">
-                                                            <label for="sertifikasi_title">Nama Sertifikasi <span class="text-danger">*</span></label>
-                                                            <input required id="sertifikasi_title" class="form-control" type="text" name="sertifikasi_title">
+                                                            <label for="masa_kerja">Masa Kerja <span class="text-danger">*</span></label>
+                                                            <input required id="masa_kerja" class="form-control" type="number" min="1" name="masa_kerja">
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="mb-4">
-                                                            <label for="sertifikasi_tunjangan">Jumlah Tunjangan <span class="text-danger">*</span></label>
-                                                            <input required id="sertifikasi_tunjangan" class="form-control" type="number" name="sertifikasi_tunjangan">
+                                                            <label for="masa_kerja_tunjangan">Jumlah Tunjangan <span class="text-danger">*</span></label>
+                                                            <input required id="masa_kerja_tunjangan" class="form-control" type="number" name="masa_kerja_tunjangan">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,9 +59,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-success font-weight-bolder">
-                                                <i class="fa fa-plus icon-sm"></i>
-                                                Tambah Data Sertifikasi</button>
+                                            <button type="submit" class="btn btn-success font-weight-bolder"><i class="fa fa-plus icon-sm"></i>Tambah Data Masa Kerja</button>
                                         </div>
                                     </form>
                                 </div>
@@ -79,8 +77,8 @@
                     <thead class="table-dark">
                         <tr>
                             <th width="">No</th>
-                            <th>Nama Sertifikasi</th>
-                            <th>Jumlah Tunjangan</th>
+                            <th>Masa Kerja</th>
+                            <th>Jumlah Tunjangann</th>
                             <th width="5%">Opsi</th>
                         </tr>
                     </thead>
@@ -88,15 +86,15 @@
                         @foreach ($data as $i)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td class='text-primary font-weight-bolder'>{{ $i->sertifikasi_title }}</td>
-                                <td>{{ rupiah($i->sertifikasi_tunjangan) }}</td>
+                                <td class='text-primary font-weight-bolder'>{{ $i->masa_kerja }} Tahun</td>
+                                <td>{{ rupiah($i->masa_kerja_tunjangan) }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bx bx-dots-horizontal-rounded"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" style="">
-                                            <li><a class="dropdown-item" href='{{ route('sertifikasi.edit', $i->id) }}'>
+                                            <li><a class="dropdown-item" href='{{ route('masa-kerja.edit', $i->id) }}'>
                                                 <span><i class="fas fa-edit icon-sm"></i></span>&nbsp;
                                                 Edit
                                             </a></li>
@@ -133,7 +131,7 @@
                 var idStaff = $(this).attr("id");
                 Swal.fire({
                     title: 'Konfirmasi Hapus Data',
-                    text: 'Apakah Anda yakin ingin menghapus sertifikasi ini? Data yang sudah dihapus tidak bisa dikembalikan.',
+                    text: 'Apakah Anda yakin ingin menghapus masa kerja ini? Data yang sudah dihapus tidak bisa dikembalikan.',
                     icon: 'question',
                     confirmButtonText: '<i class="fas fa-trash"></i>&nbsp; Hapus',
                     confirmButtonColor: '{{ btnDelete(); }}',
@@ -142,7 +140,7 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "{{ url('master/tunjangan/sertifikasi') }}" + '/' + idStaff;
+                        var url = "{{ url('master/tunjangan/masa-kerja') }}" + '/' + idStaff;
                         $.ajaxSetup({
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                         });
@@ -156,7 +154,7 @@
                             {
                                 if (result == "ok") {
                                     row_index.remove().draw();
-                                    Swal.fire('Berhasil', 'Berhasil menghapus sertifikasi', 'success')
+                                    Swal.fire('Berhasil', 'Berhasil menghapus masa kerja', 'success')
                                 } else {
                                     Swal.fire('Gagal',result,'error')
                                 }

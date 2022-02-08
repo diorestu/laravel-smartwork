@@ -42,11 +42,13 @@
                                         <div class="modal-body p-4">
                                             <div data-scroll="true" data-height="400">
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-6">
                                                         <div class="mb-4">
                                                             <label for="jabatan_title">Nama Jabatan <span class="text-danger">*</span></label>
                                                             <input required id="jabatan_title" class="form-control" type="text" name="jabatan_title">
                                                         </div>
+                                                    </div>
+                                                    <div class="col-6">
                                                         <div class="mb-4">
                                                             <label for="jabatan_tunjangan">Jumlah Tunjangan <span class="text-danger">*</span></label>
                                                             <input required id="jabatan_tunjangan" class="form-control" type="number" name="jabatan_tunjangan">

@@ -24,6 +24,8 @@ use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\SertifikasiController;
+use App\Http\Controllers\MasaKerjaController;
+use App\Http\Controllers\StatusKawinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,8 @@ use App\Http\Controllers\SertifikasiController;
             Route::resource('upah', UserSalaryController::class);
             Route::resource('tunjangan/jabatan', JabatanController::class);
             Route::resource('tunjangan/sertifikasi', SertifikasiController::class);
+            Route::resource('tunjangan/masa-kerja', MasaKerjaController::class);
+            Route::resource('tunjangan/status-kawin', StatusKawinController::class);
         });
 
         // Manajemen

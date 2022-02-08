@@ -33,8 +33,8 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-tunjangan">
                                     <a href="{{ route('jabatan.index') }}" class="dropdown-item">Jabatan</a>
                                     <a href="{{ route('sertifikasi.index') }}" class="dropdown-item">Sertifikasi</a>
-                                    <a href="#" class="dropdown-item">Masa Kerja</a>
-                                    <a href="#" class="dropdown-item">Status Kawin</a>
+                                    <a href="{{ route('masa-kerja.index') }}" class="dropdown-item">Masa Kerja</a>
+                                    <a href="{{ route('status-kawin.index') }}" class="dropdown-item">Status Kawin</a>
                                 </div>
                             </div>
                         </div>

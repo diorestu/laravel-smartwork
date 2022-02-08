@@ -10,4 +10,5 @@ class MasaKerja extends Model
     use HasFactory;
     protected $table = 'masa_kerjas';
     protected $guarded = ['id'];
+    protected $primaryKey = 'id';
 }
