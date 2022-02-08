@@ -8,10 +8,13 @@
     <!-- DataTables -->
     <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+    </style>
 @endpush
 
 @section('content')
-    <div class="row px-4">
+    <div class="row px-0">
         <div class="col-12">
             <div class="page-title-box pb-2 d-sm-flex align-items-start justify-content-between">
                 <div>
@@ -26,8 +29,8 @@
                     <div class="d-flex justify-content-end mb-3">
                         <a class="btn btn-soft-primary waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp;Impor/Ekspor Data</a>
                         {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}
-                        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <i class="fa fa-plus icon-sm text-white"></i>
+                        <button type="button" class="btn btn-warning waves-effect waves-light text-black" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="fa fa-plus icon-sm text-black"></i>
                             Tambah Pegawai&nbsp;
                         </button>
                         <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
@@ -40,11 +43,6 @@
                                             <h5 class="modal-title" id="exampleModalLabel">Tambah Pegawai</h5>
                                         </div>
                                         <div class="modal-body p-4">
-                                            @if ($errors->any())
-                                                @foreach ($errors->all() as $error)
-                                                    <div>{{ $error }}</div>
-                                                @endforeach
-                                            @endif
                                             <div data-scroll="true" data-height="400">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -84,11 +82,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="reset" class="btn btn-light-danger font-weight-bold"
-                                                data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-success font-weight-bolder">
-                                                <i class="fa fa-plus icon-sm"></i>
-                                                Tambah Data Pegawai</button>
+                                            <button type="submit" class="btn btn-success btn-block w-100 font-weight-bolder"><i class="fa fa-plus icon-sm"></i> Tambah Data Pegawai</button>
                                         </div>
                                     </form>
                                 </div>

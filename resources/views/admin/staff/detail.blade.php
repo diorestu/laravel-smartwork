@@ -18,7 +18,6 @@
                     <div class="profile-user"></div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="profile-content">
                     <div class="row align-items-end">

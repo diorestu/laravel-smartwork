@@ -43,9 +43,12 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
-                                            <div class="form-group mb-4">
+                                            <div class="mb-4 form-group">
                                                 <label for="masa_kerja_tunjangan">Jumlah Tunjangan <span class="text-danger">*</span></label>
-                                                <input required id="masa_kerja_tunjangan" class="form-control" type="number" name="masa_kerja_tunjangan" value="{{ $data->masa_kerja_tunjangan }}">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text" id="my-addon">Rp</span></div>
+                                                    <input required class="form-control" type="number" id="masa_kerja_tunjangan" name="masa_kerja_tunjangan" value="{{ $data->masa_kerja_tunjangan }}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

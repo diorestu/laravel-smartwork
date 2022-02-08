@@ -24,7 +24,6 @@
                             <a href="{{ route('cabang.index') }}" class="dropdown-item {{ request()->is('master/cabang*') ? 'active' : ''}}" data-key="t-lokasi">Lokasi Kerja</a>
                             <a href="{{ route('shift.index') }}" class="dropdown-item" data-key="t-jam">Jam Kerja</a>
                             <a href="{{ route('divisi.index') }}" class="dropdown-item" data-key="t-divisi">Divisi</a>
-                            <a href="{{ route('upah.index') }}" class="dropdown-item" data-key="t-upah">Nilai Upah</a>
                             <div class="dropdown">
                                 <a class="dropdown-item {{ request()->is('master/tunjangan*') ? 'active' : ''}} dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-tunjangan" role="button">
                                     <span data-key="t-email">Tunjangan</span>

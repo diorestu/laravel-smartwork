@@ -16,11 +16,9 @@ class CabangController extends Controller
      */
     public function index()
     {
-        $id = Auth::user()->id;
-        $data = Cabang::where('id_admin', $id)->get();
-        return view('admin.cabang.index', [
-            'data' => $data,
-        ]);
+        $id     = Auth::user()->id;
+        $data   = Cabang::where('id_admin', $id)->get();
+        return view('admin.cabang.index', ['data' => $data]);
     }
 
     /**
@@ -30,7 +28,7 @@ class CabangController extends Controller
      */
     public function create()
     {
-        //
+        // pop up on index
     }
 
     /**
@@ -41,22 +39,28 @@ class CabangController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        $id = Auth::user()->id;
-        $input['id_admin'] = $id;
-        $input['hitung_dasar'] = (1/173) * (int) $input['cabang_umk'];
-        $input['cabang_h1'] = 1.5 * $input['hitung_dasar'];
-        $input['cabang_h2'] = 2 * $input['hitung_dasar'];
-        $input['cabang_h9'] = 3 * $input['hitung_dasar'];
-        $input['cabang_h10'] = 4 * $input['hitung_dasar'];
-        // dd($input);
-        try {
-            $save = Cabang::create($input);
-            return redirect()->route('cabang.index')->with('success', 'Lokasi '.$save->cabang_nama.' telah berhasil ditambahkan!');
-        } catch (\Throwable $th) {
-            return redirect()->route('cabang.index')->with('error', $th);
+        $idAdmin                        = Auth::user()->id;
+        $data                           = $request->all();
+        $tambah_baru                    = new Cabang;
+        $tambah_baru->id_admin          = $idAdmin;
+        $tambah_baru->cabang_nama       = $data['cabang_nama'];
+        $tambah_baru->cabang_email      = $data['cabang_email'];
+        $tambah_baru->cabang_phone      = $data['cabang_phone'];
+        $tambah_baru->cabang_alamat     = $data['cabang_alamat'];
+        $tambah_baru->cabang_lat        = $data['cabang_lat'];
+        $tambah_baru->cabang_long       = $data['cabang_long'];
+        $tambah_baru->cabang_umk        = $data['cabang_umk'];
+        $tambah_baru->lembur_dasar      = (1/173) * (int) $data['cabang_umk'];
+        $tambah_baru->lembur_h1         = 1.5 * $tambah_baru->lembur_dasar;
+        $tambah_baru->lembur_h2         = 2 * $tambah_baru->lembur_dasar;
+        $tambah_baru->lembur_h9         = 3 * $tambah_baru->lembur_dasar;
+        $tambah_baru->lembur_h10        = 4 * $tambah_baru->lembur_dasar;
+        $berhasilTambah                 = $tambah_baru->save();
+        if ($berhasilTambah) {
+            return redirect()->route('cabang.index')->with('success', 'Lokasi kerja ' . $tambah_baru->cabang_nama . ' berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', "Gagal menambahkan lokasi kerja baru");
         }
-
     }
 
     /**
@@ -68,9 +72,7 @@ class CabangController extends Controller
     public function show($id)
     {
         $data = Cabang::find($id);
-        return view('admin.cabang.detail', [
-            'data' => $data,
-        ]);
+        return view('admin.cabang.detail', ['data' => $data]);
     }
 
     /**
@@ -81,7 +83,8 @@ class CabangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Cabang::find($id);
+        return view('admin.cabang.edit', ['data' => $data]);
     }
 
     /**
@@ -93,7 +96,32 @@ class CabangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id_admin                = Auth::user()->id;
+        $input                   = $request->all();
+        $data                    = Cabang::findOrFail($id);
+        $data->cabang_nama       = $input['cabang_nama'];
+        $data->cabang_email      = $input['cabang_email'];
+        $data->cabang_phone      = $input['cabang_phone'];
+        $data->cabang_alamat     = $input['cabang_alamat'];
+        $data->cabang_lat        = $input['cabang_lat'];
+        $data->cabang_long       = $input['cabang_long'];
+        $data->cabang_umk        = $input['cabang_umk'];
+        $data->lembur_dasar      = (1 / 173) * (int) $input['cabang_umk'];
+        $data->lembur_h1         = 1.5 * $data->lembur_dasar;
+        $data->lembur_h2         = 2 * $data->lembur_dasar;
+        $data->lembur_h9         = 3 * $data->lembur_dasar;
+        $data->lembur_h10        = 4 * $data->lembur_dasar;
+        $cekJudul                = Cabang::where('cabang_nama', '=', $input['cabang_nama'])->where('id_admin', '=', $id_admin)->where('id', '!=', $id)->first();
+        if ($cekJudul != null) {
+            return redirect()->route('cabang.edit', $id)->with('error', 'Lokasi kerja sudah tersedia');
+        } else {
+            $berhasilSimpan      = $data->save();
+            if ($berhasilSimpan) {
+                return redirect()->route('cabang.index')->with('success', 'Proses update data lokasi kerja berhasil');
+            } else {
+                return redirect()->route('cabang.edit', $id)->with('error', 'Gagal mengupdate data lokasi kerja');
+            }
+        }
     }
 
     /**
@@ -106,9 +134,7 @@ class CabangController extends Controller
     {
         try {
             Cabang::findOrFail($id)->delete();
-            return redirect()->route('cabang.index')->with('success', 'Lokasi telah terhapus!');
-        } catch (\Throwable $th) {
-            return redirect()->route('cabang.index')->with('error', $th);
-        }
+            return 'ok'; }
+        catch (\Throwable $th) { return $th; }
     }
 }
