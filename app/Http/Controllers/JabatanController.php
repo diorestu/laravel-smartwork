@@ -62,7 +62,6 @@ class JabatanController extends Controller
      */
     public function show($id)
     {
-        //
         return redirect()->back();
     }
 

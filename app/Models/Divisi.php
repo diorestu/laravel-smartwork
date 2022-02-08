@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Divisi extends Model
 {
     use HasFactory;
-    protected $guarded = ['div_id'];
+    protected $guarded      = ['div_id'];
+    protected $table        = 'divisis';
+    protected $primaryKey   = 'div_id';
 }
