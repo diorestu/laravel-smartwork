@@ -96,6 +96,14 @@ function tanggalIndo($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('dddd, LL');
 }
+function tanggalIndoWaktu($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('ll HH:mm');
+}
+function tanggalIndoWaktuLengkap($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('dddd, LL HH:mm');
+}
 function tglIndo2($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('L');
@@ -104,6 +112,11 @@ function TampilJamMenit($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('HH:mm');
 }
+function TampilTanggal($date)
+{
+    return Carbon::parse($date)->locale('id')->format('Y-m-d');
+}
+
 
 function masaKerja($tanggal)
 {

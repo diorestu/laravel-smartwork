@@ -11,8 +11,6 @@
                         </a>
                     </li>
 
-
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none {{ request()->is('master*') ? 'active' : ''}}" href="#" id="topnav-master"
                             role="button">
@@ -20,13 +18,13 @@
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-master">
-                            <a href="{{ route('pegawai.index') }}" class="dropdown-item {{ request()->is('master/pegawai*') ? 'active' : ''}}" data-key="t-pegawai">Pegawai</a>
-                            <a href="{{ route('cabang.index') }}" class="dropdown-item {{ request()->is('master/cabang*') ? 'active' : ''}}" data-key="t-lokasi">Lokasi Kerja</a>
-                            <a href="{{ route('shift.index') }}" class="dropdown-item" data-key="t-jam">Jam Kerja</a>
-                            <a href="{{ route('divisi.index') }}" class="dropdown-item" data-key="t-divisi">Divisi</a>
+                            <a href="{{ route('pegawai.index') }}" class="dropdown-item {{ request()->is('master/pegawai*') ? 'active' : ''}}" data-key="t-pegawai"><i class="icon-menu" data-feather="user"></i> Pegawai</a>
+                            <a href="{{ route('cabang.index') }}" class="dropdown-item {{ request()->is('master/cabang*') ? 'active' : ''}}" data-key="t-lokasi"><i class="icon-menu" data-feather="map-pin"></i> Lokasi Kerja</a>
+                            <a href="{{ route('shift.create') }}" class="dropdown-item" data-key="t-jam"><i class="icon-menu" data-feather="clock"></i> Jam Kerja</a>
+                            <a href="{{ route('divisi.index') }}" class="dropdown-item" {{ request()->is('master/divisi*') ? 'active' : ''}} data-key="t-divisi"><i class="icon-menu" data-feather="briefcase"></i> Divisi</a>
                             <div class="dropdown">
                                 <a class="dropdown-item {{ request()->is('master/tunjangan*') ? 'active' : ''}} dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-tunjangan" role="button">
-                                    <span data-key="t-email">Tunjangan</span>
+                                    <span data-key="t-email"><i class="icon-menu" data-feather="award"></i> Tunjangan</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-tunjangan">

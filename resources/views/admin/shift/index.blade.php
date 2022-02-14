@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    smartwork
+    Jadwal Kerja
 @endsection
 
 @push('addon-style')

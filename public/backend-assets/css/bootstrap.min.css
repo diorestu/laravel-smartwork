@@ -16078,5 +16078,10 @@ body[data-layout-mode=dark] .progress {
     line-height: 1.5em !important;
     font-weight: 300 !important;
 }
+.icon-menu {
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 10px;
+}
 
 /*# sourceMappingURL=bootstrap.min.css.map */

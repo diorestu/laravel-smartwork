@@ -32,8 +32,8 @@ class ShiftController extends Controller
 
     public function index()
     {
-        $id = Auth::user()->id;
-        $data = Shift::where('id_admin', $id)->get();
+        $id     = Auth::user()->id;
+        $data   = Shift::where('id_admin', $id)->get();
         return view('admin.shift.index', ['data' => $data]);
     }
 
@@ -44,8 +44,8 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        $id = Auth::user()->id;
-        $data = Shift::where('id_admin', $id)->get();
+        $id     = Auth::user()->id;
+        $data   = Shift::where('id_admin', $id)->get();
         return view('admin.shift.create', ['data' => $data]);
     }
 
@@ -84,7 +84,11 @@ class ShiftController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data           = Shift::findOrFail($id);
+        return view(
+            'admin.shift.edit',
+            ['data' => $data]
+        );
     }
 
     /**
@@ -96,7 +100,24 @@ class ShiftController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id_admin                   = Auth::user()->id;
+        $input                      = $request->all();
+        $data                       = Shift::findOrFail($id);
+        $data->nama_shift           = $input['nama_shift'];
+        $data->ket_shift            = $input['ket_shift'];
+        $data->hadir_shift          = $input['hadir_shift'];
+        $data->pulang_shift         = $input['pulang_shift'];
+        $cekJudul                   = Shift::where('nama_shift', '=', $input['nama_shift'])->where('id_admin', '=', $id_admin)->where('id', '!=', $id)->first();
+        if ($cekJudul != null) {
+            return redirect()->route('shift.create')->with('error', 'Kode jadwal kerja sudah tersedia');
+        } else {
+            $berhasilSimpan             = $data->save();
+            if ($berhasilSimpan) {
+                return redirect()->route('shift.create')->with('success', 'Proses update data jadwal kerja berhasil');
+            } else {
+                return redirect()->route('shift.create')->with('error', 'Gagal mengupdate data jadwal kerja');
+            }
+        }
     }
 
     /**
@@ -107,6 +128,11 @@ class ShiftController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Shift::findOrFail($id)->delete();
+            return "ok";
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 }
