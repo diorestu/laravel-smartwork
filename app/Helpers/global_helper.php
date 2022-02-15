@@ -116,8 +116,32 @@ function TampilTanggal($date)
 {
     return Carbon::parse($date)->locale('id')->format('Y-m-d');
 }
-
-
+function converttanggal($date)
+{
+    $temp = explode("-", $date);
+    $tahun = $temp[0];
+    $bl = $temp[1];
+    $tanggal = $temp[2];
+    $waktu = $bl . "/" . $tanggal . "/" . $tahun;
+    return $waktu;
+}
+function inverttanggal($date)
+{
+    if ($date == "") {
+        $tgl_ukur_bener = "0000-00-00";
+    } else {
+        $temp = explode("/", $date);
+        $bl = $temp[0];
+        $tanggal = $temp[1];
+        $tahun = $temp[2];
+        $tgl_ukur_bener = $tahun . "-" . $bl . "-" . $tanggal;
+    }
+    return str_replace(' ', '', $tgl_ukur_bener);
+}
+function ubahKeTanggal($datetime) {
+    $tanggal = date("Y-m-d", strtotime($datetime));
+    return $tanggal;
+}
 function masaKerja($tanggal)
 {
     $awal  = new DateTime($tanggal);

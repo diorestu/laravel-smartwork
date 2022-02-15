@@ -73,6 +73,10 @@
       white-space: nowrap;
       text-align: center;
       min-width: 32px; }
+  body[data-layout-mode=dark] .daterangepicker .calendar-table {
+        background-color: #333 !important;
+        border: 1px solid #333 !important;
+    }
   .daterangepicker .calendar-table {
     border: 1px solid #fff;
     padding: 4px;
@@ -96,7 +100,12 @@
     .daterangepicker td.week, .daterangepicker th.week {
       font-size: 80%;
       color: #ccc; }
-  .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+
+  body[data-layout-mode=dark] .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+    background-color: #262626;
+    border-color: transparent;
+    color: #5c5c5c; }
+      .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
     background-color: #fff;
     border-color: transparent;
     color: #999; }
@@ -112,7 +121,7 @@
   .daterangepicker td.start-date.end-date {
     border-radius: 4px; }
   .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #357ebd;
+    background-color: #eb3838;
     border-color: transparent;
     color: #fff; }
   .daterangepicker th.month {

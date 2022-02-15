@@ -50,14 +50,10 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                    <a href="{{ route('absensi.create') }}" class="dropdown-item"
-                                        data-key="t-inbox">Input Absensi</a>
-                                    <a href="{{ route('absensi.index') }}" class="dropdown-item"
-                                        data-key="t-inbox">Absensi Hari Ini</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Absensi Per Karyawan</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Absensi Per Cabang</a>
+                                    <a href="{{ route('absensi.create') }}" class="dropdown-item" data-key="t-inbox">Input Absensi</a>
+                                    <a href="{{ route('absensi.index') }}" class="dropdown-item" data-key="t-inbox">Absensi Hari Ini</a>
+                                    <a href="{{ route('absensi.data_karyawan') }}" class="dropdown-item" data-key="t-read-email">Absensi Per Pegawai</a>
+                                    <a href="{{ route('absensi.data_cabang') }}" class="dropdown-item" data-key="t-read-email">Absensi Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">

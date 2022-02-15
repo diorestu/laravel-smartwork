@@ -73,6 +73,14 @@ use App\Http\Controllers\StatusKawinController;
         // Manajemen
         Route::prefix('kelola')->group(function () {
             Route::resource('absensi', ViewAbsenController::class);
+            Route::get('absensi-per-karyawan', [ViewAbsenController::class, 'data_karyawan'])->name('absensi.data_karyawan');
+            Route::post('data-absensi-per-karyawan', [ViewAbsenController::class, 'showDataKaryawan'])->name('absensi.show_data_karyawan');
+            Route::get('absensi-per-cabang', [ViewAbsenController::class, 'data_cabang'])->name('absensi.data_cabang');
+            Route::post('data-absensi-per-cabang', [ViewAbsenController::class, 'showDataCabang'])->name('absensi.show_data_cabang');
+
+
+
+
             Route::get('cuti/{id}/terima', [ViewCutiController::class, 'accept'])->name('cuti.terima');
             Route::get('cuti/{id}/tolak', [ViewCutiController::class, 'decline'])->name('cuti.tolak');
             Route::get('cuti/riwayat', [ViewCutiController::class, 'riwayat'])->name('cuti.riwayat');

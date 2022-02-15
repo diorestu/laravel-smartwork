@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 p-0">
                 <form action="{{ route('absensi.store') }}" method="post" enctype="multipart/form-data">
-                    @method('PATCH')
+                    @method('POST')
                     @csrf
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel">
@@ -36,46 +36,45 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-12">
                                             <div class="mb-4">
-                                                <label for="tgl_hadir">Tanggal Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="tgl_hadir" class="form-control datepicker" type="text" name="tgl_hadir" value="{{ TampilTanggal($data->jam_hadir) }}">
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="jam_hadir">Waktu Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="jam_hadir" class="form-control" type="time" name="jam_hadir" value="{{ TampilJamMenit($data->jam_hadir) }}">
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="ket_hadir">Keterangan Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="ket_hadir" class="form-control" type="text" name="ket_hadir" value="{{ $data->ket_hadir }}">
+                                                <label for="staff">Pegawai <span class="text-danger">*</span></label>
+                                                <select required id="staff" class="form-select" name="id_staff">
+                                                    @php
+                                                        $q_staff = App\Models\User::where('id_admin', auth()->user()->id)->where('id','!=',auth()->user()->id)->get();
+                                                    @endphp
+                                                    @foreach ($q_staff as $r_staff)
+                                                    <option value='{{ $r_staff->id }}'>{{ $r_staff->nama }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-4">
                                                 <label for="tgl_hadir">Tanggal Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="tgl_hadir" class="form-control datepicker" type="text" name="tgl_hadir" value="{{ TampilTanggal($data->jam_hadir) }}">
+                                                <input required id="tgl_hadir" class="form-control datepicker" type="text" name="tgl_hadir" value="">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="jam_hadir">Waktu Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="jam_hadir" class="form-control" type="time" name="jam_hadir" value="{{ TampilJamMenit($data->jam_hadir) }}">
+                                                <input required id="jam_hadir" class="form-control" type="time" name="jam_hadir" value="">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="ket_hadir">Keterangan Absen Datang <span class="text-danger">*</span></label>
-                                                <input required id="ket_hadir" class="form-control" type="text" name="ket_hadir" value="{{ $data->ket_hadir }}">
+                                                <input required id="ket_hadir" class="form-control" type="text" name="ket_hadir" value="">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-4">
                                                 <label for="tgl_pulang">Tanggal Absen Pulang</label>
-                                                <input id="tgl_pulang" class="form-control datepicker" type="text" name="tgl_pulang" value="@if($data->jam_pulang != null){{ TampilTanggal($data->jam_pulang) }}@endif">
+                                                <input id="tgl_pulang" class="form-control datepicker" type="text" name="tgl_pulang" value="">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="jam_pulang">Waktu Absen Pulang</label>
-                                                <input id="jam_pulang" class="form-control" type="time" name="jam_pulang" value="@if($data->jam_pulang != null){{ TampilJamMenit($data->jam_pulang) }}@endif">
+                                                <input id="jam_pulang" class="form-control" type="time" name="jam_pulang" value="">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="ket_pulang">Keterangan Absen Pulang</label>
-                                                <input id="ket_pulang" class="form-control" type="text" name="ket_pulang" value="{{ $data->ket_pulang }}">
+                                                <input id="ket_pulang" class="form-control" type="text" name="ket_pulang" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -94,6 +93,10 @@
 @endsection
 
 @push('addon-script')
+    <script>
+        const elementStaff = document.querySelector('#staff');
+        const choices = new Choices(elementStaff);
+    </script>
     @if (Session::has('success'))
         <script type="text/javascript">
             Swal.fire('Berhasil','{{ \Session::get('success') }}','success')

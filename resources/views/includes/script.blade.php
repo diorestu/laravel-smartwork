@@ -18,5 +18,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $('.datepicker').datepicker({ autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd', });
+    $('.daterange').daterangepicker();
     $(function () { $('[data-toggle="tooltip"]').tooltip() });
 </script>
