@@ -5,6 +5,14 @@ use Carbon\Carbon;
 function btnDelete() {
     return "#e34b4b";
 }
+function btnTerima()
+{
+    return "#38a877";
+}
+function btnTolak()
+{
+    return "#e34b4b";
+}
 
 function nomorUrut($int)
 {
@@ -107,6 +115,10 @@ function tanggalIndoWaktuLengkap($date)
 function tglIndo2($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('L');
+}
+function tanggalIndo3($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('ll');
 }
 function TampilJamMenit($date)
 {
