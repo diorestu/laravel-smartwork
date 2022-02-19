@@ -161,4 +161,57 @@ class ViewCutiController extends Controller
             return $th;
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data_karyawan()
+    {
+        return view('admin.cuti.show_karyawan');
+    }
+
+    public function showDataKaryawan(Request $request)
+    {
+        $input      = $request->all();
+        $staff_id   = $input['id_staff'];
+        // $date       = $input['waktu'];
+        // $temp       = explode("-", $date);
+        // $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        // $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $data   = Cuti::where('id_user', $staff_id)->get();
+        return view(
+            'admin.cuti.data.show_data_karyawan',
+            ['data' => $data]
+        );
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data_cabang()
+    {
+        return view('admin.cuti.show_cabang');
+    }
+
+    public function showDataCabang(Request $request)
+    {
+        $input      = $request->all();
+        $cabang_id  = $input['id_cabang'];
+        // $date       = $input['waktu'];
+        // $temp       = explode("-", $date);
+        // $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        // $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $data   = Cuti::leftJoin('users',         'users.id',             '=', 'cutis.id_user')
+                        ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                        ->where('users.id_cabang', $cabang_id)->get();
+
+        return view(
+            'admin.cuti.data.show_data_cabang',
+            ['data' => $data]
+        );
+    }
 }

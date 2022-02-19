@@ -78,12 +78,14 @@ use App\Http\Controllers\StatusKawinController;
             Route::get('absensi-per-cabang', [ViewAbsenController::class, 'data_cabang'])->name('absensi.data_cabang');
             Route::post('data-absensi-per-cabang', [ViewAbsenController::class, 'showDataCabang'])->name('absensi.show_data_cabang');
 
-
-
-
             Route::get('cuti/{id}/terima', [ViewCutiController::class, 'accept'])->name('cuti.terima');
             Route::get('cuti/{id}/tolak', [ViewCutiController::class, 'decline'])->name('cuti.tolak');
             Route::get('cuti/riwayat', [ViewCutiController::class, 'riwayat'])->name('cuti.riwayat');
+            Route::get('cuti-per-karyawan', [ViewCutiController::class, 'data_karyawan'])->name('cuti.data_karyawan');
+            Route::post('data-cuti-per-karyawan', [ViewCutiController::class, 'showDataKaryawan'])->name('cuti.show_data_karyawan');
+            Route::get('cuti-per-cabang', [ViewCutiController::class, 'data_cabang'])->name('cuti.data_cabang');
+            Route::post('data-cuti-per-cabang', [ViewCutiController::class, 'showDataCabang'])->name('cuti.show_data_cabang');
+
             Route::resource('cuti', ViewCutiController::class);
             Route::resource('jadwal', JadwalController::class);
             Route::resource('payroll', PayrollController::class);

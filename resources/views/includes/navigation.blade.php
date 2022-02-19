@@ -50,10 +50,10 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                    <a href="{{ route('absensi.create') }}" class="dropdown-item" data-key="t-inbox">Input Absensi</a>
-                                    <a href="{{ route('absensi.index') }}" class="dropdown-item" data-key="t-inbox">Absensi Hari Ini</a>
-                                    <a href="{{ route('absensi.data_karyawan') }}" class="dropdown-item" data-key="t-read-email">Absensi Per Pegawai</a>
-                                    <a href="{{ route('absensi.data_cabang') }}" class="dropdown-item" data-key="t-read-email">Absensi Per Lokasi Kerja</a>
+                                    <a href="{{ route('absensi.create') }}" class="dropdown-item">Input Absensi</a>
+                                    <a href="{{ route('absensi.index') }}" class="dropdown-item">Absensi Hari Ini</a>
+                                    <a href="{{ route('absensi.data_karyawan') }}" class="dropdown-item">Absensi Per Pegawai</a>
+                                    <a href="{{ route('absensi.data_cabang') }}" class="dropdown-item">Absensi Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">
@@ -63,14 +63,10 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                    <a href="{{ route('cuti.create') }}" class="dropdown-item"
-                                        data-key="t-inbox">Input Cuti</a>
-                                    <a href="{{ route('cuti.index') }}" class="dropdown-item"
-                                        data-key="t-inbox">Pengajuan Cuti Bulan Ini</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Rekap Cuti Per Karyawan</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Rekap Cuti Per Cabang</a>
+                                    <a href="{{ route('cuti.create') }}" class="dropdown-item">Input Cuti</a>
+                                    <a href="{{ route('cuti.index') }}" class="dropdown-item">Pengajuan Cuti Bulan Ini</a>
+                                    <a href="{{ route('cuti.data_karyawan') }}" class="dropdown-item">Rekap Cuti Per Karyawan</a>
+                                    <a href="{{ route('cuti.data_cabang') }}" class="dropdown-item">Rekap Cuti Per Cabang</a>
                                 </div>
                             </div>
                             <div class="dropdown">
