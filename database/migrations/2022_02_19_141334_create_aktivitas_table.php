@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCutiJenisTable extends Migration
+class CreateAktivitasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCutiJenisTable extends Migration
      */
     public function up()
     {
-        Schema::create('cuti_jenis', function (Blueprint $table) {
+        Schema::create('aktivitas', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_admin');
-            $table->string('cuti_nama_jenis');
-            $table->enum('cuti_potong', ['1', '0'])->default('1');
+            $table->integer('id_user');
+            $table->string('judul_aktivitas');
+            $table->text('aktivitas');
+            $table->string('jam_aktivitas');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCutiJenisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cuti_jenis');
+        Schema::dropIfExists('aktivitas');
     }
 }

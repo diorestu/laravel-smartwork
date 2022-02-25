@@ -78,7 +78,7 @@
                                             <i class="bx bx-dots-horizontal-rounded"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" style="">
-                                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit" data-bs-remote="false" href='{{ url('shift', $item->id) }}/edit'>
+                                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit" data-bs-remote="false" href='{{ url('master/shift', $item->id) }}/edit'>
                                                 <span><i class="fas fa-pen icon-sm"></i></span>&nbsp;
                                                 Ubah
                                             </a></li>
@@ -135,7 +135,7 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "{{ url('shift') }}" + '/' + idStaff;
+                        var url = "{{ url('master/shift') }}" + '/' + idStaff;
                         $.ajaxSetup({
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                         });

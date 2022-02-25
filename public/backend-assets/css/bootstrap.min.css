@@ -15055,7 +15055,7 @@ button {
 }
 
 .btn-soft-warning {
-    color: #ffcc5a;
+    color: #ffcc5a !important;
     background-color: rgba(255, 204, 90, .1);
     border-color: transparent
 }
@@ -15063,7 +15063,7 @@ button {
 .btn-soft-warning:active,
 .btn-soft-warning:focus,
 .btn-soft-warning:hover {
-    color: #fff;
+    color: #fff !important;
     background-color: #ffcc5a
 }
 

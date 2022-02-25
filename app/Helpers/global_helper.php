@@ -99,7 +99,20 @@ function terbilang($nilai)
     }
     return $hasil;
 }
-
+function removeNol($angka) {
+    $angkaTanpaNol = str_replace("0", "", $angka);
+    return $angkaTanpaNol;
+}
+function tambahNol($angka)
+{
+    if (strlen($angka) == 1) {
+        $angkaDenganNol = "0".$angka;
+    }
+    else {
+        $angkaDenganNol = $angka;
+    }
+    return $angkaDenganNol;
+}
 function tanggalIndo($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('dddd, LL');
@@ -127,6 +140,33 @@ function TampilJamMenit($date)
 function TampilTanggal($date)
 {
     return Carbon::parse($date)->locale('id')->format('Y-m-d');
+}
+function BulanTahun($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('MMMM Y');
+}
+function TanggalOnly($date)
+{
+    $tanggal = Carbon::parse($date)->locale('id')->format('d');
+    $tgl     = ltrim($tanggal, '0');
+    return $tgl;
+}
+function JamOnly($date)
+{
+    if ($date != null) {
+        $jam    = Carbon::parse($date)->locale('id')->isoFormat('HH');
+        $jam2   = str_replace("0", "", $jam);
+    }
+    else {
+        $jam2 = 0;
+    }
+    return $jam2;
+}
+function Bulan($date)
+{
+    $dateObj   = DateTime::createFromFormat('!m', $date);
+    $monthName = $dateObj->format('F'); // March
+    return $monthName;
 }
 function converttanggal($date)
 {

@@ -1,69 +1,201 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 
 @section('title')
-    smartwork
+    Jadwal Kerja Pegawai
 @endsection
 
 @push('addon-style')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css" />
+    <style>
+        .main-content {
+            overflow: visible !important;
+        }
+
+        .topnav {
+            margin-top: 0px !important;
+        }
+
+        .row_sticky {
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .div_sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 120px;
+            z-index: 90;
+        }
+
+        .choices__list--dropdown .choices__item {
+            font-size: 11px !important;
+        }
+
+        .f-8 {
+            font-size: 10px !important;
+        }
+
+        .table>:not(caption)>*>* {
+            padding: 0.35rem 0.35rem !important;
+        }
+        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+    </style>
 @endpush
 
+
 @section('content')
-    <div class="d-flex flex-column flex-column-fluid" id="kt_content">
-        <div class="pt-8 px-10">
-            <div class="card gutter-b card-stretch p-4">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+    <div class="row px-0">
+        <div class="col-12">
+            <div class="page-title-box pb-2 d-sm-flex align-items-start justify-content-between">
+                <div>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('cuti.index') }}">Jadwal Kerja</a></li>
+                        <li class="breadcrumb-item active">Lihat Jadwal Kerja Pegawai</li>
+                    </ol>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Jadwal Kerja Pegawai {{ BulanTahun($tahun."-".$bulan) }}</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Lihat data jadwal kerja pegawai</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row_sticky">
+        <div class="col-12 div_sticky">
+            <div class="card card-custom rounded-sm shadow-md">
+                <div class="card-body px-4 py-4">
+                    <form id="formAction" action="{{ route("jadwal.cari") }}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option  @if($r_cabang->id == $cb) selected @endif value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option @if($cb == "all") selected @endif value='all'>Semua Lokasi Kerja</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="tahun">Tahun <span class="text-danger">*</span></label>
+                                    <select required id="tahun" class="form-select" name="tahun">
+                                        @for ($t = 2021; $t <= 2030; $t++)
+                                        <option @if($t == $tahun) selected @endif value='{{ $t }}'>{{ $t }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="bulan">Bulan <span class="text-danger">*</span></label>
+                                    <select required id="bulan" class="form-select" name="bulan">
+                                        @for ($b = 1; $b <= 12; $b++)
+                                        <option @if($b == $bulan) selected @endif value='{{ $b }}'>{{ $b.": ".Bulan($b) }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 d-flex align-items-end">
+                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                    <i class="fas fa-info-circle icon-md"></i> Lihat Data
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" id="content">
+            @php
+                if ($cb != "all") {
+                    $dt_cb = App\Models\Cabang::where('id', $cb)->get(); }
+                else {
+                    $dt_cb = App\Models\Cabang::where('cabang_status', 'Active')->where('id_admin', Auth::user()->id)->get(); }
+            @endphp
+            @php $jum_hari = Carbon\Carbon::createFromFormat('m-Y', $bulan.'-'.$tahun)->daysInMonth; @endphp
+            @foreach ($dt_cb as $c)
+            <div class="card shadow rounded-sm">
+                <div class="card-header">
+                    <h5 class="card-title text-white mb-0">Lokasi Kerja {{ $c->cabang_nama }}</h5>
+                </div>
+                <div class="card-body px-4 py-4 table-responsive">
+                    <table class="table table-bordered table-edits table-editable">
+                        <thead class="table-dark">
                             <tr>
-                                <td>Nama Pegawai</td>
-                                @php
-                                    $t = date('t');
-                                    $s = (int) $t;
-                                    for ($i = 1; $i <= $s; $i++) {
-                                        echo '<td align="center">' . $i . '</td>';
-                                    }
-                                @endphp
+                                <th class="align-middle" style="width:350px !important;">Nama Pegawai</th>
+                                @for ($i = 1; $i <= $jum_hari; $i++)
+                                    <th width="2%" class="align-middle f-8 text-center">{{ $i }}</th>
+                                @endfor
+                                <th class="align-middle f-8 text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $item }}</td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                </tr>
+                            @php $nomor = 1; @endphp
+                            @foreach (App\Models\User::where('id_cabang', $c->id)->get() as $i)
+                            <tr data-id="{{ $i->id }}">
+                                <td class="align-middle f-8" style="width:350px !important;">{{ $i->nama }}</td>
+                                @foreach ($data as $item)
+                                    @if ($item->nama == $i->nama)
+                                        {{-- @for($d = 1; $d <= $jum_hari; $d++) --}}
+                                            @if ($nomor == TanggalOnly($item->tanggal_shift))
+                                                <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $item->ket_shift." ".TampilJamMenit($item->hadir_shift)." - ".TampilJamMenit($item->pulang_shift) }}"> {{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }}</a></td>
+                                                @php $nomor++; @endphp
+                                            @else
+                                                <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;">{{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }} -</td>
+                                                @php $nomor++; @endphp
+                                                @if ($nomor == TanggalOnly($item->tanggal_shift))
+                                                    <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;">{{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }}</td>
+                                                @endif
+                                                @php $nomor++; @endphp
+
+
+                                            @endif
+                                        {{-- @endfor --}}
+                                    @else
+                                    @php $nomor = 1; @endphp
+                                    @endif
                                 @endforeach
-                            @foreach ($data as $key => $item)
-
-                                <td>{{ $item->nama }}</td>
-
-                                {{-- <td>{{ $item->nama_shift }}</td>
-
-                                @if (($key + 1) % 31 == 0)
-                                    </tr>
-                                @endif --}}
-
+                                <td>
+                                    <a href="{{ route("jadwal.atur", ['usr' => $i->id, 'bl' => $bulan, 'th' => $tahun]) }}" class="btn btn-sm btn-soft-warning waves-effect waves-light" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
                             @endforeach
-
-                            {{-- @if (($key + 1) % 31 != 0)
-                                </tr>
-                            @endif --}}
                         </tbody>
                     </table>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 @endsection
 
 @push('addon-script')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        })
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+        const elementTahun = document.querySelector('#bulan');
+        const choices2 = new Choices(elementTahun);
+        const elementBulan = document.querySelector('#tahun');
+        const choices3 = new Choices(elementBulan);
     </script>
+
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+        </script>
+    @endif
 @endpush
-
-

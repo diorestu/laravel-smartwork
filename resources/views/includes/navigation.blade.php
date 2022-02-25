@@ -44,8 +44,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('absensi.index') }}" id="topnav-email"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('absensi.index') }}" id="topnav-email" role="button">
                                     <span data-key="t-email">Absensi</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -57,33 +56,27 @@
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('cuti.index') }}" id="topnav-email"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('cuti.index') }}" id="topnav-email" role="button">
                                     <span data-key="t-email">Cuti</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('cuti.create') }}" class="dropdown-item">Input Cuti</a>
                                     <a href="{{ route('cuti.index') }}" class="dropdown-item">Pengajuan Cuti Bulan Ini</a>
-                                    <a href="{{ route('cuti.data_karyawan') }}" class="dropdown-item">Rekap Cuti Per Karyawan</a>
-                                    <a href="{{ route('cuti.data_cabang') }}" class="dropdown-item">Rekap Cuti Per Cabang</a>
+                                    <a href="{{ route('cuti.data_karyawan') }}" class="dropdown-item">Cuti Per Pegawai</a>
+                                    <a href="{{ route('cuti.data_cabang') }}" class="dropdown-item">Cuti Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button">
                                     <span data-key="t-email">Lembur</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                    <a href="apps-email-inbox.html" class="dropdown-item"
-                                        data-key="t-inbox">Input Lembur</a>
-                                    <a href="apps-email-inbox.html" class="dropdown-item"
-                                        data-key="t-inbox">Lembur Hari Ini</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Lembur Per Karyawan</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Lembur Per Cabang</a>
+                                    <a href="{{ route('lembur.create') }}" class="dropdown-item">Input Lembur</a>
+                                    <a href="{{ route('lembur.index') }}" class="dropdown-item">Permohonan Lembur Bulan Ini</a>
+                                    <a href="{{ route('lembur.data_karyawan') }}" class="dropdown-item">Lembur Per Pegawai</a>
+                                    <a href="{{ route('lembur.data_cabang') }}" class="dropdown-item">Lembur Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">
@@ -93,29 +86,21 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-tasks">
-                                    <a href="tasks-list.html" class="dropdown-item"
-                                        data-key="t-task-list">Input Jadwal Kerja</a>
-                                    <a href="tasks-kanban.html" class="dropdown-item"
-                                        data-key="t-kanban-board">Lihat Jadwal Kerja</a>
-                                    <a href="tasks-create.html" class="dropdown-item"
-                                        data-key="t-create-task">Lihat Jam Kerja</a>
+                                    <a href="{{ route("jadwal.create") }}" class="dropdown-item">Atur Jadwal Kerja</a>
+                                    <a href="{{ route("jadwal.impor") }}" class="dropdown-item">Impor Jadwal</a>
+                                    <a href="{{ route("jadwal.index") }}" class="dropdown-item">Lihat Jadwal Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                    id="topnav-contact" role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('aktivitas.index') }}" id="topnav-contact" role="button">
                                     <span data-key="t-contacts">Aktivitas</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
-                                    <a href="apps-email-inbox.html" class="dropdown-item"
-                                        data-key="t-inbox">Input Aktivitas</a>
-                                    <a href="apps-email-inbox.html" class="dropdown-item"
-                                        data-key="t-inbox">Aktivitas Hari Ini</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Aktivitas Per Karyawan</a>
-                                    <a href="apps-email-read.html" class="dropdown-item"
-                                        data-key="t-read-email">Aktivitas Per Cabang</a>
+                                    <a href="{{ route('aktivitas.create') }}" class="dropdown-item">Input Aktivitas</a>
+                                    <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Aktivitas Hari Ini</a>
+                                    <a href="{{ route('aktivitas.data_karyawan') }}" class="dropdown-item">Aktivitas Per Pegawai</a>
+                                    <a href="{{ route('aktivitas.data_cabang') }}" class="dropdown-item">Aktivitas Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">
@@ -125,10 +110,8 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
-                                    <a href="{{ route('payroll.create') }}" class="dropdown-item"
-                                        data-key="t-inbox">Input Payroll</a>
-                                    <a href="{{ route('payroll.index') }}" class="dropdown-item"
-                                        data-key="t-inbox">Riwayat Payroll</a>
+                                    <a href="{{ route('payroll.create') }}" class="dropdown-item">Buat Payroll Baru</a>
+                                    <a href="{{ route('payroll.index') }}" class="dropdown-item">Riwayat Payroll</a>
                                 </div>
                             </div>
                         </div>

@@ -13,28 +13,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ShiftController extends Controller
 {
-    public function getShiftUser(){
-        return view('admin.shift.setShiftUser');
-    }
-
-    public function getShiftCabang(){
-        return view('admin.shift.setShiftCabang');
-    }
-
-    public function postShiftUser(){
-        Excel::import(new UsersShiftImport, request()->file('excel'), null, \Maatwebsite\Excel\Excel::XLSX);
-        return redirect()->route('jadwal.index');
-    }
-
-    public function postShiftCabang(Request $r){
-
-    }
+    // public function postShiftUser(){
+    //     Excel::import(new UsersShiftImport, request()->file('excel'), null, \Maatwebsite\Excel\Excel::XLSX);
+    //     return redirect()->route('jadwal.index');
+    // }
 
     public function index()
     {
-        $id     = Auth::user()->id;
-        $data   = Shift::where('id_admin', $id)->get();
-        return view('admin.shift.index', ['data' => $data]);
+        //
     }
 
     /**

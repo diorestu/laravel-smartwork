@@ -1,137 +1,96 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 
 @section('title')
-    smartwork
+    Lihat Jadwal Kerja Pegawai
 @endsection
 
 @push('addon-style')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css"/>
+    <style>
+        .main-content { overflow: visible !important; }
+        .topnav { margin-top: 0px !important; }
+        .row_sticky { justify-content: space-around; align-items: flex-start; }
+        .div_sticky { position: -webkit-sticky; position: sticky; top: 120px; z-index: 90; }
+        .choices__list--dropdown .choices__item { font-size: 11px !important; }
+    </style>
 @endpush
 
 @section('content')
-    <div class="d-flex flex-column flex-column-fluid" id="kt_content">
-        <div class="pt-8 px-10">
-            <div class="card card-custom mb-12">
-                <div class="card-body rounded p-0 d-flex">
-                    <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-10 p-md-20">
-                        <h1 class="font-weight-bolder text-dark">Lihat Jadwal Kerja</h1>
-                        <div class="font-size-h4 mb-8">Cari berdasarkan Periode Bulan Kerja</div>
-                        <!--begin::Form-->
-                        <form class="d-flex py-2 bg-white rounded" action="{{ route('cari.jadwal') }}" method="post">
-                            @method('POST')
-                            @csrf
-                            <select id="my-select" class="form-control form-control-solid mr-5" name="bulan">
-                                <option selected disabled>Pilih Periode</option>
-                                <option value='01'>Januari</option>
-                                <option value='02'>Februari</option>
-                                <option value='03'>Maret</option>
-                                <option value='04'>April</option>
-                                <option value='05'>Mei</option>
-                                <option value='06'>Juni</option>
-                                <option value='07'>Juli</option>
-                                <option value='08'>Agustus</option>
-                                <option value='09'>September</option>
-                                <option value='10'>Oktober</option>
-                                <option value='11'>November</option>
-                                <option value='12'>Desember</option>
-                            </select>
-                            <button class="btn btn-icon btn-danger px-10" type="submit">
-                                <i class="fa fa-search icon-md"></i> &nbsp;&nbsp;Cari
-                            </button>
-                        </form>
-                        <!--end::Form-->
-                    </div>
-                    <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
-                        style="background-image: url(/metronic/theme/html/demo1/dist/assets/media/svg/illustrations/progress.svg);">
-                    </div>
+    <div class="row px-0">
+        <div class="col-12">
+            <div class="page-title-box pb-2 d-sm-flex align-items-start justify-content-between">
+                <div>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Jadwal Kerja</a></li>
+                        <li class="breadcrumb-item active">Lihat Jadwal Kerja Pegawai</li>
+                    </ol>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Jadwal Kerja Pegawai</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Lihat data jadwal kerja pegawai</p>
                 </div>
             </div>
-
-            <!-- Modal-->
-            <div class="modal fade" id="crudModal" data-backdrop="static" tabindex="-1" role="dialog"
-                aria-labelledby="staticBackdrop" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <form action="{{ route('pegawai.store') }}" method="post">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Pegawai</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i aria-hidden="true" class="ki ki-close"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div data-scroll="true" data-height="400">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="my-input">Nama Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="nama">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Nomor Induk Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="nip">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Lokasi Kerja</label>
-                                                <select id="my-select" class="form-control" name="id_cabang">
-                                                    @foreach (App\Models\Cabang::where('id_admin', auth()->user()->id)->get() as $i)
-                                                        <option value='{{ $i->id }}'>{{ $i->cabang_nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Username Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="username">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Kata Sandi Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="password">
-                                            </div>
-                                            {{-- <div class="form-group">
-                                                <label for="my-input">Username Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="password">
-                                            </div> --}}
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="my-input">E-mail Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Alamat Pegawai</label>
-                                                <textarea id="my-textarea" class="form-control" name="alamat"
-                                                    rows="5"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">No. HP Pegawai</label>
-                                                <input id="my-input" class="form-control" type="text" name="phone">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Tanggungan Pegawai</label>
-                                                <select id="my-select" class="form-control" name="tanggungan">
-                                                    <option value='TK/0'>TK/0</option>
-                                                    <option value='K/0'>K/0</option>
-                                                    <option value='K/1'>K/1</option>
-                                                    <option value='K/2'>K/2</option>
-                                                    <option value='K/3'>K/3</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="my-input">Tanggal Mulai Kerja</label>
-                                                <input id="my-input" class="form-control" type="date" name="nama">
-                                            </div>
-                                        </div>
-                                    </div>
+        </div>
+    </div>
+    <div class="row row_sticky">
+        <div class="col-12 div_sticky">
+            <div class="card card-custom rounded-sm shadow-md">
+                <div class="card-body px-4 py-4">
+                    <form id="formAction" action="{{ route("jadwal.cari") }}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option value='all'>Semua Lokasi Kerja</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-light-danger font-weight-bold"
-                                    data-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-danger font-weight-bolder">
-                                    <i class="fa fa-plus icon-sm"></i>
-                                    Simpan Data Pegawai</button>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="tahun">Tahun <span class="text-danger">*</span></label>
+                                    <select required id="tahun" class="form-select" name="tahun">
+                                        @for ($t=2021;$t<=2030;$t++)
+                                        <option value='{{ $t }}'>{{ $t }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
                             </div>
-                        </form>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="bulan">Bulan <span class="text-danger">*</span></label>
+                                    <select required id="bulan" class="form-select" name="bulan">
+                                        @for ($b=1;$b<=12;$b++)
+                                        <option value='{{ $b }}'>{{ $b.": ".Bulan($b) }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 d-flex align-items-end">
+                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                    <i class="fas fa-info-circle icon-md"></i> Lihat Data
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" id="content">
+            <div class="card shadow rounded-sm">
+                <div class="card-body px-4 py-4">
+                    <div class="text-center">
+                        <h1><i class="icon-sm fas fa-filter"></i></h1>
+                        <h3>Silahkan Pilih Filter Diatas</h3>
+                        <p>Untuk melihat data, silahkan pilih lokasi kerja, tahun dan bulan lalu klik lihat data.</p>
                     </div>
                 </div>
             </div>
@@ -140,10 +99,27 @@
 @endsection
 
 @push('addon-script')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        })
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+        const elementTahun = document.querySelector('#bulan');
+        const choices2 = new Choices(elementTahun);
+        const elementBulan = document.querySelector('#tahun');
+        const choices3 = new Choices(elementBulan);
     </script>
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+        </script>
+    @endif
 @endpush
+
+
+
+
+

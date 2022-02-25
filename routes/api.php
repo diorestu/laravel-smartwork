@@ -24,7 +24,7 @@ use App\Http\Controllers\Admin\UserController;
 // Auth API Routes
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::post('logout', [AuthController::class,'logoutApi']);
+// Route::post('logout', [AuthController::class,'logoutApi']);
 // Route::post('logout', [UserController::class,'logoutApi']);
 
 Route::middleware(['auth:api', 'is_admin'])->group(function () {
