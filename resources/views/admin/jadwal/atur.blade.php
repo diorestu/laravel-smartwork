@@ -22,7 +22,7 @@
                         <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Jadwal Kerja</a></li>
                         <li class="breadcrumb-item active">Atur Jadwal Kerja Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Atur Jadwal Kerja Pegawai - {{ $bulan." ".$tahun }}</h4>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Atur Jadwal Kerja Pegawai</h4>
                     <p class="text-muted mt-1 text-opacity-50">Atur data jadwal kerja pegawai</p>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div id="external-events" class="mt-2">
                         <h4>{{ $nama }}</h4>
-                        <p class="text-muted">Drag and drop your event or click in the calendar</p>
+                        <p class="text-muted">Drag lalu taruh shift yang tersedia di kolom kalendar untuk menambahkan shift.</p>
                         <br>
                         @php
                             $q_shift = App\Models\Shift::where('id_admin', auth()->user()->id)->get();
@@ -77,32 +77,16 @@
                                     <label class="form-label">Event Name</label>
                                     <input type="hidden" name="id_user_shift" id="id_user_shift" required value="" />
                                     <input class="form-control" placeholder="Insert Event Name" type="text" name="title" id="event-title" required value="" />
-                                    <div class="invalid-feedback">Please provide a valid event name</div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Category</label>
-                                    <select class="form-control form-select" name="category" id="event-category">
-                                        <option  selected> --Select-- </option>
-                                        <option value="bg-danger">Danger</option>
-                                        <option value="bg-success">Success</option>
-                                        <option value="bg-primary">Primary</option>
-                                        <option value="bg-info">Info</option>
-                                        <option value="bg-dark">Dark</option>
-                                        <option value="bg-warning">Warning</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a valid event category</div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-6">
-                                <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
+                                <button type="button" class="btn btn-danger" id="btn-delete-event">Hapus Shift</button>
                             </div>
                             <div class="col-6 text-end">
-                                <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
+                                <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-success" id="btn-save-event">Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -182,7 +166,7 @@
                     a.modal("show"), n[0].reset(), l = e.event, v("#id_user_shift").val(l.extendedProps.id_user_shift), v("#event-title").val(l.title), v("#event-category").val(l.classNames[0]), i = null, t.text("Edit Event"), i = null
                 },
                 dateClick: function(e) {
-                    o(e)
+                    // o(e)
                 },
                 events: e,
                 drop: function(e) {

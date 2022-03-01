@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserShift;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\JadwalTemplateExport;
+use App\Imports\UsersShiftImport;
 
 class JadwalController extends Controller
 {
@@ -16,6 +19,16 @@ class JadwalController extends Controller
         $bulan      = $input['bulan'];
         return redirect()->route('jadwal.lihat', ['cb' => $cabang, 'bl' => $bulan, 'th' => $tahun]);
         // dd($d);
+    }
+
+    public function download_template(Request $r)
+    {
+        $input      = $r->all();
+        $cabang     = $input['id_cabang'];
+        $tahun      = $input['tahun'];
+        $bulan      = $input['bulan'];
+
+        return new JadwalTemplateExport($tahun, $bulan, $cabang);
     }
 
     public function lihat_jadwal($cabang, $bulan, $tahun) {
@@ -60,7 +73,13 @@ class JadwalController extends Controller
     }
 
     public function impor() {
-        //
+        return view('admin.jadwal.impor');
+    }
+
+    public function upload_add_jadwal()
+    {
+        Excel::import(new UsersShiftImport, request()->file('jadwal'), null, \Maatwebsite\Excel\Excel::XLSX);
+        return 'ok';
     }
 
     public function simpan_jadwal($user, $shift, $tanggal)

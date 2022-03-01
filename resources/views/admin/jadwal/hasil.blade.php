@@ -137,31 +137,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $nomor = 1; @endphp
+                            @php $nomor = 1;@endphp
                             @foreach (App\Models\User::where('id_cabang', $c->id)->get() as $i)
                             <tr data-id="{{ $i->id }}">
                                 <td class="align-middle f-8" style="width:350px !important;">{{ $i->nama }}</td>
-                                @foreach ($data as $item)
-                                    @if ($item->nama == $i->nama)
-                                        {{-- @for($d = 1; $d <= $jum_hari; $d++) --}}
-                                            @if ($nomor == TanggalOnly($item->tanggal_shift))
-                                                <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $item->ket_shift." ".TampilJamMenit($item->hadir_shift)." - ".TampilJamMenit($item->pulang_shift) }}"> {{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }}</a></td>
-                                                @php $nomor++; @endphp
-                                            @else
-                                                <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;">{{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }} -</td>
-                                                @php $nomor++; @endphp
-                                                @if ($nomor == TanggalOnly($item->tanggal_shift))
-                                                    <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;">{{ $nomor. ' '. TanggalOnly($item->tanggal_shift) }}</td>
-                                                @endif
-                                                @php $nomor++; @endphp
-
-
-                                            @endif
-                                        {{-- @endfor --}}
+                                @for ($j = 1; $j <= $jum_hari; $j++)
+                                    @php
+                                        $id_user    = $i->id;
+                                        $ada        = false;
+                                        $data_shift = NULL;
+                                        foreach ($data as $item) {
+                                            $id_user_shift = $item->id_user;
+                                            $tanggal_shift = TanggalOnly($item->tanggal_shift);
+                                            if ($id_user_shift == $id_user && $j == $tanggal_shift) {
+                                                $ada        = true;
+                                                $data_shift = $item;
+                                            }
+                                        }
+                                    @endphp
+                                    @if ($ada)
+                                        <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $data_shift->ket_shift." ".TampilJamMenit($data_shift->hadir_shift)." - ".TampilJamMenit($data_shift->pulang_shift) }}"> {{ $data_shift->shift->nama_shift }}</a></td>
                                     @else
-                                    @php $nomor = 1; @endphp
+                                        <td data-field="shift" class="align-middle f-8 text-center" style="width:2.5% !important;">-</td>
                                     @endif
-                                @endforeach
+                                @endfor
                                 <td>
                                     <a href="{{ route("jadwal.atur", ['usr' => $i->id, 'bl' => $bulan, 'th' => $tahun]) }}" class="btn btn-sm btn-soft-warning waves-effect waves-light" title="Edit">
                                         <i class="fas fa-edit"></i>

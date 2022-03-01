@@ -115,6 +115,8 @@ use App\Http\Controllers\StatusKawinController;
             Route::resource('lembur',                   LemburController::class);
             // jadwal kerja
             Route::get('jadwal/impor-jadwal',           [JadwalController::class, 'impor'])->name('jadwal.impor');
+            Route::post('jadwal/download-template',     [JadwalController::class, 'download_template'])->name('jadwal.downloadtemplate');
+            Route::post('jadwal/upload-tambah-jadwal',  [JadwalController::class, 'upload_add_jadwal'])->name('jadwal.uploadAdd');
             Route::post('jadwal/get-jadwal',            [JadwalController::class, 'get_jadwal'])->name('jadwal.cari');
             Route::get('jadwal/lihat/{cb}/{bl}/{th}',   [JadwalController::class, 'lihat_jadwal'])->name('jadwal.lihat');
             Route::get('jadwal/atur/{usr}/{bl}/{th}',   [JadwalController::class, 'atur_jadwal'])->name('jadwal.atur');
