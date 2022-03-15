@@ -118,7 +118,14 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="col-12">
+            <div class="card shadow rounded-sm">
+                <div class="card-body p-2">
+                    <h4 class="card-title my-3 ms-3">Lampiran Foto Absensi</h4>
+                </div>
+            </div>
+        </div>
 @endsection
 
 @push('addon-script')
@@ -127,7 +134,7 @@
         var myMap1 = {
             lat: {{ $data->lat_hadir }},
             lng: {{ $data->long_hadir }}
-        };
+        };as
         var myMap2 = {
             lat: @if($data->lat_pulang == "") {{ "0" }} @else {{ $data->lat_pulang }} @endif,
             lng: @if($data->lat_pulang == "") {{ "0" }} @else {{ $data->long_pulang }} @endif

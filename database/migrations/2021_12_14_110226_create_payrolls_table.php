@@ -16,17 +16,28 @@ class CreatePayrollsTable extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->bigIncrements('id_pay');
             $table->integer('id_user');
-            $table->string('pay_code', 50);
-            $table->string('pay_bulan', 2);
-            $table->string('pay_tahun', 4);
             $table->double('pay_pokok');
-            $table->double('bpjs_tk')->nullable();
-            $table->double('bpjs_kes')->nullable();
+            $table->double('bpjs_tk_u')->nullable();
+            $table->double('bpjs_tk_p')->nullable();
+            $table->double('bpjs_kes_u')->nullable();
+            $table->double('bpjs_kes_p')->nullable();
+            $table->double('tj_jabatan');
+            $table->double('tj_sertifikasi');
+            $table->double('tj_transport');
+            $table->double('tj_kosmetik');
+            $table->double('tj_makan');
+            $table->double('tj_masaKerja');
+            $table->double('tj_statusKawin');
+            $table->double('tj_bonus');
+            $table->double('pt_absen');
+            $table->double('pt_kasbon');
+            $table->double('pt_lainnya');
             $table->double('total_pot');
             $table->double('total_tj');
             $table->double('bruto');
             $table->double('netto');
             $table->double('pph21')->nullable();
+            $table->enum('status', ['PENDING', 'BERHASIL']);
             $table->timestamps();
         });
     }

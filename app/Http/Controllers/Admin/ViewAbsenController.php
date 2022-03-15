@@ -4,12 +4,63 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
+use App\Models\AbsensiImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ViewAbsenController extends Controller
 {
+    // ULOAD IMAGES DROPZONE
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadImages(Request $request, $id)
+    {
+        $absen      = Absensi::find($id);
+        $nama       = $absen->user->nama;
+        $absen_jam  = $absen->jam_hadir;
+        $image      = $request->file('file');
+        $fileInfo   = $image->getClientOriginalName();
+        // $filename   = pathinfo($fileInfo, PATHINFO_FILENAME);
+        $extension  = pathinfo($fileInfo, PATHINFO_EXTENSION);
+        $file_name  = $nama . '-' . time() . '.' . $extension;
+        $image->move(storage_path('app/public/absen'), $file_name);
+
+        $datang                     = "datang";
+        $imageUpload                = new AbsensiImage;
+        $imageUpload->absensi_id    = $id;
+        $imageUpload->absen_tipe    = $datang;
+        $imageUpload->images        = $file_name;
+        $imageUpload->save();
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage($id)
+    {
+        $berita     = BeritaImage::where('berita_img_id', $id)->first();
+        $filename   = $berita->image;
+        $success    = $berita->delete();
+        if ($success) {
+            $msg = File::delete($filename);
+            if ($msg) {
+                return "ok";
+            } else {
+                return "ok";
+            }
+        } else {
+            return "Gagal menghapus foto berita.";
+        }
+    }
     /**
      * Display a listing of the resource.
      *

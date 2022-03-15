@@ -184,7 +184,7 @@ return array(
          *
          * @var int
          */
-        "dpi" => 96,
+        "dpi" => 150,
 
         /**
          * Enable inline PHP
@@ -198,7 +198,7 @@ return array(
          *
          * @var bool
          */
-        "enable_php" => true,
+        "enable_php" => false,
 
         /**
          * Enable inline Javascript
@@ -237,7 +237,7 @@ return array(
         /**
          * Use the more-than-experimental HTML5 Lib parser
          */
-        "enable_html5_parser" => false,
+        "enable_html5_parser" => true,
     ),
 
 

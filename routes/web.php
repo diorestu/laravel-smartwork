@@ -122,7 +122,11 @@ use App\Http\Controllers\StatusKawinController;
             Route::get('jadwal/atur/{usr}/{bl}/{th}',   [JadwalController::class, 'atur_jadwal'])->name('jadwal.atur');
             Route::post('jadwal/simpan/{usr}/{shift}/{tgl}', [JadwalController::class, 'simpan_jadwal'])->name('jadwal.simpan');
             Route::resource('jadwal',                   JadwalController::class);
-            //
+            //payroll
+            Route::post('payroll/cari',                 [PayrollController::class, 'get_payroll'])->name('payroll.cari');
+            Route::get('payroll/riwayat/{bl}/{th}',     [PayrollController::class, 'lihat_payroll'])->name('payroll.riwayat');
+            Route::get('payroll/slip-gaji/{id}',        [PayrollController::class, 'slipgaji_payroll'])->name('payroll.slipgaji');
+            Route::get('payroll/download-slip-gaji/{id}', [PayrollController::class, 'cetak_slipgaji_payroll'])->name('payroll.cetak_slipgaji');
             Route::resource('payroll',                  PayrollController::class);
         });
 
@@ -131,6 +135,8 @@ use App\Http\Controllers\StatusKawinController;
         // PENNGATURAN
         Route::resource('config', UserConfigController::class);
         Route::get('slip-gaji/{id}', [PrintPDFController::class, 'cetak_slip_gaji']);
+        Route::post('absensi/uploadimages/{id}',    [ViewAbsenController::class, 'uploadImages'])->name("absensi.uploadimages");
+        Route::post('absensi/deleteimages/{id}',    [ViewAbsenController::class, 'deleteImage'])->name("absensi.deleteimages");
     });
 
     // USER CONTROLLER

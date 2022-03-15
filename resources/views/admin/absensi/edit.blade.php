@@ -5,6 +5,7 @@
 @endsection
 
 @push('addon-style')
+    <link href="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
     </style>
@@ -73,6 +74,18 @@
                         </div>
                     </div>
                 </form>
+
+                <div id="my_div">123</div>
+
+                <form method="post" action="{{ route('absensi.uploadimages', $data->id) }}" enctype="multipart/form-data" class="dropzone">
+                    @method('post')
+                    @csrf
+                    <div class="fallback"><input name="file" type="file" multiple="multiple"></div>
+                    <div class="dz-message needsclick">
+                        <div class="mb-3"><i class="display-4 text-muted bx bx-cloud-upload"></i></div>
+                        <h5>Drop files here or click to upload.</h5>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -80,6 +93,7 @@
 @endsection
 
 @push('addon-script')
+    <script src="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.js') }}"></script>
     @if (Session::has('success'))
         <script type="text/javascript">
             Swal.fire('Berhasil','{{ \Session::get('success') }}','success')

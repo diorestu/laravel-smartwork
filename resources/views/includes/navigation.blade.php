@@ -45,7 +45,7 @@
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
                             <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('absensi.index') }}" id="topnav-email" role="button">
-                                    <span data-key="t-email">Absensi</span>
+                                    <i class="icon-menu" data-feather="user-check"></i> <span data-key="t-email">Absensi</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('cuti.index') }}" id="topnav-email" role="button">
-                                    <span data-key="t-email">Cuti</span>
+                                    <i class="icon-menu" data-feather="briefcase"></i> <span data-key="t-email">Cuti</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button">
-                                    <span data-key="t-email">Lembur</span>
+                                    <i class="icon-menu" data-feather="clock"></i> <span data-key="t-email">Lembur</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
@@ -82,7 +82,7 @@
                             <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" id="topnav-tasks"
                                     role="button">
-                                    <span data-key="t-tasks">Jadwal Kerja</span>
+                                    <i class="icon-menu" data-feather="calendar"></i> <span data-key="t-tasks">Jadwal Kerja</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-tasks">
@@ -93,7 +93,7 @@
                             </div>
                             <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('aktivitas.index') }}" id="topnav-contact" role="button">
-                                    <span data-key="t-contacts">Aktivitas</span>
+                                    <i class="icon-menu" data-feather="clipboard"></i> <span data-key="t-contacts">Aktivitas</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
@@ -104,9 +104,8 @@
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                    id="topnav-contact" role="button">
-                                    <span data-key="t-contacts">Payroll</span>
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-contact" role="button">
+                                    <i class="icon-menu" data-feather="credit-card"></i> <span data-key="t-contacts">Payroll</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
