@@ -6,11 +6,62 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\User\AktivitasController;
 use App\Models\Aktivitas;
+use App\Models\AktivitasImage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use DateTime;
 
 class ViewAktivitasController extends Controller
 {
+    // ULOAD IMAGES DROPZONE
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadImages(Request $request, $id)
+    {
+        $aktivitas  = Aktivitas::find($id);
+        $nama       = $aktivitas->user->nama;
+        $image      = $request->file('file');
+        $fileInfo   = $image->getClientOriginalName();
+        // $filename   = pathinfo($fileInfo, PATHINFO_FILENAME);
+        $extension  = pathinfo($fileInfo, PATHINFO_EXTENSION);
+        $file_name  = $nama . '-' . time() . '.' . $extension;
+        $image->move(storage_path('app/public/aktivitas'), $file_name);
+
+        $imageUpload                = new AktivitasImage;
+        $imageUpload->aktivitas_id  = $id;
+        $imageUpload->images        = $file_name;
+        $imageUpload->save();
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage($id)
+    {
+        $aktivitas      = AktivitasImage::where('id', $id)->first();
+        $idaktivitas    = $aktivitas->aktivitas_id;
+        $filename       = $aktivitas->images;
+        $success        = $aktivitas->delete();
+        if ($success) {
+            $path = storage_path("app/public/aktivitas/".$filename);
+            $msg = File::delete($path);
+            if ($msg) {
+                return redirect()->route('aktivitas.show', $idaktivitas)->with('success', 'Berhasil menghapus foto aktivitas');
+            } else {
+                return redirect()->route('aktivitas.show', $idaktivitas)->with('success', 'Berhasil menghapus foto aktivitas');
+            }
+        } else {
+            return redirect()->route('aktivitas.show', $idaktivitas)->with('error', 'Gagal menghapus foto aktivitas');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +69,7 @@ class ViewAktivitasController extends Controller
      */
     public function index()
     {
-        $date   = date("Y-m-d");
+        $date   = date("2022-02-21");
         $data   = Aktivitas::whereDate('created_at', '=', $date)->get();
         return view("admin.aktivitas.index", ['data' => $data]);
     }
@@ -63,7 +114,13 @@ class ViewAktivitasController extends Controller
      */
     public function show($id)
     {
-        // sudah ada di index
+        $data       = Aktivitas::where('id', '=', $id)->first();
+        $data_img   = AktivitasImage::where('aktivitas_id', '=', $id)->get();
+        if ($data != null) {
+            return view('admin.aktivitas.detail', ['data' => $data, 'data_image' => $data_img]);
+        } else {
+            return redirect()->route('aktivitas.index')->with('error', 'Tidak mendapatkan id aktivitas');
+        }
     }
 
     /**
@@ -95,7 +152,7 @@ class ViewAktivitasController extends Controller
         $data->jam_aktivitas       = $input['jam_aktivitas'];
         $berhasilSimpan            = $data->save();
         if ($berhasilSimpan) {
-            return redirect()->route('aktivitas.edit', $data->id)->with('success', 'Proses update aktivitas pegawai berhasil');
+            return redirect()->route('aktivitas.show', $data->id)->with('success', 'Proses update aktivitas pegawai berhasil');
         } else {
             return redirect()->route('aktivitas.edit', $data->id)->with('error', 'Gagal mengupdate data aktivitas');
         }

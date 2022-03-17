@@ -96,6 +96,9 @@
                                             <li><a class="dropdown-item" href='{{ route('aktivitas.edit', $i->id) }}'>
                                                     <span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Edit
                                             </a></li>
+                                            <li><a class="dropdown-item" href='{{ route('aktivitas.show', $i->id) }}'>
+                                                    <span><i class="fas fa-info icon-sm"></i></span>&nbsp; Detail
+                                            </a></li>
                                             <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
                                         </ul>
                                     </div>

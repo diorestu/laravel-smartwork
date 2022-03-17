@@ -5,8 +5,9 @@
 @endsection
 
 @push('addon-style')
+    <link href="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
-        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header-custom { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
     </style>
 @endpush
@@ -32,7 +33,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header card-header-custom">
                                     <h5 class="card-title text-white mb-0">Ubah Aktivitas Baru</h5>
                                 </div>
                                 <div class="card-body">
@@ -77,12 +78,36 @@
                     </div>
                 </form>
             </div>
+
+            <div class="col-xl-12 col-lg-12 p-0">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="overview" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Upload Foto Aktivitas</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{{ route('aktivitas.uploadimages', ['id' => $data->id]) }}" enctype="multipart/form-data" class="dropzone">
+                                    @method('post')
+                                    @csrf
+                                    <div class="fallback"><input name="file" type="file" multiple="multiple"></div>
+                                    <div class="dz-message needsclick">
+                                        <div class="mb-3"><i class="display-4 text-muted bx bx-cloud-upload"></i></div>
+                                        <h5>Drop files here or click to upload.</h5>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 
 @push('addon-script')
+    <script src="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.js') }}"></script>
     <script>
         const elementStaff      = document.querySelector('#staff');
         const choicesStaff      = new Choices(elementStaff);

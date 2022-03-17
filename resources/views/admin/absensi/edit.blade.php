@@ -7,7 +7,7 @@
 @push('addon-style')
     <link href="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
-        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header-custom { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
     </style>
 @endpush
 
@@ -32,7 +32,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header card-header-custom">
                                     <h5 class="card-title text-white mb-0">Ubah Absensi Pegawai</h5>
                                 </div>
                                 <div class="card-body">
@@ -74,19 +74,54 @@
                         </div>
                     </div>
                 </form>
-
-                <div id="my_div">123</div>
-
-                <form method="post" action="{{ route('absensi.uploadimages', $data->id) }}" enctype="multipart/form-data" class="dropzone">
-                    @method('post')
-                    @csrf
-                    <div class="fallback"><input name="file" type="file" multiple="multiple"></div>
-                    <div class="dz-message needsclick">
-                        <div class="mb-3"><i class="display-4 text-muted bx bx-cloud-upload"></i></div>
-                        <h5>Drop files here or click to upload.</h5>
-                    </div>
-                </form>
             </div>
+
+            <div class="col-xl-6 col-lg-6">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="overview" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Upload Foto Absen Datang</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{{ route('absensi.uploadimages', ['tipe' => "datang", 'id' => $data->id]) }}" enctype="multipart/form-data" class="dropzone">
+                                    @method('post')
+                                    @csrf
+                                    <div class="fallback"><input name="file" type="file" multiple="multiple"></div>
+                                    <div class="dz-message needsclick">
+                                        <div class="mb-3"><i class="display-4 text-muted bx bx-cloud-upload"></i></div>
+                                        <h5>Drop files here or click to upload.</h5>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="overview" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Upload Foto Absen Pulang</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{{ route('absensi.uploadimages', ['tipe' => "pulang", 'id' => $data->id]) }}" enctype="multipart/form-data" class="dropzone">
+                                    @method('post')
+                                    @csrf
+                                    <div class="fallback"><input name="file" type="file" multiple="multiple"></div>
+                                    <div class="dz-message needsclick">
+                                        <div class="mb-3"><i class="display-4 text-muted bx bx-cloud-upload"></i></div>
+                                        <h5>Drop files here or click to upload.</h5>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -88,6 +88,8 @@ use App\Http\Controllers\StatusKawinController;
             Route::post('data-absensi-per-karyawan',    [ViewAbsenController::class, 'showDataKaryawan'])->name('absensi.show_data_karyawan');
             Route::get('absensi-per-cabang',            [ViewAbsenController::class, 'data_cabang'])->name('absensi.data_cabang');
             Route::post('data-absensi-per-cabang',      [ViewAbsenController::class, 'showDataCabang'])->name('absensi.show_data_cabang');
+            Route::post('absensi/uploadimages/{tipe}/{id}', [ViewAbsenController::class, 'uploadImages'])->name("absensi.uploadimages");
+            Route::post('absensi/deleteimages/{id}',    [ViewAbsenController::class, 'deleteImage'])->name("absensi.deleteimages");
             Route::resource('absensi',                  ViewAbsenController::class);
             // cuti
             Route::get('cuti/riwayat',                  [ViewCutiController::class, 'riwayat'])->name('cuti.riwayat');
@@ -98,7 +100,9 @@ use App\Http\Controllers\StatusKawinController;
             Route::get('cuti-per-cabang',               [ViewCutiController::class, 'data_cabang'])->name('cuti.data_cabang');
             Route::post('data-cuti-per-cabang',         [ViewCutiController::class, 'showDataCabang'])->name('cuti.show_data_cabang');
             Route::resource('cuti',                     ViewCutiController::class);
-            // aktivitas
+        // aktivitas
+            Route::post('aktivitas/uploadimages/{id}',  [ViewAktivitasController::class, 'uploadImages'])->name("aktivitas.uploadimages");
+            Route::post('aktivitas/deleteimages/{id}',  [ViewAktivitasController::class, 'deleteImage'])->name("aktivitas.deleteimages");
             Route::get('aktivitas-per-karyawan',        [ViewAktivitasController::class, 'data_karyawan'])->name('aktivitas.data_karyawan');
             Route::post('data-aktivitas-per-karyawan',  [ViewAktivitasController::class, 'showDataKaryawan'])->name('aktivitas.show_data_karyawan');
             Route::get('aktivitas-per-cabang',          [ViewAktivitasController::class, 'data_cabang'])->name('aktivitas.data_cabang');
@@ -135,8 +139,6 @@ use App\Http\Controllers\StatusKawinController;
         // PENNGATURAN
         Route::resource('config', UserConfigController::class);
         Route::get('slip-gaji/{id}', [PrintPDFController::class, 'cetak_slip_gaji']);
-        Route::post('absensi/uploadimages/{id}',    [ViewAbsenController::class, 'uploadImages'])->name("absensi.uploadimages");
-        Route::post('absensi/deleteimages/{id}',    [ViewAbsenController::class, 'deleteImage'])->name("absensi.deleteimages");
     });
 
     // USER CONTROLLER

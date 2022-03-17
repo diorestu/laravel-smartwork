@@ -8,6 +8,7 @@ use App\Models\AbsensiImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ViewAbsenController extends Controller
 {
@@ -19,7 +20,7 @@ class ViewAbsenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function uploadImages(Request $request, $id)
+    public function uploadImages(Request $request, $tipe, $id)
     {
         $absen      = Absensi::find($id);
         $nama       = $absen->user->nama;
@@ -31,10 +32,10 @@ class ViewAbsenController extends Controller
         $file_name  = $nama . '-' . time() . '.' . $extension;
         $image->move(storage_path('app/public/absen'), $file_name);
 
-        $datang                     = "datang";
+        $tipe                       = $tipe;
         $imageUpload                = new AbsensiImage;
         $imageUpload->absensi_id    = $id;
-        $imageUpload->absen_tipe    = $datang;
+        $imageUpload->absen_tipe    = $tipe;
         $imageUpload->images        = $file_name;
         $imageUpload->save();
     }
@@ -47,18 +48,20 @@ class ViewAbsenController extends Controller
      */
     public function deleteImage($id)
     {
-        $berita     = BeritaImage::where('berita_img_id', $id)->first();
-        $filename   = $berita->image;
-        $success    = $berita->delete();
+        $absen     = AbsensiImage::where('id', $id)->first();
+        $idabsen   = $absen->absensi_id;
+        $filename  = $absen->images;
+        $success   = $absen->delete();
         if ($success) {
-            $msg = File::delete($filename);
+            $path = storage_path("app/public/absen/" . $filename);
+            $msg = File::delete($path);
             if ($msg) {
-                return "ok";
+                return redirect()->route('absensi.show', $idabsen)->with('success', 'Berhasil menghapus foto absensi');
             } else {
-                return "ok";
+                return redirect()->route('absensi.show', $idabsen)->with('success', 'Berhasil menghapus foto absensi');
             }
         } else {
-            return "Gagal menghapus foto berita.";
+            return redirect()->route('absensi.show', $idabsen)->with('error', 'Gagal menghapus foto absensi');
         }
     }
     /**
@@ -175,9 +178,11 @@ class ViewAbsenController extends Controller
                                     ->leftJoin('shifts',        'shifts.id',            '=', 'user_shifts.id_user_shift')
                                     ->where('absensis.id',                          '=', $id)
                                     ->orWhere('user_shifts.id_user_shift',          '=', NULL)->first();
-        // dd($data);
+
+        $data_img = AbsensiImage::where('absensi_id', '=', $id)->get();
+        // dd($data_img);
         if ($data != null) {
-            return view('admin.absensi.detail', ['data' => $data]);
+            return view('admin.absensi.detail', ['data' => $data, 'data_image' => $data_img]);
         }
         else {
             return redirect()->route('absensi.index')->with('error', 'Tidak mendapatkan id absensi');

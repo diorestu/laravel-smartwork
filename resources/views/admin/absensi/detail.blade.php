@@ -5,8 +5,12 @@
 @endsection
 
 @push('addon-style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/css/lightgallery.min.css">
     <style>
         .map { height: 200px; display: block; }
+        .gallery_wp img { border-radius: 5px; border: 5px solid #e0e0e0; }
+        .btn-hapus-gambar { width:30px; height: 30px; border-radius: 80px; position: absolute; text-align: center; right: -10px; top:-10px; line-height: 3px }
+        .btn-hapus-gambar i { margin-left: -4px; }
     </style>
 @endpush
 
@@ -123,14 +127,59 @@
             <div class="card shadow rounded-sm">
                 <div class="card-body p-2">
                     <h4 class="card-title my-3 ms-3">Lampiran Foto Absensi</h4>
+                    <div class="d-flex" id="animated-thumbnails-gallery">
+                        @foreach($data_image as $img)
+                        <div class="col-lg-3 mx-2" style="position: relative;">
+                            <a class="gallery_wp" data-src="{{ asset('storage/absen/'. $img->images) }}" data-sub-html="<p>Foto absen {{ $img->absen_tipe }}<p>" href="{{ asset('storage/absen/'. $img->images) }}">
+                                <img class="img-responsive w-100" src="{{ asset('storage/absen/'. $img->images) }}">
+                            </a>
+                            <form action="{{ route("absensi.deleteimages", $img->id) }}" method="post">
+                                @method('POST')
+                                @csrf
+                                <button type="submit" class="bg-danger btn btn-hapus-gambar"><i class="fa fa-trash text-white"></i></button>
+                            </form>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
 @endsection
 
 @push('addon-script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/lightgallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.3.0/plugins/rotate/lg-rotate.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn3JGAbQ9x5_umeWpD9wd3vAxaGK6kv5U&callback=initMap"></script>
     <script>
+        $(document).ready(function() {
+            lightGallery(document.getElementById('animated-thumbnails-gallery'), {
+                selector: '.gallery_wp',
+                thumbnail: true,
+                rotate: true,
+                rotateLeft: true,
+                rotateRight: true,
+            });
+            $('.btn-hapus-gambar').on('click',function(e){
+                e.preventDefault();
+                var form = $(this).parents('form');
+                Swal.fire({
+                    title: 'Konfirmasi Hapus Data',
+                    text: 'Apakah Anda yakin ingin menghapus foto ini? Foto yang sudah dihapus tidak bisa dikembalikan.',
+                    icon: 'question',
+                    confirmButtonText: '<i class="fas fa-trash"></i>&nbsp; Hapus',
+                    confirmButtonColor: '{{ btnDelete(); }}',
+                    showConfirmButton: 'true',
+                    showCancelButton: 'true',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
         var myMap1 = {
             lat: {{ $data->lat_hadir }},
             lng: {{ $data->long_hadir }}
