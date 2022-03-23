@@ -51,6 +51,7 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('absensi.create') }}" class="dropdown-item">Input Absensi</a>
                                     <a href="{{ route('absensi.index') }}" class="dropdown-item">Absensi Hari Ini</a>
+                                    <a href="{{ route('absensi.riwayat') }}" class="dropdown-item">Riwayat Absensi</a>
                                     <a href="{{ route('absensi.data_karyawan') }}" class="dropdown-item">Absensi Per Pegawai</a>
                                     <a href="{{ route('absensi.data_cabang') }}" class="dropdown-item">Absensi Per Lokasi Kerja</a>
                                 </div>
@@ -62,7 +63,8 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('cuti.create') }}" class="dropdown-item">Input Cuti</a>
-                                    <a href="{{ route('cuti.index') }}" class="dropdown-item">Pengajuan Cuti Bulan Ini</a>
+                                    <a href="{{ route('cuti.index') }}" class="dropdown-item">Pengajuan Cuti</a>
+                                    <a href="{{ route('cuti.index') }}" class="dropdown-item">Rekap Cuti</a>
                                     <a href="{{ route('cuti.data_karyawan') }}" class="dropdown-item">Cuti Per Pegawai</a>
                                     <a href="{{ route('cuti.data_cabang') }}" class="dropdown-item">Cuti Per Lokasi Kerja</a>
                                 </div>
@@ -74,7 +76,8 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('lembur.create') }}" class="dropdown-item">Input Lembur</a>
-                                    <a href="{{ route('lembur.index') }}" class="dropdown-item">Permohonan Lembur Bulan Ini</a>
+                                    <a href="{{ route('lembur.index') }}" class="dropdown-item">Permohonan Lembur</a>
+                                    <a href="{{ route('lembur.index') }}" class="dropdown-item">Rekap Lembur</a>
                                     <a href="{{ route('lembur.data_karyawan') }}" class="dropdown-item">Lembur Per Pegawai</a>
                                     <a href="{{ route('lembur.data_cabang') }}" class="dropdown-item">Lembur Per Lokasi Kerja</a>
                                 </div>
@@ -86,7 +89,6 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-tasks">
-                                    <a href="{{ route("jadwal.create") }}" class="dropdown-item">Atur Jadwal Kerja</a>
                                     <a href="{{ route("jadwal.impor") }}" class="dropdown-item">Impor Jadwal</a>
                                     <a href="{{ route("jadwal.index") }}" class="dropdown-item">Lihat Jadwal Kerja</a>
                                 </div>
@@ -99,6 +101,7 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
                                     <a href="{{ route('aktivitas.create') }}" class="dropdown-item">Input Aktivitas</a>
                                     <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Aktivitas Hari Ini</a>
+                                    <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Riwayat Aktivitas</a>
                                     <a href="{{ route('aktivitas.data_karyawan') }}" class="dropdown-item">Aktivitas Per Pegawai</a>
                                     <a href="{{ route('aktivitas.data_cabang') }}" class="dropdown-item">Aktivitas Per Lokasi Kerja</a>
                                 </div>

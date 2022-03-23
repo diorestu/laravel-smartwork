@@ -13,7 +13,9 @@
         .row_sticky { justify-content: space-around; align-items: flex-start; }
         .div_sticky { position: -webkit-sticky; position: sticky; top: 120px; z-index: 90; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
-        .f-12 { font-size: 10px !important; }
+        .f-12 { font-size: 12px !important; }
+        .tj_div { border-bottom: 1px solid #f5f5f5; padding: 3px 0px; }
+        .tj_ket, .tj_jum { width: 100px; }
     </style>
 @endpush
 
@@ -32,10 +34,15 @@
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="#" class="btn btn-warning waves-effect waves-light text-black">
-                            <i class="fa fa-download icon-sm text-black"></i>
-                            Download CSV Payroll&nbsp;
-                        </a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-warning waves-effect waves-light text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-download icon-sm text-black"></i>&nbsp; Download CSV <i class="mdi mdi-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <li><a class="dropdown-item" href="#">Bank Mandiri</a></li>
+                                <li><a class="dropdown-item" href="#">Bank BCA</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,8 +59,7 @@
                                     <th class="text-left">Nama Pegawai</th>
                                     <th class="text-left">Gaji Pokok</th>
                                     <th class="text-left">Tunjangan</th>
-                                    <th class="text-left">Pot. Asuransi</th>
-                                    <th class="text-left">Pot. Lainnya</th>
+                                    <th class="text-left">Potongan</th>
                                     <th class="text-left">Total</th>
                                     <th class="text-left" width="5%">Opsi</th>
                                 </tr>
@@ -63,9 +69,35 @@
                                     <tr class="f-12">
                                         <td>{{ $i->user->nama }}</td>
                                         <td>{{ rupiah($i->pay_pokok) }}</td>
-                                        <td>{{ rupiah($i->total_tj) }}</td>
-                                        <td>{{ rupiah($i->bpjs_tk_u + $i->bpjs_kes_u) }}</td>
-                                        <td>{{ rupiah($i->total_pot - ($i->bpjs_tk_u + $i->bpjs_kes_u)) }}</td>
+                                        <td>
+                                            <a class="text-success" href="#" data-bs-toggle="popover" data-bs-html="true" data-bs-placement="top"
+                                            data-bs-original-title="Detail Tunjangan" data-bs-trigger="focus"
+                                            data-bs-content="
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Jabatan</div>         <div class='tj_jum text-success'>+ {{ rupiah($i->tj_jabatan) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Sertifikasi</div>     <div class='tj_jum text-success'>+ {{ rupiah($i->tj_sertifikasi) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Transport</div>       <div class='tj_jum text-success'>+ {{ rupiah($i->tj_transport) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Kosmetik</div>        <div class='tj_jum text-success'>+ {{ rupiah($i->tj_kosmetik) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Makan</div>           <div class='tj_jum text-success'>+ {{ rupiah($i->tj_makan) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Masa Kerja</div>      <div class='tj_jum text-success'>+ {{ rupiah($i->tj_masaKerja) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Status Kawin</div>    <div class='tj_jum text-success'>+ {{ rupiah($i->tj_statusKawin) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Bonus</div>           <div class='tj_jum text-success'>+ {{ rupiah($i->tj_bonus) }}</div></div>
+                                            ">
+                                                {{ rupiah($i->total_tj) }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="text-danger" href="#" data-bs-toggle="popover" data-bs-html="true" data-bs-placement="top"
+                                            data-bs-original-title="Detail Potongan" data-bs-trigger="focus"
+                                            data-bs-content="
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Absensi</div>    <div class='tj_jum text-danger'>- {{ rupiah($i->pt_absen) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Kasbon</div>     <div class='tj_jum text-danger'>- {{ rupiah($i->pt_kasbon) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>BPJS Kes</div>   <div class='tj_jum text-danger'>- {{ rupiah($i->bpjs_kes_u) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>BPJS TK</div>    <div class='tj_jum text-danger'>- {{ rupiah($i->bpjs_tk_u) }}</div></div>
+                                            <div class='tj_div d-flex'><div class='tj_ket'>Lainnya</div>    <div class='tj_jum text-danger'>- {{ rupiah($i->pt_lainnya) }}</div></div>
+                                            ">
+                                                {{ rupiah($i->total_pot) }}
+                                            </a>
+                                        </td>
                                         <td><b>{{ rupiah($i->pay_pokok + $i->total_tj - $i->total_pot) }}</b></td>
                                         <td>
                                             <div class="dropdown">

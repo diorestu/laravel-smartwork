@@ -151,6 +151,24 @@ function TanggalOnly($date)
     $tgl     = ltrim($tanggal, '0');
     return $tgl;
 }
+function telat($start_time, $finish_time, $shift) {
+    if ($shift == "L") {
+        echo "<span>-</span>";
+    } else {
+        $awal  = new DateTime($start_time);
+        $akhir = new DateTime($finish_time);
+        $diff  = $awal->diff($akhir);
+        $jam   = $diff->h . 'h, ';
+        $menit = $diff->i . 'm ';
+        $detik = $diff->s . 's ';
+        $totalDuration = $jam . $menit;
+        if ($menit > 1) {
+            echo "<span class='text-danger'>" . $totalDuration . "</span>";
+        } else {
+            echo "<span>-</span>";
+        }
+    }
+}
 function JamOnly($date)
 {
     if ($date != null) {

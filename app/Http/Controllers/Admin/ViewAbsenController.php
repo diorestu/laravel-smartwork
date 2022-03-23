@@ -64,6 +64,7 @@ class ViewAbsenController extends Controller
             return redirect()->route('absensi.show', $idabsen)->with('error', 'Gagal menghapus foto absensi');
         }
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,18 +73,31 @@ class ViewAbsenController extends Controller
     public function index()
     {
         $id     = Auth::user()->id;
-        $date   = ("2021-12-27");
+        $date   = "2021-12-27";
         $data   = Absensi::select(['absensis.id', 'cabang_nama', 'absensis.id_user', 'jam_hadir', 'jam_pulang', 'nama_shift', 'ket_shift', 'hadir_shift', 'pulang_shift', 'jam_kerja',])
                         ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
                         ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
                         ->leftJoin('user_shifts',   'user_shifts.id_user',  '=', 'users.id')
                         ->leftJoin('shifts',        'shifts.id',            '=', 'user_shifts.id_user_shift')
-                        ->where('user_shifts.tanggal_shift',            '=', $date)
-                        ->whereDate('absensis.jam_hadir',               '=', $date)
-                        ->orWhere('user_shifts.id_user_shift',          '=', NULL)
+                        ->whereDate('user_shifts.tanggal_shift',            '=', $date)
+                        ->whereDate('absensis.jam_hadir',                   '=', $date)
+                        ->orWhere('user_shifts.id_user_shift',              '=', NULL)
                         ->where('users.id_admin', $id)->get();
+
+        $gak_absen  =   User::select(['users.id', 'users.nama', 'users.id_cabang', 'shifts.ket_shift', 'shifts.hadir_shift', 'shifts.pulang_shift', 'shifts.nama_shift'])
+                        ->leftJoin('user_shifts',   'user_shifts.id_user',  '=', 'users.id')
+                        ->leftJoin('shifts',        'shifts.id',            '=', 'user_shifts.id_user_shift')
+                        ->whereNotIn('users.id', function ($query) use ($date) {
+                            $query->select('absensis.id_user')->from('absensis')->whereDate('absensis.jam_hadir', $date)->groupBy('absensis.id_user');
+                        })
+                        ->where('user_shifts.tanggal_shift',            '=', $date)
+                        ->orWhere('user_shifts.id_user_shift',          '=', NULL)
+                        ->where('users.roles', 'user')
+                        ->where('users.id_admin', $id)->get();
+        // dd($gak_absen);
+
         return view('admin.absensi.index',
-            ['data' => $data]
+            ['data' => $data, 'data_belum_absen' => $gak_absen]
         );
     }
 
@@ -263,7 +277,6 @@ class ViewAbsenController extends Controller
     public function data_karyawan() {
         return view('admin.absensi.show_karyawan');
     }
-
     public function showDataKaryawan(Request $request)
     {
         $input      = $request->all();
@@ -293,7 +306,6 @@ class ViewAbsenController extends Controller
     {
         return view('admin.absensi.show_cabang');
     }
-
     public function showDataCabang(Request $request)
     {
         $input      = $request->all();
@@ -302,15 +314,48 @@ class ViewAbsenController extends Controller
         $temp       = explode("-", $date);
         $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
         $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-        $data   = Absensi::select(['absensis.id', 'absensis.id_user', 'absensis.jam_hadir', 'absensis.jam_pulang', 'absensis.jam_kerja', 'cabangs.cabang_nama'])
-        ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
-        ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
-        ->whereBetween('absensis.jam_hadir',                 [$tawal, $takhir])
-        ->where('users.id_cabang', $cabang_id)->get();
+        $data       = Absensi::select(['absensis.id', 'absensis.id_user', 'absensis.jam_hadir', 'absensis.jam_pulang', 'absensis.jam_kerja', 'cabangs.cabang_nama'])
+                                ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
+                                ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                                ->whereBetween('absensis.jam_hadir',                 [$tawal, $takhir])
+                                ->where('users.id_cabang', $cabang_id)->get();
 
         return view(
             'admin.absensi.show_data_cabang',
             ['data' => $data]
         );
+    }
+
+    public function data_riwayat()
+    {
+        return view("admin.absensi.riwayat");
+    }
+    public function showDataRiwayat(Request $request)
+    {
+        $input  = $request->all();
+        $date   = ($input['hari']);
+        $id     = Auth::user()->id;
+        $data   = Absensi::select(['absensis.id', 'cabang_nama', 'absensis.id_user', 'jam_hadir', 'jam_pulang', 'nama_shift', 'ket_shift', 'hadir_shift', 'pulang_shift', 'jam_kerja',])
+                            ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
+                            ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                            ->leftJoin('user_shifts',   'user_shifts.id_user',  '=', 'users.id')
+                            ->leftJoin('shifts',        'shifts.id',            '=', 'user_shifts.id_user_shift')
+                            ->where('user_shifts.tanggal_shift',            '=', $date)
+                            ->whereDate('absensis.jam_hadir',               '=', $date)
+                            ->orWhere('user_shifts.id_user_shift',          '=', NULL)
+                            ->where('users.id_admin', $id)->get();
+
+        $gak_absen  =   User::select(['users.id', 'users.nama', 'users.id_cabang', 'shifts.ket_shift', 'shifts.hadir_shift', 'shifts.pulang_shift', 'shifts.nama_shift'])
+                                ->leftJoin('user_shifts',   'user_shifts.id_user',  '=', 'users.id')
+                                ->leftJoin('shifts',        'shifts.id',            '=', 'user_shifts.id_user_shift')
+                                ->whereNOTIn('users.id', function ($query) use ($date) {
+                                    $query->select('absensis.id_user')->from('absensis')->whereDate('absensis.jam_hadir', $date)->groupBy('absensis.id_user');
+                                })
+                                    ->where('user_shifts.tanggal_shift',            '=', $date)
+                                    ->orWhere('user_shifts.id_user_shift',          '=', NULL)
+                                    ->where('users.roles', 'user')
+                                    ->where('users.id_admin', $id)->get();
+        // dd($data);
+        return view("admin.absensi.data.data_riwayat", ['data' => $data, 'data_belum_absen' => $gak_absen]);
     }
 }

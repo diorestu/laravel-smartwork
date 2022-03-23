@@ -10,6 +10,8 @@
     <style>
         .f-10 { font-size: 10px !important; }
         .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
+        .text-tipis  { font-weight: 300; opacity: 0.5; }
     </style>
 @endpush
 
@@ -29,6 +31,13 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-custom gutter-b rounded-sm shadow-sm">
+        <div class="card-body p-4">
+            <div class="row" id="userstable_filter"></div>
+        </div>
+    </div>
+
     <div class="card card-custom gutter-b rounded-sm shadow-sm">
         <div class="card-body p-4">
             <div class="table-responsive">
@@ -38,9 +47,10 @@
                             <th width="2%">No</th>
                             <th>Nama Pegawai</th>
                             <th>Lokasi Kerja</th>
-                            <th class="text-center">Shift</th>
+                            <th class="text-center">Tanggal</th>
                             <th class="text-center">In</th>
                             <th class="text-center">Out</th>
+                            <th class="text-center">Late</th>
                             <th width="5%">Opsi</th>
                         </tr>
                     </thead>
@@ -48,12 +58,14 @@
                         @foreach ($data as $i)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td class='font-weight-bolder'>{{ $i->user->nama }}</td>
+                                <td>{{ $i->user->nama }}</td>
                                 <td>{{ $i->cabang_nama }}</td>
-                                <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $i->ket_shift." ".TampilJamMenit($i->hadir_shift)." - ".TampilJamMenit($i->pulang_shift) }}">{{ $i->nama_shift }}</a></td>
-                                <td class="text-center">{{ tanggalIndoWaktu($i->jam_hadir) }}</td>
-                                <td class="text-center">@if ($i->jam_pulang == "") {{ "-" }} @else {{ tanggalIndoWaktu($i->jam_pulang) }} @endif</td>
-
+                                <td>{{ tglIndo2($i->jam_hadir) }} <br><span class="text-tipis">{{ $i->ket_shift." ".TampilJamMenit($i->hadir_shift)." - ".TampilJamMenit($i->pulang_shift) }}</span></td>
+                                <td class="text-center">{{ TampilJamMenit($i->jam_hadir) }}</td>
+                                <td class="text-center">@if ($i->jam_pulang == "") {{ "-" }} @else {{ TampilJamMenit($i->jam_pulang) }} @endif</td>
+                                <td class="text-center">
+                                    {{ telat(TampilTanggal($i->jam_hadir)." ".$i->hadir_shift, $i->jam_hadir, $i->nama_shift) }}
+                                </td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,6 +87,38 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-custom gutter-b rounded-sm shadow-sm">
+        <div class="card-body p-4">
+            <h4>Belum Absen</h4>
+            <div class="table-responsive">
+                <table class="table table-hover" id="myTableTwo">
+                    <thead class="table-dark">
+                        <tr>
+                            <th width="2%">No</th>
+                            <th>Nama Pegawai</th>
+                            <th>Lokasi Kerja</th>
+                            <th class="text-center">Shift</th>
+                            <th class="text-center">In</th>
+                            <th class="text-center">Out</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data_belum_absen as $b)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $b->nama }}</td>
+                                <td>{{ $b->cabang->cabang_nama }}</td>
+                                <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $b->ket_shift." ".TampilJamMenit($b->hadir_shift)." - ".TampilJamMenit($b->pulang_shift) }}">{{ $b->nama_shift }}</a></td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('addon-script')
@@ -82,13 +126,36 @@
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $('#myTableTwo').DataTable({
+                lengthMenu: [30, 60, 120, 240],
+                order: [[0, 'asc']]
+            });
             $('#myTable').DataTable({
+                initComplete: function () {
+                    this.api().columns([1, 2]).every( function (jud) {
+                        var sita            = $('#myTableTwo').DataTable();
+                        var theadname       = $("#myTable th").eq([jud]).text();
+                        var column          = this;
+                        const wrapper       = document.createElement('div');
+                        wrapper.className   = 'filter_wp col-lg-6';
+                        wrapper.innerHTML   = '<span><i class="fa fa-filter"></i>&nbsp; Filter Dengan '+theadname+'</span>';
+                        var ss              = document.getElementById('userstable_filter').appendChild(wrapper);
+                        var select          = '<select class="form-control"><option value="">Semua '+theadname+'</option></select>';
+
+                        var damas           = $(select).appendTo(ss);
+                        damas.on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            var ssss = column.search( val ? '^'+val+'$' : '', true, false ).draw();
+                            sita.columns([column[0][0]]).search( val ? '^'+val+'$' : '', true, false ).draw();
+                            // console.log();
+                        });
+                        column.data().unique().sort().each( function ( d, j ) {
+                            damas.append( '<option value="'+d+'">'+d+'</option>' )
+                        });
+                    });
+                },
                 lengthMenu: [50, 100, 150, 300],
-                columnDefs: [
-                    { searchable: false, targets: 0 },
-                    { orderable: false, searchable: false, targets: 1 },
-                  ],
-                  order: [[0, 'asc']]
+                order: [[0, 'asc']]
             });
             $('#myTable').on('click', '.remove', function() {
                 var table = $('#myTable').DataTable();

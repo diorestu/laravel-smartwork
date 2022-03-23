@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('title')
-    Data Absensi Per Lokasi Kerja
+    Riwayat Absensi Pegawai
 @endsection
 
 @push('addon-style')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/sl-1.3.1/datatables.min.css"/>
     <style>
-        .main-content { overflow: visible !important; }
-        .topnav { margin-top: 0px !important; }
+        /* .main-content { overflow: visible !important; } */
+        /* .topnav { margin-top: 0px !important; } */
         .row_sticky { justify-content: space-around; align-items: flex-start; }
         .div_sticky { position: -webkit-sticky; position: sticky; top: 120px; z-index: 90; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
@@ -22,11 +22,11 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("jabatan.index") }}">Absensi</a></li>
-                        <li class="breadcrumb-item active">Absensi Per Lokasi Kerja</li>
+                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Absensi Pegawai</a></li>
+                        <li class="breadcrumb-item active">Riwayat Abensi Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Absensi Per Lokasi Kerja</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Lihat data absensi per lokasi kerja</p>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Riwayat Abensi Pegawai</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Lihat data absensi pegawai dengan waktu tertentu</p>
                 </div>
             </div>
         </div>
@@ -39,31 +39,22 @@
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-9">
                                 <div class="form-group">
-                                    <label for="cabang">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
-                                    <select required id="cabang" class="form-select" name="id_cabang">
-                                        @php
-                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
-                                        @endphp
-                                        @foreach ($q_cabang as $r_cabang)
-                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-5">
-                                <div class="form-group">
-                                    <label for="waktu">Rentang Waktu <span class="text-danger">*</span></label>
-                                    <input required id="waktu" class="form-control daterange" type="text" name="waktu" value="">
+                                    <label for="hari">Pilih Hari Absensi <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                        <input type="text" class="form-control datepicker" id="hari" name="hari" value="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                <button class="btn btn-warning w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -72,9 +63,9 @@
             <div class="card shadow rounded-sm">
                 <div class="card-body px-4 py-4">
                     <div class="text-center">
-                        <h1><i class="icon-sm fas fa-coffee"></i></h1>
-                        <h3>Silahkan Pilih Lokasi Kerja</h3>
-                        <p>Untuk melihat data, silahkan pilih lokasi kerja lalu klik lihat data.</p>
+                        <h1><i class="icon-sm fas fa-calendar"></i></h1>
+                        <h3>Silahkan Pilih Hari Diatas</h3>
+                        <p>Untuk melihat data, silahkan pilih lokasi kerja, tahun dan bulan lalu klik lihat data.</p>
                     </div>
                 </div>
             </div>
@@ -84,14 +75,12 @@
 
 @push('addon-script')
     <script>
-        const elementCabang = document.querySelector('#cabang');
-        const choices = new Choices(elementCabang);
         $('#formAction').submit(function(e) {
             e.preventDefault();
-            var idStaff = $("#cabang").val();
+            var hari = $("#hari").val();
             var formData = new FormData(this);
-            if (idStaff != "") {
-                var url = "{{ url('kelola/data-absensi-per-cabang') }}";
+            if (hari != "") {
+                var url = "{{ url('kelola/data-absensi-riwayat') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });
@@ -120,7 +109,7 @@
                     processData: false
                 });
             } else {
-                Swal.fire('Maaf','Silahkan pilih lokasi kerja terlebih dahulu.','error');
+                Swal.fire('Maaf','Silahkan pilih tanggal absen terlebih dahulu.','error');
             }
         });
     </script>

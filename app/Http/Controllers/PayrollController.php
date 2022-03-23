@@ -130,7 +130,7 @@ class PayrollController extends Controller
                 $tunjangan  = UserTunjangan::where('id_user', $i->id_user)->first();
 
                 $asuransi   = UserAsuransi::where('id_user', $i->id_user)->first();
-                $potonngan  = UserPotongan::where('pot_bulan', $bulan)
+                $potongan   = UserPotongan::where('pot_bulan', $bulan)
                 ->where('pot_tahun', $tahun)
                 ->where('id_user', $i->id_user)->get();
                 // gp + tj
@@ -152,7 +152,7 @@ class PayrollController extends Controller
                     $bpjs_ker_u = ($asuransi->pot_naker / 100) * $gaji_pokok;
                 }
                 // potongan lain
-                foreach ($potonngan as $pot) {
+                foreach ($potongan as $pot) {
                     $total_pot += $pot->pot_nilai;
                 }
                 $total_potongan = $total_pot + $bpjs_kes_u + $bpjs_ker_u;

@@ -84,6 +84,8 @@ use App\Http\Controllers\StatusKawinController;
         // MANAJEMEN
         Route::prefix('kelola')->group(function () {
             // absensi
+            Route::get('absensi/riwayat',               [ViewAbsenController::class, 'data_riwayat'])->name('absensi.riwayat');
+            Route::post('data-absensi-riwayat',         [ViewAbsenController::class, 'showDataRiwayat'])->name('absensi.show_data_riwayat');
             Route::get('absensi-per-karyawan',          [ViewAbsenController::class, 'data_karyawan'])->name('absensi.data_karyawan');
             Route::post('data-absensi-per-karyawan',    [ViewAbsenController::class, 'showDataKaryawan'])->name('absensi.show_data_karyawan');
             Route::get('absensi-per-cabang',            [ViewAbsenController::class, 'data_cabang'])->name('absensi.data_cabang');
@@ -100,7 +102,7 @@ use App\Http\Controllers\StatusKawinController;
             Route::get('cuti-per-cabang',               [ViewCutiController::class, 'data_cabang'])->name('cuti.data_cabang');
             Route::post('data-cuti-per-cabang',         [ViewCutiController::class, 'showDataCabang'])->name('cuti.show_data_cabang');
             Route::resource('cuti',                     ViewCutiController::class);
-        // aktivitas
+            // aktivitas
             Route::post('aktivitas/uploadimages/{id}',  [ViewAktivitasController::class, 'uploadImages'])->name("aktivitas.uploadimages");
             Route::post('aktivitas/deleteimages/{id}',  [ViewAktivitasController::class, 'deleteImage'])->name("aktivitas.deleteimages");
             Route::get('aktivitas-per-karyawan',        [ViewAktivitasController::class, 'data_karyawan'])->name('aktivitas.data_karyawan');

@@ -1,52 +1,57 @@
 <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
-<div class="table-responsive">
-    <table class="table table-hover" id="myTable">
-        <thead class="table-dark">
-            <tr>
-                <th>Nama</th>
-                <th>Tanggal Absen</th>
-                <th class="text-center">Shift</th>
-                <th class="text-center">In</th>
-                <th class="text-center">Out</th>
-                <th width="5%">Opsi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($data as $i)
-                <tr>
-                    <td>{{ $i->user->nama }}</td>
-                    <td>{{ tanggalIndo($i->jam_hadir) }}</td>
-                    @php
-                        $tanggal = ubahKeTanggal($i->jam_hadir);
-                        $r_shift = App\Models\UserShift::where('id_user', $i->id_user)->whereDate('tanggal_shift', '=' , $tanggal)->first();
-                    @endphp
-                    @if ($r_shift != "")
-                        <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $r_shift->shift->ket_shift." ".TampilJamMenit($r_shift->shift->hadir_shift)." - ".TampilJamMenit($r_shift->shift->pulang_shift) }}">{{ $r_shift->shift->nama_shift }}</a></td>
-                    @else
-                        <td class="text-center"></td>
-                    @endif
-                    <td class="text-center">{{ TampilJamMenit($i->jam_hadir) }}</td>
-                    <td class="text-center">@if ($i->jam_pulang == "") {{ "-" }} @else {{ TampilJamMenit($i->jam_pulang) }} @endif</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bx bx-dots-horizontal-rounded"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" style="">
-                                <li><a target="_blank" class="dropdown-item" href='{{ route('absensi.show', $i->id) }}'>
-                                    <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;
-                                    Lihat Detail
-                                </a></li>
-                                <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+<div class="card shadow rounded-sm">
+    <div class="card-body px-4 py-4">
+        <div class="table-responsive">
+            <table class="table table-hover" id="myTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nama</th>
+                        <th>Tanggal Absen</th>
+                        <th class="text-center">Shift</th>
+                        <th class="text-center">In</th>
+                        <th class="text-center">Out</th>
+                        <th width="5%">Opsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $i)
+                        <tr>
+                            <td>{{ $i->user->nama }}</td>
+                            <td>{{ tanggalIndo($i->jam_hadir) }}</td>
+                            @php
+                                $tanggal = ubahKeTanggal($i->jam_hadir);
+                                $r_shift = App\Models\UserShift::where('id_user', $i->id_user)->whereDate('tanggal_shift', '=' , $tanggal)->first();
+                            @endphp
+                            @if ($r_shift != "")
+                                <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $r_shift->shift->ket_shift." ".TampilJamMenit($r_shift->shift->hadir_shift)." - ".TampilJamMenit($r_shift->shift->pulang_shift) }}">{{ $r_shift->shift->nama_shift }}</a></td>
+                            @else
+                                <td class="text-center"></td>
+                            @endif
+                            <td class="text-center">{{ TampilJamMenit($i->jam_hadir) }}</td>
+                            <td class="text-center">@if ($i->jam_pulang == "") {{ "-" }} @else {{ TampilJamMenit($i->jam_pulang) }} @endif</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bx bx-dots-horizontal-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" style="">
+                                        <li><a target="_blank" class="dropdown-item" href='{{ route('absensi.show', $i->id) }}'>
+                                            <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;
+                                            Lihat Detail
+                                        </a></li>
+                                        <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>

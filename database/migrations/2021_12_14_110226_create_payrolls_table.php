@@ -15,6 +15,7 @@ class CreatePayrollsTable extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->bigIncrements('id_pay');
+            $table->integer('id_payroll');
             $table->integer('id_user');
             $table->double('pay_pokok');
             $table->double('bpjs_tk_u')->nullable();
