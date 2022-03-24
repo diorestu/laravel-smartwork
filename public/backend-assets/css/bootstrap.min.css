@@ -2819,7 +2819,7 @@ textarea.form-control-lg {
 }
 
 .form-check .form-check-input {
-    float: left;
+    float: right;
     margin-left: -1.5em
 }
 
@@ -2903,7 +2903,7 @@ textarea.form-control-lg {
 }
 
 .form-switch {
-    padding-left: 2.5em
+    padding-left: 0px
 }
 
 .form-switch .form-check-input {

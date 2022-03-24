@@ -5428,14 +5428,14 @@ body[data-layout-mode=dark] .auth-full-page-content {
 }
 
 .email-leftbar {
-    width: 236px;
+    width: 330px;
     float: left;
     padding: 20px;
     border-radius: 5px
 }
 
 .email-rightbar {
-    margin-left: 260px
+    margin-left: 350px
 }
 
 .chat-user-box p.user-title {

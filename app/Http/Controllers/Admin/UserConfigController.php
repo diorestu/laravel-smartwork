@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cabang;
 use Illuminate\Support\Facades\Auth;
 
 class UserConfigController extends Controller
@@ -17,8 +18,10 @@ class UserConfigController extends Controller
      */
     public function index()
     {
-        $data = User::find(Auth::user()->id);
-        return view('admin.config', compact('data'));
+        $id_admin   = Auth::user()->id;
+        $data       = UserConfig::where("id_admin", $id_admin)->first();
+        $datacabang = Cabang::where("id_admin", $id_admin)->get();
+        return view('admin.config', ['data' => $data, 'data_cabang' => $datacabang]);
     }
 
     /**
@@ -50,6 +53,7 @@ class UserConfigController extends Controller
      */
     public function show(Request $r, $userConfig)
     {
+        return view('admin.config_cabang');
         // $input = $r->all();
         // $result = UserConfig::findOrFail($userConfig);
         // $result->layout_mode = $input['layout_mode'];

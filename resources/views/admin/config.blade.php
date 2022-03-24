@@ -1,78 +1,176 @@
 @extends('layouts.main')
 
 @section('title')
-    Profil Saya
+    Pengaturan Sistem
 @endsection
 
 @push('addon-style')
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .f-10 { font-size: 10px !important; }
+        .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
+        .text-tipis  { font-weight: 300; opacity: 0.5; }
+        .main-content { overflow: visible !important; }
+        .topnav { margin-top: 0px !important; }
+        .row_sticky { justify-content: space-around; align-items: flex-start; }
+        .div_sticky { position: -webkit-sticky; position: sticky; top: 150px; }
+        .choices__list--dropdown .choices__item { font-size: 11px !important; }
+        .pro-text { letter-spacing: 0.3px; background: linear-gradient(120deg,#ff725c,#dbb118); -webkit-background-clip: text; color: transparent !important; }
+    </style>
 @endpush
 
 @section('content')
-        <div class='mt-0'>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="profile-user"></div>
+    <div class="row px-0">
+        <div class="col-12">
+            <div class="page-title-box pb-2 d-sm-flex align-items-start justify-content-between">
+                <div>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pengaturan Sistem</a></li>
+                    </ol>
+                    <h4 class="fw-bold font-size-22 mt-3 mb-3">Pengaturan Sistem</h4>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="profile-content">
-                    <div class="row align-items-end">
-                        <div class="col-sm">
-                            <div class="d-flex align-items-end mt-3 mt-sm-0">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar-xxl me-3">
-                                        <img src="{{ !$data->company_logo ? asset('backend-assets/images/no-image.png') : asset('storage/logo/' . Auth::user()->company_logo) }}"
-                                            alt="" class="img-cropped rounded-circle d-block img-thumbnail">
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div>
-                                        <h5 class="font-size-16 mb-1">{{ $data->nama }}</h5>
-                                        <p class="text-muted font-size-13 mb-2 pb-2">{{ !$data->cabang ? '-' : $data->cabang->cabang_nama }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="row row_sticky">
+        <div class="col-4 div_sticky">
+            @if ($data->tipe_akun == "Basic")
+            <div class="card bg-warning border-dark text-black">
+                <div class="card-body">
+                    <h5 class="mb-4 text-black"><i class="mdi mdi-alert-circle-outline me-3"></i>Basic Version</h5>
+                    <p class="card-text">Akun Anda masih menggunakan versi basic Smartwork. Upgrade Smartwork Anda ke Pro Version
+                        untuk mendapatkan fitur-fitur lainnya.
+                    </p>
+                </div>
+            </div>
+            @else
+            <div class="card border-dark">
+                <div class="card-body d-flex">
+                    <div>
+                        <img src="{{ asset("backend-assets/images/sw-pro.svg") }}" width="80" />
+                    </div>
+                    <div class="mt-3 px-3">
+                        <h3 class="mb-1 text-light pro-text">Pro Version</h3>
+                        <p class="card-text">Smartwrok Pro - Unlimited Access</p>
                     </div>
                 </div>
             </div>
-            <hr>
-
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success" role="alert">
-                    <h4 class="font-weight-bolder alert-heading">Berhasil</h4>
-                    {{ $message }}
-                </div>
             @endif
 
-            {{-- <div class="card card-custom rounded-sm shadow-md">
-                <div class="card-body p-4">
-                    <form action="{{ route('config.show', Auth::user()->id) }}" method="post">
-                        @method('GET')
-                        @csrf
-                        <div class="mb-3">
-                            <label for="my-input">Nomor Surat</label>
-                            <input id="my-input" class="form-control" type="text" name="nomor_surat">
-                        </div>
-                        <div class="mb-3">
-                            <label for="my-input">Tampilan Sistem</label>
-                            <select id="my-input" class="form-select" type="text" name="layout_mode">
-                                <option value="light">Mode Terang</option>
-                                <option value="dark">Mode Gelap</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary w-100 btn-lg mt-3" type="submit">
-                            <i class="fas fa-hdd icon-md"></i>&nbsp; Simpan Pengaturan
-                        </button>
-                    </form>
+            <div class="card card-custom rounded-sm shadow-md">
+                <div class="card-body px-4 py-4">
+                    <h4 class="card-title my-3 ms-3">Akun Smartwork</h4>
+                    <div class="table-responsive">
+                        <table class="table mb-3">
+                            <tbody>
+                                <tr>
+                                    <td>Max User</td>
+                                    <td>{{ $data->max_user }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tipe Akun</td>
+                                    <td>{{ $data->tipe_akun }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Aktif Sampai</td>
+                                    <td>{{ tanggalIndo($data->expired_at) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @if ($data->tipe_akun == "Basic") <a href="#" class="btn btn-block w-100 btn-primary">Upgrade ke Pro</a> @endif
+                    </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
+        <div class="col-8">
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body px-4 py-4">
+                    <h4 class="card-title my-2 ms-0">Pengaturan Lokasi Kerja</h4>
+                    <div class="list-group mb-3 py-3">
+                        @foreach($data_cabang as $dc)
+                            <a href="{{ route("config.show", $dc->id) }}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">{{ $dc->cabang_nama }} <i class="fa fa-chevron-right"></i></a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body px-4 py-4">
+                    <h4 class="card-title my-2 ms-0">Pengaturan Tampilan</h4>
+                    <div class="form-check form-switch form-switch-lg mb-3 py-3">
+                        <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
+                        <input type="checkbox" class="form-check-input" id="mode-setting-btn">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body px-4 py-4">
+                    <h4 class="card-title my-2 ms-0">Pengaturan Umum</h4>
+                    <div class="col-12">
+                        <form class="py-3">
+                            <div class="row mb-4">
+                                <label for="company_name" class="col-sm-3 col-form-label">Nama Perusahaan</label>
+                                <div class="col-sm-9"><input type="text" class="form-control" id="company_name" value="{{ $data->company_name }}"></div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="company_address" class="col-sm-3 col-form-label">Alamat</label>
+                                <div class="col-sm-9"><input type="text" class="form-control" id="company_address" value="{{ $data->company_address }}"></div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="company_phone" class="col-sm-3 col-form-label">Telepon</label>
+                                <div class="col-sm-9"><input type="text" class="form-control" id="company_phone" value="{{ $data->company_phone }}"></div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="company_email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9"><input type="email" class="form-control" id="company_email" value="{{ $data->company_email }}"></div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="company_bidang" class="col-sm-3 col-form-label">Bidang Usaha</label>
+                                <div class="col-sm-9">
+                                    <select required id="company_bidang" class="form-select" name="company_bidang">
+                                        <option value='Pengelolaan SDM'>Pengelolaan SDM</option>
+                                        <option value='Teknologi Informasi'>Teknologi Informasi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="company_" class="col-sm-3 col-form-label">Logo Perusahan</label>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div><button type="submit" class="btn btn-warning text-black w-md"><i class="fa fa-save"></i>&nbsp; Simpan Perubahan</button></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('addon-script')
-
+    <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script>
+        const elementBidang = document.querySelector('#company_bidang');
+        const choices = new Choices(elementBidang);
+    </script>
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+        </script>
+    @endif
 @endpush
