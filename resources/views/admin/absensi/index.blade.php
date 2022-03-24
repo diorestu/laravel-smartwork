@@ -10,6 +10,7 @@
     <style>
         .f-10 { font-size: 10px !important; }
         .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .filter_wp { margin-bottom: 20px; }
         .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
         .text-tipis  { font-weight: 300; opacity: 0.5; }
     </style>
@@ -34,12 +35,10 @@
 
     <div class="card card-custom gutter-b rounded-sm shadow-sm">
         <div class="card-body p-4">
-            <div class="row" id="userstable_filter"></div>
-        </div>
-    </div>
-
-    <div class="card card-custom gutter-b rounded-sm shadow-sm">
-        <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+                <h4>Absensi Tercatat</h4>
+                <div class="row" id="userstable_filter"></div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover" id="myTable">
                     <thead class="table-dark">
@@ -126,19 +125,19 @@
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#myTableTwo').DataTable({
-                lengthMenu: [30, 60, 120, 240],
+            $('#myTable').DataTable({
+                lengthMenu: [50, 100, 150, 300],
                 order: [[0, 'asc']]
             });
-            $('#myTable').DataTable({
+            $('#myTableTwo').DataTable({
                 initComplete: function () {
-                    this.api().columns([1, 2]).every( function (jud) {
-                        var sita            = $('#myTableTwo').DataTable();
-                        var theadname       = $("#myTable th").eq([jud]).text();
+                    this.api().columns([2]).every( function (jud) {
+                        var sita            = $('#myTable').DataTable();
+                        var theadname       = $("#myTableTwo th").eq([jud]).text();
                         var column          = this;
                         const wrapper       = document.createElement('div');
-                        wrapper.className   = 'filter_wp col-lg-6';
-                        wrapper.innerHTML   = '<span><i class="fa fa-filter"></i>&nbsp; Filter Dengan '+theadname+'</span>';
+                        wrapper.className   = 'filter_wp input-group';
+                        wrapper.innerHTML   = '<div class="input-group-text"><i class="fa fa-filter"></i></div>';
                         var ss              = document.getElementById('userstable_filter').appendChild(wrapper);
                         var select          = '<select class="form-control"><option value="">Semua '+theadname+'</option></select>';
 
@@ -149,12 +148,13 @@
                             sita.columns([column[0][0]]).search( val ? '^'+val+'$' : '', true, false ).draw();
                             // console.log();
                         });
-                        column.data().unique().sort().each( function ( d, j ) {
-                            damas.append( '<option value="'+d+'">'+d+'</option>' )
-                        });
+                        @php $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
+                        @foreach ($q_cabang as $r_cabang)
+                            damas.append( '<option value="{{ $r_cabang->cabang_nama }}">{{ $r_cabang->cabang_nama }}</option>' )
+                        @endforeach
                     });
                 },
-                lengthMenu: [50, 100, 150, 300],
+                lengthMenu: [30, 60, 120, 240],
                 order: [[0, 'asc']]
             });
             $('#myTable').on('click', '.remove', function() {
