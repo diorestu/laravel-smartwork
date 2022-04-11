@@ -24,6 +24,7 @@ use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LemburController;
 use App\Http\Controllers\SertifikasiController;
 use App\Http\Controllers\MasaKerjaController;
@@ -94,15 +95,19 @@ use App\Http\Controllers\StatusKawinController;
             Route::post('absensi/deleteimages/{id}',    [ViewAbsenController::class, 'deleteImage'])->name("absensi.deleteimages");
             Route::resource('absensi',                  ViewAbsenController::class);
             // cuti
-            Route::get('cuti/riwayat',                  [ViewCutiController::class, 'riwayat'])->name('cuti.riwayat');
+            Route::get('cuti/rekap',                    [ViewCutiController::class, 'rekap'])->name('cuti.rekap');
+            Route::post('data-rekap-cuti',              [ViewCutiController::class, 'showDataRekap'])->name('cuti.show_data_rekap');
             Route::get('cuti/{id}/terima',              [ViewCutiController::class, 'accept'])->name('cuti.terima');
             Route::get('cuti/{id}/tolak',               [ViewCutiController::class, 'decline'])->name('cuti.tolak');
             Route::get('cuti-per-karyawan',             [ViewCutiController::class, 'data_karyawan'])->name('cuti.data_karyawan');
             Route::post('data-cuti-per-karyawan',       [ViewCutiController::class, 'showDataKaryawan'])->name('cuti.show_data_karyawan');
             Route::get('cuti-per-cabang',               [ViewCutiController::class, 'data_cabang'])->name('cuti.data_cabang');
             Route::post('data-cuti-per-cabang',         [ViewCutiController::class, 'showDataCabang'])->name('cuti.show_data_cabang');
+            Route::post('data-pengajuan-cuti',          [ViewCutiController::class, 'showDataPengajuan'])->name('cuti.show_data_pengajuan');
             Route::resource('cuti',                     ViewCutiController::class);
             // aktivitas
+            Route::get('aktivitas/riwayat',             [ViewAktivitasController::class, 'riwayat'])->name("aktivitas.riwayat");
+            Route::post('data-riwayat-aktivitas',       [ViewAktivitasController::class, 'showDataRiwayat'])->name('aktivitas.show_data_riwayat');
             Route::post('aktivitas/uploadimages/{id}',  [ViewAktivitasController::class, 'uploadImages'])->name("aktivitas.uploadimages");
             Route::post('aktivitas/deleteimages/{id}',  [ViewAktivitasController::class, 'deleteImage'])->name("aktivitas.deleteimages");
             Route::get('aktivitas-per-karyawan',        [ViewAktivitasController::class, 'data_karyawan'])->name('aktivitas.data_karyawan');
@@ -118,6 +123,7 @@ use App\Http\Controllers\StatusKawinController;
             Route::post('data-lembur-per-karyawan',     [LemburController::class, 'showDataKaryawan'])->name('lembur.show_data_karyawan');
             Route::get('lembur-per-cabang',             [LemburController::class, 'data_cabang'])->name('lembur.data_cabang');
             Route::post('data-lembur-per-cabang',       [LemburController::class, 'showDataCabang'])->name('lembur.show_data_cabang');
+            Route::post('data-pengajuan-lembur',        [LemburController::class, 'showDataPengajuan'])->name('lembur.show_data_pengajuan');
             Route::resource('lembur',                   LemburController::class);
             // jadwal kerja
             Route::get('jadwal/impor-jadwal',           [JadwalController::class, 'impor'])->name('jadwal.impor');
@@ -134,6 +140,10 @@ use App\Http\Controllers\StatusKawinController;
             Route::get('payroll/slip-gaji/{id}',        [PayrollController::class, 'slipgaji_payroll'])->name('payroll.slipgaji');
             Route::get('payroll/download-slip-gaji/{id}', [PayrollController::class, 'cetak_slipgaji_payroll'])->name('payroll.cetak_slipgaji');
             Route::resource('payroll',                  PayrollController::class);
+            // laporan
+            Route::get('laporan/absensi',               [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
+            Route::get('laporan/detail-absensi',        [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
+            Route::post('laporan/data-absensi',         [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
         });
 
         // PELAPORAN

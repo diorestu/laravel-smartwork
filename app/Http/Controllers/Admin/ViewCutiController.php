@@ -34,25 +34,80 @@ class ViewCutiController extends Controller
         }
     }
 
-    public function riwayat()
+    public function rekap(Request $request)
     {
-        $id = Auth::user()->id;
-        $user = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
-        $data = Cuti::whereIn('id_user', $user)->get();
-        return view('admin.cuti.riwayat', [
+        $sekarang = date("m/d/Y");
+        if ($request->session()->has('cuti_pengajuan')) {
+            $value      = $request->session()->get('cuti_pengajuan', 'default');
+            $temp       = explode("-", $value);
+            $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+            $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+            $id         = Auth::user()->id;
+            $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+            $datacuti   = Cuti::whereIn('id_user', $user)
+                                ->whereBetween('cuti_awal', [$tawal, $takhir])
+                                ->where('cuti_status', 'DITERIMA')->get();
+        } else {
+            $value      = $sekarang . " - " . $sekarang;
+            $datacuti   = null;
+        }
+        return view('admin.cuti.rekap', ['data' => $datacuti, 'sesi_cuti' => $value]);
+    }
+    public function showDataRekap(Request $request)
+    {
+        $input      = $request->all();
+        $date       = $input['waktu'];
+        $temp       = explode("-", $date);
+        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $id         = Auth::user()->id;
+        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+        $data       = Cuti::whereIn('id_user', $user)
+                            ->whereBetween('cuti_awal', [$tawal, $takhir])
+                            ->where('cuti_status', 'DITERIMA')->get();
+
+        $request->session()->put('cuti_pengajuan', $date);
+        return view('admin.cuti.data.show_data_rekap', [
             'data' => $data,
         ]);
     }
 
-    public function index()
+    public function showDataPengajuan(Request $request)
     {
-        $id = Auth::user()->id;
-        $user = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
-        $data = Cuti::whereIn('id_user', $user)->where('cuti_status', 'PENGAJUAN')->get();
+        $input      = $request->all();
+        $date       = $input['waktu'];
+        $temp       = explode("-", $date);
+        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $id         = Auth::user()->id;
+        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+        $data       = Cuti::whereIn('id_user', $user)
+                            ->whereBetween('cuti_awal', [$tawal, $takhir])
+                            ->where('cuti_status', 'PENGAJUAN')->get();
         // dd($data);
-        return view('admin.cuti.index', [
+        $request->session()->put('cuti_pengajuan', $date);
+        return view('admin.cuti.data.show_data_pengajuan', [
             'data' => $data,
         ]);
+    }
+    public function index(Request $request)
+    {
+        $sekarang = date("m/d/Y");
+        if ($request->session()->has('cuti_pengajuan')) {
+            $value      = $request->session()->get('cuti_pengajuan', 'default');
+            $temp       = explode("-", $value);
+            $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+            $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+            $id         = Auth::user()->id;
+            $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+            $datacuti   = Cuti::whereIn('id_user', $user)
+                                ->whereBetween('cuti_awal', [$tawal, $takhir])
+                                ->where('cuti_status', 'PENGAJUAN')->get();
+        } else {
+            $value      = $sekarang . " - " . $sekarang;
+            $datacuti   = null;
+        }
+        return view('admin.cuti.index', ['data' => $datacuti, 'sesi_cuti' => $value]);
     }
 
     /**
@@ -140,7 +195,7 @@ class ViewCutiController extends Controller
         $data->cuti_akhir           = $cuti_akhir;
         $berhasilSimpan             = $data->save();
         if ($berhasilSimpan) {
-            return redirect()->route('cuti.riwayat')->with('success', 'Proses update data cuti pegawai berhasil');
+            return redirect()->route('cuti.edit', $id)->with('success', 'Proses update data cuti pegawai berhasil');
         } else {
             return redirect()->route('cuti.edit', $id)->with('error', 'Gagal mengupdate data cuti pegawai');
         }
@@ -176,10 +231,6 @@ class ViewCutiController extends Controller
     {
         $input      = $request->all();
         $staff_id   = $input['id_staff'];
-        // $date       = $input['waktu'];
-        // $temp       = explode("-", $date);
-        // $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
-        // $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
         $data   = Cuti::where('id_user', $staff_id)->get();
         return view(
             'admin.cuti.data.show_data_karyawan',
@@ -201,10 +252,6 @@ class ViewCutiController extends Controller
     {
         $input      = $request->all();
         $cabang_id  = $input['id_cabang'];
-        // $date       = $input['waktu'];
-        // $temp       = explode("-", $date);
-        // $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
-        // $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
         $data   = Cuti::leftJoin('users',         'users.id',             '=', 'cutis.id_user')
                         ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
                         ->where('users.id_cabang', $cabang_id)->get();

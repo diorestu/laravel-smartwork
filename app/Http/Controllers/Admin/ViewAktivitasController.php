@@ -179,11 +179,45 @@ class ViewAktivitasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function riwayat(Request $request)
+    {
+        $sekarang = date("m/d/Y");
+        if ($request->session()->has('aktivitas')) {
+            $value      = $request->session()->get('aktivitas', 'default');
+            $temp       = explode("-", $value);
+            $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+            $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+            $dataaktivi = Aktivitas::whereBetween('created_at', [$tawal, $takhir])->get();
+        } else {
+            $value      = $sekarang . " - " . $sekarang;
+            $dataaktivi   = null;
+        }
+        return view('admin.aktivitas.riwayat', ['data' => $dataaktivi, 'sesi_aktivitas' => $value]);
+    }
+    public function showDataRiwayat(Request $request)
+    {
+        $input      = $request->all();
+        $date       = $input['waktu'];
+        $temp       = explode("-", $date);
+        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $data       = Aktivitas::whereBetween('created_at', [$tawal, $takhir])->get();
+        $request->session()->put('aktivitas', $date);
+        return view(
+            'admin.aktivitas.data.show_data_riwayat',
+            ['data' => $data]
+        );
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function data_karyawan()
     {
         return view('admin.aktivitas.show_karyawan');
     }
-
     public function showDataKaryawan(Request $request)
     {
         $input      = $request->all();
@@ -208,7 +242,6 @@ class ViewAktivitasController extends Controller
     {
         return view('admin.aktivitas.show_cabang');
     }
-
     public function showDataCabang(Request $request)
     {
         $input      = $request->all();

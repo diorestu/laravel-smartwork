@@ -37,24 +37,57 @@ class LemburController extends Controller
         }
     }
 
-    public function riwayat()
+    public function riwayat(Request $request)
     {
         $id     = Auth::user()->id;
         $user   = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
         $data   = Lembur::whereIn('id_user', $user)->where('lembur_status','!=','PENGAJUAN')->get();
-        return view('admin.lembur.riwayat', ['data' => $data]);
+
+        if ($request->session()->has('lembur_pengajuan')) {
+            $value = $request->session()->get('lembur_pengajuan', 'default');
+        }
+
+        return view('admin.lembur.riwayat', ['data' => $data, 'sesi' => $value]);
+    }
+
+    public function showDataPengajuan(Request $request) {
+        $input      = $request->all();
+        $date       = $input['waktu'];
+        $temp       = explode("-", $date);
+        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $id         = Auth::user()->id;
+        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+        $data       = Lembur::whereIn('id_user', $user)
+                            ->whereBetween('lembur_awal', [$tawal, $takhir])
+                            ->where('lembur_status', 'PENGAJUAN')->get();
+
+        $request->session()->put('lembur_pengajuan', $date);
+        return view("admin.lembur.data.show_data_pengajuan", ['data' => $data]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $id     = Auth::user()->id;
-        $user   = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
-        $data   = Lembur::whereIn('id_user', $user)->where('lembur_status', 'PENGAJUAN')->get();
-        return view("admin.lembur.index", ['data' => $data]);
+        $sekarang = date("m/d/Y");
+        if ($request->session()->has('lembur_pengajuan')) {
+            $value      = $request->session()->get('lembur_pengajuan', 'default');
+            $temp       = explode("-", $value);
+            $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+            $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+            $id         = Auth::user()->id;
+            $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+            $datalembur = Lembur::whereIn('id_user', $user)
+                            ->whereBetween('lembur_awal', [$tawal, $takhir])
+                            ->where('lembur_status', 'PENGAJUAN')->get();
+        } else {
+            $value      = $sekarang." - ".$sekarang;
+            $datalembur = null;
+        }
+        return view("admin.lembur.index", ['data' => $datalembur, 'sesi_lembur' => $value]);
     }
 
     /**

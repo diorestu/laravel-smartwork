@@ -12,68 +12,124 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Lembur Pegawai</a></li>
-                        <li class="breadcrumb-item active">Lembur Hari Ini</li>
+                        <li class="breadcrumb-item active">Permohonan Lembur</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Permohonan Lembur Pegawai {{ Carbon\Carbon::parse(date('Y-m'))->locale('id')->format('M Y') }}</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Data permohonan lembur pegawai hari ini, {{ Carbon\Carbon::parse(date('Y-m'))->locale('id')->format('M Y') }}</p>
+                    <h4 class="fw-bold font-size-22 mt-3 mb-3">Permohonan Lembur Pegawai</h4>
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a class="btn btn-soft-primary waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp;Impor/Ekspor Data</a>
-                        <a href="{{ route('lembur.riwayat') }}" class="btn btn-warning waves-effect waves-light text-black">
-                            <i class="fa fa-check-circle icon-sm text-black"></i> Lihat Lembur Pegawai Yang Telah Disetujui&nbsp;
-                        </a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-download"></i> &nbsp; Ekspor Data &nbsp; <i class="mdi mdi-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        @forelse ($data as $item)
-            <div class="col-sm-6 col-md-3 cont_{{ $item->id }}">
-                <div class="card card-custom gutter-b rounded-sm shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ $item->user->nama }}</h4>
-                        <p class="card-text">{{ $item->lembur_judul }}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="icon-menu" data-feather="map-pin"></i> {{ $item->user->cabang->cabang_nama }}</li>
-                        <li class="list-group-item"><i class="icon-menu" data-feather="clock"></i> <span class="badge bg-soft-warning text-warning">{{ $item->jam_lembur }} jam</span></li>
-                        <li class="list-group-item">{{ $item->lembur_keterangan }}</li>
-                        <li class="list-group-item" style="font-size: 10px;font-weight:bold;">{{ tanggalIndoWaktu($item->lembur_awal).' - '.tanggalIndoWaktu($item->lembur_akhir) }}</li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Option</span>
-                            <div class="dropdown">
-                                <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
-                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bx bx-dots-horizontal-rounded"></i>
+    <div class="row mt-3">
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Pilih Rentang Waktu
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end" style="">
-                                    <li><a class="dropdown-item" href='{{ route('lembur.edit', $item->id) }}'><span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Edit</a></li>
-                                    <li><a id="{{ $item->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
-                                </ul>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                    <form id="formAction" action="#" method="POST">
+                                        @method('POST')
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-sm-9 col-md-9">
+                                                <div class="form-group mb-4">
+                                                    <label for="waktu">Rentang Waktu <span class="text-danger">*</span></label>
+                                                    <input required id="waktu" class="form-control daterange" type="text" name="waktu" value="{{ $sesi_lembur }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 mt-2">
+                                                <button class="btn btn-primary w-100 mt-3 font-weight-boldest btn-md" type="submit">
+                                                    <i class="fas fa-info-circle icon-md"></i> Lihat Data
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
-                        </li>
-                    </ul>
-                    <div class="card-body d-flex justify-content-center">
-                        <a onclick="actionCuti('terima', {{ $item->id }})" href="javascript:void(0);" class="btn btn-block w-100 mx-1 btn-primary waves-effect waves-light"><i class="fas fa-check"></i>&nbsp; Terima</a>
-                        <a onclick="actionCuti('tolak', {{ $item->id }})" href="javascript:void(0);" class="btn btn-block w-100 mx-1 btn-warning waves-effect waves-light text-black"><i class="fas fa-times"></i>&nbsp; Tolak</a>
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <div class="card card-custom gutter-b rounded-sm shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h1><i class="fas fa-coffee"></i></h1>
-                            <h4>Data Kosong</h4>
-                            <p>Belum ada permohonan lembur pegawai di perode {{ Carbon\Carbon::parse(date('Y-m'))->locale('id')->format('M Y') }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforelse
+        </div>
+
+        <div class="row" id="content">
+            @if ($data != null)
+            @forelse ($data as $item)
+                <div class="col-sm-6 col-md-3 cont_{{ $item->id }}">
+                    <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ $item->user->nama }}</h4>
+                            <p class="card-text">{{ $item->lembur_judul }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="icon-menu fas fa-map-marker-alt"></i> {{ $item->user->cabang->cabang_nama }}</li>
+                            <li class="list-group-item"><i class="icon-menu fas fa-clock"></i> <span class="badge bg-soft-warning text-warning">{{ $item->jam_lembur }} jam</span></li>
+                            <li class="list-group-item">{{ $item->lembur_keterangan }}</li>
+                            <li class="list-group-item" style="font-size: 10px;font-weight:bold;">{{ tanggalIndoWaktu($item->lembur_awal).' - '.tanggalIndoWaktu($item->lembur_akhir) }}</li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Option</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bx bx-dots-horizontal-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" style="">
+                                        <li><a class="dropdown-item" href='{{ route('lembur.edit', $item->id) }}'><span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Edit</a></li>
+                                        <li><a id="{{ $item->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="card-body d-flex justify-content-center">
+                            <a onclick="actionCuti('terima', {{ $item->id }})" href="javascript:void(0);" class="btn btn-block w-100 mx-1 btn-primary waves-effect waves-light"><i class="fas fa-check"></i>&nbsp; Terima</a>
+                            <a onclick="actionCuti('tolak', {{ $item->id }})" href="javascript:void(0);" class="btn btn-block w-100 mx-1 btn-warning waves-effect waves-light text-black"><i class="fas fa-times"></i>&nbsp; Tolak</a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12">
+                    <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h1><i class="fas fa-coffee"></i></h1>
+                                <h4>Data Kosong</h4>
+                                <p>Belum ada permohonan lembur pegawai di perode {{ Carbon\Carbon::parse(date('Y-m'))->locale('id')->format('M Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforelse
+            @else
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h1><i class="icon-sm fas fa-calendar"></i></h1>
+                        <h3>Silahkan Pilih Rentang Waktu</h3>
+                        <p>Untuk melihat data, silahkan set rentang waktu lalu klik lihat data.</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
     </div>
 @endsection
 
@@ -119,6 +175,43 @@
                     }
                 });
             });
+        });
+        $('#formAction').submit(function(e) {
+            e.preventDefault();
+            var waktu = $("#waktu").val();
+            var formData = new FormData(this);
+            if (waktu != "") {
+                var url = "{{ url('kelola/data-pengajuan-lembur') }}";
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Sedang Memproses Data...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            showDenyButton: false,
+                            showCancelButton: false
+                        });
+                        Swal.showLoading();
+                    },
+                    success: function(result) {
+                        $('#content').html(result);
+                    },
+                    complete: function(data) {
+                        Swal.close();
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            } else {
+                Swal.fire('Maaf','Silahkan pilih rentang waktu.','error');
+            }
         });
         function actionCuti(action, idLembur) {
             if (action == "terima") {

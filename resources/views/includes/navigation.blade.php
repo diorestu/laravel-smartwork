@@ -64,7 +64,7 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('cuti.create') }}" class="dropdown-item">Input Cuti</a>
                                     <a href="{{ route('cuti.index') }}" class="dropdown-item">Pengajuan Cuti</a>
-                                    <a href="{{ route('cuti.index') }}" class="dropdown-item">Rekap Cuti</a>
+                                    <a href="{{ route('cuti.rekap') }}" class="dropdown-item">Rekap Cuti</a>
                                     <a href="{{ route('cuti.data_karyawan') }}" class="dropdown-item">Cuti Per Pegawai</a>
                                     <a href="{{ route('cuti.data_cabang') }}" class="dropdown-item">Cuti Per Lokasi Kerja</a>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
                                     <a href="{{ route('aktivitas.create') }}" class="dropdown-item">Input Aktivitas</a>
                                     <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Aktivitas Hari Ini</a>
-                                    <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Riwayat Aktivitas</a>
+                                    <a href="{{ route('aktivitas.riwayat') }}" class="dropdown-item">Riwayat Aktivitas</a>
                                     <a href="{{ route('aktivitas.data_karyawan') }}" class="dropdown-item">Aktivitas Per Pegawai</a>
                                     <a href="{{ route('aktivitas.data_cabang') }}" class="dropdown-item">Aktivitas Per Lokasi Kerja</a>
                                 </div>
@@ -126,70 +126,28 @@
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                            <a class="dropdown-item" >Laporan Absensi</a>
-                            <a class="dropdown-item" >Laporan Aktivitas</a>
-                            <a class="dropdown-item" >Laporan Lembur</a>
-                            <a class="dropdown-item" >Laporan Cuti</a>
+                            <a href="{{ route("laporan.absensi") }}" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Absensi</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lembur</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Cuti</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> BPJS</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> PPh 21</a>
                         </div>
                     </li>
-                    {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button">
-                            <i data-feather="file-text"></i><span data-key="t-extra-pages">Extra Pages</span>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-laporan"
+                            role="button">
+                            <i data-feather="file-text"></i><span>Rekrutmen</span>
                             <div class="arrow-down"></div>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="topnav-more">
-
-                            <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth"
-                                    role="button">
-                                    <span data-key="t-authentication">Authentication</span>
-                                    <div class="arrow-down"></div>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="topnav-auth">
-                                    <a href="auth-login.html" class="dropdown-item"
-                                        data-key="t-login">Login</a>
-                                    <a href="auth-register.html" class="dropdown-item"
-                                        data-key="t-register">Register</a>
-                                    <a href="auth-recoverpw.html" class="dropdown-item"
-                                        data-key="t-recover-password">Recover Password</a>
-                                    <a href="auth-lock-screen.html" class="dropdown-item"
-                                        data-key="t-lock-screen">Lock Screen</a>
-                                    <a href="auth-logout.html" class="dropdown-item" data-key="t-logout">Log
-                                        Out</a>
-                                    <a href="auth-confirm-mail.html" class="dropdown-item"
-                                        data-key="t-confirm-mail">Confirm Mail</a>
-                                    <a href="auth-email-verification.html" class="dropdown-item"
-                                        data-key="t-email-verification">Email verification</a>
-                                    <a href="auth-two-step-verification.html" class="dropdown-item"
-                                        data-key="t-two-step-verification">Two step verification</a>
-                                </div>
-                            </div>
-                            <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                    id="topnav-utility" role="button">
-                                    <span data-key="t-utility">Utility</span>
-                                    <div class="arrow-down"></div>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="topnav-utility">
-                                    <a href="pages-starter.html" class="dropdown-item"
-                                        data-key="t-starter-page">Starter Page</a>
-                                    <a href="pages-maintenance.html" class="dropdown-item"
-                                        data-key="t-maintenance">Maintenance</a>
-                                    <a href="pages-comingsoon.html" class="dropdown-item"
-                                        data-key="t-coming-soon">Coming Soon</a>
-                                    <a href="pages-timeline.html" class="dropdown-item"
-                                        data-key="t-timeline">Timeline</a>
-                                    <a href="pages-faqs.html" class="dropdown-item" data-key="t-faqs">FAQs</a>
-                                    <a href="pages-pricing.html" class="dropdown-item"
-                                        data-key="t-pricing">Pricing</a>
-                                    <a href="pages-404.html" class="dropdown-item"
-                                        data-key="t-error-404">Error 404</a>
-                                    <a href="pages-500.html" class="dropdown-item"
-                                        data-key="t-error-500">Error 500</a>
-                                </div>
-                            </div>
+                        <div class="dropdown-menu" aria-labelledby="topnav-pages">
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Lowongan Pekjerjaan</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lamaran Masuk</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Psikotes</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Wawancara</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Pembuatan Kontrak</a>
                         </div>
-                    </li> --}}
+                    </li>
 
                 </ul>
             </div>

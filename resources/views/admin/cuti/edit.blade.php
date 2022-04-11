@@ -18,7 +18,7 @@
             <ol class="breadcrumb m-0">
                 <li class="breadcrumb-item"><a href="javascript: void(0);">Kelola</a></li>
                 <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Cuti Pegawai</a></li>
-                <li class="breadcrumb-item"><a href="{{ route("cuti.riwayat") }}">Riwayat Cuti</a></li>
+                <li class="breadcrumb-item"><a href="{{ route("cuti.rekap") }}">Rekap Cuti</a></li>
                 <li class="breadcrumb-item active">Ubah Data Cuti</li>
             </ol>
             <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Ubah Data Cuti Pegawai</h4>
