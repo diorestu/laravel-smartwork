@@ -36,35 +36,25 @@
                 @csrf
                 <h4 class="text-muted mb-2">Data Diri</h4>
                 <div class="mb-3">
-                    <label for="my-input">Nama</label>
+                    <label for="my-input">Nama Lengkap</label>
                     <input id="my-input" class="form-control" type="text" name="nama" value="{{ $id->nama }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Nomor HP</label>
-                    <input id="my-input" class="form-control" type="text" name="phone" value="{{ $id->phone }}">
                 </div>
                 <div class="mb-3">
                     <label for="my-input">Email</label>
                     <input id="my-input" class="form-control" type="text" name="email" value="{{ $id->email }}">
                 </div>
                 <div class="mb-3">
+                    <label for="my-input">Nomor HP</label>
+                    <input id="my-input" class="form-control" type="text" name="phone" value="{{ $id->phone }}">
+                </div>
+                <div class="mb-3">
+                    <label for="my-input">Nomor Rekening</label>
+                    <input id="my-input" class="form-control" type="text" name="no_rek" value="{{ $id->no_rek }}">
+                </div>
+                <div class="mb-3">
                     <label for="my-input">Alamat</label>
                     <textarea class="form-control" id="my-input" name="alamat" id="" cols="10"
                         rows="5">{{ $id->alamat }}</textarea>
-                </div>
-                <hr>
-                <h4 class="text-muted mb-2 mt-3">Data Pengguna Aplikasi</h4>
-                <div class="mb-3">
-                    <label for="my-input">Nama Pengguna</label>
-                    <input id="my-input" class="form-control" type="text" name="username" value="{{ $id->username }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Kata Sandi Baru</label>
-                    <input id="my-input" class="form-control" type="password" name="password">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Ulangi Kata Sandi Baru</label>
-                    <input id="my-input" class="form-control" type="password" name="password">
                 </div>
                 <br>
                 <br>

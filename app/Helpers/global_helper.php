@@ -184,7 +184,7 @@ function Bulan($date)
 {
     $dateObj   = DateTime::createFromFormat('!m', $date);
     $monthName = $dateObj->format('F'); // March
-    return $monthName;
+    return Carbon::parse($monthName)->locale('id')->isoFormat('MMMM');
 }
 function converttanggal($date)
 {

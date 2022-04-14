@@ -5,16 +5,13 @@
 @endsection
 
 @push('addon-style')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
-
 @endpush
 
 @section('content')
     @php
-        $id = Auth::user();
-        $radius = 100;
+    $id = Auth::user();
+    $radius = 100;
     @endphp
     <section class="p-0 mb-3">
         <div class="ps-5 pe-4 pb-3 pt-3" style="background-color: #B0141C !important;">
@@ -46,16 +43,12 @@
             <div class="card-body px-3 py-8">
                 <h3 class="text-center font-weight-bolder mb-1">Absen Pulang</h3>
                 <h2 id='span' class="text-center display-2 fw-bold text-perol mb-4"></h2>
-                <div class="px-3">
-                    <input id="avatar" type="file" name="avatar" class="filepond" />
-                </div>
                 <form method="post" action="{{ route('absen.update', $data->id) }}" id="myForm" class="px-3">
                     @method('PATCH')
                     @csrf
                     <div class="form-group text-center">
                         <label for="my-textarea">Keterangan Absen Pulang:</label>
-                        <textarea onclick="getLocation()" id="my-textarea" class="form-control rounded-5" name="deskripsi"
-                            rows="3"></textarea>
+                        <textarea onclick="getLocation()" id="my-textarea" class="form-control rounded-5" name="deskripsi" rows="3"></textarea>
                     </div>
                     <input id="lokasix" class="form-control" type="hidden" name="lat_pulang">
                     <input id="lokasiy" class="form-control" type="hidden" name="long_pulang">
@@ -69,33 +62,21 @@
     <br>
     <br>
     <br>
-
 @endsection
 
 @push('addon-script')
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.filepond--credits').addClass('d-none');
-            getLocation();
-        });
-    </script>
     <script>
         var span = document.getElementById('span');
 
         function time() {
-          var d = new Date();
-          var s = d.getSeconds();
-          var m = d.getMinutes();
-          var h = d.getHours();
-          span.textContent =
-            ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+            var d = new Date();
+            var s = d.getSeconds();
+            var m = d.getMinutes();
+            var h = d.getHours();
+            span.textContent =
+                ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         }
-
-
-        $( document ).ready(function() {
+        $(document).ready(function() {
             getLocation();
             setInterval(time, 1000);
         });
@@ -116,12 +97,11 @@
         }
 
         function showPosition(position) {
-            var latitude1 = position.coords.latitude.toFixed(7);
+            var latitude1  = position.coords.latitude.toFixed(7);
             var longitude1 = position.coords.longitude.toFixed(7);
-            var latitude2 = -8.61958;
-            var longitude2 = 115.2011289;
-
-            var radius = 1000;
+            var latitude2  = -8.617903;
+            var longitude2 = 115.192535;
+            var radius     = 100;
             var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,
                     longitude1),
                 new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
@@ -166,33 +146,4 @@
             }
         }
     </script>
-
-    <script>
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        FilePond.registerPlugin(FilePondPluginFileValidateType);
-        // Get a reference to the file input element
-        const inputElement = document.querySelector('input[id="avatar"]');
-
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement, {
-            allowImagePreview: true,
-            imagePreviewMaxHeight: 300,
-        });
-
-        FilePond.setOptions({
-            server: {
-                url: "{{ route('upload-pulang') }}",
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            },
-            labelIdle: '<span class="filepond--label-action text-success text-decoration-none"><i class="fa fa-camera"></i> Upload Foto</span> ',
-            acceptedFileTypes: ['image/*'],
-        });
-    </script>
-
-
-
-
-
 @endpush

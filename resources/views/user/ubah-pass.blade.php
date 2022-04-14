@@ -31,7 +31,7 @@
     </section>
     <section>
         <div class="p-4">
-            <form action="{{ route('user.save') }}" method="post" id="myForm">
+            <form action="{{ route('user.pass.save') }}" method="post" id="myForm">
                 @method('POST')
                 @csrf
                 {{-- <h4 class="text-muted mb-2 mt-3">Data Pengguna Aplikasi</h4>
@@ -39,7 +39,7 @@
                 <br>
                 <div class="mb-3">
                     <label for="my-input">Nama Pengguna</label>
-                    <input id="my-input" class="form-control form-control-lg" type="text" name="username" value="{{ $id->username }}">
+                    <input id="my-input" class="form-control form-control-lg" type="text" name="username" value="{{ $id->username }}" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="my-input">Kata Sandi Lama</label>

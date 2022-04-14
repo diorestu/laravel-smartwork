@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function config(): HasOne
     {
-        return $this->hasOne(UserConfig::class, 'id_admin', 'id');
+        return $this->hasOne(UserConfig::class, 'id', 'id_admin');
     }
 
     public function AauthAcessToken()

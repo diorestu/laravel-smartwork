@@ -32,10 +32,14 @@
 
         /* Hide scrollbar for IE, Edge and Firefox */
         .example {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
+
     </style>
+    @livewireStyles
     @include('includes.style')
     @stack('addon-style')
 
@@ -47,34 +51,18 @@
         <!-- Start Content here -->
         <div class="main-content">
             @yield('content')
-            <div class="card fixed-bottom shadow mb-0">
-                <div class="card-body">
-                    <div class="d-flex justify-content-around">
-                        <a href='{{ route('user.home') }}' class=" text-muted d-flex flex-column align-items-center">
-                            <span class='mb-2 {{ request()->is('user') ? 'text-danger' : '' }}'><i data-feather='home'></i></span>
-                            <span class="{{ request()->is('user') ? 'text-danger' : 'text-muted' }}">Home</span>
-                        </a>
-                        <a href='{{ route('absen.index') }}' class=" text-muted d-flex flex-column align-items-center">
-                            <span class='mb-2 {{ request()->is('user/absen*') ? 'text-danger' : '' }}'><i data-feather='clock'></i></span>
-                            <span class="{{ request()->is('user/absen*') ? 'text-danger' : 'text-muted' }}">Absen</span>
-                        </a>
-                        <a href='{{ route('kegiatan.index') }}' class=" text-muted d-flex flex-column align-items-center">
-                            <span class='mb-2 {{ request()->is('user/aktif*') ? 'text-danger' : '' }}'><i data-feather='activity'></i></span>
-                            <span class="{{ request()->is('user/aktif*') ? 'text-danger' : 'text-muted' }}">Aktivitas</span>
-                        </a>
-                        <a href='{{ route('cuti.index') }}' class=" text-muted d-flex flex-column align-items-center">
-                            <span class='mb-2 {{ request()->is('user/cuti*') ? 'text-danger' : '' }}'><i data-feather='calendar'></i></span>
-                            <span class="{{ request()->is('user/cuti*') ? 'text-danger' : 'text-muted' }}">Cuti</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <livewire:navbar>
         </div>
         <!-- End Content here -->
         <!-- ============================================================== -->
     </div>
+    @livewireScripts
     @include('includes.script')
     @stack('addon-script')
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script>
+
 </body>
 
 </html>

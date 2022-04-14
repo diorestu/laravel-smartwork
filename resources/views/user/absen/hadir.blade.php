@@ -1,22 +1,26 @@
 @extends('layouts.mobile')
 
+@section('title')
+    Absen Hadir
+@endsection
 
 @push('addon-style')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 @endpush
 
 @section('content')
     @php
-        $id = Auth::user();
-        $radius = 100;
+    $radius = 100;
     @endphp
     <section class="p-0 mb-3">
         <div class="ps-5 pe-4 pb-3 pt-3" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-baseline">
                 <div>
-                    <a href="{{ route('absen.index') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="{{ route('absen.index') }}" class="text-white">
+                        <i class="fa fa-chevron-left font-size-20"></i>
+                    </a>
                 </div>
                 <div class="">
                     <h2 class="fw-bold font-size-18 text-white">Absen Hadir</h2>
@@ -31,32 +35,27 @@
         </div>
     </section>
     <div class="mx-4" onclick="getLocation();">
-        <div class="alert rounded-10 text-center" role="alert" id='demo'>
+        <div class="alert rounded-sm text-center" role="alert" id='demo'>
             <i class="fa fa-spinner fa-spin font-size-22 text-success mb-3"></i>
             <h4 class="alert-heading">Verifikasi Lokasi...</h4>
         </div>
     </div>
-
     <div class="text-center d-none" id="absenForm">
         <div class="card mx-4 rounded-sm">
-            <div class="card-body px-3 py-5">
+            <div class="card-body px-2 py-4">
                 <h3 class="text-center font-weight-bolder mb-1">Absen Hadir</h3>
                 <h2 id='span' class="text-center fw-bold mb-2 display-4"></h2>
-                <div class="px-3">
-                    <input id="avatar" type="file" name="avatar" class="filepond" />
-                </div>
-
-                <form method="post" action="{{ route('absen.store') }}" id="myForm" class="px-3 mt-0">
+                <form method="post" action="{{ route('absen.store') }}" id="myForm" class="px-3 my-1">
                     @method('post')
                     @csrf
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <label for="my-textarea"> Keterangan Absensi:</label>
                         <textarea onclick="getLocation()" id="my-textarea" class="form-control" name="deskripsi"
                             rows="3"></textarea>
-                    </div>
+                    </div> --}}
                     <input id="lokasix" class="form-control" type="hidden" name="lat_hadir">
                     <input id="lokasiy" class="form-control" type="hidden" name="long_hadir">
-                    <button type="submit" id="btn" class="btn btn-primary w-100 rounded mt-3 d-none py-3">Absen
+                    <button type="submit" id="btn" class="btn btn-primary w-100 rounded-md d-none py-3">Absen
                         Hadir</button>
                 </form>
             </div>
@@ -69,26 +68,26 @@
 @endsection
 
 @push('addon-script')
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    {{-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script>
         $(document).ready(function() {
             $('.filepond--credits').addClass('d-none');
         });
-    </script>
+    </script> --}}
     <script>
         var span = document.getElementById('span');
 
         function time() {
-          var d = new Date();
-          var s = d.getSeconds();
-          var m = d.getMinutes();
-          var h = d.getHours();
-          span.textContent =
-            ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+            var d = new Date();
+            var s = d.getSeconds();
+            var m = d.getMinutes();
+            var h = d.getHours();
+            span.textContent =
+                ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         }
-        $( document ).ready(function() {
+        $(document).ready(function() {
             getLocation();
             setInterval(time, 1000);
         });
@@ -107,6 +106,7 @@
             } else {
                 demo.innerHTML = "Geolocation is not supported by this browser.";
                 $('#btn').addClass("d-none");
+                $('#filepond-input').addClass("d-none");
 
             }
         }
@@ -141,29 +141,34 @@
             switch (error.code) {
                 case error.PERMISSION_DENIED:
                     $("#demo").addClass("alert-danger");
-                    demo.innerHTML = "User denied the request for Geolocation."
+                    demo.innerHTML =
+                        "Mohon Aktifkan <b>Layanan Lokasi Anda</b> <br> dan <b>Berikan Akses Lokasi</b> Melalui Pengaturan!"
+                    $('#filepond-input').addClass("d-none");
                     $("#btn").addClass("d-none");
                     break;
                 case error.POSITION_UNAVAILABLE:
                     $("#demo").addClass("alert-danger");
-                    demo.innerHTML = "Location information is unavailable."
+                    demo.innerHTML = "Lokasi Tidak Diketahui. Mohon Periksa Kembali Koneksi Data Anda"
+                    $('#filepond-input').addClass("d-none");
                     $("#btn").addClass("d-none");
                     break;
                 case error.TIMEOUT:
                     $("#demo").addClass("alert-danger");
-                    demo.innerHTML = "The request to get user location timed out."
+                    demo.innerHTML = "RTO: Periksa Koneksi Data Andaa"
+                    $('#filepond-input').addClass("d-none");
                     $("#btn").addClass("d-none");
                     break;
                 case error.UNKNOWN_ERROR:
                     $("#demo").addClass("alert-danger");
-                    demo.innerHTML = "An unknown error occurred."
+                    demo.innerHTML = "Mohon Ulangi Kembali Proses Absensi."
+                    $('#filepond-input').addClass("d-none");
                     $("#btn").addClass("d-none");
                     break;
             }
         }
     </script>
 
-    <script>
+    {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
         // Get a reference to the file input element
@@ -185,10 +190,5 @@
             labelIdle: '<span class="filepond--label-action text-success text-decoration-none"><i class="fa fa-camera"></i> Upload Foto</span> ',
             acceptedFileTypes: ['image/*'],
         });
-    </script>
-
-
-
-
-
+    </script> --}}
 @endpush

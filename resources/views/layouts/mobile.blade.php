@@ -30,6 +30,7 @@
     </style>
     @include('includes.style')
     @stack('addon-style')
+    @livewireStyles
 
 </head>
 
@@ -45,6 +46,8 @@
     </div>
     @include('includes.script')
     @stack('addon-script')
+    @livewireScripts
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>

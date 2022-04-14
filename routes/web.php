@@ -148,19 +148,28 @@ use App\Http\Controllers\StatusKawinController;
 
         // PELAPORAN
 
-        // PENNGATURAN
+        // PENGATURAN
         Route::resource('config', UserConfigController::class);
         Route::get('slip-gaji/{id}', [PrintPDFController::class, 'cetak_slip_gaji']);
     });
 
     // USER CONTROLLER
     Route::prefix('user')->middleware(['auth', 'is_user'])->group(function () {
+        // Halaman Home
         Route::get('/', [MobileController::class, 'index'])->name('user.home');
-        Route::get('/profile', [MobileController::class, 'profile'])->name('user.profil');
-        Route::get('/account', [MobileController::class, 'changePassword'])->name('user.pass');
+        // Halaman Profil
+        Route::get('/profil', [MobileController::class, 'profile'])->name('user.profil');
         Route::post('/profile', [MobileController::class, 'saveProfile'])->name('user.save');
+        Route::get('/user-data', [MobileController::class, 'data_profile'])->name('user.data');
+        Route::get('/account', [MobileController::class, 'changePassword'])->name('user.pass');
+        Route::post('/account', [MobileController::class, 'postchangePassword'])->name('user.pass.save');
+        // Halaman Absen
         Route::resource('absen', AbsenController::class);
+        // Halaman Kegiatan
         Route::resource('kegiatan', AktivitasController::class);
+        // Halaman Slip Gaji
+        Route::get('/slip-gaji', [MobileController::class, 'gaji'])->name('user.gaji');
+        // Upload Foto
         Route::post('upload-kegiatan', [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
         Route::post('upload-hadir', [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
         Route::post('upload-pulang', [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
