@@ -103,4 +103,13 @@ class   MobileController extends Controller
             'gaji'  => $gaji,
         ]);
     }
+    public function jadwal(){
+        $id = Auth::user()->id;
+        $jadwal = UserShift::where('id_user', $id)->whereMonth('tanggal_shift', date('m'))->orderBy('tanggal_shift', 'ASC')->get();
+        // dd($jadwal);
+        return view('user.jadwal', [
+            'id'      => Auth::user(),
+            'jadwal'  => $jadwal,
+        ]);
+    }
 }

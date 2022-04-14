@@ -169,6 +169,8 @@ use App\Http\Controllers\StatusKawinController;
         Route::resource('kegiatan', AktivitasController::class);
         // Halaman Slip Gaji
         Route::get('/slip-gaji', [MobileController::class, 'gaji'])->name('user.gaji');
+        // Halaman Slip Gaji
+        Route::get('/jadwal', [MobileController::class, 'jadwal'])->name('user.jadwal');
         // Upload Foto
         Route::post('upload-kegiatan', [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
         Route::post('upload-hadir', [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');

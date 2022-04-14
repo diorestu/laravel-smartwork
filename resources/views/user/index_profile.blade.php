@@ -43,7 +43,7 @@
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
-            <a href="/" class="text-dark text-decoration-none w-100">
+            <a href="{{ route('user.jadwal') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
                     <span class="fw-semibold">Jadwal Kerja</span>
                     <span><i class="fa fa-chevron-right"></i></span>
