@@ -19,7 +19,12 @@ class Home extends Component
         $absen     = Absensi::whereDate('jam_hadir', date('Y-m-d'))->where('id_user', $id)->first();
         $absenLast = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->first();
         $riwayat   = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
-        $cuti      = Cuti::where('id_user', $id)->sum('cuti_total');
+        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
+                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+                    })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
+        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
+            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+        })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis', 'LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
         $title     = null;
         $d         = false;
         if (!$shift) {
@@ -34,6 +39,7 @@ class Home extends Component
             'absen'   => $absen,
             'riwayat' => $riwayat,
             'cuti'    => $cuti,
+            'sakit'   => $sakit,
             'terbaru' => $absenLast,
             'shift'   => $shift,
             'id'      => Auth::user(),

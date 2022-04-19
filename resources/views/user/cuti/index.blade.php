@@ -1,48 +1,48 @@
-@extends('layouts.mobile-navbar')
+@extends('layouts.mobile')
 
 @section('title')
     Smartwork - Cuti Saya
 @endsection
 
 @section('content')
-    <section class="">
-        <div class="ps-5 pe-4 pb-5 pt-3"
-            style="background-color: #B0141C !important; border-bottom-left-radius: 20%; border-bottom-right-radius: 20%;">
-            <div class="d-flex justify-content-between align-items-baseline pt-3 pb-0">
+    <section class="mb-3">
+        <div class="ps-5 pe-4 pb-4 pt-3" style="background-color: #B0141C !important;">
+            <div class="d-flex justify-content-between align-items-center pt-3 pb-0">
+                <div>
+                    <a href="{{ route('user.home') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                </div>
                 <div class="">
                     <h2 class="fw-bold font-size-18 text-white">Cuti Saya</h2>
                 </div>
                 <div class=''>
-                    <a href="{{ route('cuti.create') }}"
-                        class="btn btn-transparent-danger font-weight-bold mr-2 text-white"><i
+                    <a href="{{ route('leave.create') }}" class="btn btn-transparent-danger font-weight-bold text-white"><i
                             class="fa fa-plus text-white me-2"></i>Tambah</a>
                 </div>
             </div>
         </div>
     </section>
-    <main class="px-4 mt-3 parent pb-0">
-        <div class="child card rounded mb-0 pb-0">
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <b
-                        class="fw-medium font-size-16">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
-                    {{-- <b class="fw-bold font-size-18 text-muted">{{ $absen->jam_hadir }}</b><br> --}}
+    <div class="ms-4" data-aos="fade-right" data-aos-duration="700">
+        <div class="d-flex flex-row flex-nowrap overflow-auto example">
+            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                <div class="card-body py-2 px-3">
+                    <h3 class="fw-bold font-size-16 mt-1">Cuti</h3>
+                    <span class="font-size-22 fw-black">{{ $cuti }}</span>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="card">
-                            
-                        </div>
-                    </div>
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
+            </div>
+            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                <div class="card-body py-2 px-3">
+                    <h3 class="fw-bold font-size-16 mt-1">Izin</h3>
+                    <span class="font-size-22 fw-black">0</span>
                 </div>
-
+            </div>
+            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                <div class="card-body py-2 px-3">
+                    <h3 class="fw-bold font-size-16 mt-1">Sakit</h3>
+                    <span class="font-size-22 fw-black">{{ $sakit }}</span>
+                </div>
             </div>
         </div>
-    </main>
-    <hr>
+    </div>
     <section class="px-4">
         <div class="">
             <div class="d-flex justify-content-between align-items-baseline">
@@ -51,12 +51,17 @@
                         class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
             </div>
             <div>
-                @php
-                    $data = [];
-                @endphp
                 @forelse($data as $item)
                     <div class="alert alert-secondary alert-top-border fade show mb-3" role="alert">
-                        <i class="fa fa-info-circle text-primary align-middle me-3"></i><strong>{{ tglIndo2($item->jam_hadir) }}</strong>- {{ $item->ket_hadir }}
+                        <div class="d-flex align-items-center justify-content-start">
+                            <i class="fa fa-info-circle fa-lg text-primary align-middle me-3"></i>
+                            <div>
+                                <strong>{{ tglIndo2($item->cuti_awal) }} - {{ tglIndo2($item->cuti_akhir) }}</strong>
+                                <br>
+                                <span class="">{{ $item->cuti_deskripsi }}</span>
+                            </div>
+                        </div>
+
                     </div>
                 @empty
                     <div class="card rounded py-5 rounded">
@@ -64,7 +69,8 @@
                             <div class="text-center">
                                 <a class="text-muted">Tidak ada riwayat pengajuan</a>
                                 <br>
-                                <a class="fw-bold btn btn-primary py-1 mt-2" href="{{ route('cuti.create') }}">Tambah Pengajuan Cuti</a>
+                                <a class="fw-bold btn btn-primary py-1 mt-2" href="{{ route('cuti.create') }}">Tambah
+                                    Pengajuan Cuti</a>
                             </div>
                         </div>
                     </div>

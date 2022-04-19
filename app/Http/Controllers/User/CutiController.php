@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CutiJenis;
 use Illuminate\Support\Facades\Auth;
 
 class CutiController extends Controller
@@ -18,9 +19,17 @@ class CutiController extends Controller
     public function index()
     {
         $id= Auth::user()->id;
+        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
+            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+        })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
+        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
+            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+        })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis', 'LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
         $data = Cuti::where('id_user', $id)->latest()->take(6)->get();
         return view('user.cuti.index', [
-            'data' => $data
+            'data' => $data,
+            'cuti' => $cuti,
+            'sakit' => $sakit
         ]);
     }
 
@@ -31,7 +40,10 @@ class CutiController extends Controller
      */
     public function create()
     {
-        return view('user.cuti.input');
+        $jenis = CutiJenis::where('id_admin', Auth::user()->id_admin)->get();
+        return view('user.cuti.input', [
+            'jenis' => $jenis
+        ]);
 
     }
 
@@ -45,17 +57,18 @@ class CutiController extends Controller
     {
         $r  = $request->all();
         $id = Auth::user()->id;
+        // hitung total hari
         $mulai   = Carbon::parse($r['cuti_awal']);
         $selesai = Carbon::parse($r['cuti_akhir']);
         $diff    = $selesai->diffInDays($mulai);
-
+        // Prepare Data Cuti
         $r['id_user'] = $id;
-        $r['cuti_status'] = 'PENDING';
+        $r['cuti_status'] = 'PENGAJUAN';
         $r['cuti_total'] = $diff + 1;
         try {
-            $scs = Cuti::create($r);
-            return redirect()->route('cuti.index');
-        } catch (\Throwable $e) {
+            Cuti::create($r);
+            return redirect()->route('leave.index');
+        } catch (\Illuminate\Database\QueryException $e) {
             abort(500, $e->getMessage());
         }
     }

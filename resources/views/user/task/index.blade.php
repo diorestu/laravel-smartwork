@@ -6,7 +6,7 @@
 
 @section('content')
     <section class="">
-        <div class="ps-5 pe-4 pb-5 pt-3" style="background-color: #B0141C !important;">
+        <div class="px-4 pt-3 pb-4" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-baseline pt-3 pb-0">
                 <div class="">
                     <h2 class="fw-bold font-size-18 text-white">Kegiatan Saya</h2>
@@ -17,35 +17,13 @@
                             class="fa fa-plus text-white me-2"></i>Tambah</a>
                 </div>
             </div>
+            <b class="text-white fw-medium font-size-12">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
         </div>
     </section>
-    <main class="px-4 mt-3 parent pb-0">
-        <div class="child card rounded mb-0 pb-0">
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <b
-                        class="fw-medium font-size-16">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
-                    {{-- <b class="fw-bold font-size-18 text-muted">{{ $absen->jam_hadir }}</b><br> --}}
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="card">
-
-                        </div>
-                    </div>
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
-                </div>
-
-            </div>
-        </div>
-    </main>
-    <hr>
-    <section class="px-4">
+    <section class="px-4 mt-3">
         <div class="">
             <div class="d-flex justify-content-between align-items-baseline">
-                <h4 class="mb-3">Kegiatan Saya</h4>
+                <h4 class="mb-3">Riwayat</h4>
                 <a href='' class="font-size-sm text-peimary fw-bold">Lihat semua <i
                         class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
             </div>

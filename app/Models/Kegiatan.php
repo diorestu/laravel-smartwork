@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Kegiatan extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id_kgt';
     protected $guarded = ['id_kgt'];
     public $timestamps = false;
     /**

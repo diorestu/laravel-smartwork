@@ -175,5 +175,5 @@ use App\Http\Controllers\StatusKawinController;
         Route::post('upload-kegiatan', [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
         Route::post('upload-hadir', [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
         Route::post('upload-pulang', [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
-        // route::resource('cuti', CutiController::class);
+        route::resource('leave', CutiController::class);
     });

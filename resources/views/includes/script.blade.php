@@ -21,5 +21,4 @@
     $('.daterange').daterangepicker();
     $(function () { $('[data-toggle="tooltip"]').tooltip() });
 </script>
-<script src="{{ asset('js/app.js') }}"></script>
 

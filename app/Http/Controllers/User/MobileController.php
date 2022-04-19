@@ -71,7 +71,12 @@ class   MobileController extends Controller
         $absen     = Absensi::whereDate('jam_hadir', date('Y-m-d'))->where('id_user', $id)->first();
         $absenLast = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->first();
         $riwayat   = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
-        $cuti      = Cuti::where('id_user', $id)->sum('cuti_total');
+        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
+                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+                    })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
+        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
+                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
+                    })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis','LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
         $title     = null;
         $d         = false;
         if (!$shift) {
@@ -82,11 +87,12 @@ class   MobileController extends Controller
             $d = true;
         }
 
-        // dd($absenLast);
+        // dd($cuti);
         return view('user.home', [
             'absen'   => $absen,
             'riwayat' => $riwayat,
             'cuti'    => $cuti,
+            'sakit'   => $sakit,
             'terbaru' => $absenLast,
             'shift'   => $shift,
             'id'      => Auth::user(),
@@ -95,7 +101,8 @@ class   MobileController extends Controller
         ]);
     }
 
-    public function gaji(){
+    public function gaji()
+    {
         $id = Auth::user()->id;
         $gaji = Payroll::where('id_user', $id)->orderBy('id_payroll', 'DESC')->get();
         return view('user.gaji', [
@@ -103,7 +110,8 @@ class   MobileController extends Controller
             'gaji'  => $gaji,
         ]);
     }
-    public function jadwal(){
+    public function jadwal()
+    {
         $id = Auth::user()->id;
         $jadwal = UserShift::where('id_user', $id)->whereMonth('tanggal_shift', date('m'))->orderBy('tanggal_shift', 'ASC')->get();
         // dd($jadwal);

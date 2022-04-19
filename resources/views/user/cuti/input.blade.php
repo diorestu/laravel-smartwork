@@ -9,7 +9,7 @@ Tambah Cuti
         <div class="ps-5 pe-4 pb-3 pt-4" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-baseline">
                 <div>
-                    <a href="{{ route('cuti.index') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="{{ route('leave.index') }}" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
                 <div class="">
                     <h2 class="fw-bold font-size-18 text-white">Pengajuan Cuti</h2>
@@ -21,9 +21,17 @@ Tambah Cuti
     </section>
 
     <div class="py-4 px-4">
-        <form action="{{ route('cuti.store') }}" method="post" id="myForm">
+        <form action="{{ route('leave.store') }}" method="post" id="myForm">
             @method('POST')
             @csrf
+            <div class="mb-3">
+                <label for="my-input font-weight-bolder">Jenis Cuti<span class="text-danger font-weight-bold font-size-sm">*Wajib diisi </span></label>
+                <select name="id_cuti_jenis" id="cuti_jenis" class="form-select">
+                    @foreach ($jenis as $item)
+                        <option value="{{ $item->id }}">{{ $item->cuti_nama_jenis }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-3">
                 <label for="my-input font-weight-bolder">Tanggal Mulai Cuti <span class="text-danger font-weight-bold font-size-sm">*Wajib diisi </span></label>
                 <input id="my-input" class="form-control" type="date" name="cuti_awal" required>

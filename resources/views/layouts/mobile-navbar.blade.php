@@ -43,6 +43,12 @@
     @include('includes.style')
     @stack('addon-style')
 
+    @livewireScripts
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+    data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+
 </head>
 
 <body data-layout="horizontal" data-key="body" data-layout-mode="light" data-topbar="dark">
@@ -56,13 +62,8 @@
         <!-- End Content here -->
         <!-- ============================================================== -->
     </div>
-    @livewireScripts
     @include('includes.script')
     @stack('addon-script')
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" data-turbo-eval="false"></script>
-
 </body>
 
 </html>

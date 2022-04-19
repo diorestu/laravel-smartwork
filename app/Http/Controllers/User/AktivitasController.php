@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Aktivitas;
 use Illuminate\Support\Facades\Auth;
 
 class AktivitasController extends Controller
@@ -71,8 +72,8 @@ class AktivitasController extends Controller
         $input['tanggal_kgt'] =  date('Y-m-d');
         $input['jam_kgt'] = date('H:i:s');
         try {
-            Kegiatan::create($input);
-            return redirect()->route('kegiatan.index');
+            $res = Kegiatan::create($input);
+            return redirect()->route('kegiatan.show', $res->id);
         } catch (\Throwable $th) {
             return redirect()->route('kegiatan.index')->withErrors('Gagal Mencatat!');
         }
@@ -86,7 +87,9 @@ class AktivitasController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Kegiatan::find($id);
+        // dd($data);
+        return view('user.task.detail', ['data' => $data ]);
     }
 
     /**

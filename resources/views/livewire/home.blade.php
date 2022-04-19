@@ -1,11 +1,11 @@
 <div>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <section class="p-0">
-        <div class="ps-5 pe-4 pb-5 pt-3" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4 pb-4 pt-3" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-baseline">
-                <div class="">
+                <div class="mb-0">
                     <h2 class="fw-bold font-size-18 text-white">Hai, {{ $data->nama }}</h2>
-                    <p class="text-white-50 fw-light font-size-12">{{ $data->cabang->cabang_nama }}</p>
+                    <p class="text-white-50 fw-light font-size-12 mb-1">{{ $data->cabang->cabang_nama }}</p>
                 </div>
                 <div class='mt-3'>
                     {{-- <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
@@ -19,12 +19,15 @@
                     </form>
                 </div>
             </div>
+            <div class="text-center mb-3">
+                <b class="text-center fw-medium text-white font-size-16">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
+            </div>
             @if (!$shift || $shift == null)
             @else
                 <br>
             @endif
         </div>
-        <div class="parent mb-10">
+        <div class="parent mb-6">
             <div class="child-float rounded mt-5 px-4">
                 <div class="card rounded-sm">
                     <div class="card-body">
@@ -62,7 +65,7 @@
             <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
                 <div class="card-body py-2 px-3">
                     <h3 class="fw-bold font-size-16 mt-1">Cuti</h3>
-                    <span class="font-size-22 fw-black">0</span>
+                    <span class="font-size-22 fw-black">{{ $cuti }}</span>
                 </div>
             </div>
             <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
@@ -100,7 +103,7 @@
             <div class="row">
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('user.data') }}" class="mb-2">
                             <i class="bi bi-person-circle circle font-size-20 px-3 text-white"
                                 style="background-color: #dc2626"></i>
                         </a>
@@ -109,7 +112,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('user.jadwal') }}" class="mb-2">
                             <i class="bi bi-calendar-week circle font-size-20 px-3 text-white"
                                 style="background-color: #ea580c"></i>
                         </a>
@@ -118,7 +121,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('absen.index') }}" class="mb-2">
                             <i class="bi bi-alarm-fill circle font-size-20 px-3 text-white"
                                 style="background-color: #65a30d"></i>
                         </a>
@@ -127,7 +130,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('kegiatan.index') }}" class="mb-2">
                             <i class="bi bi-star-fill circle font-size-20 px-3 text-white"
                                 style="background-color: #0d9488"></i>
                         </a>
@@ -136,7 +139,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('leave.index') }}" class="mb-2">
                             <i class="bi bi-calendar-x circle font-size-20 px-3 text-white"
                                 style="background-color: #0284c7"></i>
                         </a>
@@ -154,7 +157,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('user.gaji') }}" class="mb-2">
                             <i class="bi bi-wallet2 circle font-size-20 px-3 text-white"
                                 style="background-color: #c026d3"></i>
                         </a>
