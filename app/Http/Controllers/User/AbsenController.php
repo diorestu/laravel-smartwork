@@ -29,10 +29,11 @@ class AbsenController extends Controller
         // Set Data User;
         $id        = Auth::user()->id;
         // Cek Shift
-        $shift        = UserShift::where('id_user', $id)->whereDate('tanggal_shift', date('Y-m-d'))->first();
+        $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
         // Cek Absensi Terakhir
         $absenHariIni = Absensi::where('id_user', $id)->whereDate('jam_hadir', $today)->first();
-        $absenKemarin = Absensi::where('id_user', $id)->whereDate('jam_hadir', $yesterday)->first();
+        $absenKemarin = Absensi::where('id_user', $id)->whereDate('jam_hadir', $yesterday)->whereNull('jam_pulang')->first();
+        // dd($absenKemarin);
         $absen = '';
         // Set Riwayat Absensi
         $riwayat      = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
@@ -40,6 +41,15 @@ class AbsenController extends Controller
         $title        = null;
         $d            = false;
         if(!$shift){
+            if ($absenKemarin) {
+                $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
+                $absen = $absenKemarin;
+                $in    = true;
+                if ($absen->jam_pulang) {
+                    $out = true;
+                }
+            }
+
             $title = 'Absen Tidak Tersedia';
             $d= true;
         }elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
@@ -47,12 +57,14 @@ class AbsenController extends Controller
             $d = true;
         }else{
             if ($absenHariIni) {
+                $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
                 $absen = $absenHariIni;
                 $in    = true;
                 if ($absen->jam_pulang) {
                     $out = true;
                 }
             } elseif ($absenKemarin) {
+                $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
                 $absen = $absenKemarin;
                 $in    = true;
                 if ($absen->jam_pulang) {
@@ -108,11 +120,11 @@ class AbsenController extends Controller
         // dd($hadir);
         $hadir['hadir'] = date("Y-m-d H:i:s");
         $response = Absensi::create([
-            'id_user' => Auth::user()->id,
-            'jam_hadir' => $hadir['hadir'],
-            'lat_hadir' => $hadir['lat_hadir'],
+            'id_user'    => Auth::user()->id,
+            'jam_hadir'  => $hadir['hadir'],
+            'lat_hadir'  => $hadir['lat_hadir'],
             'long_hadir' => $hadir['long_hadir'],
-            'ket_hadir' => '',
+            'ket_hadir'  => '',
         ]);
         // dd($response);
         return redirect()->route('absen.index');
@@ -126,8 +138,9 @@ class AbsenController extends Controller
      */
     public function show($id)
     {
+        $data = Absensi::find($id);
         return view('user.absen.detail', [
-            'id' => 1
+            'data' => $data
         ]);
     }
 

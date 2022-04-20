@@ -5,8 +5,8 @@
 @endsection
 
 @push('addon-style')
-    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -33,24 +33,27 @@
             </div>
         </div>
     </section>
-    <div class="text-center d-none" id="absenForm">
+    <div class="text-center" id="absenForm">
         <div class="card mx-4 rounded-sm">
             <div class="card-body px-2 py-4">
-                <h3 class="text-center font-weight-bolder mb-1">Absen Hadir</h3>
-                <h2 id='span' class="text-center fw-bold mb-2 display-4"></h2>
-                <form method="post" action="{{ route('absen.store') }}" id="myForm" class="px-3 my-1">
-                    @method('post')
-                    @csrf
-                    {{-- <div class="text-center">
-                        <label for="my-textarea"> Keterangan Absensi:</label>
-                        <textarea onclick="getLocation()" id="my-textarea" class="form-control" name="deskripsi"
-                            rows="3"></textarea>
-                    </div> --}}
-                    <input id="lokasix" class="form-control" type="hidden" name="lat_hadir">
-                    <input id="lokasiy" class="form-control" type="hidden" name="long_hadir">
-                    <button type="submit" id="btn" class="btn btn-primary w-100 rounded-md d-none py-3">Absen
-                        Hadir</button>
-                </form>
+                <h3 class="text-center font-weight-bolder mb-1">Absensi Saya</h3>
+                <h2 id='span' class="text-center fw-bold mb-2"></h2>
+                <div class="mb-3 px-4 row">
+                    <div class="col-6">
+                        <div class="bg-primary rounded-lg p-3"><span class="text-white">{{ tanggalIndoWaktuLengkap($data->jam_hadir) }}</span></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-primary rounded-lg p-3"><span class="text-white">{{ tanggalIndoWaktuLengkap($data->jam_pulang) }}</span></div>
+                    </div>
+                </div>
+                <div class="px-4">
+                    <span class="fw-semibold">Foto Absen Hadir</span>
+                    <input id="hadir" name="hadir" type="file" />
+                </div>
+                <div class="px-4">
+                    <span class="fw-semibold">Foto Absen Pulang</span>
+                    <input id="pulang" name="pulang" type="file" />
+                </div>
             </div>
         </div>
     </div>
@@ -61,22 +64,27 @@
 @endsection
 
 @push('addon-script')
-    {{-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script>
         $(document).ready(function() {
             $('.filepond--credits').addClass('d-none');
         });
-    </script> --}}
-    {{-- <script>
+    </script>
+    <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
         // Get a reference to the file input element
-        const inputElement = document.querySelector('input[id="avatar"]');
+        const inputElement = document.querySelector('input[id="hadir"]');
+        const inputElement2 = document.querySelector('input[id="pulang"]');
 
         // Create a FilePond instance
         const pond = FilePond.create(inputElement, {
+            allowImagePreview: true,
+            imagePreviewMaxHeight: 300,
+        });
+        const pond2 = FilePond.create(inputElement2, {
             allowImagePreview: true,
             imagePreviewMaxHeight: 300,
         });
@@ -91,5 +99,5 @@
             labelIdle: '<span class="filepond--label-action text-success text-decoration-none"><i class="fa fa-camera"></i> Upload Foto</span> ',
             acceptedFileTypes: ['image/*'],
         });
-    </script> --}}
+    </script>
 @endpush

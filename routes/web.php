@@ -29,6 +29,8 @@ use App\Http\Controllers\LemburController;
 use App\Http\Controllers\SertifikasiController;
 use App\Http\Controllers\MasaKerjaController;
 use App\Http\Controllers\StatusKawinController;
+use App\Http\Controllers\User\UserLemburController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -176,4 +178,5 @@ use App\Http\Controllers\StatusKawinController;
         Route::post('upload-hadir', [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
         Route::post('upload-pulang', [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
         route::resource('leave', CutiController::class);
+        route::resource('overtime', UserLemburController::class);
     });

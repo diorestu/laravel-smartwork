@@ -234,3 +234,10 @@ function getTahunKerja($tanggal)
     $tahun = $diff->y;
     return $tahun;
 }
+function selisihJam($awal, $akhir)
+{
+    $awal  = Carbon::parse($awal);
+    $akhir = Carbon::parse($akhir);
+    $diff  = $akhir->diffInMinutes($awal);
+    return $diff;
+}

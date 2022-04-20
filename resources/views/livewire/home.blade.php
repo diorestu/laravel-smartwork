@@ -148,7 +148,7 @@
                 </div>
                 <div class="col-3 mb-3">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="" class="mb-2">
+                        <a href="{{ route('overtime.index') }}" class="mb-2">
                             <i class="bi bi-clock-history circle font-size-20 px-3 text-white"
                                 style="background-color: #7c3aed"></i>
                         </a>

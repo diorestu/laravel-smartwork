@@ -38,7 +38,7 @@
     </section>
 @endsection
 
-@push('addon-script')
+{{-- @push('addon-script')
     <script>
         $(function() {
             $('#btn-logout').click(function() {
@@ -50,4 +50,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}

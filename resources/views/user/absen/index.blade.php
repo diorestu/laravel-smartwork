@@ -19,13 +19,10 @@
                     </button>
                 </div>
             </div>
-            <div class="text-center">
-                <b class="text-center fw-medium text-white font-size-16">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
+            <div class="text-center {{ !$shift ? 'mb-2' : 'mb-1' }}">
+                <b
+                    class="text-center fw-medium text-white font-size-16">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</b><br>
             </div>
-            @if (!$shift || $shift == null)
-            @else
-                <br>
-            @endif
         </div>
     </section>
 
@@ -37,23 +34,40 @@
                         <b class="fw-medium font-size-16 text-muted">Tidak Ada Shift</b><br>
                         <b class="fw-bold font-size-20 text-muted">-</b><br>
                     @else
-                        <b class="fw-medium font-size-16 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift '.$shift->shift->ket_shift  }}</b><br>
+                        <b
+                            class="fw-medium font-size-16 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift ' . $shift->shift->ket_shift }} - {{ tglIndo2($shift->tanggal_shift) }}</b><br>
                         <b class="fw-bold font-size-20 text-muted">{{ tampilJamMenit($shift->shift->hadir_shift) }} -
                             {{ tampilJamMenit($shift->shift->pulang_shift) }}</b><br>
                     @endif
                 </div>
                 {{-- <hr> --}}
-                <div class="row {{ $d ? 'd-none' : '' }}">
+                <div class="row">
                     @if ($absen)
                         <div class="col-6">
-                            <a id="btn" class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $in ? 'disabled' : '' }}"
+                            <a id="btn"
+                                class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $in ? 'disabled' : '' }}"
                                 href="{{ route('absen.create') }}">
-                                IN {{ $in ? '- '.tampilJamMenit($absen->jam_hadir) : 'false' }}</a>
+                                IN {{ $in ? '- ' . tampilJamMenit($absen->jam_hadir) : 'false' }}</a>
                         </div>
                         <div class="col-6">
-                            <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn" class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
+                            <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn"
+                                class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
                                 OUT</a>
-                                {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
+                            {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
+                        </div>
+                    @elseif(!$shift || $shift == null)
+                        <div class="col-12 text-center">
+                            <span class="font-medium ">Atur Shift Anda Terlebih Dahulu</span>
+                        </div>
+                    @else
+                        <div class="col-6">
+                            <a id="btn" class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100"
+                                href="{{ route('absen.create') }}">
+                                CLOCK IN</a>
+                        </div>
+                        <div class="col-6">
+                            <a id="btn" class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 disabled">
+                                CLOCK OUT</a>
                         </div>
                     @endif
                 </div>
@@ -70,7 +84,8 @@
             </div>
             <div>
                 @forelse($riwayat as $item)
-                    <a href="{{ route('absen.show', $item->id) }}" class="text-dark bg-white rounded mb-3 p-3 d-flex align-items-center">
+                    <a href="{{ route('absen.show', $item->id) }}"
+                        class="text-dark bg-white rounded mb-3 p-3 d-flex align-items-center">
                         <i class="fa fa-info-circle text-primary align-middle me-3"></i><strong>{{ tanggalIndoWaktu($item->jam_hadir) }}
                             - {{ $item->jam_pulang ? tanggalIndoWaktu($item->jam_pulang) : 'Belum Absen' }}</strong>
                     </a>
@@ -89,4 +104,3 @@
         </div>
     </section>
 @endsection
-
