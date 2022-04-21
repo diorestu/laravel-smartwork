@@ -12,7 +12,7 @@
                     <a href="{{ route('user.home') }}" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
                 <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Cuti Saya</h2>
+                    <h2 class="fw-bold font-size-18 text-white mb-0">Cuti Saya</h2>
                 </div>
                 <div class=''>
                     <a href="{{ route('leave.create') }}" class="btn btn-transparent-danger font-weight-bold text-white"><i

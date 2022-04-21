@@ -143,9 +143,15 @@ use App\Http\Controllers\User\UserLemburController;
             Route::get('payroll/download-slip-gaji/{id}', [PayrollController::class, 'cetak_slipgaji_payroll'])->name('payroll.cetak_slipgaji');
             Route::resource('payroll',                  PayrollController::class);
             // laporan
-            Route::get('laporan/absensi',               [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
-            Route::get('laporan/detail-absensi',        [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
-            Route::post('laporan/data-absensi',         [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
+            Route::get('laporan/absensi',         [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
+            Route::get('laporan/cuti',            [LaporanController::class, 'lap_cuti'])->name('laporan.cuti');
+            Route::post('laporan/cuti',            [LaporanController::class, 'ekspor_cuti'])->name('ekspor.laporan.cuti');
+            Route::get('laporan/lembur',            [LaporanController::class, 'lap_lembur'])->name('laporan.lembur');
+            Route::post('laporan/lembur',            [LaporanController::class, 'ekspor_lembur'])->name('ekspor.laporan.lembur');
+            Route::get('laporan/bpjs',            [LaporanController::class, 'lap_bpjs'])->name('laporan.bpjs');
+            Route::post('laporan/bpjs',            [LaporanController::class, 'ekspor_bpjs'])->name('ekspor.laporan.bpjs');
+            Route::get('laporan/detail-absensi',  [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
+            Route::post('laporan/data-absensi',   [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
         });
 
         // PELAPORAN
