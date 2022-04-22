@@ -16,7 +16,7 @@
                 </div>
                 <div class=''>
                     <a href="{{ route('leave.create') }}" class="btn btn-transparent-danger font-weight-bold text-white"><i
-                            class="fa fa-plus text-white me-2"></i>Tambah</a>
+                            class="fa fa-plus fa-lg text-white"></i></a>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ Tambah Cuti
                     <a href="{{ route('overtime.index') }}" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
                 <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Pengajuan Cuti</h2>
+                    <h2 class="fw-bold font-size-18 text-white">Pengajuan Lembur</h2>
                 </div>
                 <div class='ms-4'>
                 </div>

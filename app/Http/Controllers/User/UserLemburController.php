@@ -16,7 +16,9 @@ class UserLemburController extends Controller
      */
     public function index()
     {
-        return view('user.lembur.index');
+        $id = Auth::user()->id;
+        $data = Lembur::where('id_user', $id)->get();
+        return view('user.lembur.index', compact('data'));
     }
 
     /**
@@ -53,7 +55,7 @@ class UserLemburController extends Controller
     }
 
     /**
-     * Display the specified resource.  
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

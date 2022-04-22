@@ -29,14 +29,14 @@
                         class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
             </div>
             <div>
-                @forelse($data = [] as $item)
+                @forelse($data as $item)
                     <div class="alert alert-secondary alert-top-border fade show mb-3" role="alert">
                         <div class="d-flex align-items-center justify-content-start">
-                            <i class="fa fa-info-circle fa-lg text-primary align-middle me-3"></i>
+                            <i class="fa fa-{{ $item->lembur_status == 'PENGAJUAN' ? 'info' : 'check' }}-circle fa-lg text-{{ $item->lembur_status == 'PENGAJUAN' ? 'primary' : 'success' }} align-middle me-3"></i>
                             <div>
-                                <strong>{{ tglIndo2($item->cuti_awal) }} - {{ tglIndo2($item->cuti_akhir) }}</strong>
+                                <strong>{{ tglIndo2($item->lembur_awal) }}</strong> - <span class="text-muted">{{ tampilJamMenit($item->lembur_awal) }} s/d {{ tampilJamMenit($item->lembur_akhir) }}</span>
                                 <br>
-                                <span class="">{{ $item->cuti_deskripsi }}</span>
+                                <em class="">{{ $item->lembur_keterangan }}</em>
                             </div>
                         </div>
 
