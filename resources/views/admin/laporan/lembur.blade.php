@@ -23,11 +23,11 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Laporan</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">BPJS</a></li>
-                        <li class="breadcrumb-item active">Laporan BPJS Pegawai</li>
+                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Lembur</a></li>
+                        <li class="breadcrumb-item active">Laporan Lembur Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Laporan BPJS Pegawai</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Lihat laporan BPJS pegawai dengan waktu tertentu</p>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Laporan Lembur Pegawai</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Lihat laporan Lembur pegawai dengan waktu tertentu</p>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="col-12 div_sticky">
             <div class="card card-custom rounded-sm shadow-md">
                 <div class="card-body px-4 py-4">
-                    <form id="formAction" action="{{ route('ekspor.laporan.bpjs') }}" method="POST">
+                    <form id="formAction" action="{{ route('ekspor.laporan.lembur') }}" method="POST">
                         @method('POST')
                         @csrf
                         <div class="row">

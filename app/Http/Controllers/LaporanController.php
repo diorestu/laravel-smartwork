@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Exports\CutiExport;
 use Illuminate\Http\Request;
+use App\Exports\LemburExport;
 use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
@@ -16,19 +17,19 @@ class LaporanController extends Controller
         return view("admin.laporan.cuti");
     }
     public function ekspor_cuti(Request $r) {
-        return (new CutiExport($r->waktu))->download('export_cuti.xlsx');
+        return (new CutiExport($r->waktu))->download('export_report_cuti.xlsx');
     }
     public function lap_lembur() {
         return view("admin.laporan.lembur");
     }
     public function ekspor_lembur(Request $r) {
-        return (new CutiExport($r->waktu))->download('export_lembur.xlsx');
+        return (new LemburExport($r->waktu))->download('export_lembur.xlsx');
     }
     public function lap_bpjs() {
         return view("admin.laporan.bpjs");
     }
     public function ekspor_bpjs(Request $r) {
-        return (new CutiExport($r->waktu))->download('export_bpjs.xlsx');
+        return 'success';
     }
 
     public function detail_absensi() {

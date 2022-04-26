@@ -127,7 +127,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
                             <a href="{{ route("laporan.absensi") }}" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Absensi</a>
-                            <a href="/" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lembur</a>
+                            <a href="{{ route("laporan.lembur") }}" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lembur</a>
                             <a href="{{ route('laporan.cuti') }}" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Cuti</a>
                             <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> BPJS</a>
                             <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> PPh 21</a>

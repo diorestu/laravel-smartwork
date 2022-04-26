@@ -23,11 +23,11 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Laporan</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Cuti</a></li>
-                        <li class="breadcrumb-item active">Laporan Cuti Pegawai</li>
+                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">BPJS</a></li>
+                        <li class="breadcrumb-item active">Simulasi Iuran BPJS</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Laporan Cuti Pegawai</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Lihat laporan cuti pegawai dengan waktu tertentu</p>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Simulasi Iuran BPJS</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Kalkulator untuk menghitung berapa iuran BPJS yang harus dibayarkan</p>
                 </div>
             </div>
         </div>
@@ -40,24 +40,52 @@
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-9">
-                                <div class="form-group">
-                                    <label for="waktu">Pilih Rentang Waktu <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                                        <input type="text" class="form-control daterange" id="waktu" name="waktu" value="">
-                                    </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="form-group mb-sm-2">
+                                    <label for="waktu">Masukkan Nilai Gaji Pokok <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control mb-1 mb-md-0" id="nilai" name="nilai" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2">
+                                <div class="form-group mb-sm-2">
+                                    <label for="waktu">Tipe Iuran <span class="text-danger">*</span></label>
+                                    <select name="" id="" class="form-select">
+                                        <option value="">JHT</option>
+                                        <option value="">JKK</option>
+                                        <option value="">JP</option>
+                                        <option value="">JKP</option>
+                                        <option value="">Pilih Semua</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
-                                <button class="btn btn-warning w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
-                                    <i class="fas fa-info-circle icon-md"></i> Lihat Data
+                                <button class="btn btn-success text-white w-100 mt-1 font-weight-boldest btn-md text-black mb-2" type="submit">
+                                    <i class="fas fa-info-circle icon-md"></i> Hitung
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
+            </div>
+            <div class="card card-custom rounded-sm shadow-md p-4">
+                <table class="table">
+                    <thead class="table-dark border border-secondary">
+                        <tr>
+                            <th>Gaji Pokok</th>
+                            <th>JHT</th>
+                            <th>JP</th>
+                            <th>JKK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Rp. 3.500.000</th>
+                            <td>Rp. 128.000</td>
+                            <td>Rp. 60.000</td>
+                            <td>Rp. 35.000</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -73,44 +101,44 @@
                 order: [[0, 'asc']]
             });
         });
-        // $('#formAction').submit(function(e) {
-        //     e.preventDefault();
-        //     var hari = $("#waktu").val();
-        //     var formData = new FormData(this);
-        //     if (hari != "") {
-        //         var url = "{{ route('ekspor.laporan.cuti') }}";
-        //         $.ajaxSetup({
-        //             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        //         });
-        //         $.ajax({
-        //             url: url,
-        //             data: formData,
-        //             type: 'POST',
-        //             beforeSend: function() {
-        //                 Swal.fire({
-        //                     title: 'Sedang Memproses Data...',
-        //                     allowOutsideClick: false,
-        //                     showConfirmButton: false,
-        //                     showDenyButton: false,
-        //                     showCancelButton: false
-        //                 });
-        //                 Swal.showLoading();
-        //             },
-        //             success: function(result) {
-        //                 // console.log(result)
-        //                 // $('#content').html(result);
-        //             },
-        //             complete: function(data) {
-        //                 Swal.close();
-        //             },
-        //             cache: false,
-        //             contentType: false,
-        //             processData: false
-        //         });
-        //     } else {
-        //         Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
-        //     }
-        // });
+        $('#formAction').submit(function(e) {
+            e.preventDefault();
+            var hari = $("#waktu").val();
+            var formData = new FormData(this);
+            if (hari != "") {
+                var url = "{{ route('ekspor.laporan.bpjs') }}";
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Sedang Memproses Data...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            showDenyButton: false,
+                            showCancelButton: false
+                        });
+                        Swal.showLoading();
+                    },
+                    success: function(result) {
+                        console.log(result)
+                        // $('#content').html(result);
+                    },
+                    complete: function(data) {
+                        Swal.close();
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            } else {
+                Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
+            }
+        });
     </script>
     @if (Session::has('success'))
         <script type="text/javascript">
