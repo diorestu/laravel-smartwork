@@ -27,7 +27,7 @@
                 <br>
             @endif
         </div>
-        <div class="parent mb-6">
+        <div class="parent mb-6" wire:ignore>
             <div class="child-float rounded mt-5 px-4">
                 <div class="card rounded-sm">
                     <div class="card-body">

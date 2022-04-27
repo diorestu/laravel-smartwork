@@ -36,7 +36,7 @@
         <div class="col-12 div_sticky">
             <div class="card card-custom rounded-sm shadow-md">
                 <div class="card-body px-4 py-4">
-                    <form id="formAction" action="{{ route('ekspor.laporan.cuti') }}" method="POST">
+                    <form id="formAction" action="" method="POST">
                         @method('POST')
                         @csrf
                         <div class="row">
@@ -60,6 +60,45 @@
                 </div>
             </div>
         </div>
+        <div class="col-12" id="content">
+                <div class="card shadow rounded-sm">
+                    <div class="card-body px-4 py-4">
+                        <div class="d-flex justify-content-between">
+                            <h4>Cuti</h4>
+                            <div class="row" id="userstable_filter"></div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-hover" id="myTable">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nama Pegawai</th>
+                                        <th>Lokasi Kerja</th>
+                                        <th width="5%">Opsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>Damas</td>
+                                            <td>Asta Pijar</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bx bx-dots-horizontal-rounded"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" style="#">
+                                                        <li><a class="dropdown-item" href='{{ route('laporan.detail_absensi') }}'>
+                                                            <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;Lihat Detail
+                                                        </a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
 @endsection
 
@@ -72,45 +111,70 @@
                 lengthMenu: [30, 60, 120, 240],
                 order: [[0, 'asc']]
             });
+            $('#myTable').DataTable({
+                initComplete: function () {
+                    this.api().columns([2]).every( function (jud) {
+                        var theadname       = $("#myTable th").eq([jud]).text();
+                        var column          = this;
+                        const wrapper       = document.createElement('div');
+                        wrapper.className   = 'filter_wp input-group';
+                        wrapper.innerHTML   = '<div class="input-group-text"><i class="fa fa-filter"></i></div>';
+                        var ss              = document.getElementById('userstable_filter').appendChild(wrapper);
+                        var select          = '<select class="form-control"><option value="">Semua '+theadname+'</option></select>';
+                        var damas           = $(select).appendTo(ss);
+                        damas.on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            var ssss = column.search( val ? '^'+val+'$' : '', true, false ).draw();
+                            // console.log();
+                        });
+                        @php $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
+                        @foreach ($q_cabang as $r_cabang)
+                            damas.append( '<option value="{{ $r_cabang->cabang_nama }}">{{ $r_cabang->cabang_nama }}</option>' )
+                        @endforeach
+                    });
+                },
+                lengthMenu: [30, 60, 120, 240],
+                order: [[0, 'asc']]
+            });
         });
-        // $('#formAction').submit(function(e) {
-        //     e.preventDefault();
-        //     var hari = $("#waktu").val();
-        //     var formData = new FormData(this);
-        //     if (hari != "") {
-        //         var url = "{{ route('ekspor.laporan.cuti') }}";
-        //         $.ajaxSetup({
-        //             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        //         });
-        //         $.ajax({
-        //             url: url,
-        //             data: formData,
-        //             type: 'POST',
-        //             beforeSend: function() {
-        //                 Swal.fire({
-        //                     title: 'Sedang Memproses Data...',
-        //                     allowOutsideClick: false,
-        //                     showConfirmButton: false,
-        //                     showDenyButton: false,
-        //                     showCancelButton: false
-        //                 });
-        //                 Swal.showLoading();
-        //             },
-        //             success: function(result) {
-        //                 // console.log(result)
-        //                 // $('#content').html(result);
-        //             },
-        //             complete: function(data) {
-        //                 Swal.close();
-        //             },
-        //             cache: false,
-        //             contentType: false,
-        //             processData: false
-        //         });
-        //     } else {
-        //         Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
-        //     }
-        // });
+        $('#formAction').submit(function(e) {
+            e.preventDefault();
+            var hari = $("#waktu").val();
+            var formData = new FormData(this);
+            if (hari != "") {
+                var url = "{{ route('ekspor.laporan.cuti') }}";
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Sedang Memproses Data...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            showDenyButton: false,
+                            showCancelButton: false
+                        });
+                        Swal.showLoading();
+                    },
+                    success: function(result) {
+                        // console.log(result)
+                        // $('#content').html(result);
+                    },
+                    complete: function(data) {
+                        Swal.close();
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            } else {
+                Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
+            }
+        });
     </script>
     @if (Session::has('success'))
         <script type="text/javascript">

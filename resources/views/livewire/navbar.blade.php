@@ -1,6 +1,6 @@
 <div>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <div class="card fixed-bottom shadow mb-0">
+    <div class="card fixed-bottom shadow mb-0" wire:ignore>
         <div class="card-body">
             <div class="d-flex justify-content-around">
                 <a href='{{ route('user.home') }}' class="d-flex flex-column align-items-center">

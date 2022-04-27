@@ -34,8 +34,8 @@
                         <b class="fw-medium font-size-16 text-muted">Tidak Ada Shift</b><br>
                         <b class="fw-bold font-size-20 text-muted">-</b><br>
                     @else
-                        <b
-                            class="fw-medium font-size-16 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift ' . $shift->shift->ket_shift }} - {{ tglIndo2($shift->tanggal_shift) }}</b><br>
+                        <b class="fw-medium font-size-16 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift ' . $shift->shift->ket_shift }}
+                            - {{ tglIndo2($shift->tanggal_shift) }}</b><br>
                         <b class="fw-bold font-size-20 text-muted">{{ tampilJamMenit($shift->shift->hadir_shift) }} -
                             {{ tampilJamMenit($shift->shift->pulang_shift) }}</b><br>
                     @endif
@@ -52,12 +52,13 @@
                         <div class="col-6">
                             <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn"
                                 class="rounded-lg font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
-                                OUT</a>
+                                OUT {{ $out ? '- '.tampilJamMenit($absen->jam_pulang) : '' }}</a>
                             {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
                         </div>
                     @elseif(!$shift || $shift == null)
                         <div class="col-12 text-center">
-                            <span class="font-medium ">Atur Shift Anda Terlebih Dahulu</span>
+                            <p class="font-medium mb-2">Atur Shift Anda Terlebih Dahulu</p>
+                            <a href="{{ route('user.get.shift') }}" class="btn btn-primary w-100 rounded">Pilih Shift</a>
                         </div>
                     @else
                         <div class="col-6">
@@ -104,3 +105,16 @@
         </div>
     </section>
 @endsection
+
+@push('addon-script')
+    @if (Session::has('success'))
+        <script type="text/javascript">
+            Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script type="text/javascript">
+            Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
+        </script>
+    @endif
+@endpush
