@@ -17,7 +17,20 @@ class LaporanController extends Controller
         return view("admin.laporan.cuti");
     }
     public function ekspor_cuti(Request $r) {
-        return (new CutiExport($r->waktu))->download('export_report_cuti.xlsx');
+        // return (new CutiExport($r->waktu))->download('export_report_cuti.xlsx');
+        $input      = $r->all();
+        $date       = $input['waktu'];
+        $temp       = explode("-", $date);
+        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+        $id         = Auth::user()->id;
+
+        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
+        $data       = Lembur::whereIn('id_user', $user)
+        ->whereBetween('lembur_awal', [$tawal, $takhir])
+        ->where('lembur_status', 'PENGAJUAN')->get();
+
+        $r->session()->put('lembur_pengajuan', $date);
     }
     public function lap_lembur() {
         return view("admin.laporan.lembur");

@@ -62,6 +62,7 @@
         <!-- End Content here -->
         <!-- ============================================================== -->
     </div>
+    @livewire('livewire-ui-modal')
     @include('includes.script')
     @stack('addon-script')
 </body>

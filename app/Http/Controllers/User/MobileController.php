@@ -9,6 +9,8 @@ use App\Models\Payroll;
 use App\Models\UserShift;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Shift;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -59,7 +61,7 @@ class   MobileController extends Controller
         $data->nama   = $i['nama'];
         $data->email  = $i['email'];
         $data->phone  = $i['phone'];
-        // $data->no_rek = $i['no_rek'];
+        $data->no_rek = $i['no_rek'];
         $data->alamat = $i['alamat'];
         $data->save();
         return redirect()->route('user.profil');
@@ -119,5 +121,27 @@ class   MobileController extends Controller
             'id'      => Auth::user(),
             'jadwal'  => $jadwal,
         ]);
+    }
+
+    public function getShift(){
+        $admin = Auth::user()->id_admin;
+        $shift = Shift::where('id_admin', $admin)->get();
+        return view('user.absen.pilih-shift', [
+            'shift' => $shift,
+        ]);
+    }
+
+    public function postShift(Request $r){
+        $input                  = $r->all();
+        $input['id_user']       = Auth::user()->id;
+        $input['id_user_shift'] = $r->shift;
+        $input['tanggal_shift'] = Carbon::now()->format('Y-m-d');
+        $input['status_shift']  = 'active';
+        try {
+            UserShift::create($input);
+            return redirect()->route('absen.index')->with('success', 'Berhasil Menambahkan Shift!');
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->route('absen.index')->with('error', $th->getMessage());
+        }
     }
 }

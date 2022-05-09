@@ -153,10 +153,21 @@ class AbsenController extends Controller
     public function edit($id)
     {
         $data = Absensi::findOrFail($id);
-        // dd($data);
-        return view('user.absen.pulang', [
-            'data' => $data,
-        ]);
+        $tanggalAbsen = Carbon::parse($data->jam_hadir);
+        $now = Carbon::now();
+        $selisih = $now->diffInHours($tanggalAbsen);
+        // dd($selisih);
+        if ($selisih > 24) {
+            // dd('lupa');
+            return view('user.absen.lupa-pulang', [
+                'data' => $data,
+            ]);
+        }else{
+            // dd('tidak');
+            return view('user.absen.pulang', [
+                'data' => $data,
+            ]);
+        }
     }
 
     /**

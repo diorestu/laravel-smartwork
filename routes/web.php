@@ -173,6 +173,9 @@ use App\Http\Controllers\User\UserLemburController;
         Route::post('/account', [MobileController::class, 'postchangePassword'])->name('user.pass.save');
         // Halaman Absen
         Route::resource('absen', AbsenController::class);
+        Route::get('/set-shift', [MobileController::class, 'getShift'])->name('user.get.shift');
+        Route::post('/set-shift', [MobileController::class, 'postShift'])->name('user.post.shift');
+
         // Halaman Kegiatan
         Route::resource('kegiatan', AktivitasController::class);
         // Halaman Slip Gaji
