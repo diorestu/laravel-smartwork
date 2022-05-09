@@ -61,6 +61,120 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow rounded-sm my-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                        </div>
+                        <div class="flex-1 ms-3">
+                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">Damasius Wikaryana Utama</a></h5>
+                            <p class="text-muted mb-0">Full Stack Developer</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3 pt-1">
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
+                            070 2860 5375</p>
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
+                            PhyllisGatlin@spy.com</p>
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
+                            52 Ilchester MYBSTER 9WX</p>
+                    </div>
+                    <div class="table-responsive mt-4">
+                        <table class="table rounded" id="">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="text-left">Cuti Awal</th>
+                                    <th class="text-left">Cuti Akhir</th>
+                                    <th class="text-center">Hari Cuti</th>
+                                    <th class="text-center">Sisa Cuti</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-center">10 d</td>
+                                    <td class="text-center"><b>2 d</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-center">10 d</td>
+                                    <td class="text-center"><b>2 d</b></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Total Lembur :</th>
+                                    <th class="text-center">2 h</th>
+                                    <th class="text-center">2 d</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow rounded-sm my-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                        </div>
+                        <div class="flex-1 ms-3">
+                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">Damasius Wikaryana Utama</a></h5>
+                            <p class="text-muted mb-0">Full Stack Developer</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3 pt-1">
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
+                            070 2860 5375</p>
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
+                            PhyllisGatlin@spy.com</p>
+                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
+                            Sisa cuti terakhir 10 hari</p>
+                    </div>
+                    <div class="table-responsive mt-4">
+                        <table class="table rounded" id="">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="text-left">Cuti Awal</th>
+                                    <th class="text-left">Cuti Akhir</th>
+                                    <th class="text-center">Hari Cuti</th>
+                                    <th class="text-center">Sisa Cuti</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-center">10 d</td>
+                                    <td class="text-center"><b>2 d</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-left">17 September 2022</td>
+                                    <td class="text-center">10 d</td>
+                                    <td class="text-center"><b>2 d</b></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Total Lembur :</th>
+                                    <th class="text-center">2 h</th>
+                                    <th class="text-center">2 d</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('addon-script')

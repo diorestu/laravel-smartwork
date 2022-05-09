@@ -61,11 +61,118 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow rounded-sm">
+                <div class="card-body px-4 py-4" id="content">
+                    <div class="table-responsive">
+                        <table class="table rounded" id="">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="text-left">In</th>
+                                    <th class="text-center">Shift</th>
+                                    <th class="text-left">Out</th>
+                                    <th class="text-center">Jam Kerja</th>
+                                    <th class="text-center">Jam Lembur</th>
+                                    <th class="text-left">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <th colspan="6" class="text-left">
+                                            <h5>Damasius Wikaryana Utama</h5>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">17 September 2022 09:00</td>
+                                        <td class="text-center">Shift Pagi</td>
+                                        <td class="text-left">17 September 2022 19:00</td>
+                                        <td class="text-center">10 h</td>
+                                        <td class="text-center">1 h</td>
+                                        <td class="text-left"><b>Rp. 1.000</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">17 September 2022 09:00</td>
+                                        <td class="text-center">Shift Pagi</td>
+                                        <td class="text-left">17 September 2022 19:00</td>
+                                        <td class="text-center">10 h</td>
+                                        <td class="text-center">1 h</td>
+                                        <td class="text-left"><b>Rp. 1.000</b></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-end">Total Lembur :</th>
+                                        <th class="text-center">2 h</th>
+                                        <th class="text-left">Rp. 2.000</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="6" class="text-left">
+                                            <h5>Damasius Wikaryana Utama</h5>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">17 September 2022 09:00</td>
+                                        <td class="text-center">Shift Pagi</td>
+                                        <td class="text-left">17 September 2022 19:00</td>
+                                        <td class="text-center">10 h</td>
+                                        <td class="text-center">1 h</td>
+                                        <td class="text-left"><b>Rp. 1.000</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">17 September 2022 09:00</td>
+                                        <td class="text-center">Shift Pagi</td>
+                                        <td class="text-left">17 September 2022 19:00</td>
+                                        <td class="text-center">10 h</td>
+                                        <td class="text-center">1 h</td>
+                                        <td class="text-left"><b>Rp. 1.000</b></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-end">Total Lembur :</th>
+                                        <th class="text-center">2 h</th>
+                                        <th class="text-left">Rp. 2.000</th>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('addon-script')
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script>
+        function format ( data ) {
+            return '<table class="table">'+data+'</table>';
+        }
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                lengthMenu: [10, 30, 45, 100],
+                columnDefs: [
+                    { searchable: false, targets: 0 },
+                    { orderable: false, searchable: false, targets: 1 },
+                ],
+                order: [[0, 'asc']]
+            });
+            $('#myTable tbody').on('click', 'td.dt-control', function () {
+                var table   = $('#myTable').DataTable();
+                var tr      = $(this).closest('tr');
+                var row     = table.row( tr );
+                if ( row.child.isShown() ) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    row.child(format(tr.data('child-value'))).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+    </script>
 
     @if (Session::has('success'))
         <script type="text/javascript">
