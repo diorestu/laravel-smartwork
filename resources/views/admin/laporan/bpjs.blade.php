@@ -1,18 +1,17 @@
 @extends('layouts.main')
 
 @section('title')
-    Laporan Absensi Pegawai
+    Laporan Iuran BPJS Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
-    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .f-10 { font-size: 10px !important; }
         .row_sticky { justify-content: space-around; align-items: flex-start; }
         .div_sticky { position: -webkit-sticky; position: sticky; top: 120px; z-index: 90; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
         .text-tipis  { font-weight: 300; opacity: 0.5; }
+        .card-header { background:#B0141C !important; }
     </style>
 @endpush
 
@@ -23,11 +22,10 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Laporan</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">BPJS</a></li>
-                        <li class="breadcrumb-item active">Simulasi Iuran BPJS</li>
+                        <li class="breadcrumb-item"><a href="{{ route("laporan.bpjs") }}">BPJS</a></li>
+                        <li class="breadcrumb-item active">Perhitungan Iuran BPJS Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Simulasi Iuran BPJS</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Kalkulator untuk menghitung berapa iuran BPJS yang harus dibayarkan</p>
+                    <h4 class="mb-sm-3 fw-bold font-size-22 mt-3">Perhitungan Iuran BPJS Pegawai</h4>
                 </div>
             </div>
         </div>
@@ -36,77 +34,87 @@
         <div class="col-12 div_sticky">
             <div class="card card-custom rounded-sm shadow-md">
                 <div class="card-body px-4 py-4">
-                    <form id="formAction" action="{{ route('ekspor.laporan.cuti') }}" method="POST">
+                    <form id="formAction" action="" method="POST">
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-7">
-                                <div class="form-group mb-sm-2">
-                                    <label for="waktu">Masukkan Nilai Gaji Pokok <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control mb-1 mb-md-0" id="nilai" name="nilai" value="">
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option value='all'>Semua Lokasi Kerja</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2">
-                                <div class="form-group mb-sm-2">
-                                    <label for="waktu">Tipe Iuran <span class="text-danger">*</span></label>
-                                    <select name="" id="" class="form-select">
-                                        <option value="">JHT</option>
-                                        <option value="">JKK</option>
-                                        <option value="">JP</option>
-                                        <option value="">JKP</option>
-                                        <option value="">Pilih Semua</option>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="tahun">Tahun <span class="text-danger">*</span></label>
+                                    <select required id="tahun" class="form-select" name="tahun">
+                                        @for ($t=2022;$t>=2020;$t--)
+                                        <option value='{{ $t }}'>{{ $t }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="bulan">Bulan <span class="text-danger">*</span></label>
+                                    <select required id="bulan" class="form-select" name="bulan">
+                                        @for ($b=1;$b<=12;$b++)
+                                        <option value='{{ $b }}'>{{ $b.": ".Bulan($b) }}</option>
+                                        @endfor
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
-                                <button class="btn btn-success text-white w-100 mt-1 font-weight-boldest btn-md text-black mb-2" type="submit">
-                                    <i class="fas fa-info-circle icon-md"></i> Hitung
+                                <button class="btn btn-warning text-black w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
+                                    <i class="fas fa-info-circle icon-md"></i> Hitung Iuran
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="card card-custom rounded-sm shadow-md p-4">
-                <table class="table">
-                    <thead class="table-dark border border-secondary">
-                        <tr>
-                            <th>Gaji Pokok</th>
-                            <th>JHT</th>
-                            <th>JP</th>
-                            <th>JKK</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Rp. 3.500.000</th>
-                            <td>Rp. 128.000</td>
-                            <td>Rp. 60.000</td>
-                            <td>Rp. 35.000</td>
-                        </tr>
-                    </tbody>
-                </table>
+        </div>
+    </div>
+
+    <div class="row" id="content">
+        <div class="col-12">
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h1><i class="fas fa-filter"></i></h1>
+                        <h4>Silahkan lengkapi filter diatas</h4>
+                        <p>Untuk melihat data, silahkan isi filter diatas lalu klik hitung iuran</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
 
 @push('addon-script')
-    <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+     <script>
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+        const elementTahun = document.querySelector('#bulan');
+        const choices2 = new Choices(elementTahun);
+        const elementBulan = document.querySelector('#tahun');
+        const choices3 = new Choices(elementBulan);
+    </script>
     <script>
-        $(document).ready(function() {
-            $('#myTable2').DataTable({
-                lengthMenu: [30, 60, 120, 240],
-                order: [[0, 'asc']]
-            });
-        });
         $('#formAction').submit(function(e) {
             e.preventDefault();
-            var hari = $("#waktu").val();
+            var waktu = $("#bulan").val();
             var formData = new FormData(this);
-            if (hari != "") {
-                var url = "{{ route('ekspor.laporan.bpjs') }}";
+            if (waktu != "") {
+                var url = "{{ url('kelola/data-iuran-bpjs') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });
@@ -125,8 +133,7 @@
                         Swal.showLoading();
                     },
                     success: function(result) {
-                        console.log(result)
-                        // $('#content').html(result);
+                        $('#content').html(result);
                     },
                     complete: function(data) {
                         Swal.close();
@@ -136,7 +143,7 @@
                     processData: false
                 });
             } else {
-                Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
+                Swal.fire('Maaf','Silahkan pilih rentang waktu.','error');
             }
         });
     </script>

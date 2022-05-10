@@ -23,7 +23,7 @@ class Payroll extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function slip(): BelongsTo
+     public function slip(): BelongsTo
     {
         return $this->belongsTo(PayrollParent::class, 'id_payroll', 'id');
     }

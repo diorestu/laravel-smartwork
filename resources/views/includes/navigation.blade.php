@@ -34,6 +34,7 @@
                                     <a href="{{ route('status-kawin.index') }}" class="dropdown-item">Status Kawin</a>
                                 </div>
                             </div>
+                            <a href="{{ route('kpi-master.index') }}" class="dropdown-item" {{ request()->is('master/kpi-master') ? 'active' : ''}} data-key="t-divisi"><i class="icon-menu" data-feather="heart"></i> KPI</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -129,8 +130,8 @@
                             <a href="{{ route("laporan.absensi") }}" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Absensi</a>
                             <a href="{{ route("laporan.lembur") }}" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lembur</a>
                             <a href="{{ route('laporan.cuti') }}" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Cuti</a>
-                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> BPJS</a>
-                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> PPh 21</a>
+                            <a href="{{ route('laporan.bpjs') }}" class="dropdown-item"><i class="icon-menu" data-feather="shield"></i> BPJS</a>
+                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="dollar-sign"></i> PPh 21</a>
                         </div>
                     </li>
 

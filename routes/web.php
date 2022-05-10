@@ -24,6 +24,7 @@ use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\KpiMasterController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LemburController;
 use App\Http\Controllers\SertifikasiController;
@@ -82,6 +83,8 @@ use App\Http\Controllers\User\UserLemburController;
             Route::resource('tunjangan/masa-kerja',     MasaKerjaController::class);
             // tunjangan status kawin
             Route::resource('tunjangan/status-kawin',   StatusKawinController::class);
+            //
+            Route::resource('kpi-master',               KpiMasterController::class);
         });
 
         // MANAJEMEN
@@ -143,15 +146,22 @@ use App\Http\Controllers\User\UserLemburController;
             Route::get('payroll/download-slip-gaji/{id}', [PayrollController::class, 'cetak_slipgaji_payroll'])->name('payroll.cetak_slipgaji');
             Route::resource('payroll',                  PayrollController::class);
             // laporan
-            Route::get('laporan/absensi',         [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
-            Route::get('laporan/cuti',            [LaporanController::class, 'lap_cuti'])->name('laporan.cuti');
-            Route::post('laporan/cuti',            [LaporanController::class, 'ekspor_cuti'])->name('ekspor.laporan.cuti');
-            Route::get('laporan/lembur',            [LaporanController::class, 'lap_lembur'])->name('laporan.lembur');
-            Route::post('laporan/lembur',            [LaporanController::class, 'ekspor_lembur'])->name('ekspor.laporan.lembur');
-            Route::get('laporan/bpjs',            [LaporanController::class, 'lap_bpjs'])->name('laporan.bpjs');
-            Route::post('laporan/bpjs',            [LaporanController::class, 'ekspor_bpjs'])->name('ekspor.laporan.bpjs');
-            Route::get('laporan/detail-absensi',  [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
-            Route::post('laporan/data-absensi',   [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
+            Route::get('laporan/absensi',               [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
+
+            Route::get('laporan/cuti',                  [LaporanController::class, 'lap_cuti'])->name('laporan.cuti');
+            Route::post('data-laporan-cuti',            [LaporanController::class, 'showDataCuti'])->name('laporan.show_data_cuti');
+            Route::post('laporan/cuti',                 [LaporanController::class, 'ekspor_cuti'])->name('ekspor.laporan.cuti');
+
+            Route::get('laporan/lembur',                [LaporanController::class, 'lap_lembur'])->name('laporan.lembur');
+            Route::post('data-laporan-lembur',          [LaporanController::class, 'showDataLembur'])->name('laporan.show_data_lembur');
+            Route::post('laporan/lembur',               [LaporanController::class, 'ekspor_lembur'])->name('ekspor.laporan.lembur');
+
+            Route::get('laporan/bpjs',                  [LaporanController::class, 'lap_bpjs'])->name('laporan.bpjs');
+            Route::post('data-iuran-bpjs',              [LaporanController::class, 'showDataBpjs'])->name('laporan.show_data_bpjs');
+            Route::post('laporan/bpjs',                 [LaporanController::class, 'ekspor_bpjs'])->name('ekspor.laporan.bpjs');
+
+            Route::get('laporan/detail-absensi',        [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
+            Route::post('laporan/data-absensi',         [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
         });
 
         // PELAPORAN

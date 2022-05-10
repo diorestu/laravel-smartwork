@@ -1,12 +1,10 @@
 @extends('layouts.main')
 
 @section('title')
-    Laporan Absensi Pegawai
+    Laporan Lembur Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
-    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .f-10 { font-size: 10px !important; }
         .row_sticky { justify-content: space-around; align-items: flex-start; }
@@ -36,11 +34,25 @@
         <div class="col-12 div_sticky">
             <div class="card card-custom rounded-sm shadow-md">
                 <div class="card-body px-4 py-4">
-                    <form id="formAction" action="{{ route('ekspor.laporan.lembur') }}" method="POST">
+                    <form id="formAction" action="" method="POST">
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option value='all'>Semua Lokasi Kerja</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="waktu">Pilih Rentang Waktu <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -49,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-3 d-flex align-items-end">
+                            <div class="col-sm-12 col-md-4 d-flex align-items-end">
                                 <button class="btn btn-warning w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
@@ -62,118 +74,69 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="content">
         <div class="col-12">
-            <div class="card shadow rounded-sm">
-                <div class="card-body px-4 py-4" id="content">
-                    <div class="table-responsive">
-                        <table class="table rounded" id="">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-left">In</th>
-                                    <th class="text-center">Shift</th>
-                                    <th class="text-left">Out</th>
-                                    <th class="text-center">Jam Kerja</th>
-                                    <th class="text-center">Jam Lembur</th>
-                                    <th class="text-left">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <th colspan="6" class="text-left">
-                                            <h5>Damasius Wikaryana Utama</h5>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">17 September 2022 09:00</td>
-                                        <td class="text-center">Shift Pagi</td>
-                                        <td class="text-left">17 September 2022 19:00</td>
-                                        <td class="text-center">10 h</td>
-                                        <td class="text-center">1 h</td>
-                                        <td class="text-left"><b>Rp. 1.000</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">17 September 2022 09:00</td>
-                                        <td class="text-center">Shift Pagi</td>
-                                        <td class="text-left">17 September 2022 19:00</td>
-                                        <td class="text-center">10 h</td>
-                                        <td class="text-center">1 h</td>
-                                        <td class="text-left"><b>Rp. 1.000</b></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4" class="text-end">Total Lembur :</th>
-                                        <th class="text-center">2 h</th>
-                                        <th class="text-left">Rp. 2.000</th>
-                                    </tr>
-
-                                    <tr>
-                                        <th colspan="6" class="text-left">
-                                            <h5>Damasius Wikaryana Utama</h5>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">17 September 2022 09:00</td>
-                                        <td class="text-center">Shift Pagi</td>
-                                        <td class="text-left">17 September 2022 19:00</td>
-                                        <td class="text-center">10 h</td>
-                                        <td class="text-center">1 h</td>
-                                        <td class="text-left"><b>Rp. 1.000</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">17 September 2022 09:00</td>
-                                        <td class="text-center">Shift Pagi</td>
-                                        <td class="text-left">17 September 2022 19:00</td>
-                                        <td class="text-center">10 h</td>
-                                        <td class="text-center">1 h</td>
-                                        <td class="text-left"><b>Rp. 1.000</b></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4" class="text-end">Total Lembur :</th>
-                                        <th class="text-center">2 h</th>
-                                        <th class="text-left">Rp. 2.000</th>
-                                    </tr>
-                            </tbody>
-                        </table>
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h1><i class="fas fa-filter"></i></h1>
+                        <h4>Silahkan lengkapi filter diatas</h4>
+                        <p>Untuk melihat data, silahkan isi filter diatas lalu klik lihat data</p>
                     </div>
                 </div>
             </div>
         </div>
+
+                {{-- $cabang     = 1;
+                $tawal      = "2022-02-01";
+                $takhir      = "2022-02-28"; --}}
     </div>
 @endsection
 
 @push('addon-script')
-    <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-
     <script>
-        function format ( data ) {
-            return '<table class="table">'+data+'</table>';
-        }
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                lengthMenu: [10, 30, 45, 100],
-                columnDefs: [
-                    { searchable: false, targets: 0 },
-                    { orderable: false, searchable: false, targets: 1 },
-                ],
-                order: [[0, 'asc']]
-            });
-            $('#myTable tbody').on('click', 'td.dt-control', function () {
-                var table   = $('#myTable').DataTable();
-                var tr      = $(this).closest('tr');
-                var row     = table.row( tr );
-                if ( row.child.isShown() ) {
-                    row.child.hide();
-                    tr.removeClass('shown');
-                }
-                else {
-                    row.child(format(tr.data('child-value'))).show();
-                    tr.addClass('shown');
-                }
-            });
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+    </script>
+    <script>
+        $('#formAction').submit(function(e) {
+            e.preventDefault();
+            var hari = $("#waktu").val();
+            var formData = new FormData(this);
+            if (hari != "") {
+                var url = "{{ url('kelola/data-laporan-lembur') }}";
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Sedang Memproses Data...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            showDenyButton: false,
+                            showCancelButton: false
+                        });
+                        Swal.showLoading();
+                    },
+                    success: function(result) {
+                        $('#content').html(result);
+                    },
+                    complete: function(data) {
+                        Swal.close();
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            } else {
+                Swal.fire('Maaf','Silahkan pilih rentang waktu terlebih dahulu.','error');
+            }
         });
     </script>
-
     @if (Session::has('success'))
         <script type="text/javascript">
             Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
@@ -185,8 +148,3 @@
         </script>
     @endif
 @endpush
-
-
-
-
-

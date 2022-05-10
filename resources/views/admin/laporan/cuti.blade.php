@@ -1,12 +1,10 @@
 @extends('layouts.main')
 
 @section('title')
-    Laporan Absensi Pegawai
+    Laporan Cuti Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
-    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .f-10 { font-size: 10px !important; }
         .row_sticky { justify-content: space-around; align-items: flex-start; }
@@ -40,7 +38,21 @@
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option value='all'>Semua Lokasi Kerja</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="waktu">Pilih Rentang Waktu <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -49,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-3 d-flex align-items-end">
+                            <div class="col-sm-12 col-md-4 d-flex align-items-end">
                                 <button class="btn btn-warning w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
@@ -60,155 +72,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-12" id="content">
-                <div class="card shadow rounded-sm">
-                    <div class="card-body px-4 py-4">
-                        <div class="d-flex justify-content-between">
-                            <h4>Cuti</h4>
-                            <div class="row" id="userstable_filter"></div>
-                        </div>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-hover" id="myTable">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Nama Pegawai</th>
-                                        <th>Lokasi Kerja</th>
-                                        <th width="5%">Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>Damas</td>
-                                            <td>Asta Pijar</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bx-dots-horizontal-rounded"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end" style="#">
-                                                        <li><a class="dropdown-item" href='{{ route('laporan.detail_absensi') }}'>
-                                                            <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;Lihat Detail
-                                                        </a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-        </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="content">
         <div class="col-12">
-            <div class="card shadow rounded-sm my-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
-                        </div>
-                        <div class="flex-1 ms-3">
-                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">Damasius Wikaryana Utama</a></h5>
-                            <p class="text-muted mb-0">Full Stack Developer</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mt-3 pt-1">
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
-                            070 2860 5375</p>
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
-                            PhyllisGatlin@spy.com</p>
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
-                            52 Ilchester MYBSTER 9WX</p>
-                    </div>
-                    <div class="table-responsive mt-4">
-                        <table class="table rounded" id="">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-left">Cuti Awal</th>
-                                    <th class="text-left">Cuti Akhir</th>
-                                    <th class="text-center">Hari Cuti</th>
-                                    <th class="text-center">Sisa Cuti</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-center">10 d</td>
-                                    <td class="text-center"><b>2 d</b></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-center">10 d</td>
-                                    <td class="text-center"><b>2 d</b></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="2" class="text-end">Total Lembur :</th>
-                                    <th class="text-center">2 h</th>
-                                    <th class="text-center">2 d</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow rounded-sm my-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
-                        </div>
-                        <div class="flex-1 ms-3">
-                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">Damasius Wikaryana Utama</a></h5>
-                            <p class="text-muted mb-0">Full Stack Developer</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mt-3 pt-1">
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
-                            070 2860 5375</p>
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
-                            PhyllisGatlin@spy.com</p>
-                        <p class="text-muted mb-0 mt-2 mx-3"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
-                            Sisa cuti terakhir 10 hari</p>
-                    </div>
-                    <div class="table-responsive mt-4">
-                        <table class="table rounded" id="">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-left">Cuti Awal</th>
-                                    <th class="text-left">Cuti Akhir</th>
-                                    <th class="text-center">Hari Cuti</th>
-                                    <th class="text-center">Sisa Cuti</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-center">10 d</td>
-                                    <td class="text-center"><b>2 d</b></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-left">17 September 2022</td>
-                                    <td class="text-center">10 d</td>
-                                    <td class="text-center"><b>2 d</b></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="2" class="text-end">Total Lembur :</th>
-                                    <th class="text-center">2 h</th>
-                                    <th class="text-center">2 d</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h1><i class="fas fa-filter"></i></h1>
+                        <h4>Silahkan lengkapi filter diatas</h4>
+                        <p>Untuk melihat data, silahkan isi filter diatas lalu klik lihat data</p>
                     </div>
                 </div>
             </div>
@@ -217,46 +90,17 @@
 @endsection
 
 @push('addon-script')
-    <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('#myTable2').DataTable({
-                lengthMenu: [30, 60, 120, 240],
-                order: [[0, 'asc']]
-            });
-            $('#myTable').DataTable({
-                initComplete: function () {
-                    this.api().columns([2]).every( function (jud) {
-                        var theadname       = $("#myTable th").eq([jud]).text();
-                        var column          = this;
-                        const wrapper       = document.createElement('div');
-                        wrapper.className   = 'filter_wp input-group';
-                        wrapper.innerHTML   = '<div class="input-group-text"><i class="fa fa-filter"></i></div>';
-                        var ss              = document.getElementById('userstable_filter').appendChild(wrapper);
-                        var select          = '<select class="form-control"><option value="">Semua '+theadname+'</option></select>';
-                        var damas           = $(select).appendTo(ss);
-                        damas.on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            var ssss = column.search( val ? '^'+val+'$' : '', true, false ).draw();
-                            // console.log();
-                        });
-                        @php $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
-                        @foreach ($q_cabang as $r_cabang)
-                            damas.append( '<option value="{{ $r_cabang->cabang_nama }}">{{ $r_cabang->cabang_nama }}</option>' )
-                        @endforeach
-                    });
-                },
-                lengthMenu: [30, 60, 120, 240],
-                order: [[0, 'asc']]
-            });
-        });
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+    </script>
+    <script>
         $('#formAction').submit(function(e) {
             e.preventDefault();
             var hari = $("#waktu").val();
             var formData = new FormData(this);
             if (hari != "") {
-                var url = "{{ route('ekspor.laporan.cuti') }}";
+                var url = "{{ url('kelola/data-laporan-cuti') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });
@@ -275,8 +119,7 @@
                         Swal.showLoading();
                     },
                     success: function(result) {
-                        // console.log(result)
-                        // $('#content').html(result);
+                        $('#content').html(result);
                     },
                     complete: function(data) {
                         Swal.close();
@@ -301,8 +144,3 @@
         </script>
     @endif
 @endpush
-
-
-
-
-

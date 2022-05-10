@@ -121,6 +121,10 @@ function tanggalIndoWaktu($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('ll HH:mm');
 }
+function tanggalIndoWaktu2($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('LL HH:mm');
+}
 function tanggalIndoWaktuLengkap($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('dddd, LL HH:mm');
