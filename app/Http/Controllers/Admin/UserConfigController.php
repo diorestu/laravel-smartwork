@@ -87,11 +87,27 @@ class UserConfigController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = UserConfig::where('id_admin', $id)->first();
-        $input = $request->all();
-        $data->is_first = $input['is_first'];
-        $data->save();
-        return redirect()->route('admin.home');
+        $input                  = $request->all();
+        $data                   = UserConfig::where('id_admin', $id)->first();
+        $data->company_name     = $input['company_name'];
+        $data->company_address  = $input['company_address'];
+        $data->company_email    = $input['company_email'];
+        $data->company_phone    = $input['company_phone'];
+        $data->company_bidang   = $input['company_bidang'];
+        $berhasilSimpan         = $data->save();
+        if ($berhasilSimpan) { echo "ok"; } else { echo "gagal"; }
+    }
+
+    public function updateLayout(Request $request, $id) {
+        // $input              = $request->all();
+        $data               = $request->all();
+        // echo $name;
+        return $data;
+        // $data               = UserConfig::where('id_admin', $id)->first();
+
+        // $data->layout_mode  = $input['mode'];
+        // $berhasilSimpan     = $data->save();
+        // echo $data->company_address."damas";
     }
 
     /**

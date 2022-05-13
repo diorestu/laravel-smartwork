@@ -78,7 +78,6 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-email">
                                     <a href="{{ route('lembur.create') }}" class="dropdown-item">Input Lembur</a>
                                     <a href="{{ route('lembur.index') }}" class="dropdown-item">Permohonan Lembur</a>
-                                    <a href="{{ route('lembur.index') }}" class="dropdown-item">Rekap Lembur</a>
                                     <a href="{{ route('lembur.data_karyawan') }}" class="dropdown-item">Lembur Per Pegawai</a>
                                     <a href="{{ route('lembur.data_cabang') }}" class="dropdown-item">Lembur Per Lokasi Kerja</a>
                                 </div>
@@ -115,6 +114,16 @@
                                 <div class="dropdown-menu" aria-labelledby="topnav-contact">
                                     <a href="{{ route('payroll.create') }}" class="dropdown-item">Buat Payroll Baru</a>
                                     <a href="{{ route('payroll.index') }}" class="dropdown-item">Riwayat Payroll</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-contact" role="button">
+                                    <i class="icon-menu" data-feather="bell"></i> <span data-key="t-contacts">Pengumuman</span>
+                                    <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-contact">
+                                    <a href="{{ route('pengumuman.create') }}" class="dropdown-item">Buat Pengumuman Baru</a>
+                                    <a href="{{ route('pengumuman.index') }}" class="dropdown-item">Data Pengumuman</a>
                                 </div>
                             </div>
                         </div>

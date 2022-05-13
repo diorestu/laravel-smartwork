@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('nip');
             $table->string('username');
             $table->string('status');
-            $table->enum('roles', ['admin', 'user']);
+            $table->enum('roles', ['masteradmin','admin','admin_cabang','admin_payroll','admin_absensi','user']);
             $table->text('alamat')->nullable();
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
