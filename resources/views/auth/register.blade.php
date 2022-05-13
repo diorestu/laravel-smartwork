@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('title')
+    Daftar Akun Baru
+@endsection
+
 @section('content')
     <div class="auth-content my-auto">
         <div class="text-center">

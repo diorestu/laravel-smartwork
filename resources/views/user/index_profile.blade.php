@@ -3,10 +3,6 @@
 @section('title')
     Profil Saya
 @endsection
-{{--
-@push('addon-styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endpush --}}
 
 @section('content')
     <section class="p-0">
@@ -68,12 +64,12 @@
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
-            <a href="/" class="text-dark text-decoration-none w-100">
+            {{-- <a href="/" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
                     <span class="fw-semibold">Lend App</span>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
-            </a>
+            </a> --}}
             <hr>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
