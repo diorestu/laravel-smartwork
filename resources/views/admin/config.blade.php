@@ -101,11 +101,11 @@
             <div class="card card-custom gutter-b rounded-sm shadow-sm">
                 <div class="card-body px-4 py-4">
                     <h4 class="card-title my-2 ms-0">Pengaturan Tampilan</h4>
-                    <div class="form-check form-switch form-switch-lg mb-3 py-3">
-                        <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
-                        <input id="mode" name="mode" {{ auth()->user()->config->layout_mode == 'dark' ? 'checked' : ''  }} type="checkbox" class="form-check-input layout-mode-switch">
-                    </div>
-                    <div id="content"></div>
+                        <div class="form-check form-switch form-switch-lg mb-3 py-3">
+                            <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
+                            <input id="mode" name="mode" {{ auth()->user()->config->layout_mode == 'dark' ? 'checked' : ''  }} type="checkbox" class="form-check-input layout-mode-switch">
+                        </div>
+                        <div id="content"></div>
                 </div>
             </div>
             <div class="card card-custom gutter-b rounded-sm shadow-sm">
@@ -163,7 +163,6 @@
         const elementBidang = document.querySelector('#company_bidang');
         const choices = new Choices(elementBidang);
         $(".layout-mode-switch").change(function() {
-
             if(this.checked) {
                 document.body.setAttribute("data-layout-mode",  "dark");
                 document.body.setAttribute("data-topbar",       "dark");
@@ -180,18 +179,12 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
             });
             $.ajax({
-                url: url,
-                // dataType: "json",
-                data: {'modelayout': modelayout, 'product_id': 2},
                 type: 'POST',
-                success: function(data) {
-                    console.log(data);
-                    // $('#content').html(result.scs);
-                        // Swal.fire('Berhasil',result,'success');
-                },
-                cache: false,
-                contentType: false,
-                processData: false
+                url: url,
+                data: {'mode': modelayout},
+                success: function(response) {
+                    console.log(response);
+                }
             });
         });
         $('#formSetting').submit(function(e) {
@@ -217,6 +210,7 @@
                 },
                 success: function(result) {
                     if (result == "ok") {
+                        console.log(formData);
                         Swal.fire('Berhasil','Proses update data pengaturan berhasil.','success');
                     } else {
                         Swal.fire('Gagal','Proses update data tidak berhasil.','error');

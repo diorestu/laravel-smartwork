@@ -99,15 +99,14 @@ class UserConfigController extends Controller
     }
 
     public function updateLayout(Request $request, $id) {
-        // $input              = $request->all();
-        $data               = $request->all();
-        // echo $name;
-        return $data;
-        // $data               = UserConfig::where('id_admin', $id)->first();
-
-        // $data->layout_mode  = $input['mode'];
-        // $berhasilSimpan     = $data->save();
-        // echo $data->company_address."damas";
+        $mode               = $request->mode;
+        $data               = UserConfig::where('id_admin', $id)->first();
+        $data->layout_mode  = $mode;
+        $berhasilSimpan     = $data->save();
+        if ($berhasilSimpan) {
+            echo "ok";
+        }
+        // echo $mode;
     }
 
     /**
