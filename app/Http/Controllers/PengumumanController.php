@@ -77,7 +77,7 @@ class PengumumanController extends Controller
      */
     public function edit($id)
     {
-        $data   = Pengumuman::where('id', $id)->get();
+        $data   = Pengumuman::where('id', $id)->first();
         return view('admin.pengumuman.edit', [
             'data' => $data,
         ]);

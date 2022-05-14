@@ -26,7 +26,7 @@
     <div class="page-content mt-0 pt-0">
         <div class="row">
             <div class="col-xl-12 col-lg-12 p-0">
-                <form action="{{ route('pengumuman.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('pengumuman.update', $data->id) }}" method="post" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="tab-content">
@@ -45,9 +45,9 @@
                                                         $q_div = App\Models\Divisi::where('id_admin', auth()->user()->id)->get();
                                                     @endphp
                                                     @foreach ($q_div as $r_div)
-                                                    <option value='{{ $r_div->div_id }}'>{{ $r_div->div_title }}</option>
+                                                    <option @if ($r_div->div_id == $data->id_divisi) {{ "selected" }} @endif value='{{ $r_div->div_id }}'>{{ $r_div->div_title }}</option>
                                                     @endforeach
-                                                    <option value='0'>Semua Divisi</option>
+                                                    <option @if ($data->id_divisi == 0) {{ "selected" }} @endif value='0'>Semua Divisi</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
-                                        <i class="fas fa-plus icon-md"></i> &nbsp; Simpan Perubahan
+                                        <i class="fas fa-check icon-md"></i> &nbsp; Simpan Perubahan
                                     </button>
                                 </div>
                             </div>

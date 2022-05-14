@@ -27,7 +27,15 @@
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a class="btn btn-soft-primary waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp;Impor/Ekspor Data</a>
+                        <div class="btn-group mx-2" role="group">
+                            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-download"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                                <a class="dropdown-item" href="#">File Excel</a>
+                                <a class="dropdown-item" href="#">File PDF</a>
+                            </div>
+                        </div>
                         {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}
                         <a href="{{ route("pengumuman.create") }}" class="btn btn-warning waves-effect waves-light text-black">
                             <i class="fa fa-plus icon-sm text-black"></i> Buat Pengumuman Baru&nbsp;
