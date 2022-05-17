@@ -104,7 +104,7 @@
             var hari = $("#waktu").val();
             var formData = new FormData(this);
             if (hari != "") {
-                var url = "{{ url('kelola/data-laporan-lembur') }}";
+                var url = "{{ url('laporan/data-laporan-lembur') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });

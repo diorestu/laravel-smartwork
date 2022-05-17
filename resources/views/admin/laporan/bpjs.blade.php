@@ -114,7 +114,7 @@
             var waktu = $("#bulan").val();
             var formData = new FormData(this);
             if (waktu != "") {
-                var url = "{{ url('kelola/data-iuran-bpjs') }}";
+                var url = "{{ url('laporan/data-iuran-bpjs') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });

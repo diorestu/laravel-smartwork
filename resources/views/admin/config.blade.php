@@ -62,7 +62,6 @@
                 </div>
             </div>
             @endif
-
             <div class="card card-custom rounded-sm shadow-md">
                 <div class="card-body px-4 py-4">
                     <h4 class="card-title my-3 ms-3">Akun Smartwork</h4>
@@ -99,37 +98,38 @@
                     </div>
                 </div>
             </div>
-
             <div class="card card-custom gutter-b rounded-sm shadow-sm">
                 <div class="card-body px-4 py-4">
                     <h4 class="card-title my-2 ms-0">Pengaturan Tampilan</h4>
-                    <div class="form-check form-switch form-switch-lg mb-3 py-3">
-                        <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
-                        <input type="checkbox" class="form-check-input" id="mode-setting-btn">
-                    </div>
+                        <div class="form-check form-switch form-switch-lg mb-3 py-3">
+                            <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
+                            <input id="mode" name="mode" {{ auth()->user()->config->layout_mode == 'dark' ? 'checked' : ''  }} type="checkbox" class="form-check-input layout-mode-switch">
+                        </div>
+                        <div id="content"></div>
                 </div>
             </div>
-
             <div class="card card-custom gutter-b rounded-sm shadow-sm">
                 <div class="card-body px-4 py-4">
                     <h4 class="card-title my-2 ms-0">Pengaturan Umum</h4>
                     <div class="col-12">
-                        <form class="py-3">
+                        <form method="POST" action="#" id="formSetting" class="py-3">
+                            @csrf
+                            @method('PUT')
                             <div class="row mb-4">
                                 <label for="company_name" class="col-sm-3 col-form-label">Nama Perusahaan</label>
-                                <div class="col-sm-9"><input type="text" class="form-control" id="company_name" value="{{ $data->company_name }}"></div>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="company_name" value="{{ $data->company_name }}"></div>
                             </div>
                             <div class="row mb-4">
                                 <label for="company_address" class="col-sm-3 col-form-label">Alamat</label>
-                                <div class="col-sm-9"><input type="text" class="form-control" id="company_address" value="{{ $data->company_address }}"></div>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="company_address" value="{{ $data->company_address }}"></div>
                             </div>
                             <div class="row mb-4">
                                 <label for="company_phone" class="col-sm-3 col-form-label">Telepon</label>
-                                <div class="col-sm-9"><input type="text" class="form-control" id="company_phone" value="{{ $data->company_phone }}"></div>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="company_phone" value="{{ $data->company_phone }}"></div>
                             </div>
                             <div class="row mb-4">
                                 <label for="company_email" class="col-sm-3 col-form-label">Email</label>
-                                <div class="col-sm-9"><input type="email" class="form-control" id="company_email" value="{{ $data->company_email }}"></div>
+                                <div class="col-sm-9"><input type="email" class="form-control" name="company_email" value="{{ $data->company_email }}"></div>
                             </div>
                             <div class="row mb-4">
                                 <label for="company_bidang" class="col-sm-3 col-form-label">Bidang Usaha</label>
@@ -162,6 +162,68 @@
     <script>
         const elementBidang = document.querySelector('#company_bidang');
         const choices = new Choices(elementBidang);
+        $(".layout-mode-switch").change(function() {
+            if(this.checked) {
+                document.body.setAttribute("data-layout-mode",  "dark");
+                document.body.setAttribute("data-topbar",       "dark");
+                document.body.setAttribute("data-sidebar",      "dark");
+            }
+            else {
+                document.body.setAttribute("data-layout-mode",  "light");
+                document.body.setAttribute("data-topbar",       "dark");
+                document.body.setAttribute("data-sidebar",      "light");
+            }
+            var modelayout = $(this).prop('checked') == true ? "dark" : "light";
+            var url = "{{ route('config.updateLayout', auth()->user()->id) }}";
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {'mode': modelayout},
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+        $('#formSetting').submit(function(e) {
+            e.preventDefault();
+            var formData    = new FormData(this);
+            var url         = "{{ route('config.update', auth()->user()->id) }}";
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                url: url,
+                data: formData,
+                type: 'POST',
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Sedang Memproses Data...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        showDenyButton: false,
+                        showCancelButton: false
+                    });
+                    Swal.showLoading();
+                },
+                success: function(result) {
+                    if (result == "ok") {
+                        console.log(formData);
+                        Swal.fire('Berhasil','Proses update data pengaturan berhasil.','success');
+                    } else {
+                        Swal.fire('Gagal','Proses update data tidak berhasil.','error');
+                    }
+                },
+                complete: function(data) {
+                    // Swal.close();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
     </script>
     @if (Session::has('success'))
         <script type="text/javascript">

@@ -13,7 +13,6 @@
                         {{-- <span class="logo-txt">smartwork</span> --}}
                     </span>
                 </a>
-
                 <a href="{{ route('admin.home') }}" class="logo logo-light">
                     <span class="logo-sm"><img src="{{ asset('backend-assets/images/logo-sw-fullwhite.png') }}" alt="" height="36"></span>
                     <span class="logo-lg">
@@ -22,13 +21,11 @@
                     </span>
                 </a>
             </div>
-
             <button type="button"
                 class="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
                 data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-
             <!-- App Search-->
             {{-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
@@ -46,7 +43,6 @@
                     <i data-feather="sun" class="icon-lg layout-mode-light"></i>
                 </button>
             </div>
-
             <div class="dropdown d-inline-block mx-2">
                 <button type="button" class="btn header-item noti-icon position-relative"
                     id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -90,8 +86,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -103,15 +97,12 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="{{ route('admin.profile') }}"><i
-                            class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profil</a>
-                    <a class="dropdown-item {{ auth()->user()->roles === 'masteradmin' ? '':'d-none' }}" href="{{ route('pengguna.index') }}"><i
-                            class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Pengguna Aktif</a>
-                    <a class="dropdown-item" href="{{ route('config.index') }}"><i
-                            class="mdi mdi-cog font-size-16 align-middle me-1"></i> Pengaturan</a>
+                    <a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="mdi mdi-account-edit font-size-16 align-middle me-1"></i> Profil</a>
+                    <a class="dropdown-item" href="{{ route('admin.ubahPassword') }}"><i class="mdi mdi-account-key font-size-16 align-middle me-1"></i> Ubah Kata Sandi</a>
+                    <a class="dropdown-item {{ auth()->user()->roles === 'masteradmin' ? '':'d-none' }}" href="{{ route('pengguna.index') }}"><i class="mdi mdi-account-group font-size-16 align-middle me-1"></i> Pengguna Aktif</a>
+                    <a class="dropdown-item" href="{{ route('config.index') }}"><i class="mdi mdi-cog font-size-16 align-middle me-1"></i> Pengaturan</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-white fw-black bg-danger rounded" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                            class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                    <a class="dropdown-item text-white fw-black bg-danger rounded" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>

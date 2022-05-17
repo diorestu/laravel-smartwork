@@ -56,23 +56,25 @@ class DashboardController extends Controller
     public function user() {
         return view('admin.user');
     }
+
+    // PROFILE
     public function profile() {
         $data = User::find(Auth::user()->id);
         return view('admin.profil', compact('data'));
     }
 
     public function saveProfile(Request $r) {
-        $input = $r->all();
-        $id = Auth::id();
-        $data = User::find($id);
-        $data->nama = $input['nama'];
+        $input          = $r->all();
+        $id             = Auth::id();
+        $data           = User::find($id);
+        $data->nama     = $input['nama'];
         $data->username = $input['username'];
-        $data->phone = $input['phone'];
-        $data->email = $input['email'];
-        $data->alamat = $input['alamat'];
-        $data->company = $input['company'];
+        $data->gender   = $input['gender'];
+        $data->phone    = $input['phone'];
+        $data->email    = $input['email'];
+        $data->alamat   = $input['alamat'];
         $data->save();
-        return redirect()->route('admin.profile')->with('success', 'Berhasil Update Profil Perusahaan!');
+        return redirect()->route('admin.profile')->with('success', 'Berhasil update profil admin');
     }
 
     public function uploadLogo(Request $request)
@@ -98,6 +100,11 @@ class DashboardController extends Controller
             }
             return true;
         }
+    }
+
+    // UBAH PASSWORD
+    public function ubahPassword() {
+        return view('admin.ubah_password');
     }
 
     public function verify(){
