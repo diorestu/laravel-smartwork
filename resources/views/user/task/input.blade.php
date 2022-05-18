@@ -25,8 +25,13 @@ Tambah Kegiatan
             @method('POST')
             @csrf
             <div class="mb-3">
-                <label for="my-input font-weight-bolder">Judul Kegiatan<span class="text-danger fw-light font-size-sm">*</span></label>
-                <input id="my-input" class="form-control" type="text" name="title_kgt" required>
+                <label for="title_kgt">Kategori Kegiatan<span class="text-danger fw-light font-size-sm">*</span></label>
+                {{-- <input id="my-input" class="form-control" type="text" name="title_kgt" required> --}}
+                <select name="title_kgt" id="title_kgt" class="form-select">
+                    @foreach ($data as $i)
+                        <option value="{{ $i->id }}">{{ $i->kpi_master }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-3">
                 <label for="my-input font-weight-bolder">Waktu Kegiatan<span class="text-danger fw-light font-size-sm">* </span></label>

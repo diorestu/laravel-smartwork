@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsActiveAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -68,5 +69,7 @@ class Kernel extends HttpKernel
         'is_admin' => \App\Http\Middleware\isAdmin::class,
         'is_user' => \App\Http\Middleware\isUser::class,
         'is_active' => \App\Http\Middleware\isActiveUser::class,
+        'is_expired' => \App\Http\Middleware\IsActiveAdmin::class,
+
     ];
 }

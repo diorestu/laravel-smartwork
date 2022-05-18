@@ -110,6 +110,9 @@ class DashboardController extends Controller
     public function verify(){
         return view('admin.verify');
     }
+    public function expired(){
+        return view('admin.expired');
+    }
 
 
 }
