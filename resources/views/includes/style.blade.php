@@ -1,5 +1,7 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="{{ asset('backend-assets/images/favicon.ico') }}">
+<!-- Swiper -->
+<link rel="stylesheet" href="{{ asset('backend-assets/libs/swiper/swiper-bundle.min.css') }}">
 <!-- choices css -->
 <link href="{{ asset('backend-assets/libs/choices.js/public/assets/styles/choices.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- preloader css -->

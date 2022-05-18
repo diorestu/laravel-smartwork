@@ -10,6 +10,11 @@
 <script src="{{ asset('backend-assets/libs/feather-icons/feather.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<script src="{{ asset('backend-assets/libs/pace-js/pace.min.js') }}"></script>
+<script src="{{ asset('backend-assets/libs/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('backend-assets/libs/jquery-countdown/jquery.countdown.min.js') }}"></script>
+<script src="{{ asset('backend-assets/js/pages/coming-soon.init.js') }}"></script>
+
 <script src="{{ asset('backend-assets/libs/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
