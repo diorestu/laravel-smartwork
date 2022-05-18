@@ -46,6 +46,7 @@ use App\Http\Controllers\User\UserLemburController;
     Auth::routes();
     Route::middleware(['auth'])->group(function () {
         Route::get('verify/', [DashboardController::class, 'verify'])->name('admin.verify');
+        Route::get('expired/', [DashboardController::class, 'expired'])->name('admin.expired');
     });
 
     Route::get('getCabang/{id}', function ($id) {
@@ -54,7 +55,7 @@ use App\Http\Controllers\User\UserLemburController;
     });
 
     // ADMIN CONTROLLER
-    Route::prefix('/')->middleware(['auth', 'is_admin', 'is_active'])->group(function () {
+    Route::prefix('/')->middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(function () {
         // DASHBOARD
         Route::get('/',                                 [DashboardController::class, 'index'])->name('admin.welcome');
         Route::get('/dashboard',                        [DashboardController::class, 'dashboard'])->name('admin.home');
@@ -196,6 +197,8 @@ use App\Http\Controllers\User\UserLemburController;
         Route::post('/set-shift', [MobileController::class, 'postShift'])->name('user.post.shift');
 
         // Halaman Kegiatan
+        Route::resource('kegiatan', AktivitasController::class);
+        // Halaman Pengumuman
         Route::resource('kegiatan', AktivitasController::class);
         // Halaman Slip Gaji
         Route::get('/slip-gaji', [MobileController::class, 'gaji'])->name('user.gaji');

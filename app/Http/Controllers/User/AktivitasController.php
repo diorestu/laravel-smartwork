@@ -6,6 +6,7 @@ use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aktivitas;
+use App\Models\KpiMaster;
 use Illuminate\Support\Facades\Auth;
 
 class AktivitasController extends Controller
@@ -55,7 +56,11 @@ class AktivitasController extends Controller
      */
     public function create()
     {
-        return view('user.task.input');
+        $id = Auth::user()->id_admin;
+        $kat =  KpiMaster::where('id_admin', $id)->get();
+        return view('user.task.input', [
+            'data' => $kat
+        ]);
     }
 
     /**

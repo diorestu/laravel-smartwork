@@ -1,5 +1,8 @@
 @extends('layouts.auth')
 
+@section('title')
+    Login ke SMARTWORK
+@endsection
 
 @section('content')
 <div class="auth-content my-auto">

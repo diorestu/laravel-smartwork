@@ -204,9 +204,12 @@ class AbsenController extends Controller
         $data->ket_pulang  = $absen['deskripsi'];
         $data->jam_kerja  = $jam_kerja;
         $data->jam_lembur  = $jl;
-        $data->save();
-        // dd($response);
-        return redirect()->route('absen.index');
+        try {
+            $data->save();
+            return redirect()->route('absen.index')->with('success', 'Berhasil Absen Pulang');
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->route('absen.index')->with('error', $th->getMessage());
+        }
     }
 
     /**

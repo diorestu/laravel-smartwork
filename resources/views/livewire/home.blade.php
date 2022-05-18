@@ -164,6 +164,15 @@
                         <span>Gaji</span>
                     </div>
                 </div>
+                <div class="col-3 mb-3">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <a href="{{ route('user.gaji') }}" class="mb-2">
+                            <i class="bi bi-info-circle-fill circle font-size-20 px-3 text-white"
+                                style="background-color: #588157"></i>
+                        </a>
+                        <span>Pengumuman</span>
+                    </div>
+                </div>
 
             </div>
         </div>
