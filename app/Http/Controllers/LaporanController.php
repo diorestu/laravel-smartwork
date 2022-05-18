@@ -127,4 +127,31 @@ class LaporanController extends Controller
     public function ekspor_bpjs(Request $r) {
         return 'success';
     }
+
+    // LAPORAN PAJAK PPH 21
+    public function lap_pph21()
+    {
+        return view("admin.laporan.pajak");
+    }
+
+    public function showDataPph21(Request $request)
+    {
+        $input      = $request->all();
+        $cabang     = $input['id_cabang'];
+        $tahun      = $input['tahun'];
+        $bulan      = $input['bulan'];
+        $id         = Auth::user()->id;
+
+        $payroll    = PayrollParent::where('pay_bulan', $bulan)->where('pay_tahun', $tahun)->pluck('id')->toArray();
+        $data       = Payroll::with('user')->whereIn('id_payroll', $payroll)->get();
+        // $request->session()->put('cuti_pengajuan', $date);
+        return view('admin.laporan.data.data_pajak', [
+            'data' => $data,
+        ]);
+    }
+
+    public function ekspor_pph21(Request $r)
+    {
+        return 'success';
+    }
 }

@@ -168,7 +168,10 @@ use App\Http\Controllers\User\UserLemburController;
             Route::get('bpjs/overview',                 [LaporanController::class, 'lap_bpjs'])->name('laporan.bpjs');
             Route::post('data-iuran-bpjs',              [LaporanController::class, 'showDataBpjs'])->name('laporan.show_data_bpjs');
             Route::post('bpjs/ekspor-data',             [LaporanController::class, 'ekspor_bpjs'])->name('ekspor.laporan.bpjs');
-            // pph21
+        // pph21
+            Route::get('pajak/overview',                 [LaporanController::class, 'lap_pph21'])->name('laporan.pajak');
+            Route::post('data-iuran-pajak',              [LaporanController::class, 'showDataPph21'])->name('laporan.show_data_pajak');
+            Route::post('pajak/ekspor-data',             [LaporanController::class, 'ekspor_pph21'])->name('ekspor.laporan.pajak');
         });
 
         // PENGATURAN
