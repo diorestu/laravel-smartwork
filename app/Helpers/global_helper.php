@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Absensi;
+use App\Models\UserShift;
 use Carbon\Carbon;
 
 function btnDelete() {
@@ -244,4 +246,74 @@ function selisihJam($awal, $akhir)
     $akhir = Carbon::parse($akhir);
     $diff  = $akhir->diffInMinutes($awal);
     return $diff;
+}
+function hariKerja($user, $awal, $akhir) {
+    $data       = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                ->where('shifts.nama_shift', '!=', "L")
+                ->where('id_user', $user)
+                ->whereBetween('tanggal_shift', [$awal, $akhir])->count();
+    return $data;
+
+}
+function tepatWaktu($user, $awal, $akhir)
+{
+    $hitung     = 0;
+    $data       = Absensi::whereBetween('jam_hadir', [$awal, $akhir])->where('id_user', $user)->get();
+    foreach ($data as $d) {
+        $jam_hadir = $d->jam_hadir;
+        $tgl_absen = TampilTanggal($d->jam_hadir);
+        $cek_shift = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                    ->where('user_shifts.tanggal_shift', '=', $tgl_absen)->first();
+        $jam_shift = $cek_shift->hadir_shift;
+        $waktu_shift = $tgl_absen . " " . $jam_shift;
+
+        if ($cek_shift->nama_shift != "L") {
+            $jamawal        = Carbon::parse($waktu_shift);
+            $jamakhir       = Carbon::parse($jam_hadir);
+            $totalDuration  = $jamawal->diffInMinutes($jamakhir, false);
+            if ($totalDuration <= 0) {
+                $hitung++;
+            }
+        }
+    }
+    return $hitung;
+}
+function terlambat($user, $awal, $akhir)
+{
+    $hitung     = 0;
+    $data       = Absensi::whereBetween('jam_hadir', [$awal, $akhir])->where('id_user', $user)->get();
+    foreach ($data as $d) {
+        $jam_hadir = $d->jam_hadir;
+        $tgl_absen = TampilTanggal($d->jam_hadir);
+        $cek_shift = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+            ->where('user_shifts.tanggal_shift', '=', $tgl_absen)->first();
+        $jam_shift = $cek_shift->hadir_shift;
+        $waktu_shift = $tgl_absen . " " . $jam_shift;
+
+        if ($cek_shift->nama_shift != "L") {
+            $jamawal        = Carbon::parse($waktu_shift);
+            $jamakhir       = Carbon::parse($jam_hadir);
+            $totalDuration  = $jamawal->diffInMinutes($jamakhir, false);
+            if ($totalDuration > 0) {
+                $hitung++;
+            }
+        }
+    }
+    return $hitung;
+}
+function mangkir($user, $awal, $akhir)
+{
+    $mangkir = 0;
+    $data   = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                            ->where('user_shifts.id_user', '=', $user)
+                            ->where('shifts.nama_shift', '!=', "L")
+                            ->whereBetween('user_shifts.tanggal_shift', [$awal, $akhir])->get();
+    foreach ($data as $d) {
+        $tgl        = $d->tanggal_shift;
+        $cekAbsen   = Absensi::where("id_user", $user)->whereDate('jam_hadir', $tgl)->where('id_user', $user)->count();
+        if ($cekAbsen <= 0) {
+            $mangkir++;
+        }
+    }
+    return $mangkir;
 }

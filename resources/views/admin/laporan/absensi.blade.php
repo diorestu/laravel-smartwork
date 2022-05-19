@@ -1,18 +1,17 @@
 @extends('layouts.main')
 
 @section('title')
-    Laporan Absensi Pegawai
+    Laporan Absensi Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
-    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .f-10 { font-size: 10px !important; }
         .row_sticky { justify-content: space-around; align-items: flex-start; }
         .div_sticky { position: -webkit-sticky; position: sticky; top: 120px; z-index: 90; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
         .text-tipis  { font-weight: 300; opacity: 0.5; }
+        .card-header { background:#B0141C !important; }
     </style>
 @endpush
 
@@ -23,11 +22,10 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Laporan</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Absensi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("laporan.absensi") }}">Absensi</a></li>
                         <li class="breadcrumb-item active">Laporan Abensi Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Laporan Abensi Pegawai</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Lihat laporan absensi pegawai dengan waktu tertentu</p>
+                    <h4 class="mb-sm-3 fw-bold font-size-22 mt-3">Laporan Abensi Pegawai</h4>
                 </div>
             </div>
         </div>
@@ -40,7 +38,21 @@
                         @method('POST')
                         @csrf
                         <div class="row">
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                        @php
+                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                        @endphp
+                                        @foreach ($q_cabang as $r_cabang)
+                                        <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                        @endforeach
+                                        <option value='all'>Semua Lokasi Kerja</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5">
                                 <div class="form-group">
                                     <label for="waktu">Pilih Rentang Waktu <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -51,7 +63,7 @@
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
                                 <button class="btn btn-warning w-100 mt-1 font-weight-boldest btn-md text-black" type="submit">
-                                    <i class="fas fa-info-circle icon-md"></i> Lihat Data
+                                    <i class="fas fa-info-circle icon-md"></i> Proses Data
                                 </button>
                             </div>
                         </div>
@@ -60,123 +72,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 d-flex" id="content">
-            <div class="col-6 px-2">
-                <div class="card shadow rounded-sm">
-                    <div class="card-body px-4 py-4">
-                        <div class="d-flex justify-content-between">
-                            <h4>Ringkasan Absensi</h4>
-                            <div class="row" id="userstable_filter"></div>
-                        </div>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-hover" id="myTable">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Nama Pegawai</th>
-                                        <th>Lokasi Kerja</th>
-                                        <th width="5%">Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>Damas</td>
-                                            <td>Asta Pijar</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bx-dots-horizontal-rounded"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end" style="#">
-                                                        <li><a class="dropdown-item" href='{{ route('laporan.detail_absensi') }}'>
-                                                            <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;Lihat Detail
-                                                        </a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    </div>
+
+    <div class="row" id="content">
+        <div class="col-12">
+            <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h1><i class="fas fa-filter"></i></h1>
+                        <h4>Silahkan lengkapi filter diatas</h4>
+                        <p>Untuk melihat data, silahkan isi filter diatas lalu klik proses data</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-6 px-2">
-                <div class="card shadow rounded-sm">
-                    <div class="card-body px-4 py-4">
-                        <div class="d-flex justify-content-between">
-                            <h4>Pegawai Terajin</h4>
-                        </div>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-hover" id="myTable2">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Nama Pegawai</th>
-                                        <th>Lokasi Kerja</th>
-                                        <th>Tepat Waktu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr class="f-10">
-                                            <td>
-                                                Damas<br>
-                                                <span class="text-tipis">Asta Pijar</span>
-                                            </td>
-                                            <td>Asta Pijar</td>
-                                            <td>3</td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 @endsection
 
 @push('addon-script')
-    <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('#myTable2').DataTable({
-                lengthMenu: [30, 60, 120, 240],
-                order: [[0, 'asc']]
-            });
-            $('#myTable').DataTable({
-                initComplete: function () {
-                    this.api().columns([2]).every( function (jud) {
-                        var theadname       = $("#myTable th").eq([jud]).text();
-                        var column          = this;
-                        const wrapper       = document.createElement('div');
-                        wrapper.className   = 'filter_wp input-group';
-                        wrapper.innerHTML   = '<div class="input-group-text"><i class="fa fa-filter"></i></div>';
-                        var ss              = document.getElementById('userstable_filter').appendChild(wrapper);
-                        var select          = '<select class="form-control"><option value="">Semua '+theadname+'</option></select>';
-                        var damas           = $(select).appendTo(ss);
-                        damas.on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            var ssss = column.search( val ? '^'+val+'$' : '', true, false ).draw();
-                            // console.log();
-                        });
-                        @php $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get(); @endphp
-                        @foreach ($q_cabang as $r_cabang)
-                            damas.append( '<option value="{{ $r_cabang->cabang_nama }}">{{ $r_cabang->cabang_nama }}</option>' )
-                        @endforeach
-                    });
-                },
-                lengthMenu: [30, 60, 120, 240],
-                order: [[0, 'asc']]
-            });
-        });
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
+    </script>
+    <script>
         $('#formAction').submit(function(e) {
             e.preventDefault();
             var hari = $("#waktu").val();
             var formData = new FormData(this);
             if (hari != "") {
-                var url = "{{ url('laporan/data-absensi') }}";
+                var url = "{{ url('laporan/data-laporan-absensi') }}";
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
                 });

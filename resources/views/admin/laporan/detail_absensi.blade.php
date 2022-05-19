@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Ringkasan Absensi Pegawai
+    Ringkasan Absensi Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -23,7 +23,7 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Laporan</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Absensi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("laporan.absensi") }}">Absensi</a></li>
                         <li class="breadcrumb-item active">Ringkasan Absensi Pegawai</li>
                     </ol>
                     <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Ringkasan Absensi Pegawai</h4>
@@ -36,7 +36,7 @@
                                 <i class="fa fa-download"></i> &nbsp; Download Data &nbsp; <i class="mdi mdi-chevron-down"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <li><a class="dropdown-item" href="#">PDF</a></li>
+                                <li><a class="dropdown-item" href="#">File PDF</a></li>
                             </ul>
                         </div>
                     </div>
@@ -53,25 +53,27 @@
                             <i class="bx bx-dots-horizontal-rounded"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="#">Lihat Profil</a>
+                            <a class="dropdown-item" href="{{ route("pegawai.show", $data_user->id) }}">Lihat Profil</a>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div>
-                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                            <img src="{{ $data_user->company_logo == '' ? asset('backend-assets/images/no-staff.jpg') : asset('storage/uploads/'. $data_user->company_logo) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
                         </div>
                         <div class="flex-1 ms-3">
-                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">Phyllis Gatlin</a></h5>
-                            <p class="text-muted mb-0">Full Stack Developer</p>
+                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">{{ $data_user->nama }}</a></h5>
+                            <p class="text-muted mb-0">{{ $data_user->divisi->div_title }}</p>
                         </div>
                     </div>
                     <div class="mt-3 pt-1">
                         <p class="text-muted mb-0"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
-                            070 2860 5375</p>
+                            {{ $data_user->phone }}</p>
                         <p class="text-muted mb-0 mt-2"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
-                            PhyllisGatlin@spy.com</p>
+                            {{ $data_user->email }}</p>
+                        <p class="text-muted mb-0 mt-2"><i class="mdi mdi-building font-size-15 align-middle pe-2 text-primary"></i>
+                            {{ $data_user->cabang->cabang_nama }}</p>
                         <p class="text-muted mb-0 mt-2"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
-                            52 Ilchester MYBSTER 9WX</p>
+                            {{ $data_user->alamat }}</p>
                     </div>
                 </div>
             </div>

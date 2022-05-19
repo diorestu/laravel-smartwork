@@ -155,8 +155,8 @@ use App\Http\Controllers\User\UserLemburController;
         Route::prefix('laporan')->group(function () {
             // absensi
             Route::get('absensi/overview',              [LaporanController::class, 'lap_absensi'])->name('laporan.absensi');
-            Route::get('absensi/ringkasan-absensi',     [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
-            Route::post('absensi/data-absensi',         [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
+            Route::post('data-laporan-absensi',         [LaporanController::class, 'show_data_absensi'])->name('lembur.show_data_absensi');
+            Route::get('absensi/summary/{user}/{awal}/{akhir}', [LaporanController::class, 'detail_absensi'])->name('laporan.detail_absensi');
             // cuti
             Route::get('cuti/overview',                 [LaporanController::class, 'lap_cuti'])->name('laporan.cuti');
             Route::post('data-laporan-cuti',            [LaporanController::class, 'showDataCuti'])->name('laporan.show_data_cuti');

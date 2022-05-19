@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Exports\CutiExport;
 use Illuminate\Http\Request;
 use App\Exports\LemburExport;
+use App\Models\Absensi;
 use App\Models\Cuti;
 use App\Models\Payroll;
 use App\Models\PayrollParent;
@@ -17,27 +18,37 @@ class LaporanController extends Controller
         return view("admin.laporan.absensi");
     }
 
-    public function detail_absensi()
-    {
-        return view("admin.laporan.detail_absensi");
-    }
-
     public function show_data_absensi(Request $request)
     {
         $input      = $request->all();
+        $cabang_id  = $input['id_cabang'];
         $date       = $input['waktu'];
         $temp       = explode("-", $date);
         $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
         $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
         $id         = Auth::user()->id;
 
-        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
-        $data       = Lembur::whereIn('id_user', $user)
-        ->whereBetween('lembur_awal', [$tawal, $takhir])
-            ->where('lembur_status', 'PENGAJUAN')->get();
+        $data       = Absensi::select(['absensis.id', 'absensis.id_user', 'absensis.jam_hadir', 'absensis.jam_pulang', 'absensis.jam_kerja', 'cabangs.cabang_nama'])
+                    ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
+                    ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                    ->whereBetween('absensis.jam_hadir',                 [$tawal, $takhir])
+                    ->where('users.id_cabang', $cabang_id)
+                    ->groupBy('absensis.id_user')->get();
 
-        $request->session()->put('lembur_pengajuan', $date);
-        return view("admin.lembur.data.show_data_pengajuan", ['data' => $data]);
+        return view('admin.laporan.data.data_absensi', [
+            'data' => $data,
+            'awal' => $tawal,
+            'akhir' => $takhir,
+        ]);
+    }
+
+    public function detail_absensi($user, $periode_awal, $periode_akhir)
+    {
+        $data_user = User::where("id", $user)->first();
+
+        return view("admin.laporan.detail_absensi", [
+            'data_user' => $data_user,
+        ]);
     }
 
     // LAPORAN CUTI CONTROLLER
