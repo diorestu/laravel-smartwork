@@ -67,24 +67,31 @@ use App\Http\Controllers\User\UserLemburController;
 
         // MASTER DATA
         Route::prefix('master')->group(function () {
-            // pegawai
+        // pegawai
+            Route::get('pegawai/ekspor',                [UserController::class, 'ekspor_pegawai'])->name('pegawai.ekspor');
             Route::get('pegawai/nonActive/{id}',        [UserController::class, 'nonActive'])->name('pegawai.nonactive');
             Route::get('pegawai/active/{id}',           [UserController::class, 'active'])->name('pegawai.active');
             Route::post('pegawai/upload-image-pegawai', [UserController::class, 'uploadFotoPegawai'])->name('pegawai.uploadImage');
             Route::resource('pegawai',                  UserController::class);
             // cabang
+            Route::get('cabang/ekspor',                 [CabangController::class, 'ekspor_cabang'])->name('cabang.ekspor');
             Route::resource('cabang',                   CabangController::class);
             // divisi
+            Route::get('divisi/ekspor',                 [DivisiController::class, 'ekspor_divisi'])->name('divisi.ekspor');
             Route::resource('divisi',                   DivisiController::class);
             // shift pegawai
             Route::resource('shift',                    ShiftController::class);
             // tunjanngan jabatan
+            Route::get('tunjangan/jabatan/ekspor',      [JabatanController::class, 'ekspor_jabatan'])->name('jabatan.ekspor');
             Route::resource('tunjangan/jabatan',        JabatanController::class);
             // tunjangan sertifikasi
+            Route::get('tunjangan/sertifikasi/ekspor',  [SertifikasiController::class, 'ekspor_sertifikasi'])->name('sertifikasi.ekspor');
             Route::resource('tunjangan/sertifikasi',    SertifikasiController::class);
             // tunjangan masa kerja
+            Route::get('tunjangan/masa-kerja/ekspor',   [MasaKerjaController::class, 'ekspor_masaKerja'])->name('masaKerja.ekspor');
             Route::resource('tunjangan/masa-kerja',     MasaKerjaController::class);
             // tunjangan status kawin
+            Route::get('tunjangan/status-kawin/ekspor', [StatusKawinController::class, 'ekspor_statusKawin'])->name('statusKawin.ekspor');
             Route::resource('tunjangan/status-kawin',   StatusKawinController::class);
             //
             Route::resource('kpi-master',               KpiMasterController::class);

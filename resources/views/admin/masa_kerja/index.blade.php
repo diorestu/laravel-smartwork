@@ -27,8 +27,14 @@
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a class="btn btn-soft-primary waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp;Impor/Ekspor Data</a>
-                        {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}
+                        <div class="btn-group mx-2" role="group">
+                            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-download icon-sm"></i> Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                                <a class="dropdown-item" href="{{ route("masaKerja.ekspor") }}">File Excel</a>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-warning waves-effect waves-light text-black" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="fa fa-plus icon-sm text-black"></i>
                             Tambah Masa Kerja&nbsp;

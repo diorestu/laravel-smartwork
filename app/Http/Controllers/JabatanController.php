@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JabatanExport;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JabatanController extends Controller
 {
+    public function ekspor_jabatan()
+    {
+        return Excel::download(new JabatanExport, 'Data Jabatan.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

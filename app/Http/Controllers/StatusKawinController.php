@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StatusKawinExport;
 use App\Models\StatusKawin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StatusKawinController extends Controller
 {
+    public function ekspor_statusKawin()
+    {
+        return Excel::download(new StatusKawinExport, 'Data Status Kawin.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

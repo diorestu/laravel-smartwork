@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SertifikasiExport;
 use App\Models\Sertifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SertifikasiController extends Controller
 {
+    public function ekspor_sertifikasi()
+    {
+        return Excel::download(new SertifikasiExport, 'Data Sertifikasi.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

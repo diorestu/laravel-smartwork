@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UserExport;
 use App\Models\User;
 use App\Models\Asuransi;
 use App\Models\MasaKerja;
@@ -9,9 +10,14 @@ use App\Models\UserTunjangan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function ekspor_pegawai()
+    {
+        return Excel::download(new UserExport, 'Database Pegawai.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

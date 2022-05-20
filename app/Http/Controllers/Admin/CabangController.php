@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CabangExport;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CabangController extends Controller
 {
+    public function ekspor_cabang() {
+        return Excel::download(new CabangExport, 'Data Lokasi Kerja.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MasaKerjaExport;
 use App\Models\MasaKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasaKerjaController extends Controller
 {
+    public function ekspor_masaKerja()
+    {
+        return Excel::download(new MasaKerjaExport, 'Data Masa Kerja.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

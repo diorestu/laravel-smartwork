@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DivisiExport;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DivisiController extends Controller
 {
+    public function ekspor_divisi()
+    {
+        return Excel::download(new DivisiExport, 'Data Divisi.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *
