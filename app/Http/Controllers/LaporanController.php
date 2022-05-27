@@ -1,15 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Exports\CutiExport;
+use App\Exports\LaporanBpjsExport;
+use App\Exports\LaporanCutiExport;
+use App\Exports\LaporanLemburExport;
+use App\Exports\LaporanPajakExport;
 use Illuminate\Http\Request;
 use App\Exports\LemburExport;
 use App\Models\Absensi;
-use App\Models\Cuti;
 use App\Models\Payroll;
 use App\Models\PayrollParent;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -68,26 +71,14 @@ class LaporanController extends Controller
 
         return view('admin.laporan.data.data_cuti', [
             'cabang' => $cabang,
-            'tawal' => $tawal,
+            'tawal'  => $tawal,
             'takhir' => $takhir
         ]);
     }
 
-    public function ekspor_cuti(Request $r) {
-        // return (new CutiExport($r->waktu))->download('export_report_cuti.xlsx');
-        $input      = $r->all();
-        $date       = $input['waktu'];
-        $temp       = explode("-", $date);
-        $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
-        $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-        $id         = Auth::user()->id;
-
-        $user       = User::where('id_admin', $id)->where('roles', 'user')->pluck('id')->toArray();
-        $data       = Lembur::whereIn('id_user', $user)
-        ->whereBetween('lembur_awal', [$tawal, $takhir])
-        ->where('lembur_status', 'PENGAJUAN')->get();
-
-        $r->session()->put('lembur_pengajuan', $date);
+    public function ekspor_lapCuti($user, $awal, $akhir)
+    {
+        return (new LaporanCutiExport($user, $awal, $akhir))->download('Laporan Cuti Pegawai ' . tanggalIndo3($awal) . ' sd ' . tanggalIndo3($akhir) . '.xlsx');
     }
 
     // LAPORAN LEMBUR CONTROLLER
@@ -111,8 +102,9 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function ekspor_lembur(Request $r) {
-        return (new LemburExport($r->waktu))->download('export_lembur.xlsx');
+    public function ekspor_lapLembur($user, $awal, $akhir)
+    {
+        return (new LaporanLemburExport($user, $awal, $akhir))->download('Laporan Lembur Pegawai ' . tanggalIndo3($awal) . ' sd ' . tanggalIndo3($akhir) . '.xlsx');
     }
 
     // LAPORAN BPJS CONTROLLER
@@ -131,12 +123,15 @@ class LaporanController extends Controller
         $data       = Payroll::with('user')->whereIn('id_payroll', $payroll)->get();
         // $request->session()->put('cuti_pengajuan', $date);
         return view('admin.laporan.data.data_bpjs', [
-            'data' => $data,
+            'data'      => $data,
+            'cabang'    => $cabang,
+            'bulan'     => $bulan,
+            'tahun'     => $tahun,
         ]);
     }
 
-    public function ekspor_bpjs(Request $r) {
-        return 'success';
+    public function ekspor_lapBpjs($tipe, $cabang, $bulan, $tahun) {
+        return (new LaporanBpjsExport($tipe, $cabang, $bulan, $tahun))->download('Laporan Iuran BPJS '.$tipe.'.xlsx');
     }
 
     // LAPORAN PAJAK PPH 21
@@ -158,11 +153,15 @@ class LaporanController extends Controller
         // $request->session()->put('cuti_pengajuan', $date);
         return view('admin.laporan.data.data_pajak', [
             'data' => $data,
+            'cabang'    => $cabang,
+            'bulan'     => $bulan,
+            'tahun'     => $tahun,
         ]);
     }
 
-    public function ekspor_pph21(Request $r)
+    public function ekspor_lapPajak($cabang, $bulan, $tahun)
     {
-        return 'success';
+        $periode = BulanTahun($tahun.'-'.$bulan.'-01');
+        return (new LaporanPajakExport($cabang, $bulan, $tahun))->download('Laporan Pajak PPh21 Pegawai '. $periode .'.xlsx');
     }
 }

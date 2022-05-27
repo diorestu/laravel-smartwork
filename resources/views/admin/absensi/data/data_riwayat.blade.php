@@ -2,16 +2,26 @@
 <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .f-10 { font-size: 10px !important; }
-    .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+    .card-header { background:#B0141C !important; padding: 0.75rem 1.25rem; }
     .filter_wp { margin-bottom: 20px; }
     .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
     .text-tipis  { font-weight: 300; opacity: 0.5; }
 </style>
 
 <div class="card card-custom gutter-b rounded-sm shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title text-white mb-0 mt-2">Absensi Tercatat</h5>
+        <div class="btn-group" role="group">
+            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                <a class="dropdown-item" href="{{ route("absensi.riwayat.ekspor", $hari) }}">File Excel</a>
+            </div>
+        </div>
+    </div>
     <div class="card-body p-4">
-        <div class="d-flex justify-content-between">
-            <h4>Absensi Tercatat</h4>
+        <div class="d-flex justify-content-end">
             <div class="row" id="userstable_filter"></div>
         </div>
         <div class="table-responsive">
@@ -63,8 +73,10 @@
 </div>
 
 <div class="card card-custom gutter-b rounded-sm shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title text-white mb-2 mt-2">Belum Absen</h5>
+    </div>
     <div class="card-body p-4">
-        <h4>Belum Absen</h4>
         <div class="table-responsive">
             <table class="table table-hover" id="myTableTwo">
                 <thead class="table-dark">

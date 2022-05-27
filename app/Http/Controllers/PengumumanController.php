@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PengumumanExport;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengumumanController extends Controller
 {
+    public function ekspor_pengumuman()
+    {
+        return Excel::download(new PengumumanExport, 'Data Pengumuman.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -16,7 +16,7 @@
                     <i class="bx bx-dots-horizontal-rounded"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" style="">
-                    <a class="dropdown-item" href="#">Ekspor ke Excel</a>
+                    <a class="dropdown-item" href="{{ route("lapCuti.ekspor", ['u'=>$c->user->id, 's'=>$tawal, 'e'=>$takhir]) }}">Ekspor ke Excel</a>
                     <a class="dropdown-item" href="#">Ekspor ke PDF</a>
                 </div>
             </div>

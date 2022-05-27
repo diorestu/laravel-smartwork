@@ -6,11 +6,11 @@
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title text-white mb-0 mt-2">Perhitungan Pajak PPh 21 Pegawai</h5>
             <div class="btn-group" role="group">
-                <button id="btnGroupVerticalDrop1" type="button" class="fw-bold btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-download icon-sm text-black"></i> Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
-                    <a class="dropdown-item" href="#"><i class="fas fa-file-excel icon-sm"></i> Excel</a>
+                    <a class="dropdown-item" href="{{ route("lapPajak.ekspor", ['cb'=>$cabang, 'bl'=>$bulan, 'th'=>$tahun]) }}">File Excel</a>
                     <a class="dropdown-item" href="#"><i class="fas fa-file-pdf icon-sm"></i> PDF</a>
                 </div>
             </div>

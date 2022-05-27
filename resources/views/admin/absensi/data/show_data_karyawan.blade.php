@@ -8,75 +8,54 @@
 
 <div class="card shadow rounded-sm">
     <div class="card-header d-flex justify-content-between">
-        <h5 class="card-title text-white mb-0 mt-2">Cuti Tercatat</h5>
+        <h5 class="card-title text-white mb-0 mt-2">Absensi Tercatat</h5>
         <div class="btn-group" role="group">
             <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
-                <a class="dropdown-item" href="{{ route("cuti.cabang.ekspor", $cabang) }}">File Excel</a>
-                <a class="dropdown-item" href="#">File PDF</a>
+                <a class="dropdown-item" href="{{ route("absensi.pegawai.ekspor", ["u"=>$user, "s"=>$awal, "e"=>$akhir]) }}">File Excel</a>
             </div>
         </div>
     </div>
     <div class="card-body px-4 py-4">
         <div class="table-responsive">
-            <table class="table rounded" id="myTable">
+            <table class="table table-hover" id="myTable">
                 <thead class="table-dark">
                     <tr>
-                        <th class="text-left">Nama</th>
-                        <th class="text-center">Total Hari</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Detail</th>
-                        <th class="text-center" width="5%">Opsi</th>
+                        <th>Tanggal Absen</th>
+                        <th class="text-center">Shift</th>
+                        <th class="text-center">In</th>
+                        <th class="text-center">Out</th>
+                        <th width="5%">Opsi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $i)
-                        <tr data-child-value="
-                            <tr>
-                                <td>Lokasi Kerja</td>
-                                <td>:</td>
-                                <td width='70%'>{{ $i->user->cabang->cabang_nama }}</td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal Cuti</td>
-                                <td>:</td>
-                                <td width='70%'>{{ tanggalIndo3($i->cuti_awal) }} - {{ tanggalIndo3($i->cuti_akhir) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Keterangan</td>
-                                <td>:</td>
-                                <td width='70%'>{{ $i->cuti_deskripsi }}</td>
-                            </tr>
-                            <tr>
-                                <td>Jenis Cuti</td>
-                                <td>:</td>
-                                <td width='70%'><span class='badge rounded-pill badge-soft-warning text-warning'>{{ $i->cutiJenis->cuti_nama_jenis }}</span></td>
-                            </tr>
-                            <tr>
-                                <td>Diajukan Pada</td>
-                                <td>:</td>
-                                <td width='70%'>{{ tanggalIndoWaktuLengkap($i->created_at) }}</td>
-                            </tr>
-                            ">
-                            <td>{{ $i->user->nama }}</td>
-                            <td class="text-center">{{ $i->cuti_total }} hari</td>
-                            <td class="text-center"><span class='badge rounded-pill badge-soft-primary text-primary'>{{ $i->cuti_status }}</span></td>
-                            <td class="dt-control text-center">
-                                <a class="btn btn-primary btn-sm btn-circle" href="javascript:void(0);"><i class="fas fa-chevron-down"></i></a>
-                            </td>
+                        <tr>
+                            <td>{{ tanggalIndo($i->jam_hadir) }}</td>
+                            @php
+                                $tanggal = ubahKeTanggal($i->jam_hadir);
+                                $r_shift = App\Models\UserShift::where('id_user', $i->id_user)->whereDate('tanggal_shift', '=' , $tanggal)->first();
+                            @endphp
+                            @if ($r_shift != "")
+                                <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $r_shift->shift->ket_shift." ".TampilJamMenit($r_shift->shift->hadir_shift)." - ".TampilJamMenit($r_shift->shift->pulang_shift) }}">{{ $r_shift->shift->nama_shift }}</a></td>
+                            @else
+                                <td class="text-center"></td>
+                            @endif
+                            <td class="text-center">{{ TampilJamMenit($i->jam_hadir) }}</td>
+                            <td class="text-center">@if ($i->jam_pulang == "") {{ "-" }} @else {{ TampilJamMenit($i->jam_pulang) }} @endif</td>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
-                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bx bx-dots-horizontal-rounded"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" style="">
-                                        <li><a class="dropdown-item" href='{{ route('cuti.edit', $i->id_cuti) }}'>
-                                                <span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Edit
-                                            </a></li>
-                                        <li><a id="{{ $i->id_cuti }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
+                                        <li><a target="_blank" class="dropdown-item" href='{{ route('absensi.show', $i->id) }}'>
+                                            <span><i class="fas fa-info-circle icon-sm"></i></span>&nbsp;
+                                            Lihat Detail
+                                        </a></li>
+                                        <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -91,9 +70,6 @@
 <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
-    function format ( data ) {
-        return '<table class="table">'+data+'</table>';
-    }
     $(function () { $('[data-toggle="tooltip"]').tooltip() });
     $(document).ready(function() {
         $('#myTable').DataTable({
@@ -103,19 +79,6 @@
                 { orderable: false, searchable: false, targets: 1 },
               ],
             order: [[0, 'asc']]
-        });
-        $('#myTable tbody').on('click', 'td.dt-control', function () {
-            var table   = $('#myTable').DataTable();
-            var tr      = $(this).closest('tr');
-            var row     = table.row( tr );
-            if ( row.child.isShown() ) {
-                row.child.hide();
-                tr.removeClass('shown');
-            }
-            else {
-                row.child(format(tr.data('child-value'))).show();
-                tr.addClass('shown');
-            }
         });
         $('#myTable').on('click', '.remove', function() {
             var table = $('#myTable').DataTable();

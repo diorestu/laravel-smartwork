@@ -32,8 +32,7 @@
                                 <i class="mdi mdi-download"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
-                                <a class="dropdown-item" href="#">File Excel</a>
-                                <a class="dropdown-item" href="#">File PDF</a>
+                                <a class="dropdown-item" href="{{ route("pengumuman.expor") }}">File Excel</a>
                             </div>
                         </div>
                         {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}

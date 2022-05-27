@@ -1,8 +1,23 @@
 <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-
+<style>
+    .f-10 { font-size: 10px !important; }
+    .card-header { background:#B0141C !important; padding: 0.75rem 1.25rem; }
+    .text-tipis  { font-weight: 300; opacity: 0.5; }
+</style>
 
 <div class="card shadow rounded-sm">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title text-white mb-0 mt-2">Absensi Tercatat</h5>
+        <div class="btn-group" role="group">
+            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                <a class="dropdown-item" href="{{ route("absensi.cabang.ekspor", ["c"=>$cabang, "s"=>$awal, "e"=>$akhir]) }}">File Excel</a>
+            </div>
+        </div>
+    </div>
     <div class="card-body px-4 py-4">
         <div class="table-responsive">
             <table class="table table-hover" id="myTable">
@@ -20,13 +35,13 @@
                     @foreach ($data as $i)
                         <tr>
                             <td>{{ $i->user->nama }}</td>
-                            <td>{{ tanggalIndo($i->jam_hadir) }}</td>
+                            <td>{{ tglIndo2($i->jam_hadir) }}</td>
                             @php
                                 $tanggal = ubahKeTanggal($i->jam_hadir);
                                 $r_shift = App\Models\UserShift::where('id_user', $i->id_user)->whereDate('tanggal_shift', '=' , $tanggal)->first();
                             @endphp
                             @if ($r_shift != "")
-                                <td class="text-center"><a href="javascript:void(0);" data-toggle="tooltip" title="{{ $r_shift->shift->ket_shift." ".TampilJamMenit($r_shift->shift->hadir_shift)." - ".TampilJamMenit($r_shift->shift->pulang_shift) }}">{{ $r_shift->shift->nama_shift }}</a></td>
+                                <td class="text-center">{{ $r_shift->shift->ket_shift." ".TampilJamMenit($r_shift->shift->hadir_shift)." - ".TampilJamMenit($r_shift->shift->pulang_shift) }}</td>
                             @else
                                 <td class="text-center"></td>
                             @endif

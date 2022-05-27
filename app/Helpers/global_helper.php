@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Absensi;
+use App\Models\Cabang;
+use App\Models\User;
 use App\Models\UserShift;
 use Carbon\Carbon;
 
@@ -157,21 +159,28 @@ function TanggalOnly($date)
     $tgl     = ltrim($tanggal, '0');
     return $tgl;
 }
+function hoursandmins($time, $format = '%02d:%02d')
+{
+    if ($time < 1) {
+        return;
+    }
+    $hours = floor($time / 60);
+    $minutes = ($time % 60);
+    return sprintf($format, $hours, $minutes);
+}
 function telat($start_time, $finish_time, $shift) {
     if ($shift == "L") {
         echo "<span>-</span>";
     } else {
-        $awal  = new DateTime($start_time);
-        $akhir = new DateTime($finish_time);
-        $diff  = $awal->diff($akhir);
-        $jam   = $diff->h . 'h, ';
-        $menit = $diff->i . 'm ';
-        $detik = $diff->s . 's ';
-        $totalDuration = $jam . $menit;
-        if ($menit > 1) {
-            echo "<span class='text-danger'>" . $totalDuration . "</span>";
+        $jamawal        = Carbon::parse($start_time);
+        $jamakhir       = Carbon::parse($finish_time);
+        $totalDuration  = $jamawal->diffInMinutes($jamakhir, false);
+        $jam_menit      = hoursandmins($totalDuration, '%0dj, %02dm');
+
+        if ($totalDuration > 1) {
+            echo "<span class='text-danger'>" . $jam_menit . "</span>";
         } else {
-            echo "<span>-</span>";
+            echo "<span>On time</span>";
         }
     }
 }
@@ -277,6 +286,15 @@ function tepatWaktu($user, $awal, $akhir)
         }
     }
     return $hitung;
+}
+function namaCabang($id_cabang) {
+    $cb = Cabang::where('id', $id_cabang)->first();
+    return $cb->cabang_nama;
+}
+function namaUser($id_user)
+{
+    $usr = User::where('id', $id_user)->first();
+    return $usr->nama;
 }
 function terlambat($user, $awal, $akhir)
 {

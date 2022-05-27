@@ -2,16 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AbsensiCabang;
+use App\Exports\AbsensiHarianExport;
+use App\Exports\AbsensiPegawai;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use App\Models\AbsensiImage;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ViewAbsenController extends Controller
 {
+    public function ekspor_riwayatAbsensi($hari) {
+        return (new AbsensiHarianExport($hari))->download('Riwayat Absensi Pegawai ' . tanggalIndo3($hari) .'.xlsx');
+    }
+
+    public function ekspor_cabangAbsensi($cabang, $awal, $akhir)
+    {
+        return (new AbsensiCabang($cabang, $awal, $akhir))->download('Riwayat Absensi Cabang ' . namaCabang($cabang) . ' Periode '. Carbon::parse($awal)->format('d-m-Y')." sd ".Carbon::parse($akhir)->format('d-m-Y'). '.xlsx');
+    }
+
+    public function ekspor_pegawaiAbsensi($user, $awal, $akhir)
+    {
+        return (new AbsensiPegawai($user, $awal, $akhir))->download('Riwayat Absensi Pegawai ' . namaUser($user) .' Periode ' . Carbon::parse($awal)->format('d-m-Y') . " sd " . Carbon::parse($akhir)->format('d-m-Y') . '.xlsx');
+    }
     // ULOAD IMAGES DROPZONE
     /**
      * Update the specified resource in storage.
@@ -292,8 +310,11 @@ class ViewAbsenController extends Controller
                             ->where('absensis.id_user', $staff_id)->get();
 
         return view(
-            'admin.absensi.show_data_karyawan',
-            ['data' => $data]
+            'admin.absensi.data.show_data_karyawan',[
+                'data' => $data,
+                'user' => $staff_id,
+                'awal' => $tawal,
+                'akhir' => $takhir]
         );
     }
 
@@ -321,8 +342,12 @@ class ViewAbsenController extends Controller
                                 ->where('users.id_cabang', $cabang_id)->get();
 
         return view(
-            'admin.absensi.show_data_cabang',
-            ['data' => $data]
+            'admin.absensi.data.show_data_cabang',[
+                'data' => $data,
+                'cabang' => $cabang_id,
+                'awal' => $tawal,
+                'akhir' => $takhir,
+                ]
         );
     }
 
@@ -356,6 +381,10 @@ class ViewAbsenController extends Controller
                                     ->where('users.roles', 'user')
                                     ->where('users.id_admin', $id)->get();
         // dd($data);
-        return view("admin.absensi.data.data_riwayat", ['data' => $data, 'data_belum_absen' => $gak_absen]);
+        return view("admin.absensi.data.data_riwayat", [
+            'data' => $data,
+            'data_belum_absen' => $gak_absen,
+            'hari' => $date,
+        ]);
     }
 }

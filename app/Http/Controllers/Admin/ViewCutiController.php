@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CutiCabang;
+use App\Exports\CutiPegawai;
 use App\Models\Cuti;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use DateTime;
 
 class ViewCutiController extends Controller
 {
+    public function ekspor_cabangCuti($cabang)
+    {
+        return (new CutiCabang($cabang))->download('Riwayat Cuti Cabang ' . namaCabang($cabang).'.xlsx');
+    }
+
+    public function ekspor_pegawaiCuti($user)
+    {
+        return (new CutiPegawai($user))->download('Riwayat Absensi Pegawai ' . namaUser($user).'.xlsx');
+    }
+
     public function accept($id){
         $result = Cuti::where('id_cuti', $id)->first();
         // dd($result);
@@ -234,7 +247,7 @@ class ViewCutiController extends Controller
         $data   = Cuti::where('id_user', $staff_id)->get();
         return view(
             'admin.cuti.data.show_data_karyawan',
-            ['data' => $data]
+            ['data' => $data, 'user' => $staff_id]
         );
     }
 
@@ -258,7 +271,7 @@ class ViewCutiController extends Controller
 
         return view(
             'admin.cuti.data.show_data_cabang',
-            ['data' => $data]
+            ['data' => $data, 'cabang' => $cabang_id]
         );
     }
 }

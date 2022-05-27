@@ -64,9 +64,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-8" id="content">
             <div class="card shadow rounded-sm">
-                <div class="card-body px-4 py-4" id="content">
+                <div class="card-body px-4 py-4">
                     <div class="text-center">
                         <h1><i class="icon-sm fas fa-coffee"></i></h1>
                         <h3>Silahkan Pilih Pegawai</h3>
