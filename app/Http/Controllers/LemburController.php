@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LemburCabang;
+use App\Exports\LemburPegawai;
 use App\Models\Lembur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LemburController extends Controller
 {
+    public function ekspor_cabangLembur($cabang, $awal, $akhir)
+    {
+        return (new LemburCabang($cabang, $awal, $akhir))->download('Riwayat Lembur Cabang ' . namaCabang($cabang) . ' Periode ' . Carbon::parse($awal)->format('d-m-Y') . " sd " . Carbon::parse($akhir)->format('d-m-Y') . '.xlsx');
+    }
+
+    public function ekspor_pegawaiLembur($user, $awal, $akhir)
+    {
+        return (new LemburPegawai($user, $awal, $akhir))->download('Riwayat Lembur Pegawai ' . namaUser($user) . ' Periode ' . Carbon::parse($awal)->format('d-m-Y') . " sd " . Carbon::parse($akhir)->format('d-m-Y') . '.xlsx');
+    }
+
     public function accept($id)
     {
         $result = Lembur::where('id', $id)->first();
@@ -257,7 +270,7 @@ class LemburController extends Controller
         $data       = Lembur::where('id_user', $staff_id)->whereBetween('lembur_awal', [$tawal, $takhir])->get();
         return view(
             'admin.lembur.data.show_data_karyawan',
-            ['data' => $data]
+            ['data' => $data, 'user' => $staff_id, 'awal' => $tawal, 'akhir' => $takhir]
         );
     }
 
@@ -279,10 +292,12 @@ class LemburController extends Controller
         $temp       = explode("-", $date);
         $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
         $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-        $data   = Lembur::leftJoin('users',         'users.id',             '=', 'lemburs.id_user')
-                        ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
-                        ->where('users.id_cabang', $cabang_id)->whereBetween('lemburs.lembur_awal', [$tawal, $takhir])->get();
+        $data       = Lembur::leftJoin('users',         'users.id',             '=', 'lemburs.id_user')
+                            ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                            ->where('users.id_cabang', $cabang_id)->whereBetween('lemburs.lembur_awal', [$tawal, $takhir])->get();
 
-        return view('admin.lembur.data.show_data_cabang',['data' => $data]);
+        return view(
+            'admin.lembur.data.show_data_cabang',
+            ['data' => $data, 'cabang' => $cabang_id, 'awal' => $tawal, 'akhir' => $takhir]);
     }
 }

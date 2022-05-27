@@ -136,6 +136,8 @@ use App\Http\Controllers\User\UserLemburController;
             Route::post('data-aktivitas-per-cabang',    [ViewAktivitasController::class, 'showDataCabang'])->name('aktivitas.show_data_cabang');
             Route::resource('aktivitas',                ViewAktivitasController::class);
             // lembur
+            Route::get('lembur/ekspor_cabang/{c}/{s}/{e}',  [LemburController::class, 'ekspor_cabangLembur'])->name('lembur.cabang.ekspor');
+            Route::get('lembur/ekspor_pegawai/{u}/{s}/{e}', [LemburController::class, 'ekspor_pegawaiLembur'])->name('lembur.pegawai.ekspor');
             Route::get('lembur/riwayat',                [LemburController::class, 'riwayat'])->name('lembur.riwayat');
             Route::get('lembur/{id}/terima',            [LemburController::class, 'accept'])->name('lembur.terima');
             Route::get('lembur/{id}/tolak',             [LemburController::class, 'decline'])->name('lembur.tolak');
