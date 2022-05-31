@@ -49,7 +49,7 @@
                                         @foreach ($q_cabang as $r_cabang)
                                         <option value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
                                         @endforeach
-                                        <option value='all'>Semua Lokasi Kerja</option>
+                                        {{-- <option value='all'>Semua Lokasi Kerja</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="tahun">Tahun <span class="text-danger">*</span></label>
                                     <select required id="tahun" class="form-select" name="tahun">
-                                        @for ($t=2021;$t<=2030;$t++)
+                                        @for ($t=2022;$t>=2019;$t--)
                                         <option value='{{ $t }}'>{{ $t }}</option>
                                         @endfor
                                     </select>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                <button class="btn btn-warning text-black w-100 mt-1 font-weight-boldest btn-md" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
                             </div>

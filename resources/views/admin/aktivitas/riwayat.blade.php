@@ -8,6 +8,9 @@
     <!-- DataTables -->
     <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .card-header { background:#B0141C !important; padding: 0.75rem 1.25rem; }
+    </style>
 @endpush
 
 @section('content')
@@ -20,19 +23,6 @@
                         <li class="breadcrumb-item active">Aktivitas Pegawai</li>
                     </ol>
                     <h4 class="fw-bold font-size-22 mt-3 mb-3">Riwayat Aktivitas Pegawai</h4>
-                </div>
-                <div class="page-title-right align-self-end">
-                    <div class="d-flex justify-content-end mb-3">
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-download"></i> &nbsp; Ekspor Data &nbsp; <i class="mdi mdi-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -55,14 +45,27 @@
                                         @method('POST')
                                         @csrf
                                         <div class="row">
-                                            <div class="col-sm-9 col-md-9">
+                                            <div class="col-sm-4 col-md-4">
+                                                <div class="form-group mb-4">
+                                                    <label for="staff">Pilih Lokasi Kerja <span class="text-danger">*</span></label>
+                                                    <select required id="cabang" class="form-select" name="id_cabang">
+                                                        @php
+                                                            $q_cabang = App\Models\Cabang::where('id_admin', auth()->user()->id)->get();
+                                                        @endphp
+                                                        @foreach ($q_cabang as $r_cabang)
+                                                        <option @if($cabang != null) @if($cabang == $r_cabang->id) {{ "selected" }} @endif @endif value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 col-md-5">
                                                 <div class="form-group mb-4">
                                                     <label for="waktu">Rentang Waktu <span class="text-danger">*</span></label>
                                                     <input required id="waktu" class="form-control daterange" type="text" name="waktu" value="{{ $sesi_aktivitas }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 col-md-3 mt-2">
-                                                <button class="btn btn-primary w-100 mt-3 font-weight-boldest btn-md" type="submit">
+                                                <button class="btn btn-warning text-black w-100 mt-3 font-weight-boldest btn-md" type="submit">
                                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                                 </button>
                                             </div>
@@ -80,6 +83,22 @@
         <div id="content">
             @if ($data != null)
             <div class="card card-custom gutter-b rounded-sm shadow-sm">
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="card-title text-white mb-0 mt-2">Aktivitas Tercatat</h5>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                            @php
+                                $temp       = explode("-", $sesi_aktivitas);
+                                $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
+                                $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
+                            @endphp
+                            <a class="dropdown-item" href="{{ route("aktivitas.cabang.ekspor", ["c"=>$cabang, "s"=>$tawal, "e"=>$takhir]) }}">File Excel</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body p-4">
                     <div class="table-responsive">
                         <table class="table rounded" id="myTable">
@@ -170,6 +189,8 @@
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
+        const elementCabang = document.querySelector('#cabang');
+        const choices = new Choices(elementCabang);
         function format ( data ) {
             return '<table class="table">'+data+'</table>';
         }

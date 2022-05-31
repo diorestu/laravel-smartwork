@@ -13,7 +13,7 @@
         <h5 class="card-title text-white mb-0 mt-2">Absensi Tercatat</h5>
         <div class="btn-group" role="group">
             <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                <i class="mdi mdi-download"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
                 <a class="dropdown-item" href="{{ route("absensi.riwayat.ekspor", $hari) }}">File Excel</a>

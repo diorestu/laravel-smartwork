@@ -91,7 +91,7 @@ class ViewAbsenController extends Controller
     public function index()
     {
         $id     = Auth::user()->id;
-        $date   = "2021-12-27";
+        $date   = date('Y-m-d');
         $data   = Absensi::select(['absensis.id', 'cabang_nama', 'absensis.id_user', 'jam_hadir', 'jam_pulang', 'nama_shift', 'ket_shift', 'hadir_shift', 'pulang_shift', 'jam_kerja',])
                         ->leftJoin('users',         'users.id',             '=', 'absensis.id_user')
                         ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')

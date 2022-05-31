@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\JadwalExport;
 use App\Models\UserShift;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\JadwalTemplateExport;
 use App\Imports\UsersShiftImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JadwalController extends Controller
 {
+    public function ekspor_jadwal($cabang, $bulan, $tahun) {
+        return (new JadwalExport($cabang, $bulan, $tahun))->download('Jadwal Shift Pegawai.xlsx');
+    }
+
     public function get_jadwal(Request $r){
         $input      = $r->all();
         $cabang     = $input['id_cabang'];

@@ -103,7 +103,6 @@
                                     <a href="{{ route('aktivitas.index') }}" class="dropdown-item">Aktivitas Hari Ini</a>
                                     <a href="{{ route('aktivitas.riwayat') }}" class="dropdown-item">Riwayat Aktivitas</a>
                                     <a href="{{ route('aktivitas.data_karyawan') }}" class="dropdown-item">Aktivitas Per Pegawai</a>
-                                    <a href="{{ route('aktivitas.data_cabang') }}" class="dropdown-item">Aktivitas Per Lokasi Kerja</a>
                                 </div>
                             </div>
                             <div class="dropdown">

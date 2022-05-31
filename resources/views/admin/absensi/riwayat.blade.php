@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Riwayat Absensi Pegawai
+    Riwayat Absensi Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -64,8 +64,8 @@
                 <div class="card-body px-4 py-4">
                     <div class="text-center">
                         <h1><i class="icon-sm fas fa-calendar"></i></h1>
-                        <h3>Silahkan Pilih Hari Diatas</h3>
-                        <p>Untuk melihat data, silahkan pilih lokasi kerja, tahun dan bulan lalu klik lihat data.</p>
+                        <h3>Silahkan Pilih Hari Absensi</h3>
+                        <p>Untuk melihat data, silahkan pilih tanggal absensi lalu klik lihat data.</p>
                     </div>
                 </div>
             </div>

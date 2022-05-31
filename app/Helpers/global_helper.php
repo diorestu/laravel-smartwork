@@ -198,8 +198,7 @@ function JamOnly($date)
 function Bulan($date)
 {
     $dateObj   = DateTime::createFromFormat('!m', $date);
-    $monthName = $dateObj->format('F'); // March
-    return Carbon::parse($monthName)->locale('id')->isoFormat('MMMM');
+    return Carbon::parse($dateObj)->locale('id')->isoFormat('MMMM');
 }
 function converttanggal($date)
 {

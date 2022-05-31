@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <label for="tahun">Tahun <span class="text-danger">*</span></label>
                                     <select required id="tahun" class="form-select" name="tahun">
-                                        @for ($t=2021;$t<=2030;$t++)
+                                        @for ($t=2022;$t>=2019;$t--)
                                         <option @if($t == $tahun) selected @endif value='{{ $t }}'>{{ $t }}</option>
                                         @endfor
                                     </select>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                <button class="btn btn-warning text-black w-100 mt-1 font-weight-boldest btn-md" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
                             </div>
@@ -150,9 +150,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end" style="">
                                                     <li><a class="dropdown-item" href='{{ route('payroll.edit', $i->id) }}'>
-                                                            <span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Edit
+                                                            <span><i class="fas fa-pen icon-sm"></i></span>&nbsp; Lihat Detail
                                                         </a></li>
-                                                    <li><a href="{{ route("payroll.show", $i->id) }}" class="dropdown-item"><i class="fa fa-eye me-2"></i>Detail</a></li>
+                                                    {{-- <li><a href="{{ route("payroll.show", $i->id) }}" class="dropdown-item"><i class="fa fa-eye me-2"></i>Detail</a></li> --}}
                                                 </ul>
                                             </div>
                                         </td>

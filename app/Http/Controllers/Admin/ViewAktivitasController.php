@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AktivitasCabang;
+use App\Exports\AktivitasPegawai;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\User\AktivitasController;
 use App\Models\Aktivitas;
 use App\Models\AktivitasImage;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 use DateTime;
 
 class ViewAktivitasController extends Controller
 {
+    public function ekspor_cabangAktivitas($cabang, $awal, $akhir)
+    {
+        return (new AktivitasCabang($cabang, $awal, $akhir))->download('Riwayat Aktivitas Cabang ' . namaCabang($cabang) . ' Periode ' . Carbon::parse($awal)->format('d-m-Y') . " sd " . Carbon::parse($akhir)->format('d-m-Y') . '.xlsx');
+    }
+
+    public function ekspor_pegawaiAktivitas($user, $awal, $akhir)
+    {
+        return (new AktivitasPegawai($user, $awal, $akhir))->download('Riwayat Aktivitas Pegawai ' . namaUser($user) . ' Periode ' . Carbon::parse($awal)->format('d-m-Y') . " sd " . Carbon::parse($akhir)->format('d-m-Y') . '.xlsx');
+    }
     // ULOAD IMAGES DROPZONE
     /**
      * Update the specified resource in storage.
@@ -184,28 +196,43 @@ class ViewAktivitasController extends Controller
         $sekarang = date("m/d/Y");
         if ($request->session()->has('aktivitas')) {
             $value      = $request->session()->get('aktivitas', 'default');
+            $cabang     = $request->session()->get('aktivitas_cabang', 'default');
             $temp       = explode("-", $value);
             $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
             $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-            $dataaktivi = Aktivitas::whereBetween('created_at', [$tawal, $takhir])->get();
+            $dataaktivi = Aktivitas::leftJoin('users',          'users.id',             '=', 'aktivitas.id_user')
+                                    ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                                    ->where('users.id_cabang', $cabang)
+                                    ->whereBetween('aktivitas.created_at', [$tawal, $takhir])->get();
         } else {
+            $cabang     = null;
             $value      = $sekarang . " - " . $sekarang;
             $dataaktivi   = null;
         }
-        return view('admin.aktivitas.riwayat', ['data' => $dataaktivi, 'sesi_aktivitas' => $value]);
+        return view('admin.aktivitas.riwayat', ['data' => $dataaktivi, 'cabang' => $cabang, 'sesi_aktivitas' => $value]);
     }
     public function showDataRiwayat(Request $request)
     {
         $input      = $request->all();
+        $cabang     = $input['id_cabang'];
         $date       = $input['waktu'];
         $temp       = explode("-", $date);
         $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
         $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-        $data       = Aktivitas::whereBetween('created_at', [$tawal, $takhir])->get();
+
+        $data       = Aktivitas::leftJoin('users',          'users.id',             '=', 'aktivitas.id_user')
+                                ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
+                                ->where('users.id_cabang', $cabang)
+                                ->whereBetween('aktivitas.created_at', [$tawal, $takhir])->get();
         $request->session()->put('aktivitas', $date);
+        $request->session()->put('aktivitas_cabang', $cabang);
         return view(
-            'admin.aktivitas.data.show_data_riwayat',
-            ['data' => $data]
+            'admin.aktivitas.data.show_data_riwayat', [
+                'data'      => $data,
+                'cabang'    => $cabang,
+                'awal'      => $tawal,
+                'akhir'     => $takhir,
+            ]
         );
     }
 
@@ -228,34 +255,12 @@ class ViewAktivitasController extends Controller
         $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
         $data       = Aktivitas::where('id_user', $staff_id)->whereBetween('created_at', [$tawal, $takhir])->get();
         return view(
-            'admin.aktivitas.data.show_data_karyawan',
-            ['data' => $data]
-        );
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function data_cabang()
-    {
-        return view('admin.aktivitas.show_cabang');
-    }
-    public function showDataCabang(Request $request)
-    {
-        $input      = $request->all();
-        $cabang_id  = $input['id_cabang'];
-        // $date       = $input['waktu'];
-        // $temp       = explode("-", $date);
-        // $tawal      = inverttanggal(str_replace(' ', '', $temp[0]));
-        // $takhir     = inverttanggal(str_replace(' ', '', $temp[1]));
-        $data   = Aktivitas::leftJoin('users',         'users.id',             '=', 'cutis.id_user')
-                            ->leftJoin('cabangs',       'cabangs.id',           '=', 'users.id_cabang')
-                            ->where('users.id_cabang', $cabang_id)->get();
-        return view(
-            'admin.aktivitas.data.show_data_cabang',
-            ['data' => $data]
+            'admin.aktivitas.data.show_data_karyawan',[
+                'data' => $data,
+                'user' => $staff_id,
+                'awal' => $tawal,
+                'akhir' => $takhir,
+            ]
         );
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Detail Absensi Pegawai
+    Detail Absensi Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -22,9 +22,9 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Absensi Pegawai</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("absensi.index") }}">Absensi Pegawai Hari Ini</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("absensi.index") }}">Detail Absensi Pegawai</a></li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Absensi Pegawai Hari Ini</h4>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Detail Absensi Pegawai</h4>
                     <p class="text-muted mt-1 text-opacity-50">Detail absensi kehadiran pegawai</p>
                 </div>
                 <div class="page-title-right align-self-end">
@@ -74,12 +74,7 @@
                             <tr>
                                 <td>Shift</td>
                                 <td>:</td>
-                                <td>{{ $data->nama_shift }}</td>
-                            </tr>
-                            <tr>
-                                <td>Keterangan Shift</td>
-                                <td>:</td>
-                                <td>{{ $data->ket_shift." ".TampilJamMenit($data->hadir_shift)." - ".TampilJamMenit($data->pulang_shift) }}</td>
+                                <td>{{ $data->nama_shift }} / {{ $data->ket_shift." ".TampilJamMenit($data->hadir_shift)." - ".TampilJamMenit($data->pulang_shift) }}</td>
                             </tr>
                             <tr>
                                 <td>In</td>

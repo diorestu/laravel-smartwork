@@ -126,14 +126,14 @@ use App\Http\Controllers\User\UserLemburController;
             Route::post('data-pengajuan-cuti',          [ViewCutiController::class, 'showDataPengajuan'])->name('cuti.show_data_pengajuan');
             Route::resource('cuti',                     ViewCutiController::class);
             // aktivitas
+            Route::get('aktivitas/ekspor_cabang/{c}/{s}/{e}',  [ViewAktivitasController::class, 'ekspor_cabangAktivitas'])->name('aktivitas.cabang.ekspor');
+            Route::get('aktivitas/ekspor_pegawai/{u}/{s}/{e}', [ViewAktivitasController::class, 'ekspor_pegawaiAktivitas'])->name('aktivitas.pegawai.ekspor');
             Route::get('aktivitas/riwayat',             [ViewAktivitasController::class, 'riwayat'])->name("aktivitas.riwayat");
             Route::post('data-riwayat-aktivitas',       [ViewAktivitasController::class, 'showDataRiwayat'])->name('aktivitas.show_data_riwayat');
             Route::post('aktivitas/uploadimages/{id}',  [ViewAktivitasController::class, 'uploadImages'])->name("aktivitas.uploadimages");
             Route::post('aktivitas/deleteimages/{id}',  [ViewAktivitasController::class, 'deleteImage'])->name("aktivitas.deleteimages");
             Route::get('aktivitas-per-karyawan',        [ViewAktivitasController::class, 'data_karyawan'])->name('aktivitas.data_karyawan');
             Route::post('data-aktivitas-per-karyawan',  [ViewAktivitasController::class, 'showDataKaryawan'])->name('aktivitas.show_data_karyawan');
-            Route::get('aktivitas-per-cabang',          [ViewAktivitasController::class, 'data_cabang'])->name('aktivitas.data_cabang');
-            Route::post('data-aktivitas-per-cabang',    [ViewAktivitasController::class, 'showDataCabang'])->name('aktivitas.show_data_cabang');
             Route::resource('aktivitas',                ViewAktivitasController::class);
             // lembur
             Route::get('lembur/ekspor_cabang/{c}/{s}/{e}',  [LemburController::class, 'ekspor_cabangLembur'])->name('lembur.cabang.ekspor');
@@ -149,6 +149,7 @@ use App\Http\Controllers\User\UserLemburController;
             Route::resource('lembur',                   LemburController::class);
             // jadwal kerja
             Route::get('jadwal/impor-jadwal',           [JadwalController::class, 'impor'])->name('jadwal.impor');
+            Route::get('jadwal/ekspor/{cb}/{bl}/{th}',  [JadwalController::class, 'ekspor_jadwal'])->name('jadwal.ekspor');
             Route::post('jadwal/download-template',     [JadwalController::class, 'download_template'])->name('jadwal.downloadtemplate');
             Route::post('jadwal/upload-tambah-jadwal',  [JadwalController::class, 'upload_add_jadwal'])->name('jadwal.uploadAdd');
             Route::post('jadwal/get-jadwal',            [JadwalController::class, 'get_jadwal'])->name('jadwal.cari');

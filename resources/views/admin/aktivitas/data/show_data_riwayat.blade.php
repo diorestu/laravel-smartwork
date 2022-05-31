@@ -1,7 +1,23 @@
 <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .f-10 { font-size: 10px !important; }
+    .card-header { background:#B0141C !important; padding: 0.75rem 1.25rem; }
+    .text-tipis  { font-weight: 300; opacity: 0.5; }
+</style>
 
 <div class="card card-custom gutter-b rounded-sm shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title text-white mb-0 mt-2">Aktivitas Tercatat</h5>
+        <div class="btn-group" role="group">
+            <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                <a class="dropdown-item" href="{{ route("aktivitas.cabang.ekspor", ["c"=>$cabang, "s"=>$awal, "e"=>$akhir]) }}">File Excel</a>
+            </div>
+        </div>
+    </div>
     <div class="card-body p-4">
         <div class="table-responsive">
             <table class="table rounded" id="myTable">
@@ -73,6 +89,7 @@
         </div>
     </div>
 </div>
+
 <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>

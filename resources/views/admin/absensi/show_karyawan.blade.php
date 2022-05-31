@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Data Absensi Per Karyawan
+    Data Absensi per Karyawan | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -22,11 +22,11 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("jabatan.index") }}">Absensi</a></li>
-                        <li class="breadcrumb-item active">Absensi Per Pegawai</li>
+                        <li class="breadcrumb-item"><a href="{{ route("jabatan.index") }}">Absensi Pegawai</a></li>
+                        <li class="breadcrumb-item active">Absensi per Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Absensi Per Pegawai</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Lihat data absensi per pegawai</p>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Absensi per Pegawai</h4>
+                    <p class="text-muted mt-1 text-opacity-50">Lihat data absensi per pegawai dengan waktu tertentu</p>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3 font-weight-boldest btn-md" type="submit">
+                        <button class="btn btn-warning text-black w-100 mt-3 font-weight-boldest btn-md" type="submit">
                             <i class="fas fa-info-circle icon-md"></i> Lihat Data
                         </button>
                     </form>

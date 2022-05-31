@@ -38,7 +38,7 @@
         .table>:not(caption)>*>* {
             padding: 0.35rem 0.35rem !important;
         }
-        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header { background:#B0141C !important; }
     </style>
 @endpush
 
@@ -77,7 +77,7 @@
                                         @foreach ($q_cabang as $r_cabang)
                                         <option  @if($r_cabang->id == $cb) selected @endif value='{{ $r_cabang->id }}'>{{ $r_cabang->cabang_nama }}</option>
                                         @endforeach
-                                        <option @if($cb == "all") selected @endif value='all'>Semua Lokasi Kerja</option>
+                                        {{-- <option @if($cb == "all") selected @endif value='all'>Semua Lokasi Kerja</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 mt-1 font-weight-boldest btn-md" type="submit">
+                                <button class="btn btn-warning text-black w-100 mt-1 font-weight-boldest btn-md" type="submit">
                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                 </button>
                             </div>
@@ -122,8 +122,17 @@
             @php $jum_hari = Carbon\Carbon::createFromFormat('m-Y', $bulan.'-'.$tahun)->daysInMonth; @endphp
             @foreach ($dt_cb as $c)
             <div class="card shadow rounded-sm">
-                <div class="card-header">
-                    <h5 class="card-title text-white mb-0">Lokasi Kerja {{ $c->cabang_nama }}</h5>
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="card-title text-white mb-0 mt-2">Lokasi Kerja {{ $c->cabang_nama }}</h5>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+                            <a class="dropdown-item" href="{{ route("jadwal.ekspor", ['cb'=>$cb, 'bl'=>$bulan, 'th'=>$tahun]) }}">File Excel</a>
+                            <a class="dropdown-item" href="#">File PDF</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body px-4 py-4 table-responsive">
                     <table class="table table-bordered table-edits table-editable">

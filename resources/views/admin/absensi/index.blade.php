@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Absensi Pegawai Hari Ini
+    Absensi Pegawai Hari Ini | Smartwork App
 @endsection
 
 @push('addon-style')

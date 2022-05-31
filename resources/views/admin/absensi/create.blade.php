@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('title')
-    Tambah Data Absensi Pegawai
+    Tambah Data Absensi Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
     <style>
-        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header { background:#B0141C !important; }
     </style>
 @endpush
 
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
-                                        <i class="fas fa-hdd icon-md"></i> &nbsp; Simpan Perubahan
+                                        <i class="fas fa-plus icon-md"></i> &nbsp; Buat Absensi Baru
                                     </button>
                                 </div>
                             </div>

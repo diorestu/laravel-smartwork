@@ -1,6 +1,6 @@
 <table>
     <thead>
-    <tr><th>Rekap Lembur Pegawai Pegawai {{ namaUser($user) }} Periode {{ Carbon\Carbon::parse($awal)->format('d/m/Y')." sd ".Carbon\Carbon::parse($akhir)->format('d/m/Y') }}</th></tr>
+    <tr><th>Rekap Lembur Pegawai {{ namaUser($user) }} Periode {{ Carbon\Carbon::parse($awal)->format('d/m/Y')." sd ".Carbon\Carbon::parse($akhir)->format('d/m/Y') }}</th></tr>
     <tr><th></th></tr>
     <tr>
         <th>No.</th>
