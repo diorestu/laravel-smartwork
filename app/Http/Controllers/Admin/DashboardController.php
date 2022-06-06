@@ -119,20 +119,20 @@ class DashboardController extends Controller
         $user     = User::findOrFail($id_admin);
 
         $this->validate($r, [
-            'old-password'  => 'required|min:8',
-            'new-password'  => 'min:8|different:old-password',
-            'cnew-password' => 'required|min:8|same:new-password',
+            'old_password'  => 'required|min:8',
+            'new_password'  => 'min:8|different:old_password',
+            'cnew_password' => 'required|min:8|same:new_password',
         ]);
 
-        if (Hash::check($r->password, $user->password)) {
+        if (Hash::check($r->new_password, $user->password)) {
+            $r->session()->flash('error', 'Kata Sandi Baru Tidak Sesuai!');
+            return redirect()->back();
+        } else {
             $user->fill([
                 'password' => Hash::make($r->new_password)
             ])->save();
 
             $r->session()->flash('success', 'Kata Sandi Telah Diubah');
-            return redirect()->back();
-        } else {
-            $r->session()->flash('error', 'Kata Sandi Baru Tidak Sesuai!');
             return redirect()->back();
         }
     }

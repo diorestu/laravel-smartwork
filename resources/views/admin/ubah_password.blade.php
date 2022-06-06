@@ -77,29 +77,29 @@
                                         <div class="col-sm-12 col-md-12">
                                             <div class="form-group mb-4">
                                                 <label for="old-pass" class="font-weight-bolder">Kata Sandi Lama <span class="text-danger">*</span></label>
-                                                <input required class='form-control @error("old-password")
+                                                <input required class='form-control @error("old_password")
                                                     is-invalid
-                                                @enderror' type="password" name="old-password" id="old-pass" value="">
-                                                @error('old-password')
+                                                @enderror' type="password" name="old_password" id="old-pass" value="">
+                                                @error('old_password')
                                                     <span>{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="new-pass" class="font-weight-bolder">Kata Sandi Baru <span class="text-danger">*</span></label>
-                                                <input required class='form-control @error("new-password")
+                                                <input required class='form-control @error("new_password")
                                                     is-invalid
-                                                @enderror' type="password" name="new-password" id="new-pass" value="">
-                                                @error('new-password')
+                                                @enderror' type="password" name="new_password" id="new-pass" value="">
+                                                @error('new_password')
                                                     <span>{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="cnew-pass" class="font-weight-bolder">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
                                                 <input required class='form-control
-                                                @error("cnew-password")
+                                                @error("cnew_password")
                                                     is-invalid
-                                                @enderror' type="password" name="cnew-password" id="cnew-pass" value="">
-                                                @error('cnew-password')
+                                                @enderror' type="password" name="cnew_password" id="cnew_pass" value="">
+                                                @error('cnew_password')
                                                     <span>{{ $message }}</span>
                                                 @enderror
                                             </div>
