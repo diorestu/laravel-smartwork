@@ -76,16 +76,16 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-12">
                                             <div class="form-group mb-4">
-                                                <label for="username" class="font-weight-bolder">Kata Sandi Lama <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="old-password" id="" value="">
+                                                <label for="old-pass" class="font-weight-bolder">Kata Sandi Lama <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="password" name="old-password" id="old-pass" value="">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="email" class="font-weight-bolder">Kata Sandi Baru <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="new-password" id="" value="">
+                                                <label for="new-pass" class="font-weight-bolder">Kata Sandi Baru <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="password" name="new-password" id="new-pass" value="">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="phone" class="font-weight-bolder">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="cnew-password" id="" value="">
+                                                <label for="cnew-pass" class="font-weight-bolder">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="password" name="cnew-password" id="cnew-pass" value="">
                                             </div>
                                         </div>
                                     </div>
