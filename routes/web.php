@@ -60,7 +60,7 @@ use App\Http\Controllers\User\UserLemburController;
         Route::get('/',                                 [DashboardController::class, 'index'])->name('admin.welcome');
         Route::get('/dashboard',                        [DashboardController::class, 'dashboard'])->name('admin.home');
         Route::get('/profil-saya',                      [DashboardController::class, 'profile'])->name('admin.profile');
-        Route::post('/profil-saya',                     [DashboardController::class, 'saveProfile'])->name('admin.save');
+        Route::put('/profil-saya',                     [DashboardController::class, 'saveProfile'])->name('admin.update');
         Route::post('/upload-logo',                     [DashboardController::class, 'uploadLogo'])->name('upload.logo');
         Route::get('/ubah-kata-sandi',                  [DashboardController::class, 'ubahPassword'])->name('admin.ubahPassword');
         Route::resource('pengguna',                     ViewAdminController::class);
