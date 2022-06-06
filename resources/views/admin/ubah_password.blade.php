@@ -81,7 +81,7 @@
                                                     is-invalid
                                                 @enderror' type="password" name="old-password" id="old-pass" value="">
                                                 @error('old-password')
-                                                    <span>{{ $errors }}</span>
+                                                    <span>{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group mb-4">
@@ -89,6 +89,9 @@
                                                 <input required class='form-control @error("new-password")
                                                     is-invalid
                                                 @enderror' type="password" name="new-password" id="new-pass" value="">
+                                                @error('new-password')
+                                                    <span>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="cnew-pass" class="font-weight-bolder">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
@@ -96,6 +99,9 @@
                                                 @error("cnew-password")
                                                     is-invalid
                                                 @enderror' type="password" name="cnew-password" id="cnew-pass" value="">
+                                                @error('cnew-password')
+                                                    <span>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

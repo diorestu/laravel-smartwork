@@ -120,7 +120,7 @@ class DashboardController extends Controller
 
         $this->validate($r, [
             'old-password'  => 'required|min:8',
-            'new-password'  => 'confirmed|min:8|different:old-password',
+            'new-password'  => 'min:8|different:old-password',
             'cnew-password' => 'required|min:8|same:new-password',
         ]);
 
