@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Ubah Kata Sandi
+    Ubah Kata Sandi | Smartwork App
 @endsection
 
 @push('addon-style')

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Profil Saya
+    Profil Saya | Smartwork App
 @endsection
 
 @push('addon-style')

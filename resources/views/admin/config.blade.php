@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Pengaturan Sistem
+    Pengaturan Sistem | Smartwork App
 @endsection
 
 @push('addon-style')

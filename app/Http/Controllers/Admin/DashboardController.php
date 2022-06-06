@@ -104,7 +104,9 @@ class DashboardController extends Controller
 
     // UBAH PASSWORD
     public function ubahPassword() {
-        return view('admin.ubah_password');
+        $id_admin       = Auth::user()->id;
+        $data_user      = User::where("id", $id_admin)->first();
+        return view('admin.ubah_password', ['data_user' => $data_user]);
     }
 
     public function verify(){
