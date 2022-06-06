@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="col-xl-7">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.newPassword') }}" method="post" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
                     <div class="tab-content">
@@ -77,15 +77,25 @@
                                         <div class="col-sm-12 col-md-12">
                                             <div class="form-group mb-4">
                                                 <label for="old-pass" class="font-weight-bolder">Kata Sandi Lama <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="old-password" id="old-pass" value="">
+                                                <input required class='form-control @error("old-password")
+                                                    is-invalid
+                                                @enderror' type="password" name="old-password" id="old-pass" value="">
+                                                @error('old-password')
+                                                    <span>{{ $errors }}</span>
+                                                @enderror
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="new-pass" class="font-weight-bolder">Kata Sandi Baru <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="new-password" id="new-pass" value="">
+                                                <input required class='form-control @error("new-password")
+                                                    is-invalid
+                                                @enderror' type="password" name="new-password" id="new-pass" value="">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="cnew-pass" class="font-weight-bolder">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="password" name="cnew-password" id="cnew-pass" value="">
+                                                <input required class='form-control
+                                                @error("cnew-password")
+                                                    is-invalid
+                                                @enderror' type="password" name="cnew-password" id="cnew-pass" value="">
                                             </div>
                                         </div>
                                     </div>

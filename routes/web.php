@@ -63,6 +63,7 @@ use App\Http\Controllers\User\UserLemburController;
         Route::post('/profil-saya',                     [DashboardController::class, 'saveProfile'])->name('admin.save');
         Route::post('/upload-logo',                     [DashboardController::class, 'uploadLogo'])->name('upload.logo');
         Route::get('/ubah-kata-sandi',                  [DashboardController::class, 'ubahPassword'])->name('admin.ubahPassword');
+        Route::patch('/ubah-kata-sandi',                 [DashboardController::class, 'saveNewPassword'])->name('admin.newPassword');
         Route::resource('pengguna',                     ViewAdminController::class);
 
         // MASTER DATA
@@ -217,8 +218,6 @@ use App\Http\Controllers\User\UserLemburController;
         Route::post('/set-shift', [MobileController::class, 'postShift'])->name('user.post.shift');
 
         // Halaman Kegiatan
-        Route::resource('kegiatan', AktivitasController::class);
-        // Halaman Pengumuman
         Route::resource('kegiatan', AktivitasController::class);
         // Halaman Slip Gaji
         Route::get('/slip-gaji', [MobileController::class, 'gaji'])->name('user.gaji');

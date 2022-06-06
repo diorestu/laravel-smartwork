@@ -11,8 +11,10 @@ use App\Charts\UserCountChart;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -107,6 +109,28 @@ class DashboardController extends Controller
         $id_admin       = Auth::user()->id;
         $data_user      = User::where("id", $id_admin)->first();
         return view('admin.ubah_password', ['data_user' => $data_user]);
+    }
+    public function saveNewPassword(Request $r) {
+        $id_admin = Auth::user()->id;
+        $user     = User::findOrFail($id_admin);
+
+        $this->validate($r, [
+            'old-password'  => 'required|min:8',
+            'new-password'  => 'confirmed|min:8|different:old-password',
+            'cnew-password' => 'required|min:8|same:new-password',
+        ]);
+
+        if (Hash::check($r->password, $user->password)) {
+            $user->fill([
+                'password' => Hash::make($r->new_password)
+            ])->save();
+
+            $r->session()->flash('success', 'Kata Sandi Telah Diubah');
+            return redirect()->back();
+        } else {
+            $r->session()->flash('error', 'Kata Sandi Baru Tidak Sesuai!');
+            return redirect()->back();
+        }
     }
 
     public function verify(){
