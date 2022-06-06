@@ -25,8 +25,8 @@
     <div class="page-content mt-0 pt-0">
         <div class="row">
             <div class="col-xl-12 col-lg-12 p-0">
-                <form action="{{ route('pegawai.update', $data->id) }}" method="post" enctype="multipart/form-data">
-                    @method('PATCH')
+                <form action="{{ route('admin.update') }}" method="post" enctype="multipart/form-data">
+                    @method('PUT')
                     @csrf
                     <div class="tab-content">
                         <!-- DATA DIRI -->
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
-                                        <i class="fas fa-hdd icon-md"></i> &nbsp; Simpan Profil
+                                        <i class="fas fa-check-circle icon-md"></i>&nbsp; Update Profil Saya
                                     </button>
                                 </div>
                             </div>

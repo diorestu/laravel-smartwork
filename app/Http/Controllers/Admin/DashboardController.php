@@ -65,18 +65,22 @@ class DashboardController extends Controller
         return view('admin.profil', compact('data'));
     }
 
-    public function saveProfile(Request $r) {
-        $input          = $r->all();
-        $id             = Auth::id();
-        $data           = User::find($id);
+    public function saveProfile(Request $request) {
+        $id_admin       = Auth::user()->id;
+        $input          = $request->all();
+        $data           = User::findOrFail($id_admin);
         $data->nama     = $input['nama'];
-        $data->username = $input['username'];
         $data->gender   = $input['gender'];
         $data->phone    = $input['phone'];
         $data->email    = $input['email'];
         $data->alamat   = $input['alamat'];
-        $data->save();
-        return redirect()->route('admin.profile')->with('success', 'Berhasil update profil admin');
+        $data->username = $input['username'];
+        // $data->status   = $input['status'];
+        $berhasil       = $data->save();
+        if ($berhasil) {
+            return redirect()->route('admin.profile')->with('success', 'Proses Update Data Pegawai Berhasil'); }
+        else {
+            return redirect()->route('admin.profile')->with('error', 'Gagal Mengupdate Data Pegawai'); }
     }
 
     public function uploadLogo(Request $request)
