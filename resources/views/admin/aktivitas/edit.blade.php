@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
 @section('title')
-    Ubah Aktivitas Pegawai
+    Ubah Aktivitas Pegawai | S
 @endsection
 
 @push('addon-style')
     <link href="{{ asset('backend-assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
-        .card-header-custom { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header-custom { background:#B0141C !important; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
     </style>
 @endpush
@@ -34,7 +34,7 @@
                         <div class="tab-pane active" id="overview" role="tabpanel">
                             <div class="card">
                                 <div class="card-header card-header-custom">
-                                    <h5 class="card-title text-white mb-0">Ubah Aktivitas Baru</h5>
+                                    <h5 class="card-title text-white mb-0">Ubah Aktivitas Pegawai</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
-                                        <i class="fas fa-check icon-md"></i> &nbsp; Simpan Perubahan
+                                        <i class="fas fa-check-circle icon-md"></i>&nbsp; Simpan Perubahan
                                     </button>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="overview" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header card-header-custom">
                                 <h5 class="card-title text-white mb-0">Upload Foto Aktivitas</h5>
                             </div>
                             <div class="card-body">

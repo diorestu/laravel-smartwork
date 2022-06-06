@@ -21,8 +21,8 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Aktivitas Pegawai</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("aktivitas.index") }}">Aktivitas Pegawai Hari Ini</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route("aktivitas.index") }}">Aktivitas Pegawai</a></li>
+                        <li class="breadcrumb-item active"><a href="#">Detail Aktivitas Pegawai</a></li>
                     </ol>
                     <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Detail Aktivitas Pegawai</h4>
                     <p class="text-muted mt-1 text-opacity-50">Detail aktivitas kerja pegawai</p>

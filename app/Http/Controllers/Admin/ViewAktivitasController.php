@@ -81,7 +81,8 @@ class ViewAktivitasController extends Controller
      */
     public function index()
     {
-        $date   = date("2022-02-21");
+        $date   = date("Y-m-d");
+        // $date   = date("2022-02-21");
         $data   = Aktivitas::whereDate('created_at', '=', $date)->get();
         return view("admin.aktivitas.index", ['data' => $data]);
     }

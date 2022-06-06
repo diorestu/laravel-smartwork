@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Data Pengajuan Cuti Pegawai
+    Data Pengajuan Cuti Pegawai | Smartwork App
 @endsection
 
 @section('content')
@@ -11,22 +11,14 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
-                        <li class="breadcrumb-item active">Cuti Pegawai</li>
+                        <li class="breadcrumb-item">Cuti Pegawai</li>
+                        <li class="breadcrumb-item active">Pengajuan Cuti Pegawai</li>
                     </ol>
                     <h4 class="fw-bold font-size-22 mt-3 mb-3">Pengajuan Cuti Pegawai</h4>
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('cuti.rekap') }}" class="btn btn-success mx-3"><i class="fa fa-calendar icon-sm"></i> &nbsp; Lihat Cuti yang Diapprove</a>
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-download"></i> &nbsp; Ekspor Data &nbsp; <i class="mdi mdi-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('cuti.rekap') }}" class="btn btn-success mx-3"><i class="fa fa-calendar icon-sm"></i> &nbsp; Lihat Rekap Cuti</a>
                     </div>
                 </div>
             </div>
@@ -57,7 +49,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 col-md-3 mt-2">
-                                                <button class="btn btn-primary w-100 mt-3 font-weight-boldest btn-md" type="submit">
+                                                <button class="btn btn-warning text-black w-100 mt-3 font-weight-boldest btn-md" type="submit">
                                                     <i class="fas fa-info-circle icon-md"></i> Lihat Data
                                                 </button>
                                             </div>

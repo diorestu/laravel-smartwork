@@ -44,8 +44,9 @@ class AktivitasController extends Controller
 
     public function index()
     {
-        $id = Auth::user()->id;
-        $data = Kegiatan::where('id_user', $id)->orderBy('tanggal_kgt', 'DESC')->take(5)->get();
+        $sekarang   = date("Y-m-d");
+        $id         = Auth::user()->id;
+        $data       = Kegiatan::where('id_user', $id)->orderBy('tanggal_kgt', 'DESC')->take(5)->get();
         return view('user.task.index', ['data' => $data]);
     }
 

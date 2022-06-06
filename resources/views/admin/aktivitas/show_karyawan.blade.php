@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Data Aktivitas Per Pegawai
+    Data Aktivitas Per Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -22,10 +22,10 @@
                 <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Manajemen</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route("cuti.index") }}">Aktivitas Pegawai</a></li>
-                        <li class="breadcrumb-item active">Data Aktivitas Per Pegawai</li>
+                        <li class="breadcrumb-item"><a href="{{ route("aktivitas.index") }}">Aktivitas Pegawai</a></li>
+                        <li class="breadcrumb-item active">Data Aktivitas per Pegawai</li>
                     </ol>
-                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Aktivitas Per Pegawai</h4>
+                    <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Data Aktivitas per Pegawai</h4>
                     <p class="text-muted mt-1 text-opacity-50">Lihat data aktivitas per pegawai</p>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3 font-weight-boldest btn-md" type="submit">
+                        <button class="btn btn-warning text-black w-100 mt-3 font-weight-boldest btn-md" type="submit">
                             <i class="fas fa-info-circle icon-md"></i> Lihat Data
                         </button>
                     </form>
@@ -69,8 +69,8 @@
                 <div class="card-body px-4 py-4">
                     <div class="text-center">
                         <h1><i class="icon-sm fas fa-coffee"></i></h1>
-                        <h3>Silahkan Pilih Pegawai</h3>
-                        <p>Untuk melihat data, silahkan pilih pegawai lalu klik lihat data.</p>
+                        <h3>Silahkan Pilih Pegawai dan Rentang Waktu</h3>
+                        <p>Untuk melihat data, silahkan pilih pegawai dan rentang waktu lalu klik lihat data.</p>
                     </div>
                 </div>
             </div>

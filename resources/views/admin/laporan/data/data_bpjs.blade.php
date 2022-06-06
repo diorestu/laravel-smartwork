@@ -6,11 +6,11 @@
         <div class="card-body px-2">
             <ul class="nav nav-pills nav-tabs-custom card-header-tabs mt-1" id="pills-tab" role="tablist">
                 <li class="nav-item waves-effect waves-light">
-                    <a class="nav-link px-3 py-2 active text-dark" data-bs-toggle="tab" href="#kes" role="tab"
+                    <a class="nav-link px-3 py-2 active" data-bs-toggle="tab" href="#kes" role="tab"
                         aria-selected="true">BPJS Kesehatan</a>
                 </li>
                 <li class="nav-item waves-effect waves-light">
-                    <a class="nav-link px-3 py-2 text-dark" data-bs-toggle="tab" href="#ker" role="tab"
+                    <a class="nav-link px-3 py-2" data-bs-toggle="tab" href="#ker" role="tab"
                         aria-selected="false">BPJS Ketenagakerjaan</a>
                 </li>
             </ul>
@@ -26,12 +26,12 @@
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title text-white mb-0 mt-2">BPJS Kesehatan</h5>
                     <div class="btn-group" role="group">
-                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
                             <a class="dropdown-item" href="{{ route("lapBpjs.ekspor", ['tipe'=>'Kesehatan', 'cb'=>$cabang, 'bl'=>$bulan, 'th'=>$tahun]) }}">File Excel</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-file-pdf icon-sm"></i> PDF</a>
+                            <a class="dropdown-item" href="#">File PDF</a>
                         </div>
                     </div>
                 </div>
@@ -81,12 +81,12 @@
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title text-white mb-0 mt-2">BPJS Ketenagakerjaan</h5>
                     <div class="btn-group" role="group">
-                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
+                        <button id="btnGroupVerticalDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-download icon-sm"></i>&nbsp; Ekspor Data <i class="mdi mdi-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
                             <a class="dropdown-item" href="{{ route("lapBpjs.ekspor", ['tipe'=>'Ketenagakerjaan', 'cb'=>$cabang, 'bl'=>$bulan, 'th'=>$tahun]) }}">File Excel</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-file-pdf icon-sm"></i> PDF</a>
+                            <a class="dropdown-item" href="#">File PDF</a>
                         </div>
                     </div>
                 </div>

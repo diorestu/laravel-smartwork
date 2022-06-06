@@ -8,10 +8,16 @@ use App\Exports\LaporanPajakExport;
 use Illuminate\Http\Request;
 use App\Exports\LemburExport;
 use App\Models\Absensi;
+use App\Models\Cuti;
+use App\Models\CutiJenis;
+use App\Models\Lembur;
 use App\Models\Payroll;
 use App\Models\PayrollParent;
 use App\Models\User;
+use App\Models\UserShift;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
@@ -47,10 +53,77 @@ class LaporanController extends Controller
 
     public function detail_absensi($user, $periode_awal, $periode_akhir)
     {
-        $data_user = User::where("id", $user)->first();
+        $data_user      = User::where("id", $user)->first();
+        // hari kerja
+        $hari_kerja     = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                                ->where('shifts.nama_shift', '!=', "L")
+                                ->where('id_user', $user)
+                                ->whereBetween('tanggal_shift', [$periode_awal, $periode_akhir])->count();
+        // bukan hari kerja
+        $bukan_hari_kerja  = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                                ->where('shifts.nama_shift', '=', "L")
+                                ->where('id_user', $user)
+                                ->whereBetween('tanggal_shift', [$periode_awal, $periode_akhir])->count();
+        // tepat waktu dan terlambat
+        $tepat_waktu    = 0;
+        $terlambat      = 0;
+        $data_tw        = Absensi::whereBetween('jam_hadir', [$periode_awal, $periode_akhir])->where('id_user', $user)->get();
+        foreach ($data_tw as $d) {
+            $jam_hadir = $d->jam_hadir;
+            $tgl_absen = TampilTanggal($d->jam_hadir);
+            $cek_shift = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+            ->where('user_shifts.tanggal_shift', '=', $tgl_absen)->first();
+            $jam_shift = $cek_shift->hadir_shift;
+            $waktu_shift = $tgl_absen . " " . $jam_shift;
+
+            if ($cek_shift->nama_shift != "L") {
+                $jamawal        = Carbon::parse($waktu_shift);
+                $jamakhir       = Carbon::parse($jam_hadir);
+                $totalDuration  = $jamawal->diffInMinutes($jamakhir, false);
+                if ($totalDuration <= 0) {
+                    $tepat_waktu++;
+                }
+                else {
+                    $terlambat++;
+                }
+            }
+        }
+        // mangkir
+        $mangkir = 0;
+        $data   = UserShift::leftJoin('shifts', 'user_shifts.id_user_shift', '=', 'shifts.id')
+                            ->where('user_shifts.id_user', '=', $user)
+                            ->where('shifts.nama_shift', '!=', "L")
+                            ->whereBetween('user_shifts.tanggal_shift', [$periode_awal, $periode_akhir])->get();
+        foreach ($data as $d) {
+            $tgl        = $d->tanggal_shift;
+            $cekAbsen   = Absensi::where("id_user", $user)->whereDate('jam_hadir', $tgl)->where('id_user', $user)->count();
+            if ($cekAbsen <= 0) {
+                $mangkir++;
+            }
+        }
+        // cuti
+        $data_cuti       = Cuti::where('id_user', '=', $user)->where('cuti_status', 'DITERIMA')->whereBetween('cuti_awal', [$periode_awal, $periode_akhir])->count();
+        // lembur
+        $lembur_absen    = Absensi::select(DB::raw('SUM(jam_lembur) as jam_la'))->where('id_user', $user)->whereBetween('jam_pulang', [$periode_awal, $periode_akhir])->whereNotNull('jam_lembur')->first();
+        $lembur_pegajuan = Lembur::select(DB::raw('SUM(jam_lembur) as jam_lp'))->where('id_user', $user)->where('lembur_status', 'DITERIMA')->whereBetween('lembur_awal', [$periode_awal, $periode_akhir])->first();
+        $total_lembur    = $lembur_absen->jam_la + $lembur_pegajuan->jam_lp;
+        // sakit
+        $id_admin        = Auth::user()->id;
+        $cuti_sakit      = CutiJenis::where('id_admin', $id_admin)->where('cuti_nama_jenis', 'Sakit')->first();
+        $sakit           = Cuti::where('id_user', '=', $user)->where('cuti_status', 'DITERIMA')->where('id_cuti_jenis', $cuti_sakit->id)->whereBetween('cuti_awal', [$periode_awal, $periode_akhir])->count();
 
         return view("admin.laporan.detail_absensi", [
-            'data_user' => $data_user,
+            'data_user'     => $data_user,
+            'awal'          => $periode_awal,
+            'akhir'         => $periode_akhir,
+            'hari_kerja'    => $hari_kerja,
+            'bukan_hari_kerja' => $bukan_hari_kerja,
+            'tepat_waktu'   => $tepat_waktu,
+            'terlambat'     => $terlambat,
+            'mangkir'       => $mangkir,
+            'cuti'          => $data_cuti,
+            'lembur'        => $total_lembur,
+            'sakit'         => $sakit,
         ]);
     }
 

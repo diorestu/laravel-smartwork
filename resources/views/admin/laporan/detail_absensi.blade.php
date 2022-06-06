@@ -27,19 +27,7 @@
                         <li class="breadcrumb-item active">Ringkasan Absensi Pegawai</li>
                     </ol>
                     <h4 class="mb-sm-0 fw-bold font-size-22 mt-3">Ringkasan Absensi Pegawai</h4>
-                    <p class="text-muted mt-1 text-opacity-50">Ringkasan absensi pegawai periode </p>
-                </div>
-                <div class="page-title-right align-self-end">
-                    <div class="d-flex justify-content-end mb-3">
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-download"></i> &nbsp; Download Data &nbsp; <i class="mdi mdi-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <li><a class="dropdown-item" href="#">File PDF</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <p class="text-muted mt-1 text-opacity-50">Ringkasan absensi pegawai periode {{ tanggalIndo3($awal) }} sd {{ tanggalIndo3($akhir) }}</p>
                 </div>
             </div>
         </div>
@@ -66,13 +54,13 @@
                         </div>
                     </div>
                     <div class="mt-3 pt-1">
-                        <p class="text-muted mb-0"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
+                        <p class="text-muted mb-0"><i class="icon-menu" data-feather="phone-call"></i>
                             {{ $data_user->phone }}</p>
-                        <p class="text-muted mb-0 mt-2"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
+                        <p class="text-muted mb-0 mt-3"><i class="icon-menu" data-feather="mail"></i>
                             {{ $data_user->email }}</p>
-                        <p class="text-muted mb-0 mt-2"><i class="mdi mdi-building font-size-15 align-middle pe-2 text-primary"></i>
+                        <p class="text-muted mb-0 mt-3"><i class="icon-menu" data-feather="home"></i>
                             {{ $data_user->cabang->cabang_nama }}</p>
-                        <p class="text-muted mb-0 mt-2"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i>
+                        <p class="text-muted mb-0 mt-3"><i class="icon-menu" data-feather="map-pin"></i>
                             {{ $data_user->alamat }}</p>
                     </div>
                 </div>
@@ -87,53 +75,71 @@
                         <div class="col-md-4">
                             <div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Hadir Hari Kerja</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Hari Kerja</p>
+                                    <p class="fw-bold">{{ $hari_kerja }} hari</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Sakit</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Hadir Tepat Waktu</p>
+                                    <p class="fw-bold">{{ $tepat_waktu }} hari</p>
                                 </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i>Hadir Terlambat</p>
+                                    <p class="fw-bold">{{ $terlambat }} kali</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Tidak Hadir</p>
+                                    <p class="fw-bold">{{ $mangkir }} hari</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Izin</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="fw-bold">{{ $cuti }} hari</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Cuti</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="fw-bold">{{ $cuti }} hari</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Cuti 1/2 Hari</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="fw-bold">n/a</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Unpaid Leave</p>
-                                    <p class="fw-bold">12</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Mangkir</p>
-                                    <p class="fw-bold">12</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Tugas Luar</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="fw-bold">n/a</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Terlambat</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Bukan Hari Kerja</p>
+                                    <p class="fw-bold">{{ $bukan_hari_kerja }} hari</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Bukan Hari Kerja</p>
-                                    <p class="fw-bold">12</p>
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Sakit</p>
+                                    <p class="fw-bold">{{ $sakit }} hari</p>
                                 </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Lembur</p>
+                                    <p class="fw-bold">{{ $lembur }} jam</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark"><i class="bx bx-unlink font-size-16 align-middle text-danger me-1"></i> Tugas Luar</p>
+                                    <p class="fw-bold">n/a</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-warning text-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="mdi mdi-download"></i>&nbsp; Download Informasi&nbsp; <i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                    <li><a class="dropdown-item" href="#">File PDF</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>

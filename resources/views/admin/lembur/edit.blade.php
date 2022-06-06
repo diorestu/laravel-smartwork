@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('title')
-    Edit Data Lembur Pegawai
+    Edit Data Lembur Pegawai | Smartwork App
 @endsection
 
 @push('addon-style')
     <style>
-        .card-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header { background:#B0141C !important; }
         .choices__list--dropdown .choices__item { font-size: 11px !important; }
     </style>
 @endpush

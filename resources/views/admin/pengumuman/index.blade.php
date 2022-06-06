@@ -18,7 +18,7 @@
             <div class="page-title-box pb-2 d-sm-flex align-items-start justify-content-between">
                 <div>
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Kelola</a></li>
                         <li class="breadcrumb-item"><a href="{{ route("pengumuman.index") }}">Pengumuman</a></li>
                         <li class="breadcrumb-item active">Data Pengumuman</li>
                     </ol>
@@ -35,7 +35,6 @@
                                 <a class="dropdown-item" href="{{ route("pengumuman.expor") }}">File Excel</a>
                             </div>
                         </div>
-                        {{-- <a class="btn btn-soft-success waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp; Data</a> --}}
                         <a href="{{ route("pengumuman.create") }}" class="btn btn-warning waves-effect waves-light text-black">
                             <i class="fa fa-plus icon-sm text-black"></i> Buat Pengumuman Baru&nbsp;
                         </a>
@@ -73,7 +72,7 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" style="">
                                             <li><a class="dropdown-item" href='{{ route('pengumuman.edit', $i->id) }}'>
-                                                <span><i class="fas fa-edit icon-sm"></i></span>&nbsp;
+                                                <span><i class="fas fa-pen icon-sm"></i></span>&nbsp;
                                                 Edit
                                             </a></li>
                                             <li><a id="{{ $i->id }}" href="javascript:void(0);" class="remove dropdown-item text-danger"><i class="fa fa-trash text-danger me-2"></i><b>Hapus</b></a></li>

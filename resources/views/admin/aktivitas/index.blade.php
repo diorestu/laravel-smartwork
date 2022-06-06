@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Aktivitas Pegawai - {{ Carbon\Carbon::parse(date('Y-m-d'))->locale('id')->format('D, d M Y') }}
+    Aktivitas Pegawai - {{ Carbon\Carbon::parse(date('Y-m-d'))->locale('id')->format('D, d M Y') }} | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -28,9 +28,9 @@
                 </div>
                 <div class="page-title-right align-self-end">
                     <div class="d-flex justify-content-end mb-3">
-                        <a class="btn btn-soft-primary waves-effect waves-light me-2"><i class="fa fa-file-excel fa-sm"></i> &nbsp;Impor/Ekspor Data</a>
+
                         <a href="{{ route('aktivitas.create') }}" class="btn btn-warning waves-effect waves-light text-black">
-                            <i class="fa fa-plus-circle icon-sm text-black"></i> Tambah Aktivitas Pegawai&nbsp;
+                            <i class="fa fa-plus-circle icon-sm text-black"></i> Tambah Aktivitas
                         </a>
                     </div>
                 </div>

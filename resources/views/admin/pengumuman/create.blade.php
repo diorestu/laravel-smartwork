@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-success btn-block w-100 btn-md mt-3" type="submit">
-                                        <i class="fas fa-plus icon-md"></i> &nbsp; Buat Pengumuman Baru
+                                        <i class="fas fa-plus-circle icon-md"></i>&nbsp; Buat Pengumuman Baru
                                     </button>
                                 </div>
                             </div>
