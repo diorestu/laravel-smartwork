@@ -7,6 +7,7 @@ use App\Models\UserConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
+use App\Models\MethodPajak;
 use Illuminate\Support\Facades\Auth;
 
 class UserConfigController extends Controller
@@ -51,20 +52,11 @@ class UserConfigController extends Controller
      * @param  \App\Models\UserConfig  $userConfig
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $r, $userConfig)
+    public function show(Request $r, $cabang)
     {
-        return view('admin.config_cabang');
-        // $input = $r->all();
-        // $result = UserConfig::findOrFail($userConfig);
-        // $result->layout_mode = $input['layout_mode'];
-        // $result->nomor_surat = $input['nomor_surat'];
-        // $result->save();
-        // dd($result);
-        // try {
-        //     return redirect()->route('admin.home')->with('success', 'Berhasil Hapus Data');
-        // } catch (\Throwable $th) {
-        //     return redirect()->route('admin.home')->with('error', $th);
-        // }
+        $id_admin   = Auth::user()->id;
+        $data   = Cabang::where('id', $cabang)->where('id_admin', $id_admin)->first();
+        return view('admin.config_cabang', ['data'=> $data]);
     }
 
     /**
@@ -96,6 +88,12 @@ class UserConfigController extends Controller
         $data->company_bidang   = $input['company_bidang'];
         $berhasilSimpan         = $data->save();
         if ($berhasilSimpan) { echo "ok"; } else { echo "gagal"; }
+    }
+
+    public function updateMPajak(Request $request, $id) {
+        $bulan = date('m');
+        $tahun = date('Y');
+        // $cek   = MethodPajak::
     }
 
     public function updateLayout(Request $request, $id) {

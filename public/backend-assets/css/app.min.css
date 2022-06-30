@@ -3698,16 +3698,16 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 }
 
 .choices__list--multiple .choices__item {
-    background-color: #1c84ee;
-    border-color: #1c84ee;
+    background-color: #B0141C;
+    border-color: #B0141C;
     margin-bottom: 0;
     margin-right: 7px;
     font-weight: 400
 }
 
 .choices__list--multiple .choices__item.is-highlighted {
-    background-color: #1c84ee;
-    border: 1px solid #1c84ee
+    background-color: #B0141C;
+    border: 1px solid #B0141C
 }
 
 .choices.is-disabled .choices__inner,
