@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Pengaturan Sistem
+    Pengaturan Sistem | Smartwork App
 @endsection
 
 @push('addon-style')
@@ -9,9 +9,10 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
     <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('backend-assets/libs/choices.js/public/assets/styles/choices.min.css') }}" rel="stylesheet" type="text/css" /> --}}
     <style>
         .f-10 { font-size: 10px !important; }
-        .card-header, .modal-header { background: rgb(219,66,66); background: linear-gradient(90deg, rgba(219,66,66,1) 0%, rgba(126,7,30,1) 100%); }
+        .card-header { background:#B0141C !important; }
         .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
         .text-tipis  { font-weight: 300; opacity: 0.5; }
         .main-content { overflow: visible !important; }
@@ -34,112 +35,116 @@
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Pengaturan</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Pengaturan Lokasi Kerja</a></li>
                         </ol>
-                        <h5 class="fw-bold font-size-18 mt-3">PT Asta Pijar Kreasi Teknologi</h5>
+                        <h5 class="fw-bold font-size-18 mt-3">{{ $data->cabang_nama }}</h5>
                     </div>
                 </div>
                 <div class="mail-list mt-1">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Absensi</a>
+                        <a class="active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Absensi</a>
                         <a id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Payroll</a>
                         <a id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Komponen Gaji</a>
-                        <a class="active"  id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true">Settings</a>
+                        <a id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true">Perhitungan Pajak</a>
                     </div>
                 </div>
             </div>
             <div class="email-rightbar mb-3">
-                <div class="card">
-                    <div class="btn-toolbar gap-2 p-3" role="toolbar">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary waves-light waves-effect"><i class="fa fa-inbox"></i></button>
-                            <button type="button" class="btn btn-primary waves-light waves-effect"><i class="fa fa-exclamation-circle"></i></button>
-                            <button type="button" class="btn btn-primary waves-light waves-effect"><i class="far fa-trash-alt"></i></button>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-folder"></i> <i class="mdi mdi-chevron-down ms-1"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Updates</a>
-                                <a class="dropdown-item" href="#">Social</a>
-                                <a class="dropdown-item" href="#">Team Manage</a>
+                <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
+                    {{-- pengaturan absensi --}}
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Pengaturan Absensi</h5>
                             </div>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-tag"></i> <i class="mdi mdi-chevron-down ms-1"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Updates</a>
-                                <a class="dropdown-item" href="#">Social</a>
-                                <a class="dropdown-item" href="#">Team Manage</a>
-                            </div>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary waves-light waves-effect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                More <i class="mdi mdi-dots-vertical ms-2"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Mark as Unread</a>
-                                <a class="dropdown-item" href="#">Mark as Important</a>
-                                <a class="dropdown-item" href="#">Add to Tasks</a>
-                                <a class="dropdown-item" href="#">Add Star</a>
-                                <a class="dropdown-item" href="#">Mute</a>
+                            <div class="card-body">
+                                <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                    <label class="form-check-label" for="customSwitchsizemd">Validasi GPS di Kantor</label>
+                                    <input id="mode" name="mode" type="checkbox" class="form-check-input layout-mode-switch">
+                                </div>
+                                <form>
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius Validasi GPS</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="number" max="1000" class="form-control" id="horizontal-firstname-input" placeholder="1 s/d 1000 meter">
+                                                <span class="input-group-text">meter</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-9">
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-
-                    <div class="card-body">
-                        <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
-                            <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                <p>
-                                    Raw denim you probably haven't heard of them jean shorts Austin.
-                                    Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache
-                                    cliche tempor, williamsburg carles vegan helvetica. Reprehenderit
-                                    butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi,
-                                    qui irure terry richardson ex squid. Aliquip placeat salvia cillum
-                                    iphone. Seitan aliquip quis cardigan.
-                                </p>
-                                <hr/>
-                                <p>Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi,
-                                        qui irure terry richardson ex squid.</p>
+                    {{-- pengaturan payroll --}}
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Pengaturan Payroll</h5>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                <p>
-                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                                    single-origin coffee squid. Exercitation +1 labore velit, blog
-                                    sartorial PBR leggings next level wes anderson artisan four loko
-                                    farm-to-table craft beer twee. Qui photo booth letterpress,
-                                    commodo enim craft beer mlkshk.
-                                </p>
-                                <p class="mb-0"> Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna 8-bit</p>
+                            <div class="card-body">
+                                <div class="form-check form-switch form-switch-lg mb-3 py-3">
+                                    <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
+                                    <input id="mode" name="mode" {{ auth()->user()->config->layout_mode == 'dark' ? 'checked' : ''  }} type="checkbox" class="form-check-input layout-mode-switch">
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                <p>
-                                    Etsy mixtape wayfarers, ethical wes anderson tofu before they
-                                    sold out mcsweeney's organic lomo retro fanny pack lo-fi
-                                    farm-to-table readymade. Messenger bag gentrify pitchfork
-                                    tattooed craft beer, iphone skateboard locavore carles etsy
-                                    salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                                    Leggings gentrify squid 8-bit cred.
-                                </p>
-                                <p class="mb-0">DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-                                        mi whatever gluten-free.</p>
+                        </div>
+                    </div>
+                    {{-- komponen gaji --}}
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Pengaturan Komponen Gaji</h5>
                             </div>
-                            <div class="tab-pane fade active show" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                                <p>
-                                    Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                    art party before they sold out master cleanse gluten-free squid
-                                    scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                    art party locavore wolf cliche high life echo park Austin. Cred
-                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                    farm-to-table.
-                                </p>
-                                <p class="mb-0">Fanny pack portland seitan DIY,
-                                    art party locavore wolf cliche high life echo park Austin. Cred
-                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                    farm-to-table.
-                                </p>
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3 py-0">
+                                        <label class="col-form-label">Pilih Kompenen Gaji</label>
+                                        <select class="form-control" name="choices-multiple-remove-button"
+                                            id="choices-multiple-remove-button"
+                                            placeholder="This is a placeholder" multiple>
+                                            <option value="Choice 1" selected>Choice 1</option>
+                                            <option value="Choice 2">Choice 2</option>
+                                            <option value="Choice 3">Choice 3</option>
+                                            <option value="Choice 4">Choice 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="row justify-content-end mt-4">
+                                        <div class="col-sm-12">
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- perhitungan pajak --}}
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title text-white mb-0">Pengaturan Perhitungan Pajak</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="#" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="mb-3 py-0">
+                                        <label class="col-form-label">Pilih Metode Perhitungan</label>
+                                        <select id="pajak" class="form-select" name="m_pajak">
+                                            <option value="GROSS">GROSS</option>
+                                            <option value="GROSS UP">GROSS UP</option>
+                                            <option value="NETT">NETT</option>
+                                        </select>
+                                    </div>
+                                    <div class="row justify-content-end mt-4">
+                                        <div class="col-sm-12">
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -153,8 +158,13 @@
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        const elementBidang = document.querySelector('#company_bidang');
-        const choices = new Choices(elementBidang);
+        document.addEventListener("DOMContentLoaded", function () {
+        new Choices("#choices-multiple-remove-button", {
+            removeItemButton: !0,
+        });
+        const elementPajak = document.querySelector('#pajak');
+        const choices = new Choices(elementPajak);
+        });
     </script>
     @if (Session::has('success'))
         <script type="text/javascript">

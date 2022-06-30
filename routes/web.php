@@ -198,6 +198,7 @@ use App\Http\Controllers\User\UserLemburController;
 
         // PENGATURAN
         Route::post('config/update-layout/{id}',        [UserConfigController::class, 'updateLayout'])->name("config.updateLayout");
+        Route::post('config/set-method-pajak/{id}',     [UserConfigController::class. 'updateMPajak'])->name("config.updateMPajak");
         Route::resource('config',                       UserConfigController::class);
         Route::get('slip-gaji/{id}',                    [PrintPDFController::class, 'cetak_slip_gaji']);
     });

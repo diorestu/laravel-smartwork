@@ -13,13 +13,7 @@
     <div class="">
         @error('username')
         <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-            <strong>Gagal!</strong> - Pengguna Tidak Ditemukan!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @enderror
-        @error('password')
-        <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-            <strong>Gagal!</strong> - {{ $message }}
+            <strong>Gagal</strong> - Username dan kata sandi tidak cocok
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @enderror
