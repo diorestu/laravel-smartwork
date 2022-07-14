@@ -70,6 +70,5 @@ class Kernel extends HttpKernel
         'is_user' => \App\Http\Middleware\isUser::class,
         'is_active' => \App\Http\Middleware\isActiveUser::class,
         'is_expired' => \App\Http\Middleware\IsActiveAdmin::class,
-
     ];
 }
