@@ -77,7 +77,7 @@ class CabangConfigController extends Controller
         try {
             CabangConfig::updateOrCreate(
                 ['id_admin'   => Auth::user()->id, 'id_cabang'  => $request->id_cabang],
-                []
+                ['pph21' => $request->m_pajak]
             );
         } catch (\Throwable $th) {
             throw $th;

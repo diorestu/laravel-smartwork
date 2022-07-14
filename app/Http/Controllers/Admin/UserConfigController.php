@@ -55,9 +55,10 @@ class UserConfigController extends Controller
      */
     public function show(Request $r, $cabang)
     {
-        $id_admin   = Auth::user()->id;
-        $data   = Cabang::where('id', $cabang)->where('id_admin', $id_admin)->first();
-        $detail = CabangConfig::where('id', $cabang)->where('id_admin', $id_admin)->first();
+        $id_admin = Auth::user()->id;
+        $data     = Cabang::where('id', $cabang)->where('id_admin', $id_admin)->first();
+        $detail   = CabangConfig::where('id_cabang', $cabang)->where('id_admin', $id_admin)->first();
+        // dd($detail);
         return view('admin.config_cabang', ['data'=> $data, 'detail' => $detail]);
     }
 

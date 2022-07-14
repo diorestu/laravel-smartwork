@@ -118,7 +118,9 @@
                                                 <input type="number" max="1000" class="form-control"
                                                     {{ $detail ? '' : 'disabled' }} id="horizontal-firstname-input"
                                                     placeholder="1 s/d 1000 meter" name="radius_max"
-                                                    value="{{ $detail->radius_max }}">
+                                                    value="@isset($detail)
+                                                        {{ $detail->radius_max }}
+                                                    @endisset">
                                                 <span class="input-group-text">meter</span>
                                             </div>
                                         </div>
@@ -172,9 +174,10 @@
                                             <option value="Permata">Permata</option>
                                         </select>
                                     </div>
+
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Tanggal Tutup Buku</label>
-                                        <input type="date" name="date_closed" id="date_closed" class="form-control" value="{{ $data->tgl_tutup }}">
+                                        <input type="number" name="date_closed" id="date_closed" class="form-control" value="{{ $detail ? $detail->tgl_tutup : ''}}">
                                     </div>
                                     <div class="row justify-content-end mt-4">
                                         <div class="col-sm-12">
@@ -192,8 +195,12 @@
                         aria-labelledby="v-pills-messages-tab">
                         <div class="card">
                             @php
-                                $komponen = explode(',', $detail->komponen_gaji);
+                                if (empty($detail->komponen_gaji)) {
+                                    $komponen = [];
+                                }else{
+                                    $komponen = explode(',', $detail->komponen_gaji);
 
+                                }
                             @endphp
                             <div class="card-header">
                                 <h5 class="card-title text-white mb-0">Pengaturan Komponen Gaji</h5>
@@ -210,12 +217,12 @@
 
                                             <option value="Tunjangan Jabatan" {{ in_array('Tunjangan Jabatan', $komponen) ? 'selected' : '' }}>Tunjangan Jabatan</option>
                                             <option value="Tunjangan Masa Kerja" {{ in_array('Tunjangan Masa Kerja', $komponen) ? 'selected' : '' }}>Tunjangan Masa Kerja</option>
-                                            <option value="Tunjangan Sertifikasi">Tunjangan Sertifikasi</option>
-                                            <option value="Tunjangan Status Kawin">Tunjangan Status Kawin</option>
-                                            <option value="BPJS Kesehatan">BPJS Kesehatan</option>
-                                            <option value="BPJS Tenaga Kerja">BPJS Tenaga Kerja</option>
-                                            <option value="Potongan Absen">Potongan Absen</option>
-                                            <option value="Potongan Kasbon">Potongan Kasbon</option>
+                                            <option value="Tunjangan Sertifikasi" {{ in_array('Tunjangan Sertifikasi', $komponen) ? 'selected' : '' }}>Tunjangan Sertifikasi</option>
+                                            <option value="Tunjangan Status Kawin" {{ in_array('Tunjangan Status Kawin', $komponen) ? 'selected' : '' }}>Tunjangan Status Kawin</option>
+                                            <option value="BPJS Kesehatan" {{ in_array('BPJS Kesehatan', $komponen) ? 'selected' : '' }}>BPJS Kesehatan</option>
+                                            <option value="BPJS Tenaga Kerja" {{ in_array('BPJS Tenaga Kerja', $komponen) ? 'selected' : '' }}>BPJS Tenaga Kerja</option>
+                                            <option value="Potongan Absen" {{ in_array('Potongan Absen', $komponen) ? 'selected' : '' }}>Potongan Absen</option>
+                                            <option value="Potongan Kasbon" {{ in_array('Potongan Kasbon', $komponen) ? 'selected' : '' }}>Potongan Kasbon</option>
                                             <option value="PPH21" {{ in_array('PPH21', $komponen) ? 'selected' : '' }}>PPH21</option>
                                         </select>
                                     </div>
@@ -244,9 +251,15 @@
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Pilih Metode Perhitungan</label>
                                         <select id="pajak" class="form-select" name="m_pajak">
+                                            @isset($detail->pph21)
+                                                <option value="GROSS" {{ $detail->pph21 == 'GROSS'? 'selected' : '' }}>GROSS</option>
+                                                <option value="GROSS UP" {{ $detail->pph21 == 'GROSS UP'? 'selected' : '' }}>GROSS UP</option>
+                                                <option value="NETT" {{ $detail->pph21 == 'NETT'? 'selected' : '' }}>NETT</option>
+                                            @else
                                             <option value="GROSS">GROSS</option>
-                                            <option value="GROSS UP">GROSS UP</option>
-                                            <option value="NETT">NETT</option>
+                                                <option value="GROSS UP">GROSS UP</option>
+                                                <option value="NETT">NETT</option>
+                                            @endisset
                                         </select>
                                     </div>
                                     <div class="row justify-content-end mt-4">
