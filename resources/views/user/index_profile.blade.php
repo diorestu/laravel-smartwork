@@ -6,70 +6,97 @@
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4 pb-3 pt-3" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-baseline">
                 <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Hai, {{ $id->nama }}</h2>
-                    <p class="text-white-50 fw-light font-size-12">{{ $id->company }}</p>
+                    <h2 class="fw-bold font-size-18 text-white">Profil Saya</h2>
                 </div>
                 <div class=''>
                     <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
                         <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                         <i data-feather="sun" class="icon-lg layout-mode-light"></i>
                     </button>
-                    <a class='btn ms-3 text-white' id="btn-logout"><i data-feather="log-out"></i></a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="col-xl-12 col-sm-12">
+            <div class="card mb-1">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <img src="{{ $id->company_logo == '' ? asset('backend-assets/images/no-staff.jpg') : asset('storage/uploads/'. $data_user->company_logo) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                        </div>
+                        <div class="flex-1 ms-3">
+                            <h5 class="font-size-15 mb-1"><a href="#" class="text-dark">{{ $id->nama }}</a></h5>
+                            <p class="text-muted mb-0">@if ($id->id_jabatan != null) {{ $id->jabatan->jabatan_title }} @endif</p>
+                            <p class="text-muted mb-0"><small>{{ $id->company }}</small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <section>
         <div class="p-4">
+            <h5 class="mb-3">Info Personal</h5>
             <a href="{{ route('user.data') }}" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Ubah Profil</span>
-                    <span><i class="fa fa-chevron-right"></i></span>
-                </div>
-            </a>
-            <a href="{{ route('user.pass') }}" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Pengaturan Akun</span>
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-account-box icon-profil"></i>
+                        <span class="">Informasi Personal</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
             <a href="{{ route('user.jadwal') }}" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Jadwal Kerja</span>
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-calendar-clock icon-profil"></i>
+                        <span class="">Jadwal Kerja</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
             <a href="{{ route('user.gaji') }}" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Slip Gaji</span>
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-wallet icon-profil"></i>
+                        <span class="">Slip Gaji</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
             <hr>
-            <a href="/" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Bantuan</span>
+            <h5>Pengaturan</h5>
+            <a href="{{ route('user.pass') }}" class="text-dark text-decoration-none w-100">
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-account-key icon-profil"></i>
+                        <span class="">Ubah Kata Sandi</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
             <a href="/" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">FAQ</span>
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-information icon-profil"></i>
+                        <span class="">Bantuan</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
-            {{-- <a href="/" class="text-dark text-decoration-none w-100">
-                <div class="d-flex justify-content-between align-items-center pe-2 py-2 mb-1">
-                    <span class="fw-semibold">Lend App</span>
+            <a href="/" class="text-dark text-decoration-none w-100">
+                <div class="d-flex justify-content-between align-items-center py-1 mb-0">
+                    <div>
+                        <i class="mdi mdi-account-question icon-profil"></i>
+                        <span class="">FAQ</span>
+                    </div>
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
-            </a> --}}
+            </a>
             <hr>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
