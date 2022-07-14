@@ -108,7 +108,7 @@
                                         <label class="form-check-label" for="customSwitchsizemd">Validasi GPS di
                                             Kantor</label>
                                         <input id="mode" name="is_radius" type="checkbox"
-                                            class="form-check-input layout-mode-switch" {{ $detail ? 'checked' : '' }}>
+                                            class="form-check-input layout-mode-switch" {{ $detail->is_radius ? 'checked' : '' }}>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius
@@ -116,7 +116,7 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <input type="number" max="1000" class="form-control"
-                                                    {{ $detail ? '' : 'disabled' }} id="horizontal-firstname-input"
+                                                    {{ $detail->is_radius ? '' : 'disabled' }} id="horizontal-firstname-input"
                                                     placeholder="1 s/d 1000 meter" name="radius_max"
                                                     @isset($detail)
                                                     value="{{ $detail->radius_max }}"
@@ -170,17 +170,31 @@
                                         <label class="col-form-label">Bank Pembayaran</label>
                                         <select class="form-control" name="bank_type" id="bank_type"
                                             placeholder="Pilih salah satu">
+                                            @isset($detail->bank_type)
+                                            <option value="Bank BCA" {{ $detail->bank_type == 'Bank BCA' ? 'selected' : ''}}>Bank BCA</option>
+                                            <option value="Mandiri" {{ $detail->bank_type == 'Mandiri' ? 'selected' : ''}}>Mandiri</option>
+                                            <option value="BNI" {{ $detail->bank_type == 'BNI' ? 'selected' : ''}}>BNI</option>
+                                            <option value="BRI" {{ $detail->bank_type == 'BRI' ? 'selected' : ''}}>BRI</option>
+                                            <option value="Permata" {{ $detail->bank_type == 'Permata' ? 'selected' : ''}}>Permata</option>
+                                            @else
                                             <option value="Bank BCA">Bank BCA</option>
                                             <option value="Mandiri">Mandiri</option>
                                             <option value="BNI">BNI</option>
                                             <option value="BRI">BRI</option>
                                             <option value="Permata">Permata</option>
+                                            @endisset
                                         </select>
                                     </div>
 
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Tanggal Tutup Buku</label>
-                                        <input type="number" name="date_closed" id="date_closed" class="form-control" value="{{ $detail ? $detail->tgl_tutup : ''}}">
+                                        <input type="number" name="date_closed" id="date_closed" class="form-control"
+                                        @isset($detail)
+                                        value="{{ $detail->tgl_tutup }}"
+                                        @else
+                                        value=""
+                                        @endisset
+                                        >
                                     </div>
                                     <div class="row justify-content-end mt-4">
                                         <div class="col-sm-12">
