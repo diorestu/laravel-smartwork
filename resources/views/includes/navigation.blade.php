@@ -34,7 +34,7 @@
                                     <a href="{{ route('status-kawin.index') }}" class="dropdown-item">Status Kawin</a>
                                 </div>
                             </div>
-                            <a href="{{ route('kpi-master.index') }}" class="dropdown-item" {{ request()->is('master/kpi-master') ? 'active' : ''}} data-key="t-divisi"><i class="icon-menu" data-feather="heart"></i> KPI</a>
+                            <a href="{{ route('kpi-master.index') }}" class="dropdown-item" {{ request()->is('master/kpi-master') ? 'active' : ''}} data-key="t-divisi"><i class="icon-menu" data-feather="heart"></i> KPI &nbsp;&nbsp;<span class="badge rounded-pill badge-soft-danger">On Progress</span></a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -146,7 +146,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-laporan"
                             role="button">
-                            <i data-feather="file-text"></i><span>Rekrutmen</span>
+                            <i data-feather="file-text"></i><span>Rekrutmen <span class="badge rounded-pill badge-soft-danger">On Progress</span></span>
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">

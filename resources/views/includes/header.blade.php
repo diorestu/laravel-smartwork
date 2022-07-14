@@ -48,7 +48,7 @@
                     id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
-                    <span class="badge bg-warning rounded-pill p-1">10</span>
+                    <span class="badge bg-success rounded-pill p-1">10</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
@@ -58,7 +58,7 @@
                                 <h6 class="m-0"> Notifikasi </h6>
                             </div>
                             <div class="col-auto">
-                                <span class="badge badge-soft-warning p-2">3</span>
+                                <span class="badge badge-soft-danger p-2">3</span>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                     <a class="dropdown-item {{ auth()->user()->roles === 'masteradmin' ? '':'d-none' }}" href="{{ route('pengguna.index') }}"><i class="mdi mdi-account-group font-size-16 align-middle me-1"></i> Pengguna Aktif</a>
                     <a class="dropdown-item" href="{{ route('config.index') }}"><i class="mdi mdi-cog font-size-16 align-middle me-1"></i> Pengaturan</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-white fw-black bg-danger rounded" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                    <a class="dropdown-item text-black fw-black bg-warning rounded" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>

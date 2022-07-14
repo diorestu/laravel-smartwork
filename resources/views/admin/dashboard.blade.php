@@ -4,6 +4,12 @@
     Smartwork Dashboard
 @endsection
 
+@push('addon-style')
+    <style>
+        .card-header-merah { background:#B0141C !important; }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-xl-12 col-md-12">
@@ -18,7 +24,6 @@
                             <div class="d-flex flex-wrap gap-2">
                                 <button type="button" class="btn btn-primary waves-effect btn-label waves-light"><i class="bx bx-smile label-icon"></i> Primary</button>
                                 <button type="button" class="btn btn-success waves-effect btn-label waves-light"><i class="bx bx-check-double label-icon"></i> Success</button>
-                                <button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-error label-icon"></i> Warning</button>
                                 <button type="button" class="btn btn-danger waves-effect btn-label waves-light"><i class="bx bx-block label-icon"></i> Danger</button>
                                 <button type="button" class="btn btn-dark waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Dark</button>
                                 <button type="button" class="btn btn-light waves-effect btn-label waves-light"><i class="bx bx-hourglass label-icon"></i> Light</button>
@@ -31,119 +36,70 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-3 col-md-3">
-            <div class="card card-h-100 rounded-sm">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Total Pegawai</span>
-                            <h4 class="mb-2">
-                                <span class="counter-value" data-target="84">0</span>
-                            </h4>
-                            <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-3">
-            <div class="card card-h-100 rounded-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Total Lokasi Kerja</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Pegawai</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="3">-10</span>
+                                <span class="counter-value" data-target="200">0</span> pegawai
                             </h4>
                             <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
+                                <a href="#" class="badge bg-soft-success text-success">Lihat Detail</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-3">
-            <div class="card card-h-100 rounded-sm">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Pengajuan Cuti</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Lokasi Kerja</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="1">0</span>
+                                <span class="counter-value" data-target="5">0</span> lokasi kerja
                             </h4>
                             <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
+                                <a href="#" class="badge bg-soft-warning text-warning">Lihat Detail</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-3">
-            <div class="card card-h-100 rounded-sm">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Pengajuan Cuti</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Pengajuan Cuti</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="1">0</span>
+                                <span class="counter-value" data-target="10">0</span> pengajuan
                             </h4>
                             <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
+                                <a href="#" class="badge bg-soft-danger text-danger">Lihat Detail</a>
+                                <span class="ms-1 text-muted font-size-13">pengajuan hari ini</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 col-sm-12">
-            <div class="card rounded-sm">
-                <div class="card-body">
-                    <span class="text-muted mb-3 d-block text-truncate">Total Pegawai Per Cabang</span>
-                    {!! $chart->container() !!}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card rounded-sm">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Total Pegawai</span>
-                            <h4 class="mb-2">
-                                <span class="counter-value" data-target="84">0</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Permohonan Lembur</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="19">0</span> permohonan
                             </h4>
                             <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card rounded-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <span class="text-muted mb-3 d-block text-truncate">Total Pegawai</span>
-                            <h4 class="mb-2">
-                                <span class="counter-value" data-target="84">0</span>
-                            </h4>
-                            <div class="text-nowrap">
-                                <span class="badge bg-primary px-2 py-1">Lihat Semua</span>
-                                {{-- <span class="ms-1 text-muted font-size-13">Since last week</span> --}}
+                                <a href="#" class="badge bg-soft-primary text-primary">Lihat Detail</a>
+                                <span class="ms-1 text-muted font-size-13">permohonan hari ini</span>
                             </div>
                         </div>
                     </div>
@@ -181,7 +137,15 @@
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Absensi Hari Ini</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                        <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
                             <span class="font-size-12"><i class="w-18" data-feather="credit-card"></i> &nbsp;Buat Payroll</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                        <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Pengaturan</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
@@ -205,8 +169,7 @@
                             <div class="d-flex">
                                 <img class="d-block img-fluid" height="166px" src="{{ asset("backend-assets/images/dashboard/ewa.png") }}" alt="Earn Wage Access">
                                 <div class="my-4">
-                                    <h3 class="mt-0 mb-2">Aktifkan</h3>
-                                    <h3 class="mt-0 mb-2">Earn Wage Access</h3>
+                                    <h3 class="mt-0 mb-2">Aktifkan Earn Wage Access</h3>
                                     <span>Akses gaji fleksibel untuk hilangkan stres finansial pegawai</span>
                                 </div>
                             </div>
@@ -215,7 +178,7 @@
                             <div class="d-flex">
                                 <img class="d-block img-fluid" height="166px" src="{{ asset("backend-assets/images/dashboard/dark.png") }}" alt="Earn Wage Access">
                                 <div class="my-4">
-                                    <h3 class="mt-0 mb-2">Hilangkan Lelah Mata Dengan Dark Mode</h3>
+                                    <h3 class="mt-0 mb-2">Mode Gelap Kini Sudah Hadir</h3>
                                     <span>Untuk menghilangkan dan memanjakan mata Anda</span>
                                 </div>
                             </div>
@@ -232,8 +195,8 @@
                 </div>
             </div>
             <div class="card card-custom gutter-b rounded-xs shadow-sm">
-                <div class="card-header bg-transparent border-bottom py-3">
-                   <h4 class="card-title ms-0">Pengumuman Terbaru</h4>
+                <div class="card-header card-header-merah border-bottom py-3">
+                   <h4 class="card-title text-white mb-0 ms-0">Pengumuman Terbaru</h4>
                 </div>
                 <div class="card-body px-3 py-3">
                     <div class="list-group">
@@ -274,7 +237,9 @@
                     <h2>11 Hari</h1>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">
+                        <a href="javascript: void(0);" class="card-link">Request Cuti</a>
+                    </li>
                 </ul>
                 <div class="card-footer bg-transparent border-top text-muted">
                     <a href="javascript: void(0);" class="card-link">Lihat Detail</a>
