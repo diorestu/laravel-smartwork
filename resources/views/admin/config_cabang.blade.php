@@ -118,9 +118,12 @@
                                                 <input type="number" max="1000" class="form-control"
                                                     {{ $detail ? '' : 'disabled' }} id="horizontal-firstname-input"
                                                     placeholder="1 s/d 1000 meter" name="radius_max"
-                                                    value="@isset($detail)
-                                                        {{ $detail->radius_max }}
-                                                    @endisset">
+                                                    @isset($detail)
+                                                    value="{{ $detail->radius_max }}"
+                                                    @else
+                                                    value=""
+                                                    @endisset
+                                                    >
                                                 <span class="input-group-text">meter</span>
                                             </div>
                                         </div>
