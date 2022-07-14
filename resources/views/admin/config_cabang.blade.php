@@ -128,6 +128,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                        <label class="form-check-label" for="customSwitchsizemd">Melampirkan Swafoto Presensi</label>
+                                        <input id="mode" name="is_radius" type="checkbox"
+                                            class="form-check-input layout-mode-switch" {{ $detail->is_radius ? 'checked' : '' }}>
+                                    </div>
+                                    <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                        <label class="form-check-label" for="customSwitchsizemd">Menggunakan Shift</label>
+                                        <input id="mode" name="is_radius" type="checkbox"
+                                            class="form-check-input layout-mode-switch" {{ $detail->is_radius ? 'checked' : '' }}>
+                                    </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-9">
                                             <div><button type="submit" class="btn btn-warning text-black w-lg"><i
