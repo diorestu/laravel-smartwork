@@ -117,39 +117,39 @@
                 <div class="card-body px-3 py-3">
                     <div class="list-group list-group-flush mb-3">
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user"></i> &nbsp;Profil</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="user"></i> &nbsp;&nbsp;Profil</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Tambah Pegawai</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;&nbsp;Tambah Pegawai</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Buat Pengumuman</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="bell"></i> &nbsp;&nbsp;Buat Pengumuman</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Lihat Jadwal Kerja</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="calendar"></i> &nbsp;&nbsp;Lihat Jadwal Kerja</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Input Absensi</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="clock"></i> &nbsp;&nbsp;Input Absensi</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Absensi Hari Ini</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="clock"></i> &nbsp;&nbsp;Absensi Hari Ini</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="credit-card"></i> &nbsp;Buat Payroll</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="credit-card"></i> &nbsp;&nbsp;Buat Payroll</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="user-plus"></i> &nbsp;Pengaturan</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="settings"></i> &nbsp;&nbsp;Pengaturan</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                         <a href="#" class="py-2 px-2 list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                            <span class="font-size-12"><i class="w-18" data-feather="key"></i> &nbsp;Ubah Kata Sandi</span>
+                            <span class="font-size-12"><i class="w-18" data-feather="key"></i> &nbsp;&nbsp;Ubah Kata Sandi</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </div>
