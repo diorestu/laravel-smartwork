@@ -9,7 +9,7 @@
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4 pb-3 pt-3" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-center py-3">
                 <div>
                     <a href="{{ route('user.home') }}" class="text-white"><i data-feather="chevron-left"></i></a>

@@ -6733,5 +6733,17 @@ body[data-layout-mode=dark] .pricing-table-bg {
 .rounded-circle{
     border-radius: 50%;
 }
-
+.icon-profil {
+    font-size:20px;
+    margin-right:10px;
+    color: #d63c3c;
+}
+.bg-dashboard {
+    background-repeat: no-repeat;
+    background-position: right 50px bottom -70px;
+    background-size: 20%;
+}
+.w-18 {
+    width: 15px;
+}
 /*# sourceMappingURL=app.min.css.map */
