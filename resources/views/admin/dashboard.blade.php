@@ -202,7 +202,7 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
-                            <img class="d-block img-fluid mx-auto" src="assets/images/small/img-3.jpg" alt="First slide">
+                            <img class="d-block img-fluid mx-auto" he src="{{ asset("backend-assets/images/dashboard/ewa.png") }}" alt="Earn Wage Access">
                         </div>
                         <div class="carousel-item">
                             <img class="d-block img-fluid mx-auto" src="assets/images/small/img-2.jpg" alt="Second slide">
