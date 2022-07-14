@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card card-h-100 rounded-xs">
-                <div class="card-body bg-dashboard" style="background-image: url('{{ asset('backend-assets/images/bg_dashboard.png') }}')">
+                <div class="card-body bg-dashboard" style="background-image: url('{{ asset('backend-assets/images/bg_dashboard2.png') }}')">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
                             <span class="font-size-20 fw-bold mb-1 d-block text-truncate">Halo, {{ Auth::user()->nama }}</span>
@@ -202,13 +202,23 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
-                            <img class="d-block img-fluid mx-auto" he src="{{ asset("backend-assets/images/dashboard/ewa.png") }}" alt="Earn Wage Access">
+                            <div class="d-flex">
+                                <img class="d-block img-fluid" height="166px" src="{{ asset("backend-assets/images/dashboard/ewa.png") }}" alt="Earn Wage Access">
+                                <div class="my-4">
+                                    <h3 class="mt-0 mb-2">Aktifkan</h3>
+                                    <h3 class="mt-0 mb-2">Earn Wage Access</h3>
+                                    <span>Akses gaji fleksibel untuk hilangkan stres finansial pegawai</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block img-fluid mx-auto" src="assets/images/small/img-2.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid mx-auto" src="assets/images/small/img-1.jpg" alt="Third slide">
+                            <div class="d-flex">
+                                <img class="d-block img-fluid" height="166px" src="{{ asset("backend-assets/images/dashboard/dark.png") }}" alt="Earn Wage Access">
+                                <div class="my-4">
+                                    <h3 class="mt-0 mb-2">Hilangkan Lelah Mata Dengan Dark Mode</h3>
+                                    <span>Untuk menghilangkan dan memanjakan mata Anda</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -275,7 +285,12 @@
                    <h4 class="card-title ms-0">Download Smartwork</h4>
                 </div>
                 <div class="card-body px-3 py-3">
-                    <h2>11 Hari</h1>
+                    <div class="col-8 mx-auto">
+                        <img class="d-block w-100 img-responsive" src="{{ asset("backend-assets/images/mobile/playstore.png") }}" alt="">
+                    </div>
+                    <div class="col-8 mx-auto">
+                        <img class="d-block w-100 img-responsive" src="{{ asset("backend-assets/images/mobile/appstore.png") }}" alt="">
+                    </div>
                 </div>
             </div>
         </div>
