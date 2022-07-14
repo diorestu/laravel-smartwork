@@ -7,20 +7,60 @@
 @push('addon-style')
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}"
+        rel="stylesheet" type="text/css" />
     {{-- <link href="{{ asset('backend-assets/libs/choices.js/public/assets/styles/choices.min.css') }}" rel="stylesheet" type="text/css" /> --}}
     <style>
-        .f-10 { font-size: 10px !important; }
-        .card-header { background:#B0141C !important; }
-        .filter_wp span { font-weight: bold; margin-bottom: 10px; display:block; }
-        .text-tipis  { font-weight: 300; opacity: 0.5; }
-        .main-content { overflow: visible !important; }
-        .topnav { margin-top: 0px !important; }
-        .row_sticky { justify-content: space-around; align-items: flex-start; }
-        .div_sticky { position: -webkit-sticky; position: sticky; top: 150px; }
-        .choices__list--dropdown .choices__item { font-size: 11px !important; }
-        .pro-text { letter-spacing: 0.3px; background: linear-gradient(120deg,#ff725c,#dbb118); -webkit-background-clip: text; color: transparent !important; }
+        .f-10 {
+            font-size: 10px !important;
+        }
+
+        .card-header {
+            background: #B0141C !important;
+        }
+
+        .filter_wp span {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .text-tipis {
+            font-weight: 300;
+            opacity: 0.5;
+        }
+
+        .main-content {
+            overflow: visible !important;
+        }
+
+        .topnav {
+            margin-top: 0px !important;
+        }
+
+        .row_sticky {
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .div_sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 150px;
+        }
+
+        .choices__list--dropdown .choices__item {
+            font-size: 11px !important;
+        }
+
+        .pro-text {
+            letter-spacing: 0.3px;
+            background: linear-gradient(120deg, #ff725c, #dbb118);
+            -webkit-background-clip: text;
+            color: transparent !important;
+        }
     </style>
 @endpush
 
@@ -40,42 +80,74 @@
                 </div>
                 <div class="mail-list mt-1">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Absensi</a>
-                        <a id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Payroll</a>
-                        <a id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Komponen Gaji</a>
-                        <a id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true">Perhitungan Pajak</a>
+                        <a class="active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab"
+                            aria-controls="v-pills-home" aria-selected="false">Absensi</a>
+                        <a id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="false">Payroll</a>
+                        <a id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab"
+                            aria-controls="v-pills-messages" aria-selected="false">Komponen Gaji</a>
+                        <a id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab"
+                            aria-controls="v-pills-settings" aria-selected="true">Perhitungan PPH21</a>
                     </div>
                 </div>
             </div>
             <div class="email-rightbar mb-3">
                 <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
                     {{-- pengaturan absensi --}}
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title text-white mb-0">Pengaturan Absensi</h5>
                             </div>
                             <div class="card-body">
-                                <div class="form-check form-switch form-switch-lg mb-3 py-1">
-                                    <label class="form-check-label" for="customSwitchsizemd">Validasi GPS di Kantor</label>
-                                    <input id="mode" name="mode" type="checkbox" class="form-check-input layout-mode-switch">
-                                </div>
-                                <form>
+                                <form action="{{ route('config.absen') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id_cabang" value="{{ $data->id }}">
+                                    <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                        <label class="form-check-label" for="customSwitchsizemd">Validasi GPS di
+                                            Kantor</label>
+                                        <input id="mode" name="is_radius" type="checkbox"
+                                            class="form-check-input layout-mode-switch" {{ $detail ? 'checked' : '' }}>
+                                    </div>
                                     <div class="row mb-4">
-                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius Validasi GPS</label>
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius
+                                            Validasi GPS</label>
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                <input type="number" max="1000" class="form-control" id="horizontal-firstname-input" placeholder="1 s/d 1000 meter">
+                                                <input type="number" max="1000" class="form-control"
+                                                    {{ $detail ? '' : 'disabled' }} id="horizontal-firstname-input"
+                                                    placeholder="1 s/d 1000 meter" name="radius_max"
+                                                    value="{{ $detail->radius_max }}">
                                                 <span class="input-group-text">meter</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-9">
-                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i
+                                                        class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
+                                <script>
+                                    var input = document.getElementById('horizontal-firstname-input');
+                                    var toggle = document.getElementById('mode');
+
+                                    // create a listener for both input fields(on change)
+                                    toggle.addEventListener('change', toggleDisable);
+
+                                    // evaluate input fields when either one changes (invoked by listeneres above)
+                                    function toggleDisable() {
+                                        // alert('coba');
+                                        if (toggle.checked == false) {
+                                            input.disabled = true;
+                                        } else {
+                                            input.disabled = false;
+                                        }
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -86,35 +158,72 @@
                                 <h5 class="card-title text-white mb-0">Pengaturan Payroll</h5>
                             </div>
                             <div class="card-body">
-                                <div class="form-check form-switch form-switch-lg mb-3 py-3">
-                                    <label class="form-check-label" for="customSwitchsizemd">Dark Mode</label>
-                                    <input id="mode" name="mode" {{ auth()->user()->config->layout_mode == 'dark' ? 'checked' : ''  }} type="checkbox" class="form-check-input layout-mode-switch">
-                                </div>
+                                <form action="{{ route('config.payroll') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id_cabang" value="{{ $data->id }}">
+                                    <div class="mb-3 py-0">
+                                        <label class="col-form-label">Bank Pembayaran</label>
+                                        <select class="form-control" name="bank_type" id="bank_type"
+                                            placeholder="Pilih salah satu">
+                                            <option value="Bank BCA">Bank BCA</option>
+                                            <option value="Mandiri">Mandiri</option>
+                                            <option value="BNI">BNI</option>
+                                            <option value="BRI">BRI</option>
+                                            <option value="Permata">Permata</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 py-0">
+                                        <label class="col-form-label">Tanggal Tutup Buku</label>
+                                        <input type="date" name="date_closed" id="date_closed" class="form-control" value="{{ $data->tgl_tutup }}">
+                                    </div>
+                                    <div class="row justify-content-end mt-4">
+                                        <div class="col-sm-12">
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i
+                                                        class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     {{-- komponen gaji --}}
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                        aria-labelledby="v-pills-messages-tab">
                         <div class="card">
+                            @php
+                                $komponen = explode(',', $detail->komponen_gaji);
+
+                            @endphp
                             <div class="card-header">
                                 <h5 class="card-title text-white mb-0">Pengaturan Komponen Gaji</h5>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form action="{{ route('config.komponen') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id_cabang" value="{{ $data->id }}">
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Pilih Kompenen Gaji</label>
-                                        <select class="form-control" name="choices-multiple-remove-button"
-                                            id="choices-multiple-remove-button"
-                                            placeholder="This is a placeholder" multiple>
-                                            <option value="Choice 1" selected>Choice 1</option>
-                                            <option value="Choice 2">Choice 2</option>
-                                            <option value="Choice 3">Choice 3</option>
-                                            <option value="Choice 4">Choice 4</option>
+                                        <select class="form-control" name="komponen[]"
+                                            id="komponen" placeholder="Pilih salah satu"
+                                            multiple>
+
+                                            <option value="Tunjangan Jabatan" {{ in_array('Tunjangan Jabatan', $komponen) ? 'selected' : '' }}>Tunjangan Jabatan</option>
+                                            <option value="Tunjangan Masa Kerja" {{ in_array('Tunjangan Masa Kerja', $komponen) ? 'selected' : '' }}>Tunjangan Masa Kerja</option>
+                                            <option value="Tunjangan Sertifikasi">Tunjangan Sertifikasi</option>
+                                            <option value="Tunjangan Status Kawin">Tunjangan Status Kawin</option>
+                                            <option value="BPJS Kesehatan">BPJS Kesehatan</option>
+                                            <option value="BPJS Tenaga Kerja">BPJS Tenaga Kerja</option>
+                                            <option value="Potongan Absen">Potongan Absen</option>
+                                            <option value="Potongan Kasbon">Potongan Kasbon</option>
+                                            <option value="PPH21" {{ in_array('PPH21', $komponen) ? 'selected' : '' }}>PPH21</option>
                                         </select>
                                     </div>
                                     <div class="row justify-content-end mt-4">
                                         <div class="col-sm-12">
-                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i
+                                                        class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -122,15 +231,16 @@
                         </div>
                     </div>
                     {{-- perhitungan pajak --}}
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title text-white mb-0">Pengaturan Perhitungan Pajak</h5>
                             </div>
                             <div class="card-body">
-                                <form action="#" method="POST">
+                                <form action="{{ route('config.pph21') }}" method="post">
                                     @csrf
-                                    @method('POST')
+                                    <input type="hidden" name="id_cabang" value="{{ $data->id }}">
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Pilih Metode Perhitungan</label>
                                         <select id="pajak" class="form-select" name="m_pajak">
@@ -141,7 +251,9 @@
                                     </div>
                                     <div class="row justify-content-end mt-4">
                                         <div class="col-sm-12">
-                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button></div>
+                                            <div><button type="submit" class="btn btn-warning text-black w-lg"><i
+                                                        class="fa fa-check-circle"></i>&nbsp; Simpan Perubahan</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -158,22 +270,26 @@
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        new Choices("#choices-multiple-remove-button", {
-            removeItemButton: !0,
-        });
-        const elementPajak = document.querySelector('#pajak');
-        const choices = new Choices(elementPajak);
+        document.addEventListener("DOMContentLoaded", function() {
+            new Choices("#komponen", {
+                removeItemButton: !0,
+            });
+            new Choices("#bank_type", {
+                removeItemButton: !0,
+            });
+            const elementPajak = document.querySelector('#pajak');
+            const choices = new Choices(elementPajak);
+
         });
     </script>
     @if (Session::has('success'))
         <script type="text/javascript">
-            Swal.fire('Berhasil','{{ \Session::get('success') }}','success')
+            Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
         </script>
     @endif
     @if (Session::has('error'))
         <script type="text/javascript">
-            Swal.fire('Gagal','{{ \Session::get('error') }}','error')
+            Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
         </script>
     @endif
 @endpush

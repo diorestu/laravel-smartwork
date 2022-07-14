@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ViewAktivitasController;
 use App\Http\Controllers\Admin\ViewAdminController;
 use App\Http\Controllers\KegiatanGalleryController;
 use App\Http\Controllers\Admin\UserConfigController;
+use App\Http\Controllers\CabangConfigController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KpiMasterController;
@@ -198,36 +199,40 @@ use App\Http\Controllers\User\UserLemburController;
 
         // PENGATURAN
         Route::post('config/update-layout/{id}',        [UserConfigController::class, 'updateLayout'])->name("config.updateLayout");
-        Route::post('config/set-method-pajak/{id}',     [UserConfigController::class. 'updateMPajak'])->name("config.updateMPajak");
+        Route::post('config/set-method-pajak/{id}',     [UserConfigController::class, 'updateMPajak'])->name("config.updateMPajak");
         Route::resource('config',                       UserConfigController::class);
         Route::get('slip-gaji/{id}',                    [PrintPDFController::class, 'cetak_slip_gaji']);
+        Route::post('config/absensi',       [CabangConfigController::class, 'storeConfigAbsensi'])->name("config.absen");
+        Route::post('config/payroll',       [CabangConfigController::class, 'storeConfigPayroll'])->name("config.payroll");
+        Route::post('config/komponen',      [CabangConfigController::class, 'storeConfigKomponen'])->name("config.komponen");
+        Route::post('config/pph21',         [CabangConfigController::class, 'storeConfigPph21'])->name("config.pph21");
     });
 
     // USER CONTROLLER
     Route::prefix('user')->middleware(['auth', 'is_user'])->group(function () {
         // Halaman Home
-        Route::get('/', [MobileController::class, 'index'])->name('user.home');
+        Route::get('/',             [MobileController::class, 'index'])->name('user.home');
         // Halaman Profil
-        Route::get('/profil', [MobileController::class, 'profile'])->name('user.profil');
-        Route::post('/profile', [MobileController::class, 'saveProfile'])->name('user.save');
-        Route::get('/user-data', [MobileController::class, 'data_profile'])->name('user.data');
-        Route::get('/account', [MobileController::class, 'changePassword'])->name('user.pass');
-        Route::post('/account', [MobileController::class, 'postchangePassword'])->name('user.pass.save');
+        Route::get('/profil',       [MobileController::class, 'profile'])->name('user.profil');
+        Route::post('/profile',     [MobileController::class, 'saveProfile'])->name('user.save');
+        Route::get('/user-data',    [MobileController::class, 'data_profile'])->name('user.data');
+        Route::get('/account',      [MobileController::class, 'changePassword'])->name('user.pass');
+        Route::post('/account',     [MobileController::class, 'postchangePassword'])->name('user.pass.save');
         // Halaman Absen
-        Route::resource('absen', AbsenController::class);
-        Route::get('/set-shift', [MobileController::class, 'getShift'])->name('user.get.shift');
-        Route::post('/set-shift', [MobileController::class, 'postShift'])->name('user.post.shift');
+        Route::resource('absen',    AbsenController::class);
+        Route::get('/set-shift',    [MobileController::class, 'getShift'])->name('user.get.shift');
+        Route::post('/set-shift',   [MobileController::class, 'postShift'])->name('user.post.shift');
 
         // Halaman Kegiatan
         Route::resource('kegiatan', AktivitasController::class);
         // Halaman Slip Gaji
-        Route::get('/slip-gaji', [MobileController::class, 'gaji'])->name('user.gaji');
+        Route::get('/slip-gaji',    [MobileController::class, 'gaji'])->name('user.gaji');
         // Halaman Slip Gaji
-        Route::get('/jadwal', [MobileController::class, 'jadwal'])->name('user.jadwal');
+        Route::get('/jadwal',       [MobileController::class, 'jadwal'])->name('user.jadwal');
         // Upload Foto
-        Route::post('upload-kegiatan', [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
-        Route::post('upload-hadir', [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
-        Route::post('upload-pulang', [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
-        route::resource('leave', CutiController::class);
-        route::resource('overtime', UserLemburController::class);
+        Route::post('upload-kegiatan',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
+        Route::post('upload-hadir',     [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
+        Route::post('upload-pulang',    [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
+        route::resource('leave',        CutiController::class);
+        route::resource('overtime',     UserLemburController::class);
     });

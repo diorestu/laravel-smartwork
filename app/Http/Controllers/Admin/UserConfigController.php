@@ -7,6 +7,7 @@ use App\Models\UserConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
+use App\Models\CabangConfig;
 use App\Models\MethodPajak;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +57,8 @@ class UserConfigController extends Controller
     {
         $id_admin   = Auth::user()->id;
         $data   = Cabang::where('id', $cabang)->where('id_admin', $id_admin)->first();
-        return view('admin.config_cabang', ['data'=> $data]);
+        $detail = CabangConfig::where('id', $cabang)->where('id_admin', $id_admin)->first();
+        return view('admin.config_cabang', ['data'=> $data, 'detail' => $detail]);
     }
 
     /**
