@@ -108,7 +108,11 @@
                                         <label class="form-check-label" for="customSwitchsizemd">Validasi GPS di
                                             Kantor</label>
                                         <input id="mode" name="is_radius" type="checkbox"
-                                            class="form-check-input layout-mode-switch" {{ $detail->is_radius ? 'checked' : '' }}>
+                                            class="form-check-input layout-mode-switch"
+                                            @isset($detail->is_radius)
+                                            checked
+                                            @endisset
+                                            >
                                     </div>
                                     <div class="row mb-4">
                                         <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius
@@ -116,17 +120,32 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <input type="number" max="1000" class="form-control"
-                                                    {{ $detail->is_radius ? '' : 'disabled' }} id="horizontal-firstname-input"
+                                                    @isset($detail->is_radius)
+                                                    @else disabled
+                                                    @endisset id="horizontal-firstname-input"
                                                     placeholder="1 s/d 1000 meter" name="radius_max"
                                                     @isset($detail)
                                                     value="{{ $detail->radius_max }}"
-                                                    @else
-                                                    value=""
+
                                                     @endisset
                                                     >
                                                 <span class="input-group-text">meter</span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                        <label class="form-check-label" for="customSwitchsizemd">Melampirkan Swafoto Presensi</label>
+                                        <input id="mode" name="is_radius" type="checkbox"
+                                            class="form-check-input layout-mode-switch" @isset($detail->is_photo_enabled)
+                                            {{ $detail->is_photo_enabled ? 'checked' : '' }}
+                                            @endisset>
+                                    </div>
+                                    <div class="form-check form-switch form-switch-lg mb-3 py-1">
+                                        <label class="form-check-label" for="customSwitchsizemd">Menggunakan Shift</label>
+                                        <input id="mode" name="is_radius" type="checkbox"
+                                            class="form-check-input layout-mode-switch" @isset($detail->is_using_shift)
+                                            {{ $detail->is_using_shift ? 'checked' : '' }}
+                                            @endisset>
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-9">
