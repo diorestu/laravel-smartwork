@@ -1,8 +1,6 @@
 @extends('layouts.mobile-navbar')
 
-@section('title')
-    Absen Saya
-@endsection
+@section('title')Presensi | Smartwork @endsection
 
 @section('content')
     <section class="">
