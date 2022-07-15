@@ -20,7 +20,7 @@ class CreateCabangConfigsTable extends Migration
             $table->boolean('is_radius')->nullable();
             $table->integer('radius_max')->unsigned()->nullable();
             $table->string('bank_type')->nullable();
-            $table->date('tgl_tutup')->nullable();
+            $table->integer('tgl_tutup')->nullable();
             $table->text('komponen_gaji')->nullable();
             $table->string('pph21')->nullable();
             $table->timestamps();
