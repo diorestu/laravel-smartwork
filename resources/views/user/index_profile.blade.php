@@ -44,7 +44,7 @@
             <a href="{{ route('user.data') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-account-box icon-profil"></i>
+                        <i class="mdi mdi-account-box icon-profil" style="color: #d63c3c;"></i>
                         <span class="">Informasi Personal</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -53,7 +53,7 @@
             <a href="{{ route('user.jadwal') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-calendar-clock icon-profil"></i>
+                        <i class="mdi mdi-calendar-clock icon-profil" style="color: #8213ba;"></i>
                         <span class="">Jadwal Kerja</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -62,7 +62,7 @@
             <a href="{{ route('user.gaji') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-wallet icon-profil"></i>
+                        <i class="mdi mdi-wallet icon-profil" style="color: #1874d6;"></i>
                         <span class="">Slip Gaji</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -73,7 +73,7 @@
             <a href="{{ route('user.pass') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-account-key icon-profil"></i>
+                        <i class="mdi mdi-account-key icon-profil" style="color: #1abd69;"></i>
                         <span class="">Ubah Kata Sandi</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -82,7 +82,7 @@
             <a href="/" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-information icon-profil"></i>
+                        <i class="mdi mdi-information icon-profil" style="color: #ffc400;"></i>
                         <span class="">Bantuan</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -91,7 +91,7 @@
             <a href="/" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                     <div>
-                        <i class="mdi mdi-account-question icon-profil"></i>
+                        <i class="mdi mdi-account-question icon-profil" style="color: #bf411b;"></i>
                         <span class="">FAQ</span>
                     </div>
                     <span><i class="fa fa-chevron-right"></i></span>
@@ -107,6 +107,12 @@
             </form>
         </div>
     </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 @endsection
 
 @push('addon-script')
