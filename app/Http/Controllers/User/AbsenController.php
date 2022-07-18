@@ -20,26 +20,24 @@ class AbsenController extends Controller
     public function index()
     {
         // Set Tanggal Hari Ini dan Kemarin
-        $today     = Carbon::now();
-        $yesterday = Carbon::yesterday();
-
+        $today      = Carbon::now();
+        $yesterday  = Carbon::yesterday();
         // Set Absensi Apakah Sudah Hadir;
-        $in        = false;
-        $out       = false;
-        // Set Data User;
-        $id        = Auth::user()->id;
+        $in         = false;
+        $out        = false;
+        $id         = Auth::user()->id;
         // Cek Shift
-        $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
+        $shift      = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
         // Cek Absensi Terakhir
         $absenHariIni = Absensi::where('id_user', $id)->whereDate('jam_hadir', $today)->first();
         $absenKemarin = Absensi::where('id_user', $id)->whereDate('jam_hadir', $yesterday)->whereNull('jam_pulang')->first();
         // dd($absenKemarin);
-        $absen = '';
+        $absen      = '';
         // Set Riwayat Absensi
-        $riwayat      = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
+        $riwayat    = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
         // Set Utility
-        $title        = null;
-        $d            = false;
+        $title      = null;
+        $d          = false;
         if(!$shift){
             if ($absenKemarin) {
                 $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
@@ -49,12 +47,11 @@ class AbsenController extends Controller
                     $out = true;
                 }
             }
-
-            $title = 'Absen Tidak Tersedia';
-            $d= true;
+            $title  = 'Absen Tidak Tersedia';
+            $d      = true;
         }elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
-            $title = 'Tidak Ada Shift';
-            $d = true;
+            $title  = 'Tidak Ada Shift';
+            $d      = true;
         }else{
             if ($absenHariIni) {
                 $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
@@ -71,10 +68,9 @@ class AbsenController extends Controller
                     $out = true;
                 }
             } else {
+                // do nothing
             }
         }
-
-        // dd($in);
         return view('user.absen.index',[
             'absen'      => $absen,
             'riwayat'    => $riwayat,
@@ -94,9 +90,9 @@ class AbsenController extends Controller
      */
     public function create()
     {
-        $id=Auth::user();
+        $id         = Auth::user();
         // dd($id->config->tipe_akun);
-        $dataAbsen = Absensi::where('id_user', $id->id)->whereDate('jam_hadir', date('Y-m-d'))->first();
+        $dataAbsen  = Absensi::where('id_user', $id->id)->whereDate('jam_hadir', date('Y-m-d'))->first();
         if (!$dataAbsen || $dataAbsen == null) {
             return view('user.absen.hadir', [
                 'id' => $id,
@@ -138,7 +134,7 @@ class AbsenController extends Controller
      */
     public function show($id)
     {
-        $data = Absensi::find($id);
+        $data   = Absensi::find($id);
         return view('user.absen.detail', [
             'data' => $data
         ]);
@@ -152,10 +148,10 @@ class AbsenController extends Controller
      */
     public function edit($id)
     {
-        $data = Absensi::findOrFail($id);
-        $tanggalAbsen = Carbon::parse($data->jam_hadir);
-        $now = Carbon::now();
-        $selisih = $now->diffInHours($tanggalAbsen);
+        $data           = Absensi::findOrFail($id);
+        $tanggalAbsen   = Carbon::parse($data->jam_hadir);
+        $now            = Carbon::now();
+        $selisih        = $now->diffInHours($tanggalAbsen);
         // dd($selisih);
         if ($selisih > 24) {
             // dd('lupa');

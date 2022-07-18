@@ -1,63 +1,68 @@
-@extends('layouts.mobile')
+@extends('layouts.mobile-navbar')
 
-@section('title')
-    Absen Pulang
-@endsection
+@section('title')Absen Pulang | Smartwork @endsection
 
 @push('addon-style')
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 @endpush
 
 @section('content')
-    @php
-    $id = Auth::user();
-    $radius = 100;
-    @endphp
-    <section class="p-0 mb-3">
-        <div class="ps-5 pe-4 pb-3 pt-3" style="background-color: #B0141C !important;">
-            <div class="d-flex justify-content-between align-items-baseline">
+    @php $id = Auth::user(); $radius = 10000; @endphp
+    <section class="">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:200px;">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <a href="{{ route('absen.index') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
-                <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Absen Pulang</h2>
+                <div>
+                    <h2 class="fw-bold font-size-18 text-white mb-0">Live Attendance</h2>
                 </div>
-                <div class=''>
+                <div>
                     <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
                         <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                         <i data-feather="sun" class="icon-lg layout-mode-light"></i>
                     </button>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="mx-4" onclick="getLocation();">
-        <div class="alert rounded-sm text-center" role="alert" id='demo'>
-            <i class="fa fa-spinner fa-spin font-size-22 text-success mb-3"></i>
-            <h4 class="alert-heading">Verifikasi Lokasi...</h4>
-        </div>
-    </div>
-
-    <div class="text-center">
-        <div class="card rounded-sm mx-4">
-            <div class="card-body px-3 py-8">
-                <h3 class="text-center font-weight-bolder mb-1">Absen Pulang</h3>
-                <h2 id='span' class="text-center display-2 fw-bold text-perol mb-4"></h2>
-                <form method="post" action="{{ route('absen.update', $data->id) }}" id="myForm" class="px-3">
-                    @method('PATCH')
-                    @csrf
-                    <div class="form-group text-center">
-                        <label for="my-textarea">Keterangan Absen Pulang:</label>
-                        <textarea onclick="getLocation()" id="my-textarea" class="form-control rounded-5" name="deskripsi" rows="3"></textarea>
-                    </div>
-                    <input id="lokasix" class="form-control" type="hidden" name="lat_pulang">
-                    <input id="lokasiy" class="form-control" type="hidden" name="long_pulang">
-                    <button type="submit" id="btn" class="btn btn-primary rounded-sm w-100 py-3 mt-3 d-none">Absen
-                        Pulang</button>
-                </form>
+            <div class="text-center mt-3">
+                <h2 id='span' class="text-center text-white fw-light mb-0 display-4"></h2>
+                <span class="text-white mt-0">{{ Carbon\Carbon::parse(now())->locale('id')->isoFormat('dddd, LL') }}</span>
             </div>
         </div>
+    </section>
+
+    <main class="px-4 parent pb-0 mt-3">
+        <div class="child card rounded-md mb-0 px-0">
+            <div class="card-body p-2 pt-3">
+                <div class="text-center">
+                    <b class="fw-light font-size-14 text-muted">Tidak ada shift</b><br>
+                    <b class="fw-bold font-size-20">00:00 - 00:00</b><br>
+                </div>
+                {{-- <hr> --}}
+                <div class="row mt-4">
+                    <form method="post" action="{{ route('absen.update', $data->id) }}" id="myForm" class="px-3">
+                        @method('PATCH')
+                        @csrf
+                        <div class="form-group text-center">
+                            <textarea onclick="getLocation()" id="keterangan" class="form-control rounded-5 d-none" name="deskripsi" rows="1" placeholder="Tulis keterangan absen pulang Anda"></textarea>
+                        </div>
+                        <input id="lokasix" class="form-control" type="hidden" name="lat_pulang">
+                        <input id="lokasiy" class="form-control" type="hidden" name="long_pulang">
+                        <button type="submit" id="btn" class="mt-2 btn btn-primary waves-effect btn-label waves-light w-100 rounded-md d-none py-2"><i class="label-icon fa fa-clock"></i> Clock Out</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="mx-4" style="margin-top: -35px;" onclick="getLocation();">
+        <div class="alert rounded-sm text-center" role="alert" id='demo'>
+            <i class="fa fa-spinner fa-spin font-size-22 text-success mb-3"></i>
+            <h4 class="alert-heading">Memverifikasi lokasi Anda...</h4>
+        </div>
     </div>
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -101,11 +106,12 @@
             var longitude1 = position.coords.longitude.toFixed(7);
             var latitude2  = -8.617903;
             var longitude2 = 115.192535;
-            var radius     = 100;
+            var radius     = 10000;
             var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,
                     longitude1),
                 new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
             if (distance >= radius) {
+                $("#keterangan").addClass("d-none");
                 $("#btn").addClass("d-none");
                 $("#demo").addClass("alert-danger");
                 demo.innerHTML = 'Maaf, Anda berada didalam radius <strong>' + distance.toFixed(1) +
@@ -114,8 +120,9 @@
                 $("#demo").addClass("alert-success");
                 $("#demo").removeClass("d-none");
                 $("#btn").removeClass("d-none");
+                $("#keterangan").removeClass("d-none");
                 demo.innerHTML = 'Anda berada didalam radius <strong>' + distance.toFixed(1) +
-                    '</strong> meter. </br>Silahkan klik tombol <strong>Absen</strong>';
+                    '</strong> meter. </br>Silahkan klik tombol <strong>Clock Out</strong>';
                 $("#lokasix").val(latitude1);
                 $("#lokasiy").val(longitude1);
             }

@@ -1,30 +1,36 @@
 @extends('layouts.mobile')
 
-@section('title')
-    Profil Saya
-@endsection
-{{-- @push('addon-styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endpush --}}
+@section('title')Jadwal Kerja | Smartwork @endsection
 
 @section('content')
     <section class="p-0">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
-            <div class="d-flex justify-content-between align-items-center py-3">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <a href="{{ route('user.home') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
-                <div class="">
+                <div>
                     <h2 class="fw-bold font-size-18 text-white mb-0">Jadwal Kerja Saya</h2>
                 </div>
-                <div class="">
-                    <h2 class="fw-bold font-size-18 text-white"></h2>
+                <div>
+                    <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
+                        <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
+                        <i data-feather="sun" class="icon-lg layout-mode-light"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
-    <section class="p-3">
-        <table class="table">
+    <section class="p-2">
+        <div class="card mb-2">
+            <div class="d-flex">
+                <div class="col-12 pr-0">
+                    <input class="form-control" type="month" value="{{ "2019-08" }}" id="example-month-input">
+                </div>
+            </div>
+        </div>
+        <div class="card mb-2 rounded-sm">
+        <table class="table mb-0">
             <thead class="table-dark">
                 <tr>
                     <th>Tanggal</th>
@@ -35,15 +41,22 @@
             <tbody>
                 @foreach ($jadwal as $item)
                     <tr>
-                        <td scope="row">{{ tanggalIndo($item->tanggal_shift) }}</td>
-                        <td>{{ $item->shift->ket_shift }}</td>
-                        <td>{{ tampilJamMenit($item->shift->hadir_shift) }}</td>
-                        <td>{{ tampilJamMenit($item->shift->pulang_shift) }}</td>
+                        <td class="fw-bold text-uppercase" scope="row">{{ tanggalIndo3($item->tanggal_shift) }}</td>
+                        <td class="font-size-11">{{ $item->shift->ket_shift }}</td>
+                        <td class="font-size-11 text-center">{{ tampilJamMenit($item->shift->hadir_shift) }}</td>
+                        <td class="font-size-11 text-center">{{ tampilJamMenit($item->shift->pulang_shift) }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        </div>
     </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 @endsection
 
 @push('addon-script')

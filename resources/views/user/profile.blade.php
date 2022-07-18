@@ -1,8 +1,6 @@
 @extends('layouts.mobile')
 
-@section('title')
- Profil Saya
-@endsection
+@section('title')Edit Profil | Smartwork @endsection
 
 @push('addon-styles')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -11,14 +9,14 @@
 @section('content')
     <section class="p-0">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
-            <div class="d-flex justify-content-between align-items-center py-3">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <a href="{{ route('user.profil') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
-                <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Edit Profil</h2>
+                <div>
+                    <h2 class="fw-bold font-size-18 mb-0 text-white">Personal Info</h2>
                 </div>
-                <div class=''>
+                <div>
                     <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
                         <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                         <i data-feather="sun" class="icon-lg layout-mode-light"></i>
@@ -28,51 +26,47 @@
         </div>
     </section>
     <section>
-        <div class="p-4">
-            <form action="{{ route('user.save') }}" method="post" id="myForm">
-                @method('POST')
-                @csrf
-                <h4 class="text-muted mb-2">Data Diri</h4>
-                <div class="mb-3">
-                    <label for="my-input">Nama Lengkap</label>
-                    <input id="my-input" class="form-control" type="text" name="nama" value="{{ $id->nama }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Email</label>
-                    <input id="my-input" class="form-control" type="text" name="email" value="{{ $id->email }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Nomor HP</label>
-                    <input id="my-input" class="form-control" type="text" name="phone" value="{{ $id->phone }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Nomor Rekening</label>
-                    <input id="my-input" class="form-control" type="text" name="no_rek" value="{{ $id->no_rek }}">
-                </div>
-                <div class="mb-3">
-                    <label for="my-input">Alamat</label>
-                    <textarea class="form-control" id="my-input" name="alamat" id="" cols="10"
-                        rows="5">{{ $id->alamat }}</textarea>
-                </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                {{-- <div class="form-group">
-                    <label for="select">Cabang</label>
-                    <select id="my-select" class="form-control" name="">
-                        <option value="{{ $id->id_cabang }}">{{ $id->cabang->cabang_nama }}</option>
-                    </select>
-                </div> --}}
-            </form>
+        <div class="col=12">
+            <div class="card p-4">
+                <form action="{{ route('user.save') }}" method="post" id="myForm">
+                    @method('POST')
+                    @csrf
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="nama">Nama Lengkap</label>
+                        <input id="nama" class="form-control text-dark" type="text" name="nama" value="{{ $id->nama }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="email">Email</label>
+                        <input id="email" class="form-control" type="email" name="email" value="{{ $id->email }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="phone">Nomor HP</label>
+                        <input id="phone" class="form-control" type="text" name="phone" value="{{ $id->phone }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="no_rek">Nomor Rekening</label>
+                        <input id="no_rek" class="form-control" type="text" name="no_rek" value="{{ $id->no_rek }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="alamat">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamat" id="" cols="10"
+                            rows="5">{{ $id->alamat }}</textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="fixed-bottom mb-0 card p-2">
+                <a class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
+                    <i class="label-icon fa fa-check-circle me-2"></i>Update Personal Info
+                </a>
+            </div>
         </div>
     </section>
-    <div class="fixed-bottom bg-dark py-4 text-center">
-        <a class="fw-regular font-size-16 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
-            <i class="fa fa-save me-2"></i>Simpan Profil
-        </a>
-    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 @endsection
 
 @push('addon-script')

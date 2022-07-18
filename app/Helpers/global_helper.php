@@ -149,6 +149,10 @@ function TampilTanggal($date)
 {
     return Carbon::parse($date)->locale('id')->format('Y-m-d');
 }
+function TanggalBulan($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('D MMM');
+}
 function BulanTahun($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('MMMM Y');
