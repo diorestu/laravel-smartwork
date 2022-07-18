@@ -42,7 +42,7 @@
                                                 @if ($data->company_logo == "")
                                                     <img src="{{ asset('backend-assets/images/no-staff.jpg') }}" class="d-block w-100" />
                                                 @else
-                                                    <img src="{{ asset('storage/uploads/'. $data->company_logo) }}" class="d-block w-100" />
+                                                    <img src="{{ asset('storage/logo/'. $data->company_logo) }}" class="d-block w-100" />
                                                 @endif
                                             </div>
                                             <input type="file" class="inputfile inputfile-1" name="image" id="upload_image" accept="image/*" />

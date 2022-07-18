@@ -28,16 +28,27 @@ class CabangConfigController extends Controller
             $is_radius = false;
             $rad_max   = 0;
         }
+
+        if ($request->has('is_photo_enabled')) {
+            $isPhoto = true;
+        }else{
+            $isPhoto = false;
+        }
+
+        if ($request->has('is_using_shift')) {
+            $isShift = true;
+        }else{
+            $isShift = false;
+        }
+
         try {
             CabangConfig::updateOrCreate(
                 ['id_admin'   => Auth::user()->id, 'id_cabang'  => $request->id_cabang],
-                ['is_radius'  => $is_radius, 'radius_max' => $rad_max]
+                ['is_radius'  => $is_radius, 'is_photo_enabled' => $isPhoto, 'is_using_shift' => $isShift, 'radius_max' => $rad_max]
             );
         } catch (\Throwable $th) {
             throw $th;
         }
-
-        // dd($data);
         return redirect()->back();
     }
     public function storeConfigPayroll(Request $request)
@@ -86,4 +97,5 @@ class CabangConfigController extends Controller
         // dd($data);
         return redirect()->back();
     }
+    
 }

@@ -13,16 +13,33 @@ use Illuminate\Support\Facades\Auth;
 
 class UserConfigController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function uploadLogo(Request $request)
+    {
+        $folderPath     = storage_path('app/public/logo/');
+        $image_parts    = explode(";base64,", $request->image);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type     = $image_type_aux[1];
+        $image_base64   = base64_decode($image_parts[1]);
+        $imageName      = uniqid() . '.png';
+        $imageFullPath  = $folderPath . $imageName;
+        file_put_contents($imageFullPath, $image_base64);
+        $id                         = $request->id;
+        $data                       = UserConfig::findOrFail($id);
+        $data->company_logo         = $imageName;
+        $berhasil                   = $data->save();
+        if ($berhasil) {
+            return '<img src="' . asset("storage/logo/$imageName") . '" class="d-block w-100" />';
+        } else {
+            return "gagal";
+        }
+    }
+
     public function index()
     {
         $id_admin   = Auth::user()->id;
         $data       = UserConfig::where("id_admin", $id_admin)->first();
         $datacabang = Cabang::where("id_admin", $id_admin)->get();
+        // dd($data);
         return view('admin.config', ['data' => $data, 'data_cabang' => $datacabang]);
     }
 
