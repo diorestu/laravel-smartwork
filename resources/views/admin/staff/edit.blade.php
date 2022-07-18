@@ -164,6 +164,10 @@
                                                 <label for="no_rek" class="font-weight-bolder">Nomor Rekening Pegawai <span class="text-danger">*</span></label>
                                                 <input required class='form-control' type="text" name="no_rek" id="no_rek" value="{{ $data->no_rek }}">
                                             </div>
+                                            <div class="form-group mb-4">
+                                                <label for="npwp" class="font-weight-bolder">NPWP Pegawai <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="npwp" id="npwp" value="{{ $data->npwp }}">
+                                            </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">

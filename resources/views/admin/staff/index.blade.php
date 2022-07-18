@@ -35,7 +35,7 @@
                                 <a class="dropdown-item" href="{{ route("pegawai.ekspor") }}">File Excel</a>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning waves-effect waves-light text-black" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button {{ $btn ? 'disabled' : '' }} type="button" class="btn btn-warning waves-effect waves-light text-black" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="fa fa-plus icon-sm text-black"></i>
                             Tambah Pegawai&nbsp;
                         </button>

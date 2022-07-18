@@ -210,6 +210,11 @@
                                                     <td>:</td>
                                                     <td><b>{{ $data->no_rek }}</b></td>
                                                 </tr>
+                                                <tr>
+                                                    <td>NPWP</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->npwp }}</b></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

@@ -28,7 +28,7 @@ class UserConfigController extends Controller
         $data->company_logo         = $imageName;
         $berhasil                   = $data->save();
         if ($berhasil) {
-            return '<img src="' . asset("storage/logo/$imageName") . '" class="d-block w-100" />';
+            return '<img src="' . asset("storage/logo/$imageName") . '" class="d-block w-25 rounded" />';
         } else {
             return "gagal";
         }
