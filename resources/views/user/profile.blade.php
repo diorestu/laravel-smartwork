@@ -56,8 +56,8 @@
             </div>
 
             <div class="fixed-bottom mb-0 card p-2">
-                <a class="btn btn-primary fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
-                    <i class="fa fa-check me-2"></i>Update Personal Info
+                <a class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
+                    <i class="label-icon fa fa-check-circle me-2"></i>Update Personal Info
                 </a>
             </div>
         </div>

@@ -1,48 +1,92 @@
 @extends('layouts.mobile')
 
-@section('title')
-    Smartwork - Cuti Saya
-@endsection
+@section('title')Cuti | Smartwork @endsection
+
+@push('addon-style')
+<style>
+    .no-border td { border: none; }
+    .damas { background-color: #f2f2f2; }
+</style>
+@endpush
 
 @section('content')
-    <section class="mb-3">
-        <div class="ps-5 pe-4 pb-4 pt-3" style="background-color: #B0141C !important;">
-            <div class="d-flex justify-content-between align-items-center pt-3 pb-0">
+    <section class="p-0">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <a href="{{ route('user.home') }}" class="text-white"><i data-feather="chevron-left"></i></a>
+                    <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
-                <div class="">
-                    <h2 class="fw-bold font-size-18 text-white mb-0">Cuti Saya</h2>
+                <div>
+                    <h2 class="fw-bold font-size-18 text-white mb-0">Cuti</h2>
                 </div>
-                <div class=''>
-                    <a href="{{ route('leave.create') }}" class="btn btn-transparent-danger font-weight-bold text-white"><i
-                            class="fa fa-plus fa-lg text-white"></i></a>
+                <div>
+                    <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
+                        <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
+                        <i data-feather="sun" class="icon-lg layout-mode-light"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
-    <div class="ms-4" data-aos="fade-right" data-aos-duration="700">
-        <div class="d-flex flex-row flex-nowrap overflow-auto example">
-            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <h3 class="fw-bold font-size-16 mt-1">Cuti</h3>
-                    <span class="font-size-22 fw-black">{{ $cuti }}</span>
-                </div>
-            </div>
-            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <h3 class="fw-bold font-size-16 mt-1">Izin</h3>
-                    <span class="font-size-22 fw-black">0</span>
-                </div>
-            </div>
-            <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <h3 class="fw-bold font-size-16 mt-1">Sakit</h3>
-                    <span class="font-size-22 fw-black">{{ $sakit }}</span>
+    <section class="p-2">
+        <div class="card bg-light text-white text-center p-2 mb-2">
+            <blockquote class="card-blockquote font-size-14 mb-0">
+                <p class="mb-0 text-muted">Cuti Tahunan</p>
+                <h2>11 Hari</h2>
+                <span class="text-dark font-size-12 mb-0">
+                    <i class="fa fa-calendar-alt"></i>&nbsp; 2 hari terpakai
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-calendar-alt"></i>&nbsp; 10 hari sisa
+                </span>
+            </blockquote>
+        </div>
+
+        <div class="card mb-2">
+            <div class="d-flex">
+                <div class="col-12 pr-0">
+                    <input class="form-control" type="month" value="{{ "2019-08" }}" id="example-month-input">
                 </div>
             </div>
         </div>
-    </div>
+        <div class="card mb-2">
+            <div class="d-flex">
+                <div class="col-12 pr-0">
+                    <a href="{{ route("cuti.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Request Cuti</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ms-4" data-aos="fade-right" data-aos-duration="700">
+            <div class="d-flex flex-row flex-nowrap overflow-auto example">
+                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                    <div class="card-body py-2 px-3">
+                        <h3 class="fw-bold font-size-16 mt-1">Cuti</h3>
+                        <span class="font-size-22 fw-black">{{ $cuti }}</span>
+                    </div>
+                </div>
+                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                    <div class="card-body py-2 px-3">
+                        <h3 class="fw-bold font-size-16 mt-1">Izin</h3>
+                        <span class="font-size-22 fw-black">0</span>
+                    </div>
+                </div>
+                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
+                    <div class="card-body py-2 px-3">
+                        <h3 class="fw-bold font-size-16 mt-1">Sakit</h3>
+                        <span class="font-size-22 fw-black">{{ $sakit }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <section class="px-4">
         <div class="">
             <div class="d-flex justify-content-between align-items-baseline">

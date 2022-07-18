@@ -6,7 +6,7 @@
 <script src="{{ asset('backend-assets/libs/metismenu/metisMenu.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/node-waves/waves.min.js') }}"></script>
-<!-- choices js -->
+{{-- choices.js --}}
 <script src="{{ asset('backend-assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/feather-icons/feather.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
