@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $id       = Auth::user()->id;
-        $data     = User::select(['id', 'id_cabang', 'nip', 'nama', 'email', 'phone', 'username', 'status'])->where('id_admin', $id)->where('is_admin', 0)->get();
+        $data     = User::select(['id', 'id_cabang', 'nip', 'gender','nama', 'agama','email', 'phone', 'username', 'status', 'gol_darah', 'tgl_lahir', 'tanggal_mulaiKerja'])->where('id_admin', $id)->where('is_admin', 0)->get();
         $count_user = User::where('id_admin', $id)->count();
         $max_user = UserConfig::where('id_admin', $id)->first()->max_user;
         if ($count_user > $max_user) {

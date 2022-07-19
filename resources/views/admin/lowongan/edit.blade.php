@@ -76,10 +76,6 @@
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
-                                                <label for="nik" class="font-weight-bolder">Nomor Identitas (KTP/SIM) <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="text" name="nik" id="nik" value="{{ $data->nik }}">
-                                            </div>
-                                            <div class="form-group mb-4">
                                                 <label for="nip" class="font-weight-bolder">Nomor Induk Pegawai <span class="text-danger">*</span></label>
                                                 <input required class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
                                             </div>

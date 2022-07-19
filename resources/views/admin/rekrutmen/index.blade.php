@@ -53,10 +53,6 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="mb-4">
-                                                            <label for="my-input">Nomor Identitas (KTP / SIM) <span class="text-danger">*</span></label>
-                                                            <input id="my-input" class="form-control" type="text" name="nik">
-                                                        </div>
-                                                        <div class="mb-4">
                                                             <label for="my-input">Nomor Induk Pegawai <span class="text-danger">*</span></label>
                                                             <input id="my-input" class="form-control" type="text" name="nip">
                                                         </div>
@@ -75,13 +71,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div class="form-group mb-4">
-                                                            <label for="cabang" class="font-weight-bolder">Tipe Identitas <span class="text-danger">*</span></label>
-                                                            <select id="cabang" class="form-select" name="tipe_id">
-                                                                <option value='KTP'>KTP</option>
-                                                                <option value='SIM'>SIM</option>
-                                                            </select>
-                                                        </div>
                                                         <div class="form-group mb-4">
                                                             <label for="phone" class="font-weight-bolder">No. HP <span class="text-danger">*</span></label>
                                                             <input class='form-control' type="text" name="phone" id="phone" value="">
@@ -113,49 +102,33 @@
     <div class="card card-custom gutter-b rounded-sm shadow-sm">
         <div class="card-body p-4">
             <div class="table-responsive">
-                <style>
-                    th, td { white-space: nowrap; }
-                    div.dataTables_wrapper {
-                        margin: 0 auto;
-                    }
-                </style>
                 <table class="table table-hover" id="myTable">
                     <thead class="table-dark">
                         <tr>
-                            <th width="40" style="z-index: 99 !important;">NIP</th>
-                            <th width="220" style="z-index: 99 !important;">Nama Lengkap</th>
-                            <th width="50">Usia</th>
-                            <th width="50">Agama</th>
-                            <th width="120">Lokasi</th>
-                            <th width="30">Kelamin</th>
-                            <th width="50">Gol. Darah</th>
-                            <th width="50">No. HP</th>
-                            <th width="50">Username</th>
-                            <th width="50">Status</th>
-                            <th width="120">TMT</th>
-                            <th width="">Opsi</th>
+                            <th width="">NIP</th>
+                            <th>Nama Lengkap</th>
+                            <th>Lokasi</th>
+                            <th width="">No. HP</th>
+                            <th width="">Username</th>
+                            <th width="">Status</th>
+                            <th width="5%">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $i)
                             <tr>
-                                <td class='bg-white text-primary font-weight-bolder'>{{ $i->nip }}</td>
-                                <td class="bg-white" style="border-right: 1px solid #ccc; !important ">{{ $i->nama }}</td>
-                                <td>{{ Carbon\Carbon::now()->diffInYears($i->tgl_lahir) }} th</td>
-                                <td>{{ $i->agama }}</td>
+                                <td class='text-primary font-weight-bolder'>{{ $i->nip }}</td>
+                                <td>{{ $i->nama }}</td>
                                 <td><span class="font-weight-boldest">{{ $i->cabang->cabang_nama }}</span></td>
-                                <td>{{ $i->gender }}</td>
-                                <td>{{ $i->gol_darah }}</td>
                                 <td>{{ $i->phone }}</td>
                                 <td>{{ $i->username }}</td>
                                 <td>
                                     @if ($i->status == 'active')
-                                    &nbsp; <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
+                                        &nbsp; <span><i class="fas text-success fa-check-circle icon-sm"></i></span> Aktif
                                     @else
-                                    &nbsp; <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
+                                        &nbsp; <span><i class="fas text-warning fa-exclamation-circle icon-sm"></i></span> Non Aktif
                                     @endif
                                 </td>
-                                <td>{{ $i->tanggal_mulaiKerja }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -195,26 +168,16 @@
     </script>
     <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
-    <script src="https://cdn.datatables.net/rowgroup/1.2.0/js/dataTables.rowGroup.min.js"></script>
-
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
                 lengthMenu: [30, 60, 150, 300],
                 columnDefs: [
                     { searchable: false, targets: 0 },
-                    { orderable: false, searchable: false, targets: 10 },
-                    { orderable: false, searchable: false, targets: 11 },
-                ],
-                scrollY:        "500px",
-                scrollX:        true,
-                scrollCollapse: true,
-                fixedColumns: { left: 2, right: 0 },
-                order: [[0, 'asc']],
-                // rowGroup: {
-                //     dataSrc: 4
-                // }
+                    { orderable: false, searchable: false, targets: 5 },
+                    { orderable: false, searchable: false, targets: 6 },
+                  ],
+                  order: [[0, 'asc']]
             });
             $('#myTable').on('click', '.remove', function() {
                 var table = $('#myTable').DataTable();
