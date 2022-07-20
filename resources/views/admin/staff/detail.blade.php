@@ -239,9 +239,9 @@
                                                     <td><b>{{ $data->company }}</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Nomor Rekening</td>
+                                                    <td>Rekening Bank</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->no_rek }}</b></td>
+                                                    <td><b>{{ $data->bank_type }} - {{ $data->bank_account_name }} - {{ $data->no_rek }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>NPWP</td>

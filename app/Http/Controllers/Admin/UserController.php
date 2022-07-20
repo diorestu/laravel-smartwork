@@ -185,6 +185,7 @@ class UserController extends Controller
         $input                      = $request->all();
         $data                       = User::findOrFail($id);
         // data diri
+        $data->nik                  = $input['nik'];
         $data->nip                  = $input['nip'];
         $data->nama                 = $input['nama'];
         $data->tanggal_mulaiKerja   = $input['tanggal_mulaiKerja'];
@@ -201,22 +202,24 @@ class UserController extends Controller
                 $masa_kerja_last    = MasaKerja::where('id_admin', '=', $id_admin)->orderBy('masa_kerja', 'desc')->limit(1)->first();
                 $data->id_masaKerja = $masa_kerja_last->id; }
         }
-        $data->gender               = $input['gender'];
-        $data->phone                = $input['phone'];
-        $data->email                = $input['email'];
-        $data->tanggungan           = $input['tanggungan'];
-        $data->alamat               = $input['alamat'];
+        $data->gender            = $input['gender'];
+        $data->phone             = $input['phone'];
+        $data->email             = $input['email'];
+        $data->tanggungan        = $input['tanggungan'];
+        $data->alamat            = $input['alamat'];
         // akun
-        $data->username             = $input['username'];
-        $data->status               = $input['status'];
-        $data->id_divisi            = $input['id_divisi'];
-        $data->id_jabatan           = $input['id_jabatan'];
-        $data->id_cabang            = $input['id_cabang'];
-        $data->company              = $input['company'];
-        $data->no_rek               = $input['no_rek'];
-        $data->npwp               = $input['npwp'];
-        $data->id_sertifikasi       = $input['id_sertifikasi'];
-        $berhasil                   = $data->save();
+        $data->username          = $input['username'];
+        $data->status            = $input['status'];
+        $data->id_divisi         = $input['id_divisi'];
+        $data->id_jabatan        = $input['id_jabatan'];
+        $data->id_cabang         = $input['id_cabang'];
+        $data->company           = $input['company'];
+        $data->no_rek            = $input['no_rek'];
+        $data->npwp              = $input['npwp'];
+        $data->bank_type         = $input['bank_type'];
+        $data->bank_account_name = $input['bank_account_name'];
+        $data->id_sertifikasi    = $input['id_sertifikasi'];
+        $berhasil                = $data->save();
         if ($berhasil) {
             // asuransi
             $dataAsuransi                   = Asuransi::where('id_user', '=', $id)->first();
