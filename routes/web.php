@@ -217,7 +217,11 @@ Route::middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(functi
 });
 
 // USER CONTROLLER
+<<<<<<< HEAD
 Route::prefix('user')->middleware(['auth'])->group(function () {
+=======
+Route::prefix('app')->middleware(['auth'])->group(function () {
+>>>>>>> 0eedac94133b3d4b06da6184196a3000809eb5df
     // Home
     Route::get('/',                 [MobileController::class, 'index'])->name('user.home');
     // Profil
