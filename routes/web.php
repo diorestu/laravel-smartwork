@@ -58,7 +58,7 @@ Route::get('getCabang/{id}', function ($id) {
 });
 
 // ADMIN CONTROLLER
-Route::prefix('admin')->middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(function () {
+Route::middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(function () {
     // DASHBOARD
     Route::get('/',                   [DashboardController::class, 'index'])->name('admin.welcome');
     Route::get('/dashboard',          [DashboardController::class, 'dashboard'])->name('admin.home');
@@ -217,7 +217,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin', 'is_active', 'is_expired
 });
 
 // USER CONTROLLER
-Route::prefix('app')->middleware(['auth'])->group(function () {
+Route::prefix('user')->middleware(['auth'])->group(function () {
     // Home
     Route::get('/',                 [MobileController::class, 'index'])->name('user.home');
     // Profil

@@ -20,7 +20,7 @@ class isAdmin
         if (Auth::user()->is_admin === 1 ) {
             return $next($request);
         }else{
-            return redirect('/app');
+            return redirect('/user');
             // return redirect()->route('admin.verify')->with('error', "Maaf, Anda tidak memiliki akses ke Halaman Admin. Hubungi pihak IT untuk informasi lebih lanjut.");
         }
     }
