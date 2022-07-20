@@ -76,12 +76,8 @@
                                         </div>
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group mb-4">
-                                                <label for="nik" class="font-weight-bolder">Nomor Identitas (KTP/SIM) <span class="text-danger">*</span></label>
-                                                <input class='form-control' type="text" name="nik" id="nik" value="{{ $data->nik }}">
-                                            </div>
-                                            <div class="form-group mb-4">
                                                 <label for="nip" class="font-weight-bolder">Nomor Induk Pegawai <span class="text-danger">*</span></label>
-                                                <input class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
+                                                <input required class='form-control' type="text" name="nip" id="nip" value="{{ $data->nip }}">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <label for="tanggal_mulaiKerja">Tanggal Mulai Kerja <span class="text-danger">*</span></label>
@@ -140,7 +136,10 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
-
+                                            <div class="form-group mb-4">
+                                                <label for="username" class="font-weight-bolder">Username <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="username" id="" value="{{ $data->username }}">
+                                            </div>
                                             <div class="form-group mb-4">
                                                 <label for="divisi" class="font-weight-bolder">Divisi <span class="text-danger">*</span></label>
                                                 <select required id="divisi" class="form-select" name="id_divisi">
@@ -162,25 +161,15 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="bank_type" class="font-weight-bolder">Rekening Bank <span class="text-danger">*</span></label>
-                                                <select id="bank_type" class="form-select" name="bank_type">
-                                                    <option value="BCA" {{ $data->bank_type == 'BCA' ? 'selected' : '' }}>BCA</option>
-                                                    <option value="BRI" {{ $data->bank_type == 'BRI' ? 'selected' : '' }}>BRI</option>
-                                                    <option value="BNI" {{ $data->bank_type == 'BNI' ? 'selected' : '' }}>BNI</option>
-                                                    <option value="Mandiri" {{ $data->bank_type == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                                                    <option value="BTN" {{ $data->bank_type == 'BTN' ? 'selected' : '' }}>BTN</option>
-                                                    <option value="Permata" {{ $data->bank_type == 'Permata' ? 'selected' : '' }}>Permata</option>
-                                                    <option value="Danamon" {{ $data->bank_type == 'Danamon' ? 'selected' : '' }}>Danamon</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group mb-4">
-                                                <label for="bank_account_name" class="font-weight-bolder">Nama Akun Rekening Pegawai <span class="text-danger">*</span></label>
-                                                <input class='form-control' type="text" name="bank_account_name" id="bank_account_name" value="{{ $data->bank_account_name }}">
-                                            </div>
-                                            <div class="form-group mb-4">
                                                 <label for="no_rek" class="font-weight-bolder">Nomor Rekening Pegawai <span class="text-danger">*</span></label>
-                                                <input class='form-control' type="text" name="no_rek" id="no_rek" value="{{ $data->no_rek }}">
+                                                <input required class='form-control' type="text" name="no_rek" id="no_rek" value="{{ $data->no_rek }}">
                                             </div>
+                                            <div class="form-group mb-4">
+                                                <label for="npwp" class="font-weight-bolder">NPWP Pegawai <span class="text-danger">*</span></label>
+                                                <input required class='form-control' type="text" name="npwp" id="npwp" value="{{ $data->npwp }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
                                             <div class="form-group mb-4">
                                                 <label for="status" class="font-weight-bolder">Status Akun <span class="text-danger">*</span></label>
                                                 <select required id="status" class="form-select" name="status">
@@ -188,17 +177,6 @@
                                                     <option @if ($data->status == "not active") selected @endif value='not active'>Tidak Aktif</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group mb-4">
-                                                <label for="username" class="font-weight-bolder">Username <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="text" name="username" id="" value="{{ $data->username }}">
-                                            </div>
-                                            <div class="form-group mb-4">
-                                                <label for="npwp" class="font-weight-bolder">NPWP Pegawai <span class="text-danger">*</span></label>
-                                                <input required class='form-control' type="text" name="npwp" id="npwp" value="{{ $data->npwp }}">
-                                            </div>
-
                                             <div class="form-group mb-4">
                                                 <label for="jabatan" class="font-weight-bolder">Jabatan <span class="text-danger">*</span></label>
                                                 <select required id="jabatan" class="form-select" name="id_jabatan">

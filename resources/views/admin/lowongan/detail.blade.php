@@ -98,90 +98,57 @@
                                     <h5 class="card-title text-white mb-0">Data Diri Pegawai</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 col-xl-6">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 25%;">Nama</td>
-                                                            <td style="width: 5%;">:</td>
-                                                            <td><b>{{ $data->nama }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>NIK</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->tipe_id }} - {{ $data->nik }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tanggal Lahir</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->tempat_lahir }}, {{ $data->tgl_lahir }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Jenis Kelamin</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->gender }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Agama</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->agama }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Gol Darah</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->gol_darah }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Status Perkawinan</td>
-                                                            <td>:</td>
-                                                            <td><b>@if ($data->tanggungan != null){{ $data->status_kawin->status_kawin }}@endif</b></td>
-                                                        </tr>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 15%;">Nama</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td><b>{{ $data->nama }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>NIP</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->nip }}</b></td>
+                                                </tr>
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-xl-6">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>NIP</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->nip }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Mulai Kerja</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ tanggalIndo($data->tanggal_mulaiKerja) }}</b></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>Masa Kerja</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ masaKerja($data->tanggal_mulaiKerja) }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>No. HP</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->phone }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Email</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->email }}</b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Alamat</td>
-                                                            <td>:</td>
-                                                            <td><b>{{ $data->alamat }}</b></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                                <tr>
+                                                    <td>Mulai Kerja</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ tanggalIndo($data->tanggal_mulaiKerja) }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Masa Kerja</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ masaKerja($data->tanggal_mulaiKerja) }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jenis Kelamin</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->gender }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status Perkawinan</td>
+                                                    <td>:</td>
+                                                    <td><b>@if ($data->tanggungan != null){{ $data->status_kawin->status_kawin }}@endif</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No. HP</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->phone }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->email }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Alamat</td>
+                                                    <td>:</td>
+                                                    <td><b>{{ $data->alamat }}</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -239,9 +206,9 @@
                                                     <td><b>{{ $data->company }}</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Rekening Bank</td>
+                                                    <td>Nomor Rekening</td>
                                                     <td>:</td>
-                                                    <td><b>{{ $data->bank_type }} - {{ $data->bank_account_name }} - {{ $data->no_rek }}</b></td>
+                                                    <td><b>{{ $data->no_rek }}</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>NPWP</td>

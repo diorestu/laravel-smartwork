@@ -109,10 +109,7 @@
                                             Kantor</label>
                                         <input id="mode" name="is_radius" type="checkbox"
                                             class="form-check-input layout-mode-switch"
-                                            @isset($detail->is_radius)
-                                            checked
-                                            @endisset
-                                            >
+                                            @isset($detail->is_radius) checked @endisset>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Radius
@@ -120,32 +117,26 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <input type="number" max="1000" class="form-control"
-                                                    @isset($detail->is_radius)
-                                                    @else disabled
-                                                    @endisset id="horizontal-firstname-input"
-                                                    placeholder="1 s/d 1000 meter" name="radius_max"
-                                                    @isset($detail)
-                                                    value="{{ $detail->radius_max }}"
-
-                                                    @endisset
-                                                    >
+                                                    @isset($detail->is_radius) @else disabled @endisset
+                                                    id="horizontal-firstname-input" placeholder="1 s/d 1000 meter"
+                                                    name="radius_max"
+                                                    @isset($detail) value="{{ $detail->radius_max }}" @endisset>
                                                 <span class="input-group-text">meter</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-check form-switch form-switch-lg mb-3 py-1">
-                                        <label class="form-check-label" for="customSwitchsizemd">Melampirkan Swafoto Presensi</label>
-                                        <input id="mode" name="is_radius" type="checkbox"
-                                            class="form-check-input layout-mode-switch" @isset($detail->is_photo_enabled)
-                                            {{ $detail->is_photo_enabled ? 'checked' : '' }}
-                                            @endisset>
+                                        <label class="form-check-label" for="customSwitchsizemd">Lampirkan Foto
+                                            Presensi</label>
+                                        <input id="mode" name="is_photo_enabled" type="checkbox"
+                                            class="form-check-input layout-mode-switch"
+                                            @isset($detail->is_photo_enabled) {{ $detail->is_photo_enabled ? 'checked' : '' }} @endisset>
                                     </div>
                                     <div class="form-check form-switch form-switch-lg mb-3 py-1">
                                         <label class="form-check-label" for="customSwitchsizemd">Menggunakan Shift</label>
-                                        <input id="mode" name="is_radius" type="checkbox"
-                                            class="form-check-input layout-mode-switch" @isset($detail->is_using_shift)
-                                            {{ $detail->is_using_shift ? 'checked' : '' }}
-                                            @endisset>
+                                        <input id="mode" name="is_using_shift" type="checkbox"
+                                            class="form-check-input layout-mode-switch"
+                                            @isset($detail->is_using_shift) {{ $detail->is_using_shift ? 'checked' : '' }} @endisset>
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-9">
@@ -176,7 +167,8 @@
                         </div>
                     </div>
                     {{-- pengaturan payroll --}}
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title text-white mb-0">Pengaturan Payroll</h5>
@@ -190,17 +182,22 @@
                                         <select class="form-control" name="bank_type" id="bank_type"
                                             placeholder="Pilih salah satu">
                                             @isset($detail->bank_type)
-                                            <option value="Bank BCA" {{ $detail->bank_type == 'Bank BCA' ? 'selected' : ''}}>Bank BCA</option>
-                                            <option value="Mandiri" {{ $detail->bank_type == 'Mandiri' ? 'selected' : ''}}>Mandiri</option>
-                                            <option value="BNI" {{ $detail->bank_type == 'BNI' ? 'selected' : ''}}>BNI</option>
-                                            <option value="BRI" {{ $detail->bank_type == 'BRI' ? 'selected' : ''}}>BRI</option>
-                                            <option value="Permata" {{ $detail->bank_type == 'Permata' ? 'selected' : ''}}>Permata</option>
+                                                <option value="Bank BCA"
+                                                    {{ $detail->bank_type == 'Bank BCA' ? 'selected' : '' }}>Bank BCA</option>
+                                                <option value="Mandiri"
+                                                    {{ $detail->bank_type == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                                <option value="BNI" {{ $detail->bank_type == 'BNI' ? 'selected' : '' }}>
+                                                    BNI</option>
+                                                <option value="BRI" {{ $detail->bank_type == 'BRI' ? 'selected' : '' }}>
+                                                    BRI</option>
+                                                <option value="Permata"
+                                                    {{ $detail->bank_type == 'Permata' ? 'selected' : '' }}>Permata</option>
                                             @else
-                                            <option value="Bank BCA">Bank BCA</option>
-                                            <option value="Mandiri">Mandiri</option>
-                                            <option value="BNI">BNI</option>
-                                            <option value="BRI">BRI</option>
-                                            <option value="Permata">Permata</option>
+                                                <option value="Bank BCA">Bank BCA</option>
+                                                <option value="Mandiri">Mandiri</option>
+                                                <option value="BNI">BNI</option>
+                                                <option value="BRI">BRI</option>
+                                                <option value="Permata">Permata</option>
                                             @endisset
                                         </select>
                                     </div>
@@ -208,12 +205,9 @@
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Tanggal Tutup Buku</label>
                                         <input type="number" name="date_closed" id="date_closed" class="form-control"
-                                        @isset($detail)
-                                        value="{{ $detail->tgl_tutup }}"
+                                            @isset($detail) value="{{ $detail->tgl_tutup }}"
                                         @else
-                                        value=""
-                                        @endisset
-                                        >
+                                        value="" @endisset>
                                     </div>
                                     <div class="row justify-content-end mt-4">
                                         <div class="col-sm-12">
@@ -233,9 +227,8 @@
                             @php
                                 if (empty($detail->komponen_gaji)) {
                                     $komponen = [];
-                                }else{
+                                } else {
                                     $komponen = explode(',', $detail->komponen_gaji);
-
                                 }
                             @endphp
                             <div class="card-header">
@@ -247,19 +240,35 @@
                                     <input type="hidden" name="id_cabang" value="{{ $data->id }}">
                                     <div class="mb-3 py-0">
                                         <label class="col-form-label">Pilih Kompenen Gaji</label>
-                                        <select class="form-control" name="komponen[]"
-                                            id="komponen" placeholder="Pilih salah satu"
-                                            multiple>
+                                        <select class="form-control" name="komponen[]" id="komponen"
+                                            placeholder="Pilih salah satu" multiple>
 
-                                            <option value="Tunjangan Jabatan" {{ in_array('Tunjangan Jabatan', $komponen) ? 'selected' : '' }}>Tunjangan Jabatan</option>
-                                            <option value="Tunjangan Masa Kerja" {{ in_array('Tunjangan Masa Kerja', $komponen) ? 'selected' : '' }}>Tunjangan Masa Kerja</option>
-                                            <option value="Tunjangan Sertifikasi" {{ in_array('Tunjangan Sertifikasi', $komponen) ? 'selected' : '' }}>Tunjangan Sertifikasi</option>
-                                            <option value="Tunjangan Status Kawin" {{ in_array('Tunjangan Status Kawin', $komponen) ? 'selected' : '' }}>Tunjangan Status Kawin</option>
-                                            <option value="BPJS Kesehatan" {{ in_array('BPJS Kesehatan', $komponen) ? 'selected' : '' }}>BPJS Kesehatan</option>
-                                            <option value="BPJS Tenaga Kerja" {{ in_array('BPJS Tenaga Kerja', $komponen) ? 'selected' : '' }}>BPJS Tenaga Kerja</option>
-                                            <option value="Potongan Absen" {{ in_array('Potongan Absen', $komponen) ? 'selected' : '' }}>Potongan Absen</option>
-                                            <option value="Potongan Kasbon" {{ in_array('Potongan Kasbon', $komponen) ? 'selected' : '' }}>Potongan Kasbon</option>
-                                            <option value="PPH21" {{ in_array('PPH21', $komponen) ? 'selected' : '' }}>PPH21</option>
+                                            <option value="Tunjangan Jabatan"
+                                                {{ in_array('Tunjangan Jabatan', $komponen) ? 'selected' : '' }}>
+                                                Tunjangan Jabatan</option>
+                                            <option value="Tunjangan Masa Kerja"
+                                                {{ in_array('Tunjangan Masa Kerja', $komponen) ? 'selected' : '' }}>
+                                                Tunjangan Masa Kerja</option>
+                                            <option value="Tunjangan Sertifikasi"
+                                                {{ in_array('Tunjangan Sertifikasi', $komponen) ? 'selected' : '' }}>
+                                                Tunjangan Sertifikasi</option>
+                                            <option value="Tunjangan Status Kawin"
+                                                {{ in_array('Tunjangan Status Kawin', $komponen) ? 'selected' : '' }}>
+                                                Tunjangan Status Kawin</option>
+                                            <option value="BPJS Kesehatan"
+                                                {{ in_array('BPJS Kesehatan', $komponen) ? 'selected' : '' }}>BPJS
+                                                Kesehatan</option>
+                                            <option value="BPJS Tenaga Kerja"
+                                                {{ in_array('BPJS Tenaga Kerja', $komponen) ? 'selected' : '' }}>BPJS
+                                                Tenaga Kerja</option>
+                                            <option value="Potongan Absen"
+                                                {{ in_array('Potongan Absen', $komponen) ? 'selected' : '' }}>Potongan
+                                                Absen</option>
+                                            <option value="Potongan Kasbon"
+                                                {{ in_array('Potongan Kasbon', $komponen) ? 'selected' : '' }}>Potongan
+                                                Kasbon</option>
+                                            <option value="PPH21" {{ in_array('PPH21', $komponen) ? 'selected' : '' }}>
+                                                PPH21</option>
                                         </select>
                                     </div>
                                     <div class="row justify-content-end mt-4">
@@ -288,11 +297,14 @@
                                         <label class="col-form-label">Pilih Metode Perhitungan</label>
                                         <select id="pajak" class="form-select" name="m_pajak">
                                             @isset($detail->pph21)
-                                                <option value="GROSS" {{ $detail->pph21 == 'GROSS'? 'selected' : '' }}>GROSS</option>
-                                                <option value="GROSS UP" {{ $detail->pph21 == 'GROSS UP'? 'selected' : '' }}>GROSS UP</option>
-                                                <option value="NETT" {{ $detail->pph21 == 'NETT'? 'selected' : '' }}>NETT</option>
+                                                <option value="GROSS" {{ $detail->pph21 == 'GROSS' ? 'selected' : '' }}>
+                                                    GROSS</option>
+                                                <option value="GROSS UP"
+                                                    {{ $detail->pph21 == 'GROSS UP' ? 'selected' : '' }}>GROSS UP</option>
+                                                <option value="NETT" {{ $detail->pph21 == 'NETT' ? 'selected' : '' }}>NETT
+                                                </option>
                                             @else
-                                            <option value="GROSS">GROSS</option>
+                                                <option value="GROSS">GROSS</option>
                                                 <option value="GROSS UP">GROSS UP</option>
                                                 <option value="NETT">NETT</option>
                                             @endisset
@@ -313,6 +325,7 @@
             </div>
         </div>
     </div>
+    
 @endsection
 
 @push('addon-script')

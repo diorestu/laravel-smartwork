@@ -90,8 +90,11 @@
                 <button type="button" class="btn header-item"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ asset('backend-assets/images/users/avatar-1.jpg') }}"
-                        alt="Header Avatar">
+                    @if (auth()->user()->company_logo == "")
+                        <img class="rounded-circle header-profile-user" src="{{ asset('backend-assets/images/no-staff.jpg') }}" alt="Header Avatar">
+                    @else
+                        <img class="rounded-circle header-profile-user" src="{{ asset('storage/uploads/'.auth()->user()->company_logo) }}" alt="Header Avatar">
+                    @endif
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ Auth::user()->nama }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>

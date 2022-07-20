@@ -9,6 +9,7 @@ use App\Models\MasaKerja;
 use App\Models\UserTunjangan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\UserConfig;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -25,10 +26,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        $id = Auth::user()->id;
-        $data = User::select(['id', 'id_cabang', 'nip', 'nama', 'email', 'phone', 'username', 'status'])->where('id_admin', $id)->where('is_admin', 0)->get();
+        $id       = Auth::user()->id;
+        $data     = User::select(['id', 'id_cabang', 'nip', 'gender','nama', 'agama','email', 'phone', 'username', 'status', 'gol_darah', 'tgl_lahir', 'tanggal_mulaiKerja'])->where('id_admin', $id)->where('is_admin', 0)->get();
+        $count_user = User::where('id_admin', $id)->count();
+        $max_user = UserConfig::where('id_admin', $id)->first()->max_user;
+        if ($count_user > $max_user) {
+            $btn = true;
+        }else{
+            $btn = false;
+        }
+        // dd($count_user);
         return view('admin.staff.index',[
             'data' => $data,
+            'btn' => $btn
         ]);
     }
 
@@ -74,6 +84,7 @@ class UserController extends Controller
 	    $tambah_baru->email                 = "";
 	    $tambah_baru->phone                 = $data['phone'];
 	    $tambah_baru->no_rek                = 0;
+	    $tambah_baru->npwp                  = 0;
 	    $tambah_baru->company               = "";
 	    $tambah_baru->company_logo          = "";
 	    $tambah_baru->is_admin              = false;
@@ -174,6 +185,7 @@ class UserController extends Controller
         $input                      = $request->all();
         $data                       = User::findOrFail($id);
         // data diri
+        $data->nik                  = $input['nik'];
         $data->nip                  = $input['nip'];
         $data->nama                 = $input['nama'];
         $data->tanggal_mulaiKerja   = $input['tanggal_mulaiKerja'];
@@ -190,21 +202,24 @@ class UserController extends Controller
                 $masa_kerja_last    = MasaKerja::where('id_admin', '=', $id_admin)->orderBy('masa_kerja', 'desc')->limit(1)->first();
                 $data->id_masaKerja = $masa_kerja_last->id; }
         }
-        $data->gender               = $input['gender'];
-        $data->phone                = $input['phone'];
-        $data->email                = $input['email'];
-        $data->tanggungan           = $input['tanggungan'];
-        $data->alamat               = $input['alamat'];
+        $data->gender            = $input['gender'];
+        $data->phone             = $input['phone'];
+        $data->email             = $input['email'];
+        $data->tanggungan        = $input['tanggungan'];
+        $data->alamat            = $input['alamat'];
         // akun
-        $data->username             = $input['username'];
-        $data->status               = $input['status'];
-        $data->id_divisi            = $input['id_divisi'];
-        $data->id_jabatan           = $input['id_jabatan'];
-        $data->id_cabang            = $input['id_cabang'];
-        $data->company              = $input['company'];
-        $data->no_rek               = $input['no_rek'];
-        $data->id_sertifikasi       = $input['id_sertifikasi'];
-        $berhasil                   = $data->save();
+        $data->username          = $input['username'];
+        $data->status            = $input['status'];
+        $data->id_divisi         = $input['id_divisi'];
+        $data->id_jabatan        = $input['id_jabatan'];
+        $data->id_cabang         = $input['id_cabang'];
+        $data->company           = $input['company'];
+        $data->no_rek            = $input['no_rek'];
+        $data->npwp              = $input['npwp'];
+        $data->bank_type         = $input['bank_type'];
+        $data->bank_account_name = $input['bank_account_name'];
+        $data->id_sertifikasi    = $input['id_sertifikasi'];
+        $berhasil                = $data->save();
         if ($berhasil) {
             // asuransi
             $dataAsuransi                   = Asuransi::where('id_user', '=', $id)->first();

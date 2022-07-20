@@ -114,8 +114,8 @@
 @push('addon-script')
     <script src="{{ asset('backend-assets/libs/croppie/croppie.js') }}"></script>
     <script>
-        const element = document.querySelector('#tanggungan');
-        const choices = new Choices(element);
+        // const element = document.querySelector('#tanggungan');
+        // const choices = new Choices(element);
         $(document).ready(function() {
             image_crop = $('#image_demo').croppie({
             enableExif: true,

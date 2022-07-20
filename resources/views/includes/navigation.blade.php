@@ -150,8 +150,8 @@
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Lowongan Pekerjaan</a>
-                            <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lamaran Masuk</a>
+                            <a href="{{ route('lowongan.index') }}" class="dropdown-item"><i class="icon-menu" data-feather="user-check"></i> Lowongan Pekerjaan</a>
+                            <a href="{{ route('rekrutmen.index') }}" class="dropdown-item"><i class="icon-menu" data-feather="clock"></i> Lamaran Masuk</a>
                             <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Psikotes</a>
                             <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Wawancara</a>
                             <a href="#" class="dropdown-item"><i class="icon-menu" data-feather="briefcase"></i> Pembuatan Kontrak</a>
