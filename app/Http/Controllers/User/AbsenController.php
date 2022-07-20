@@ -34,7 +34,13 @@ class AbsenController extends Controller
         // dd($absenKemarin);
         $absen      = '';
         // Set Riwayat Absensi
-        $riwayat    = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
+        $tahun      = date("Y");
+        $bulan      = date("m");
+        $riwayat    = Absensi::where('id_user', $id)
+                                ->whereYear('jam_hadir', '=', $tahun)
+                                ->whereMonth('jam_hadir', '=', $bulan)
+                                ->orderBy('jam_hadir', 'DESC')->take(31)->get();
+
         // Set Utility
         $title      = null;
         $d          = false;
@@ -71,6 +77,7 @@ class AbsenController extends Controller
                 // do nothing
             }
         }
+        // dd($rwt_shift);
         return view('user.absen.index',[
             'absen'      => $absen,
             'riwayat'    => $riwayat,
@@ -91,7 +98,6 @@ class AbsenController extends Controller
     public function create()
     {
         $id         = Auth::user();
-        // dd($id->config->tipe_akun);
         $dataAbsen  = Absensi::where('id_user', $id->id)->whereDate('jam_hadir', date('Y-m-d'))->first();
         if (!$dataAbsen || $dataAbsen == null) {
             return view('user.absen.hadir', [
@@ -99,9 +105,8 @@ class AbsenController extends Controller
                 'status' => $id->config->tipe_akun,
             ]);
         }else{
-            return redirect()->route('absen.index')->withErrors('Anda Sudah Absen Hari Ini');
+            return redirect()->route('absen.index')->withErrors('Anda telah absen hari ini');
         }
-        // dd($dataAbsen);
     }
 
     /**
@@ -122,8 +127,12 @@ class AbsenController extends Controller
             'long_hadir' => $hadir['long_hadir'],
             'ket_hadir'  => '',
         ]);
-        // dd($response);
-        return redirect()->route('absen.index');
+        try {
+            $response->save();
+            return redirect()->route('absen.index')->with('success', 'Berhasil catat kehadiran');
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->route('absen.index')->with('error', 'Gagal catat kehadiran');
+        }
     }
 
     /**
@@ -152,14 +161,11 @@ class AbsenController extends Controller
         $tanggalAbsen   = Carbon::parse($data->jam_hadir);
         $now            = Carbon::now();
         $selisih        = $now->diffInHours($tanggalAbsen);
-        // dd($selisih);
         if ($selisih > 24) {
-            // dd('lupa');
             return view('user.absen.lupa-pulang', [
                 'data' => $data,
             ]);
         }else{
-            // dd('tidak');
             return view('user.absen.pulang', [
                 'data' => $data,
             ]);
@@ -181,11 +187,11 @@ class AbsenController extends Controller
         $tl              = 50; //Waktu Toleransi terhitung lembur
 
         // Hitung Total Jam
-        $mulai = Carbon::parse($data->jam_hadir);
-        $selesai = $absen['pulang'];
-        $jam_kerja = $selesai->diffInMinutes($mulai) / 60; //Selisih Menit
+        $mulai          = Carbon::parse($data->jam_hadir);
+        $selesai        = $absen['pulang'];
+        $jam_kerja      = $selesai->diffInMinutes($mulai) / 60; //Selisih Menit
         $overtime_kerja = $selesai->diffInMinutes($mulai) % 60; //Sisa menit dari jam kerja
-        $jk = round($jam_kerja / 60, 2); //Get Nilai Lembur dalam desimal 2 angka dibelakang koma
+        $jk             = round($jam_kerja / 60, 2); //Get Nilai Lembur dalam desimal 2 angka dibelakang koma
         // dd($overtime_kerja);
         if($jk > 8){
             $jl = $jk - 8 ;
@@ -202,20 +208,34 @@ class AbsenController extends Controller
         $data->jam_lembur  = $jl;
         try {
             $data->save();
-            return redirect()->route('absen.index')->with('success', 'Berhasil Absen Pulang');
+            return redirect()->route('absen.index')->with('success', 'Berhasil catat kepulangan');
         } catch (\Illuminate\Database\QueryException $th) {
-            return redirect()->route('absen.index')->with('error', $th->getMessage());
+            return redirect()->route('absen.index')->with('error', 'Gagal catat kepulangan');
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function viewRiwayat()
     {
-        //
+        $tahun      = date("Y");
+        $bulan      = date("m");
+        $id         = Auth::user()->id;
+        $data       = Absensi::where('id_user', $id)
+                    ->whereYear('jam_hadir', '=', $tahun)
+                    ->whereMonth('jam_hadir', '=', $bulan)
+                    ->orderBy('jam_hadir', 'DESC')->get();
+        return view('user.absen.view-all', ['riwayat' => $data]);
+    }
+    public function postRiwayat(Request $request)
+    {
+        $hari       = $request->hari;
+        $temp       = explode("-", $hari);
+        $tahun      = $temp[0];
+        $bulan      = $temp[1];
+        $id         = Auth::user()->id;
+        $data       = Absensi::where('id_user', $id)
+                    ->whereYear('jam_hadir', '=', $tahun)
+                    ->whereMonth('jam_hadir', '=', $bulan)
+                    ->orderBy('jam_hadir', 'DESC')->get();
+        return view('user.absen.data.view_data_riwayat', ['riwayat' => $data]);
     }
 }

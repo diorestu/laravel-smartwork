@@ -7,6 +7,20 @@
         .parent {
             position: relative;
         }
+        .child-float {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+        }
+        .child {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            width: 100%;
+        }
         /* Hide scrollbar for Chrome, Safari and Opera */
         .example::-webkit-scrollbar {
             display: none;
@@ -16,13 +30,19 @@
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
         }
+        .swal2-container .swal2-title {
+            font-size: 13px !important;
+        }
+        .swal2-popup {
+            max-width: 15em !important;
+        }
     </style>
     @include('includes.style')
     @stack('addon-style')
-    @livewireStyles
+    {{-- @livewireStyles
     @livewireScripts
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script> --}}
 </head>
 <body data-layout="horizontal" data-key="body" data-layout-mode="light" data-topbar="dark">
     <div id="layout-wrapper">

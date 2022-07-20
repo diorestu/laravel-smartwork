@@ -3,9 +3,7 @@
 @section('title')Absen Hadir | Smartwork @endsection
 
 @push('addon-style')
-    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 @endpush
 
 @section('content')
@@ -32,7 +30,6 @@
             </div>
         </div>
     </section>
-
     <main class="px-4 parent pb-0 mt-3">
         <div class="child card rounded-md mb-0 px-0">
             <div class="card-body p-2 pt-3">

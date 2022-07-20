@@ -178,7 +178,7 @@
         var myMap1 = {
             lat: {{ $data->lat_hadir }},
             lng: {{ $data->long_hadir }}
-        };as
+        };
         var myMap2 = {
             lat: @if($data->lat_pulang == "") {{ "0" }} @else {{ $data->lat_pulang }} @endif,
             lng: @if($data->lat_pulang == "") {{ "0" }} @else {{ $data->long_pulang }} @endif

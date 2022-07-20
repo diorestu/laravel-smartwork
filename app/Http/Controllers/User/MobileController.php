@@ -10,6 +10,8 @@ use App\Models\UserShift;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Shift;
+use App\Models\UserAsuransi;
+use App\Models\UserConfig;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +23,7 @@ class   MobileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //account pertama
     public function profile()
     {
         $i = Auth::user();
@@ -28,6 +31,7 @@ class   MobileController extends Controller
             'id' => $i,
         ]);
     }
+    // profil
     public function data_profile()
     {
         $i = Auth::user();
@@ -35,23 +39,12 @@ class   MobileController extends Controller
             'id' => $i,
         ]);
     }
-
-    public function changePassword()
+    public function editProfile()
     {
-        $i = Auth::user()->id;
-        $id = User::with('cabang')->find($i);
-        // dd($id);
-        return view('user.ubah-pass', [
-            'id' => $id,
+        $i = Auth::user();
+        return view('user.update_profile', [
+            'id' => $i,
         ]);
-    }
-    public function postchangePassword(Request $r)
-    {
-        $i              = $r->all();
-        $data           = User::find(Auth::user()->id);
-        $data->password = Hash::make($i['password']);
-        $data->save();
-        return redirect()->route('user.profil');
     }
     public function saveProfile(Request $r)
     {
@@ -66,6 +59,49 @@ class   MobileController extends Controller
         $data->save();
         return redirect()->route('user.profil');
     }
+
+
+    public function changePassword()
+    {
+        $i  = Auth::user()->id;
+        $id = User::with('cabang')->find($i);
+        return view('user.ubah-pass', [
+            'id' => $id,
+        ]);
+    }
+    public function postchangePassword(Request $r)
+    {
+        $i              = $r->all();
+        $data           = User::find(Auth::user()->id);
+        $data->password = Hash::make($i['password']);
+        try {
+            $data->save();
+            return redirect()->route('user.profil')->with('success', 'Berhasil update kata sandi');
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->route('user.profil')->with('error', 'Gagal update kata sandi');
+        }
+    }
+    public function infoPegawai()
+    {
+        $i          = Auth::user();
+        $id_admin   = Auth::user()->id_admin;
+        $company    = UserConfig::where('id_admin', $id_admin)->first();
+        return view('user.info_pegawai', [
+            'id' => $i,
+            'company' => $company,
+        ]);
+    }
+    public function infoPayroll()
+    {
+        $i          = Auth::user();
+        $id_user    = Auth::user()->id;
+        $asuransi   = UserAsuransi::where('id_user', $id_user)->first();
+        return view('user.info_payroll', [
+            'id' => $i,
+            'asuransi' => $asuransi,
+        ]);
+    }
+
     public function index()
     {
         $id        = Auth::user()->id;
@@ -112,12 +148,31 @@ class   MobileController extends Controller
             'gaji'  => $gaji,
         ]);
     }
+
     public function jadwal()
     {
-        $id = Auth::user()->id;
-        $jadwal = UserShift::where('id_user', $id)->whereMonth('tanggal_shift', date('m'))->orderBy('tanggal_shift', 'ASC')->get();
-        // dd($jadwal);
-        return view('user.jadwal', [
+        $id     = Auth::user()->id;
+        $jadwal = UserShift::where('id_user', $id)
+                ->whereYear('tanggal_shift', date('Y'))
+                ->whereMonth('tanggal_shift', date('m'))
+                ->orderBy('tanggal_shift', 'ASC')->get();
+        return view('user.jadwal.index', [
+            'id'      => Auth::user(),
+            'jadwal'  => $jadwal,
+        ]);
+    }
+    public function jadwal_riwayat(Request $request)
+    {
+        $hari       = $request->hari;
+        $temp       = explode("-", $hari);
+        $tahun      = $temp[0];
+        $bulan      = $temp[1];
+        $id         = Auth::user()->id;
+        $jadwal     = UserShift::where('id_user', $id)
+                    ->whereYear('tanggal_shift', $tahun)
+                    ->whereMonth('tanggal_shift', $bulan)
+                    ->orderBy('tanggal_shift', 'ASC')->get();
+        return view('user.jadwal.data.view_data_riwayat', [
             'id'      => Auth::user(),
             'jadwal'  => $jadwal,
         ]);

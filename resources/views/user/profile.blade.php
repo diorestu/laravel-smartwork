@@ -1,9 +1,11 @@
 @extends('layouts.mobile')
 
-@section('title')Edit Profil | Smartwork @endsection
+@section('title')Profil | Smartwork @endsection
 
-@push('addon-styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@push('addon-style')
+<style>
+    .no-border { border: none !important; }
+</style>
 @endpush
 
 @section('content')
@@ -14,7 +16,7 @@
                     <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
                 <div>
-                    <h2 class="fw-bold font-size-18 mb-0 text-white">Personal Info</h2>
+                    <h2 class="fw-bold font-size-18 mb-0 text-white">Informasi Personal</h2>
                 </div>
                 <div>
                     <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
@@ -25,45 +27,93 @@
             </div>
         </div>
     </section>
+    <div>
+        <div class="card m-2 rounded-sm">
+                <div class="card-body px-2 py-1">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Nama Lengkap</span>
+                            <br>
+                            <span class="text-dark">{{ $id->nama }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Email</span>
+                            <br>
+                            <span class="text-dark">@if ($id->email == "") {{ "-" }} @else {{ $id->email }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Jenis Kelamin</span>
+                            <br>
+                            <span class="text-dark">@if ($id->gender == "") {{ "-" }} @else {{ $id->gender }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Tempat Lahir</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Tanggal Lahir</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Nomor Telepon</span>
+                            <br>
+                            <span class="text-dark">@if ($id->phone == "") {{ "-" }} @else {{ $id->phone }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Status Perkawinan</span>
+                            <br>
+                            <span class="text-dark">@if ($id->tanggungan == 0) {{ "-" }} @else {{ $id->status_kawin->status_kawin }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Agama</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">No. ID</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Tipe ID</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Alamat KTP</span>
+                            <br>
+                            <span class="text-dark">@if ($id->alamat == "") {{ "-" }} @else {{ $id->alamat }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Alamat Tempat Tinggal</span>
+                            <br>
+                            <span class="text-dark">@if ($id->alamat == "") {{ "-" }} @else {{ $id->alamat }} @endif</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Kode Pos</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                        <li class="list-group-item px-2">
+                            <span class="fw-light font-size-12 text-muted">Golongan Darah</span>
+                            <br>
+                            <span class="text-dark">{{ "-" }}</span>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </div>
     <section>
         <div class="col=12">
-            <div class="card p-4">
-                <form action="{{ route('user.save') }}" method="post" id="myForm">
-                    @method('POST')
-                    @csrf
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="nama">Nama Lengkap</label>
-                        <input id="nama" class="form-control text-dark" type="text" name="nama" value="{{ $id->nama }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="email">Email</label>
-                        <input id="email" class="form-control" type="email" name="email" value="{{ $id->email }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="phone">Nomor HP</label>
-                        <input id="phone" class="form-control" type="text" name="phone" value="{{ $id->phone }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="no_rek">Nomor Rekening</label>
-                        <input id="no_rek" class="form-control" type="text" name="no_rek" value="{{ $id->no_rek }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="alamat">Alamat</label>
-                        <textarea class="form-control" id="alamat" name="alamat" id="" cols="10"
-                            rows="5">{{ $id->alamat }}</textarea>
-                    </div>
-                </form>
-            </div>
-
             <div class="fixed-bottom mb-0 card p-2">
-                <a class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
-                    <i class="label-icon fa fa-check-circle me-2"></i>Update Personal Info
+                <a href="{{ route('user.edit') }}" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
+                    <i class="label-icon fas fa-pencil-alt me-2"></i>Ubah Profil
                 </a>
             </div>
         </div>
     </section>
-    <br>
-    <br>
     <br>
     <br>
     <br>

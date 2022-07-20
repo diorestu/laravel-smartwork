@@ -8,6 +8,7 @@
 <style>
     .no-border td { border: none; }
     .damas { background-color: #f2f2f2; }
+    /* .alertify-notifier.ajs-right .ajs-message.ajs-visible { right: 260px !important; } */
 </style>
 @endpush
 
@@ -84,13 +85,14 @@
         <div>
             <div class="px-4 d-flex justify-content-between align-items-baseline">
                 <h5 class="mb-3 fw-regular">Log Kehadiran</h5>
-                <a href='' class="font-size-sm text-primary fw-medium">Lihat semua <i class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
+                <a href='{{ route('user.absen.riwayat') }}' class="font-size-sm text-primary fw-medium">Lihat semua <i class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
             </div>
             <div class="card mx-3 table-responsive">
                 <table class="table rounded px-0" id="myTable">
                     <thead class="bg-dark">
                         <tr class="d-none">
                             <th class="text-white">TANGGAL</th>
+                            <th class="text-white">SHIFT</th>
                             <th class="text-white">IN</th>
                             <th class="text-white">OUT</th>
                             <th></th>
@@ -114,8 +116,14 @@
                                     <td class='px-0 py-1'>:</td>
                                     <td class='px-0 py-1'></td>
                                 </tr>
+                                <tr class='no-border'>
+                                    <td class='px-0 py-1'>Aksi</td>
+                                    <td class='px-0 py-1'>:</td>
+                                    <td class='px-0 py-1'> &nbsp;&nbsp;<a href='{{ route('absen.show', $item->id) }}'>Detail</a></td>
+                                </tr>
                                 ">
                                 <td class="fw-bold text-uppercase">{{ TanggalBulan($item->jam_hadir) }}</td>
+                                <td class="font-size-12">Pagi</td>
                                 <td class="font-size-12">{{ TampilJamMenit($item->jam_hadir) }}</td>
                                 <td class="font-size-12">{{ $item->jam_pulang ? TampilJamMenit($item->jam_pulang) : 'Belum Absen' }}</td>
                                 <td class="dt-control text-end">
@@ -144,6 +152,8 @@
 <script src="{{ asset('backend-assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
+    //     alertify.warning("Warning message");
+    //     alertify.message("Normal message");
     function format ( data ) {
         return '<table class="table mb-0">'+data+'</table>';
     }
@@ -179,12 +189,16 @@
 </script>
 @if (Session::has('success'))
     <script type="text/javascript">
-        Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
+        alertify.set('notifier','position', 'top-right');
+        alertify.success('{{ \Session::get('success') }}');
+        // Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
     </script>
 @endif
 @if (Session::has('error'))
     <script type="text/javascript">
-        Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
+        alertify.set('notifier','position', 'top-right');
+        alertify.error('{{ \Session::get('error') }}');
+        // Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
     </script>
 @endif
 @endpush

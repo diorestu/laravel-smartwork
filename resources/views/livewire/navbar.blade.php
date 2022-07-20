@@ -15,15 +15,15 @@
                     </span>
                     <span class="{{ request()->is('user/absen*') ? 'text-danger' : 'text-muted' }}">Absen</span>
                 </a>
-                <a href='{{ route('kegiatan.index') }}' class="d-flex flex-column align-items-center">
-                    <span class='mb-1 {{ request()->is('user/kegiatan*') ? 'text-danger' : 'text-muted' }}'>
-                        <i class="bi bi-chat-square-text{{ request()->is('user/kegiatan*') ? '-fill' : '' }} font-size-22"></i>
+                <a href='{{ route('aktivitas.index') }}' class="d-flex flex-column align-items-center">
+                    <span class='mb-1 {{ request()->is('user/aktivitas*') ? 'text-danger' : 'text-muted' }}'>
+                        <i class="bi bi-chat-square-text{{ request()->is('user/aktivitas*') ? '-fill' : '' }} font-size-22"></i>
                     </span>
                     <span class="{{ request()->is('user/kegiatan*') ? 'text-danger' : 'text-muted' }}">Kegiatan</span>
                 </a>
                 <a href='{{ route('user.profil') }}' class="d-flex flex-column align-items-center">
-                    <span class='mb-1 {{ request()->is('user/profil*') ? 'text-danger' : 'text-muted' }}'>
-                        <i class="bi bi-person{{ request()->is('user/profil*') ? '-fill' : '' }} font-size-22"></i>
+                    <span class='mb-1 {{ request()->is('user/account*') ? 'text-danger' : 'text-muted' }}'>
+                        <i class="bi bi-person{{ request()->is('user/account*') ? '-fill' : '' }} font-size-22"></i>
                     </span>
                     <span class="{{ request()->is('user/profil*') ? 'text-danger' : 'text-muted' }}">Profil</span>
                 </a>

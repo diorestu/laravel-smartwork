@@ -7,7 +7,6 @@
 <link href="{{ asset('backend-assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
 </style>
 @endpush
 
@@ -29,27 +28,30 @@
     </section>
     <section class="p-2">
         <div class="card mb-2">
-            <div class="d-flex">
-                <div class="col-12 pr-0">
-                    <input class="form-control" type="month" value="{{ "2019-08" }}" id="example-month-input">
+            <form id="formAction" action="#" method="POST">
+                @method('POST')
+                @csrf
+                <div class="d-flex">
+                    <div class="col-12 pr-0">
+                        <input class="form-control" type="month" value="{{ date("Y-m") }}" name="hari" id="example-month-input">
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="card mb-2">
             <div class="d-flex">
                 <div class="col-12 pr-0">
-                    <a href="#" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
+                    <a href="{{ route('aktivitas.create') }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
                 </div>
             </div>
         </div>
         <div>
-            <div class="card table-responsive">
+            <div id="content" class="card table-responsive">
                 <table class="table rounded px-0" id="myTable">
                     <thead class="bg-dark">
                         <tr class="d-none">
                             <th class="text-white">TANGGAL</th>
-                            <th class="text-white">IN</th>
-                            <th class="text-white">OUT</th>
+                            <th class="text-white">AKTIVITAS</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -59,27 +61,31 @@
                                 <tr class='no-border'>
                                     <td class='px-0 py-1'>Judul</td>
                                     <td class='px-0 py-1'>:</td>
-                                    <td class='px-2 py-1'> {{ $item->title_kgt }}</td>
+                                    <td class='px-2 py-1'> {{ $item->judul_aktivitas }}</td>
                                 </tr>
                                 <tr class='no-border'>
                                     <td class='px-0 py-1'>Keterangan</td>
                                     <td class='px-0 py-1'>:</td>
-                                    <td class='px-2 py-1'> {{ $item->title_kgt }}</td>
+                                    <td class='px-2 py-1'> {{ $item->aktivitas }}</td>
                                 </tr>
                                 <tr class='no-border'>
                                     <td class='px-0 py-1'>Waktu Aktivitas</td>
                                     <td class='px-0 py-1'>:</td>
-                                    <td class='px-2 py-1'> {{ $item->title_kgt }}</td>
+                                    <td class='px-2 py-1'> {{ $item->jam_aktivitas }}</td>
                                 </tr>
                                 <tr class='no-border'>
                                     <td class='px-0 py-1'>Diinput pada</td>
                                     <td class='px-0 py-1'>:</td>
-                                    <td class='px-2 py-1'> {{ $item->title_kgt }}</td>
+                                    <td class='px-2 py-1'> {{ tanggalIndoWaktuLengkap($item->created_at) }}</td>
+                                </tr>
+                                <tr class='no-border'>
+                                    <td class='px-0 py-1'>Aksi</td>
+                                    <td class='px-0 py-1'>:</td>
+                                    <td class='px-2 py-1'> <a href='{{ route('aktivitas.show', $item->id) }}'>Detail</a></td>
                                 </tr>
                                 ">
-                                <td class="fw-bold text-uppercase">{{ TanggalBulan($item->tanggal_kgt) }}</td>
-                                <td class="font-size-12"></td>
-                                <td class="font-size-12"></td>
+                                <td class="fw-bold text-uppercase">{{ TanggalBulan($item->created_at) }}</td>
+                                <td class="fw-regular">{{ $item->judul_aktivitas }}</td>
                                 <td class="dt-control text-end">
                                     <a class="btn-dark btn-sm btn-circle" href="javascript:void(0);"><i class="fa fa-plus"></i></a>
                                 </td>
@@ -104,6 +110,38 @@
         return '<table class="table mb-0">'+data+'</table>';
     }
     $(document).ready(function() {
+        $('#example-month-input').change(function() {
+            var url = "{{ route('aktivitas.riwayat') }}";
+            var date = $(this).val();
+            if (date != "") {
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    url: url,
+                    data: {'hari': date},
+                    type: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Sedang Memproses Data...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            showDenyButton: false,
+                            showCancelButton: false
+                        });
+                        Swal.showLoading();
+                    },
+                    success: function(result) {
+                        $('#content').html(result);
+                    },
+                    complete: function(data) {
+                        Swal.close();
+                    }
+                });
+            } else {
+                Swal.fire('Maaf','Silahkan pilih tanggal absen terlebih dahulu.','error');
+            }
+        });
         $('#myTable').DataTable({
             "searching": false,
             "paging":   false,
@@ -127,7 +165,7 @@
             }
             else {
                 row.child(format(tr.data('child-value'))).show();
-                row.child().addClass('damas');
+                row.child().addClass('bg-light');
                 tr.addClass('shown');
             }
         });

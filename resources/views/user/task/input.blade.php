@@ -1,54 +1,54 @@
 @extends('layouts.mobile')
 
-@section('title')
-Tambah Kegiatan
-@endsection
+@section('title')Catat Aktivitas | Smartwork @endsection
 
 @section('content')
-    <section class="p-0 mb-3">
-        <div class="ps-5 pe-4 pb-3 pt-4" style="background-color: #B0141C !important;">
-            <div class="d-flex justify-content-between align-items-baseline">
+    <section class="p-0">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <a href="{{ route('kegiatan.index') }}" class="text-white"><i class="fa fa-chevron-left"></i></a>
+                    <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
                 </div>
-                <div class="">
-                    <h2 class="fw-bold font-size-18 text-white">Catat Aktivitas</h2>
+                <div>
+                    <h2 class="fw-bold font-size-18 mb-0 text-white">Input Aktivitas</h2>
                 </div>
-                <div class='ms-4'>
+                <div>
+                    <button type="button" class="btn header-item mx-0 px-0" id="mode-setting-btn">
+                        <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
+                        <i data-feather="sun" class="icon-lg layout-mode-light"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="px-4">
-        <form action="{{ route('kegiatan.store') }}" method="post" id="myForm">
-            @method('POST')
-            @csrf
-            <div class="mb-3">
-                <label for="title_kgt">Kategori Kegiatan<span class="text-danger fw-light font-size-sm">*</span></label>
-                {{-- <input id="my-input" class="form-control" type="text" name="title_kgt" required> --}}
-                <select name="title_kgt" id="title_kgt" class="form-select">
-                    @foreach ($data as $i)
-                        <option value="{{ $i->id }}">{{ $i->kpi_master }}</option>
-                    @endforeach
-                </select>
+    <section>
+        <div class="col=12">
+            <div class="card p-4">
+                <form action="{{ route('aktivitas.store') }}" method="post" id="myForm">
+                    @method('POST')
+                    @csrf
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="judul">Judul Aktivitas</label>
+                        <input id="judul" class="form-control text-dark" type="text" name="judul_aktivitas" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="keterangan">Keterangan</label>
+                        <textarea id="keterangan" class="form-control text-dark" name="aktivitas"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="waktu">Waktu Aktivitas</label>
+                        <input id="waktu" class="form-control text-dark" type="time" name="jam_aktivitas" value="">
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="my-input font-weight-bolder">Waktu Kegiatan<span class="text-danger fw-light font-size-sm">* </span></label>
-                <input id="my-input" class="form-control" type="time" name="waktu_kgt" required>
-            </div>
-            <div class="mb-3">
-                <label for="my-input font-weight-bolder">Deskripsi Kegiatan <span class="text-danger fw-light font-size-sm">*</span></label>
-                <textarea class="form-control" name="desc_kgt" id="" cols="10" rows="5" required></textarea>
-            </div>
-            {{-- <div class="mb-3
-            pb-0 rounded-sm px-3 pt-3 bg-white" style="border-style: dashed; border-width: 1px; border-color: green">
-                <input id="avatar" type="file" name="avatar" class="filepond" />
-            </div> --}}
-            <button type="submit" class="btn w-100 btn-primary rounded text-white py-3">Catat Aktivitas</button>
-        </form>
 
-        <br>
-    </div>
+            <div class="fixed-bottom mb-0 card p-2">
+                <a class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
+                    <i class="label-icon fa fa-check-circle me-2"></i>Catat Aktivitas
+                </a>
+            </div>
+        </div>
+    </section>
 @endsection
 

@@ -32,6 +32,7 @@ use App\Http\Controllers\SertifikasiController;
 use App\Http\Controllers\MasaKerjaController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\StatusKawinController;
+use App\Http\Controllers\User\PengumumanController as UserPengumumanController;
 use App\Http\Controllers\User\UserLemburController;
 
 /*
@@ -210,25 +211,38 @@ use App\Http\Controllers\User\UserLemburController;
 
     // USER CONTROLLER
     Route::prefix('user')->middleware(['auth', 'is_user'])->group(function () {
-        // Halaman Home
-        Route::get('/',             [MobileController::class, 'index'])->name('user.home');
-        // Halaman Profil
-        Route::get('/profil',       [MobileController::class, 'profile'])->name('user.profil');
-        Route::post('/profile',     [MobileController::class, 'saveProfile'])->name('user.save');
-        Route::get('/user-data',    [MobileController::class, 'data_profile'])->name('user.data');
-        Route::get('/account',      [MobileController::class, 'changePassword'])->name('user.pass');
-        Route::post('/account',     [MobileController::class, 'postchangePassword'])->name('user.pass.save');
-        // Halaman Absen
-        Route::resource('absen',    AbsenController::class);
-        Route::get('/set-shift',    [MobileController::class, 'getShift'])->name('user.get.shift');
-        Route::post('/set-shift',   [MobileController::class, 'postShift'])->name('user.post.shift');
-
-        // Halaman Kegiatan
-        Route::resource('kegiatan', AktivitasController::class);
-        // Halaman Slip Gaji
-        Route::get('/slip-gaji',    [MobileController::class, 'gaji'])->name('user.gaji');
-        // Halaman Slip Gaji
-        Route::get('/jadwal',       [MobileController::class, 'jadwal'])->name('user.jadwal');
+        // Home
+        Route::get('/',                 [MobileController::class, 'index'])->name('user.home');
+        // Profil
+        Route::get('/account',          [MobileController::class, 'profile'])->name('user.profil');
+        // info account
+        Route::get('/profile',          [MobileController::class, 'data_profile'])->name('user.data');
+        Route::get('/update-profile',   [MobileController::class, 'editProfile'])->name('user.edit');
+        Route::post('/update-profile',  [MobileController::class, 'saveProfile'])->name('user.save');
+        Route::get('/info-pegawai',     [MobileController::class, 'infoPegawai'])->name('user.infoPegawai');
+        Route::get('/info-payroll',     [MobileController::class, 'infoPayroll'])->name('user.infoPayroll');
+        Route::get('/change-password',  [MobileController::class, 'changePassword'])->name('user.pass');
+        Route::post('/change-password', [MobileController::class, 'postchangePassword'])->name('user.pass.save');
+        Route::get('/bantuan',          [MobileController::class, 'infoPayroll'])->name('user.bantuan');
+        Route::get('/faq',              [MobileController::class, 'infoPayroll'])->name('user.faq');
+        Route::get('/hubungi-admin',    [MobileController::class, 'infoPayroll'])->name('user.hubungiAdmin');
+        // Absen
+        Route::get('/set-shift',        [MobileController::class, 'getShift'])->name('user.get.shift');
+        Route::post('/set-shift',       [MobileController::class, 'postShift'])->name('user.post.shift');
+        Route::get('/show-log',         [AbsenController::class, 'viewRiwayat'])->name('user.absen.riwayat');
+        Route::post('/show-log',        [AbsenController::class, 'postRiwayat'])->name('user.absen.viewRiwayat');
+        Route::resource('absen',        AbsenController::class);
+        // Kegiatan
+        Route::post('/aktivitas/riwayat', [AktivitasController::class, 'riwayat'])->name("aktivitas.riwayat");
+        Route::resource('aktivitas',    AktivitasController::class);
+        // Slip Gaji
+        Route::get('/slip-gaji',        [MobileController::class, 'gaji'])->name('user.gaji');
+        // Jadwal
+        Route::get('/jadwal',           [MobileController::class, 'jadwal'])->name('user.jadwal');
+        Route::post('/jadwal/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("jadwal.riwayat");
+        // Pengumuman
+        Route::post('/pengumuman/riwayat', [UserPengumumanController::class, 'riwayat'])->name("pengumuman.riwayat");
+        Route::resource('pengumuman',    UserPengumumanController::class);
         // Upload Foto
         Route::post('upload-kegiatan',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
         Route::post('upload-hadir',     [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');

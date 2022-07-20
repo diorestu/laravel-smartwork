@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aktivitas;
@@ -42,11 +41,29 @@ class AktivitasController extends Controller
         return true;
     }
 
+    public function riwayat(Request $request)
+    {
+        $hari       = $request->hari;
+        $temp       = explode("-", $hari);
+        $tahun      = $temp[0];
+        $bulan      = $temp[1];
+        $id         = Auth::user()->id;
+        $data       = Aktivitas::where('id_user', $id)
+                    ->whereYear('created_at', '=', $tahun)
+                    ->whereMonth('created_at', '=', $bulan)
+                    ->orderBy('created_at', 'DESC')->get();
+        return view('user.task.data.view_data_riwayat', ['data' => $data]);
+    }
+
     public function index()
     {
-        $sekarang   = date("Y-m-d");
-        $id         = Auth::user()->id;
-        $data       = Kegiatan::where('id_user', $id)->orderBy('tanggal_kgt', 'DESC')->take(5)->get();
+        $tahun_sekarang = date("Y");
+        $bulan_sekarang = date("m");
+        $id             = Auth::user()->id;
+        $data           = Aktivitas::where('id_user', $id)
+                        ->whereYear('created_at', '=', $tahun_sekarang)
+                        ->whereMonth('created_at', '=', $bulan_sekarang)
+                        ->orderBy('created_at', 'DESC')->get();
         return view('user.task.index', ['data' => $data]);
     }
 
@@ -72,16 +89,14 @@ class AktivitasController extends Controller
      */
     public function store(Request $request)
     {
-        $id = Auth::user()->id;
-        $input = $request->all();
-        $input['id_user']= $id;
-        $input['tanggal_kgt'] =  date('Y-m-d');
-        $input['jam_kgt'] = date('H:i:s');
+        $id                     = Auth::user()->id;
+        $input                  = $request->all();
+        $input['id_user']       = $id;
         try {
-            $res = Kegiatan::create($input);
-            return redirect()->route('kegiatan.show', $res->id);
+            $res = Aktivitas::create($input);
+            return redirect()->route('aktivitas.show', $res->id)->with('success', 'Berhasil catat aktivitas');
         } catch (\Throwable $th) {
-            return redirect()->route('kegiatan.index')->withErrors('Gagal Mencatat!');
+            return redirect()->route('aktivitas.index')->with('error', 'Gagal catat aktivitas');
         }
     }
 
@@ -93,42 +108,7 @@ class AktivitasController extends Controller
      */
     public function show($id)
     {
-        $data = Kegiatan::find($id);
-        // dd($data);
+        $data = Aktivitas::find($id);
         return view('user.task.detail', ['data' => $data ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

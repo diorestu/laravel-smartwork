@@ -20,6 +20,8 @@
 <script src="{{ asset('backend-assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('backend-assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 
+<script src="{{ asset('backend-assets/libs/alertifyjs/build/alertify.min.js') }}"></script>
+
 <script src="{{ asset('backend-assets/js/app.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
