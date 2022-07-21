@@ -18,18 +18,10 @@ class CutiController extends Controller
      */
     public function index()
     {
-        $id= Auth::user()->id;
-        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
-            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-        })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
-            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-        })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis', 'LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $data = Cuti::where('id_user', $id)->latest()->take(6)->get();
+        $id     = Auth::user()->id;
+        $data   = Cuti::where('id_user', $id)->latest()->take(6)->get();
         return view('user.cuti.index', [
             'data' => $data,
-            'cuti' => $cuti,
-            'sakit' => $sakit
         ]);
     }
 
@@ -81,7 +73,7 @@ class CutiController extends Controller
      */
     public function show($id)
     {
-        $data = Cuti::where('id_cuti', $id)->first();
+        $data   = Cuti::where('id_cuti', $id)->first();
         return view('user.cuti.detail', [
             'data' => $data
         ]);

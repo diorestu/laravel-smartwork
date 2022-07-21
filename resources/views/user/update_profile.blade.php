@@ -27,7 +27,7 @@
             </div>
         </div>
     </section>
-    <div>
+    <section>
         <div class="card m-2 rounded-sm">
             <form action="{{ route('user.save') }}" method="post" id="myForm">
                 @method('POST')
@@ -60,7 +60,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </section>
     <section>
         <div class="col=12">
             <div class="fixed-bottom mb-0 card p-2">

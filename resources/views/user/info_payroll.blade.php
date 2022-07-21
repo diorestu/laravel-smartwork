@@ -29,34 +29,34 @@
             <div class="card-body px-2 py-1">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item px-2">
-                        <span class="text-muted">NPWP</span>
+                        <span class="fw-light font-size-12 text-muted">NPWP</span>
                         <br>
                         <span>@if ($id->npwp == null) {{ "-" }} @else {{ $id->npwp }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">BPJS Ketenagakerjaan</span>
+                        <span class="fw-light font-size-12 text-muted">BPJS Ketenagakerjaan</span>
                         <br>
                         <span>@if ($asuransi->nomor_naker == null) {{ "-" }} @else {{ $asuransi->nomor_naker }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">BPJS Kesehatan</span>
+                        <span class="fw-light font-size-12 text-muted">BPJS Kesehatan</span>
                         <br>
                         <span>@if ($asuransi->nomor_nakes == null) {{ "-" }} @else {{ $asuransi->nomor_nakes }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Bank</span>
+                        <span class="fw-light font-size-12 text-muted">Bank</span>
                         <br>
-                        <span>@if ($id->npwp == null) {{ "-" }} @else {{ $id->npwp }} @endif</span>
+                        <span>@if ($id->bank_type == null) {{ "-" }} @else {{ $id->bank_type }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Nomor Rekening</span>
+                        <span class="fw-light font-size-12 text-muted">Nomor Rekening</span>
                         <br>
                         <span>@if ($id->no_rek == null) {{ "-" }} @else {{ $id->no_rek }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Nama Akun</span>
+                        <span class="fw-light font-size-12 text-muted">Nama Akun</span>
                         <br>
-                        <span>@if ($id->no_rek == null) {{ "-" }} @else {{ $id->no_rek }} @endif</span>
+                        <span>@if ($id->bank_account_name == null) {{ "-" }} @else {{ $id->bank_account_name }} @endif</span>
                     </li>
                 </ul>
             </div>

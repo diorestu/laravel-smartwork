@@ -141,6 +141,10 @@ function tanggalIndo3($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('ll');
 }
+function tglIndo4($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('LL');
+}
 function TampilJamMenit($date)
 {
     return Carbon::parse($date)->locale('id')->isoFormat('HH:mm');
