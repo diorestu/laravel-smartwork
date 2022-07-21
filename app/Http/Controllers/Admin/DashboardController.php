@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Cuti;
 use App\Models\User;
 use App\Models\Cabang;
 use App\Charts\ContohChart;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Charts\UserCountChart;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Lembur;
+use App\Models\Pengumuman;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
@@ -36,23 +39,32 @@ class DashboardController extends Controller
             return view('admin.welcome');
         }
     }
-    public function dashboard(UserCountChart $chart) {
+    public function dashboard() {
         $id     = Auth::user()->id;
-        $cabang = Cabang::pluck('cabang_nama')->toArray();
-        $user   = User::select(DB::raw('count(id) as total'))->groupBy('id_cabang')->where('id_admin', $id)->pluck('total')->toArray();
-        // $id = Auth::user()->id;
-        // $user_c = User::where('id_admin',$id)->count();
-        // $cabang_c = Cabang::where('id_admin',$id)->count();
-        // return view('admin.dashboard',[
-        //     'user' => $user_c,
-        //     'cabang' => $cabang_c,
-        //     'chart' => $chart->build(),
-        // ]);
-        // dd($user);
+        $cabang = Cabang::where('id_admin', $id)->count();
+        $user   = User::where('id_admin', $id)->count();
+        $cuti = Cuti::with(['user'])
+                    ->whereHas('user', function ($q) use ($id){
+                    $q->where('id_admin', $id);
+                    })->where('cuti_status', '!=', 'DITERIMA')
+                    ->count();
+        $lembur = Lembur::with(['user'])
+                    ->whereHas('user', function ($q) use ($id){
+                    $q->where('id_admin', $id);
+                    })->where('lembur_status', '!=', 'DITERIMA')
+                    ->count();
+        $notif = Pengumuman::with(['divisi'])
+                    ->whereHas('divisi', function ($q) use ($id){
+                    $q->where('id_admin', $id);
+                    })->get();
+        // dd($notif);
+
         return view('admin.dashboard', [
             'user'   => $user,
             'cabang' => $cabang,
-            'chart'  => $chart->build()
+            'cuti'   => $cuti,
+            'lembur' => $lembur,
+            'notif'  => $notif,
         ]);
     }
     public function user() {

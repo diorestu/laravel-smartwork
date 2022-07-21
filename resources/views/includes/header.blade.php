@@ -27,23 +27,23 @@
                 <i class="fa fa-fw fa-bars"></i>
             </button>
             <!-- App Search-->
-            {{-- <form class="app-search d-none d-lg-block">
+            <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <button class="btn btn-primary" type="button"><i
-                            class="bx bx-search-alt align-middle"></i></button>
+                    <input type="text" class="form-control" placeholder="Cari">
+                    <button class="btn btn-dark" type="button"><i
+                            class="fa fa-search align-middle"></i></button>
                 </div>
-            </form> --}}
+            </form>
         </div>
 
         <div class="d-flex">
-            <div class="dropdown d-none d-sm-inline-block">
+            <div class="d-none d-sm-inline-block mx-1">
                 <button type="button" class="btn header-item" id="mode-setting-btn">
                     <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                     <i data-feather="sun" class="icon-lg layout-mode-light"></i>
                 </button>
             </div>
-            <div class="dropdown d-inline-block mx-2">
+            <div class="dropdown d-inline-block mx-1">
                 <button type="button" class="btn header-item noti-icon position-relative"
                     id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
