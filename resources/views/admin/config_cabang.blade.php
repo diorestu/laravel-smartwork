@@ -138,6 +138,18 @@
                                             class="form-check-input layout-mode-switch"
                                             @isset($detail->is_using_shift) {{ $detail->is_using_shift ? 'checked' : '' }} @endisset>
                                     </div>
+                                    <div class="row mb-4">
+                                        <label for="jatah_cuti" class="col-sm-3 col-form-label">Jatah Cuti Tahunan</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control"
+                                                    id="jatah_cuti"
+                                                    name="jatah_cuti"
+                                                    @isset($detail) value="{{ $detail->jatah_cuti }}" @endisset>
+                                                <span class="input-group-text">hari</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-9">
                                             <div><button type="submit" class="btn btn-warning text-black w-lg"><i
@@ -325,7 +337,7 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
 
 @push('addon-script')

@@ -58,7 +58,7 @@ Route::get('getCabang/{id}', function ($id) {
 });
 
 // ADMIN CONTROLLER
-Route::prefix('')->middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(function () {
+Route::middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(function () {
     // DASHBOARD
     Route::get('/',                   [DashboardController::class, 'index'])->name('admin.welcome');
     Route::get('/dashboard',          [DashboardController::class, 'dashboard'])->name('admin.home');

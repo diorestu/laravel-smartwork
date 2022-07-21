@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\CutiCabang;
-use App\Exports\CutiPegawai;
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\User;
+use App\Exports\CutiCabang;
+use App\Exports\CutiPegawai;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use DateTime;
 
 class ViewCutiController extends Controller
 {
@@ -27,7 +28,9 @@ class ViewCutiController extends Controller
     public function accept($id){
         $result = Cuti::where('id_cuti', $id)->first();
         // dd($result);
-        $result->cuti_status = 'DITERIMA';
+        $result->cuti_status   = 'DITERIMA';
+        $result->approved_date = Carbon::now()->format('Y/m/d');
+        $result->approved_by   = auth()->user()->id;
         $result->save();
         try {
             return redirect()->back();
