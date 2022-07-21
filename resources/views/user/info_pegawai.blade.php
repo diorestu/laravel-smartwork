@@ -29,37 +29,37 @@
             <div class="card-body px-2 py-1">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item px-2">
-                        <span class="text-muted">ID Pegawai</span>
+                        <span class="fw-light font-size-12 text-muted">ID Pegawai</span>
                         <br>
                         <span>{{ $id->nip }}</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Nama Perusahaan</span>
+                        <span class="fw-light font-size-12 text-muted">Nama Perusahaan</span>
                         <br>
                         <span>{{ $company->company_name }}</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Nama Cabang</span>
+                        <span class="fw-light font-size-12 text-muted">Nama Cabang</span>
                         <br>
                         <span>{{ $id->cabang->cabang_nama }}</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Divisi</span>
+                        <span class="fw-light font-size-12 text-muted">Divisi</span>
                         <br>
                         <span>@if ($id->id_divisi != null) {{ $id->divisi->div_title }} @else {{ "-" }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Jabatan</span>
+                        <span class="fw-light font-size-12 text-muted">Jabatan</span>
                         <br>
                         <span>@if ($id->id_jabatan != null) {{ $id->jabatan->jabatan_title }} @else {{ "-" }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Tanggal Mulai Kerja</span>
+                        <span class="fw-light font-size-12 text-muted">Tanggal Mulai Kerja</span>
                         <br>
                         <span>@if ($id->tanggal_mulaiKerja != "0000-00-00") {{ tanggalIndo($id->tanggal_mulaiKerja) }} @else {{ "-" }} @endif</span>
                     </li>
                     <li class="list-group-item px-2">
-                        <span class="text-muted">Masa Kerja</span>
+                        <span class="fw-light font-size-12 text-muted">Masa Kerja</span>
                         <br>
                         <span>@if ($id->tanggal_mulaiKerja != "0000-00-00") {{ masaKerja($id->tanggal_mulaiKerja) }} @else {{ "-" }} @endif</span>
                     </li>

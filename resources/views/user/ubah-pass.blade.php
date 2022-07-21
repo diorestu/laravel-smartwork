@@ -2,6 +2,12 @@
 
 @section('title')Ubah Kata Sandi | Smartwork @endsection
 
+@push('addon-style')
+<style>
+    .no-border { border: none !important; }
+</style>
+@endpush
+
 @section('content')
     <section class="p-0">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
@@ -22,34 +28,34 @@
         </div>
     </section>
     <section>
-        <form action="{{ route('user.pass.save') }}" method="post" id="myForm">
-            <div class="col=12">
-                <div class="card p-4">
-                    @method('POST')
-                    @csrf
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="oldpassword"><span class="text-danger">*</span> Kata Sandi Lama</label>
-                        <input id="oldpassword" required class="form-control text-dark" type="password" name="oldpassword" placeholder="masukan kata sandi lama Anda">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="password"><span class="text-danger">*</span> Kata Sandi Baru</label>
-                        <input id="password" required class="form-control text-dark" type="password" name="password" placeholder="ketik kata sandi baru Anda">
-                    </div>
-                    <div class="mb-3">
-                        <label class="font-size-12 mb-1 fw-light" style="color: #888;" for="password-confirm"><span class="text-danger">*</span> Ulangi Kata Sandi Baru</label>
-                        <input id="password-confirm" required class="form-control text-dark" type="password" name="password_confirmation" placeholder="ketik ulang kata sandi baru Anda" autocomplete="new-password">
-                    </div>
-                    <div class="mb-3">
-                        <p class="text-danger mb-0">* merupakan field yang harus diisi</p>
-                    </div>
+        <div class="card m-2 rounded-sm">
+            <form action="{{ route('user.pass.save') }}" method="post" id="myForm">
+                @method('POST')
+                @csrf
+                <div class="card-body px-2 py-1">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-2 no-border">
+                            <span class="fw-light font-size-12 text-muted"><span class="text-danger">*</span> Kata Sandi Lama</span>
+                            <input id="oldpassword" required class="form-control text-dark mt-1" type="password" name="oldpassword" placeholder="masukan kata sandi lama Anda">
+                        </li>
+                        <li class="list-group-item px-2 no-border">
+                            <span class="fw-light font-size-12 text-muted"><span class="text-danger">*</span> Kata Sandi Baru</span>
+                            <input id="password" required class="form-control text-dark mt-1" type="password" name="password" placeholder="ketik kata sandi baru Anda">
+                        </li>
+                        <li class="list-group-item px-2 no-border">
+                            <span class="fw-light font-size-12 text-muted"><span class="text-danger">*</span> Ulangi Kata Sandi Baru</span>
+                            <input id="password-confirm" required class="form-control text-dark mt-1" type="password" name="password_confirmation" placeholder="ketik ulang kata sandi baru Anda" autocomplete="new-password">
+                        </li>
+                    </ul>
+                    <p class="px-2 mt-2 text-danger">* merupakan field yang harus diisi</p>
                 </div>
                 <div class="fixed-bottom mb-0 card p-2">
                     <button type="submit" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
                         <i class="label-icon fa fa-check-circle me-2"></i>Update Kata Sandi
                     </button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </section>
 @endsection
 

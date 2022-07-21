@@ -10,7 +10,7 @@
 @endpush
 
 @section('content')
-    <section class="p-0">
+    <section class="p-0 mb-2">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -28,98 +28,120 @@
             </div>
         </div>
     </section>
-    <section class="p-2">
-        <div class="card bg-light text-white text-center p-2 mb-2">
-            <blockquote class="card-blockquote font-size-14 mb-0">
-                <p class="mb-0 text-muted">Cuti Tahunan</p>
-                <h2>11 Hari</h2>
-                <span class="text-dark font-size-12 mb-0">
-                    <i class="fa fa-calendar-alt"></i>&nbsp; 2 hari terpakai
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fa fa-calendar-alt"></i>&nbsp; 10 hari sisa
-                </span>
-            </blockquote>
-        </div>
-
-        <div class="card mb-2">
-            <div class="d-flex">
-                <div class="col-12 pr-0">
-                    <input class="form-control" type="month" value="{{ "2019-08" }}" id="example-month-input">
-                </div>
+    <section class="d-flex px-2 mb-2">
+        <div class="col-4">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
+                <blockquote class="card-blockquote font-size-12 mb-0">
+                    <p class="fw-regular mb-1 text-primary">Jatah Cuti Tahunan</p>
+                    <h2 class="font-size-23 fw-bold text-primary">11 Hari</h2>
+                </blockquote>
             </div>
         </div>
-        <div class="card mb-2">
-            <div class="d-flex">
-                <div class="col-12 pr-0">
-                    <a href="{{ route("cuti.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Request Cuti</a>
-                </div>
+        <div class="col-4">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
+                <blockquote class="card-blockquote font-size-12 mb-0">
+                    <p class="fw-regular mb-1 text-danger">Telah Digunakan</p>
+                    <h2 class="font-size-23 fw-bold text-danger">2 Hari</h2>
+                </blockquote>
             </div>
         </div>
-
-
-        <div class="ms-4" data-aos="fade-right" data-aos-duration="700">
-            <div class="d-flex flex-row flex-nowrap overflow-auto example">
-                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                    <div class="card-body py-2 px-3">
-                        <h3 class="fw-bold font-size-16 mt-1">Cuti</h3>
-                        <span class="font-size-22 fw-black">{{ $cuti }}</span>
-                    </div>
-                </div>
-                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                    <div class="card-body py-2 px-3">
-                        <h3 class="fw-bold font-size-16 mt-1">Izin</h3>
-                        <span class="font-size-22 fw-black">0</span>
-                    </div>
-                </div>
-                <div class="card rounded-sm me-3" style="min-height: 70px; min-width:120px;">
-                    <div class="card-body py-2 px-3">
-                        <h3 class="fw-bold font-size-16 mt-1">Sakit</h3>
-                        <span class="font-size-22 fw-black">{{ $sakit }}</span>
-                    </div>
-                </div>
+        <div class="col-4">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
+                <blockquote class="card-blockquote font-size-12 mb-0">
+                    <p class="fw-regular mb-1 text-success">Sisa Cuti</p>
+                    <h2 class="font-size-23 fw-bold text-success">9 Hari</h2>
+                </blockquote>
             </div>
         </div>
     </section>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
-    <section class="px-4">
-        <div class="">
-            <div class="d-flex justify-content-between align-items-baseline">
-                <h4 class="mb-3">Cuti Saya</h4>
-                <a href='' class="font-size-sm text-peimary fw-bold">Lihat semua <i
-                        class="fa fa-chevron-right icon-xs text-primary fw-bold"></i></a>
+    <section class="px-2 mb-2">
+        <div class="card mb-2">
+            <form id="formAction" action="#" method="POST">
+                @method('POST')
+                @csrf
+                <div class="d-flex">
+                    <div class="col-12 pr-0 input-group">
+                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        <select class="form-control" name="hari" id="example-month-input">
+                            <option value="{{ date("Y") }}">{{ date("Y") }}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card mb-2">
+            <div class="d-flex">
+                <div class="col-12 pr-0">
+                    <a href="{{ route("leave.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Ajukan Cuti</a>
+                </div>
             </div>
-            <div>
-                @forelse($data as $item)
-                    <div class="alert alert-secondary alert-top-border fade show mb-3" role="alert">
-                        <div class="d-flex align-items-center justify-content-start">
-                            <i class="fa fa-info-circle fa-lg text-primary align-middle me-3"></i>
-                            <div>
-                                <strong>{{ tglIndo2($item->cuti_awal) }} - {{ tglIndo2($item->cuti_akhir) }}</strong>
-                                <br>
-                                <span class="">{{ $item->cuti_deskripsi }}</span>
-                            </div>
+        </div>
+        <div id="content" class="card table-responsive rounded">
+            <div class="card-body px-2 py-1">
+                <ul class="list-group list-group-flush">
+                    @forelse($data as $item)
+                    <li class="list-group-item px-2 py-1 mb-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="fw-bold font-size-12 mb-1">{{ $item->cutiJenis->cuti_nama_jenis }}</p>
+                            <p class="fw-regular font-size-12 text-muted mb-1">{{ tglIndo4($item->cuti_awal) }} - {{ tglIndo4($item->cuti_akhir) }}</p>
+                            @if ($item->cuti_status == "DITOLAK")
+                                <p class="fw-regular font-size-12 text-danger mb-1">{{ $item->cuti_status }}</p>
+                            @elseif($item->cuti_status == "DITERIMA")
+                                <p class="fw-regular font-size-12 text-success mb-1">{{ $item->cuti_status }}</p>
+                            @else
+                                <p class="fw-regular font-size-12 text-primary mb-1">{{ $item->cuti_status }}</p>
+                            @endif
                         </div>
-
-                    </div>
-                @empty
-                    <div class="card rounded py-5 rounded">
-                        <div class="d-flex justify-content-center align-self-center">
-                            <div class="text-center">
-                                <a class="text-muted">Tidak ada riwayat pengajuan</a>
-                                <br>
-                                <a class="fw-bold btn btn-primary py-1 mt-2" href="{{ route('cuti.create') }}">Tambah
-                                    Pengajuan Cuti</a>
-                            </div>
+                        <a href="{{ route("leave.show", $item->id_cuti) }}" class="btn btn-sm btn-outline-danger">Detail</a>
+                    </li>
+                    @empty
+                    <li class="list-group-item px-2 py-3 mb-2">
+                        <div class="text-center">
+                            <p class="fw-bold font-size-14 mb-1">Belum ada cuti yang diambil</p>
+                            <p class="fw-regular font-size-12 text-muted mb-1">Semua cuti yang kamu ajukan akan tampil disini</p>
                         </div>
-                    </div>
-                @endforelse
+                    </li>
+                    @endforelse
+                </ul>
             </div>
         </div>
     </section>
 @endsection
+
+@push('addon-script')
+<script>
+    $('#example-month-input').change(function() {
+        var url = "";
+        var date = $(this).val();
+        if (date != "") {
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                url: url,
+                data: {'hari': date},
+                type: 'POST',
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Sedang Memproses Data...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        showDenyButton: false,
+                        showCancelButton: false
+                    });
+                    Swal.showLoading();
+                },
+                success: function(result) {
+                    $('#content').html(result);
+                },
+                complete: function(data) {
+                    Swal.close();
+                }
+            });
+        } else {
+            Swal.fire('Maaf','Silahkan pilih periode terlebih dahulu.','error');
+        }
+    });
+</script>
+@endpush

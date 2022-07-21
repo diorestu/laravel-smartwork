@@ -68,7 +68,6 @@ Route::middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(functi
     Route::get('/ubah-kata-sandi',    [DashboardController::class, 'ubahPassword'])->name('admin.ubahPassword');
     Route::patch('/ubah-kata-sandi',  [DashboardController::class, 'saveNewPassword'])->name('admin.newPassword');
     Route::resource('pengguna',       ViewAdminController::class);
-
     // MASTER DATA
     Route::prefix('master')->group(function () {
         // pegawai
@@ -100,13 +99,11 @@ Route::middleware(['auth', 'is_admin', 'is_active', 'is_expired'])->group(functi
         //
         Route::resource('kpi-master',               KpiMasterController::class);
     });
-
     // REKRUTMEN
     Route::prefix('rekrutmen')->group(function () {
         Route::resource('lowongan', LowonganController::class);
         Route::resource('rekrutmen', RekrutmenController::class);
     });
-
     // MANAJEMEN
     Route::prefix('kelola')->group(function () {
         // absensi
@@ -249,11 +246,12 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('/jadwal/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("jadwal.riwayat");
     // Pengumuman
     Route::post('/notifikasi/riwayat', [UserPengumumanController::class, 'riwayat'])->name("pengumuman.riwayat");
-    Route::resource('notifikasi',    UserPengumumanController::class);
+    Route::resource('notifikasi',   UserPengumumanController::class);
+    // Cuti
+    route::resource('leave',        CutiController::class);
     // Upload Foto
     Route::post('upload-kegiatan',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
     Route::post('upload-hadir',     [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
     Route::post('upload-pulang',    [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
-    route::resource('leave',        CutiController::class);
     route::resource('overtime',     UserLemburController::class);
 });

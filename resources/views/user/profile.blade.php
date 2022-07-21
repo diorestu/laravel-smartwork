@@ -49,12 +49,12 @@
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Tempat Lahir</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->tempat_lahir == "") {{ "-" }} @else {{ $id->tempat_lahir }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Tanggal Lahir</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->tgl_lahir == "") {{ "-" }} @else {{ tanggalIndo($id->tgl_lahir) }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Nomor Telepon</span>
@@ -69,22 +69,22 @@
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Agama</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->agama == "") {{ "-" }} @else {{ $id->agama }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">No. ID</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->nik == "") {{ "-" }} @else {{ $id->nik }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Tipe ID</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->tipe_id == "") {{ "-" }} @else {{ $id->tipe_id }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Alamat KTP</span>
                             <br>
-                            <span class="text-dark">@if ($id->alamat == "") {{ "-" }} @else {{ $id->alamat }} @endif</span>
+                            <span class="text-dark">@if ($id->alamat_ktp == "") {{ "-" }} @else {{ $id->alamat_ktp }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Alamat Tempat Tinggal</span>
@@ -94,12 +94,12 @@
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Kode Pos</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->kode_pos == "") {{ "-" }} @else {{ $id->kode_pos }} @endif</span>
                         </li>
                         <li class="list-group-item px-2">
                             <span class="fw-light font-size-12 text-muted">Golongan Darah</span>
                             <br>
-                            <span class="text-dark">{{ "-" }}</span>
+                            <span class="text-dark">@if ($id->gol_darah == "") {{ "-" }} @else {{ $id->gol_darah }} @endif</span>
                         </li>
                     </ul>
                 </div>
