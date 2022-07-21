@@ -248,8 +248,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/jadwal',           [MobileController::class, 'jadwal'])->name('user.jadwal');
     Route::post('/jadwal/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("jadwal.riwayat");
     // Pengumuman
-    Route::post('/pengumuman/riwayat', [UserPengumumanController::class, 'riwayat'])->name("pengumuman.riwayat");
-    Route::resource('pengumuman',    UserPengumumanController::class);
+    Route::post('/notifikasi/riwayat', [UserPengumumanController::class, 'riwayat'])->name("pengumuman.riwayat");
+    Route::resource('notifikasi',    UserPengumumanController::class);
     // Upload Foto
     Route::post('upload-kegiatan',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
     Route::post('upload-hadir',     [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
