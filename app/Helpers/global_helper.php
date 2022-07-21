@@ -167,6 +167,10 @@ function TanggalOnly($date)
     $tgl     = ltrim($tanggal, '0');
     return $tgl;
 }
+function BulanOnly($date)
+{
+    return Carbon::parse($date)->locale('id')->isoFormat('MMM');
+}
 function hoursandmins($time, $format = '%02d:%02d')
 {
     if ($time < 1) {

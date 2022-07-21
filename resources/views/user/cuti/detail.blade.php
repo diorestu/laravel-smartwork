@@ -42,19 +42,19 @@
             <div class="card-body p-3">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <p class="card-text text-muted mb-1">PT. Asta Pijar Kreasi</p>
-                        <h5 class="card-title mb-1">Ni Komang Karina Wardani</h5>
-                        <p class="fw-light card-text text-muted">Staff Marketing</p>
+                        <p class="card-text text-muted mb-1">{{ $data->user->cabang->cabang_nama }}</p>
+                        <h5 class="card-title mb-1">{{ $data->user->nama }}</h5>
+                        <p class="fw-light card-text text-muted">{{ $data->user->jabatan->jabatan_title }}</p>
                     </div>
                     <div>
-                        <img src="{{ asset('backend-assets/images/no-staff.jpg') }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                        <img src="{{ $data->user->company_logo == '' ? asset('backend-assets/images/no-staff.jpg') : asset('storage/uploads/'. $data->user->company_logo) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <section>
-        <div class="card mx-2 rounded">
+        <div class="card mx-2 rounded mb-3">
             <div class="card-body px-2 py-1">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item px-2">
@@ -83,7 +83,7 @@
                                 <span class="fw-light font-size-12 text-muted">Hari Cuti</span>
                             </div>
                             <div class="col-8 px-1">
-                                <span>Tipe</span>
+                                <span>{{ $data->cuti_total }} hari</span>
                             </div>
                         </div>
                     </li>
@@ -107,8 +107,115 @@
                             </div>
                         </div>
                     </li>
-
+                    <li class="list-group-item px-2">
+                        <div class="d-flex">
+                            <div class="col-4 px-1">
+                                <span class="fw-light font-size-12 text-muted">Status Cuti</span>
+                            </div>
+                            <div class="col-8 px-1">
+                                @if ($data->cuti_status == "DITOLAK")
+                                    <p class="fw-regular font-size-12 text-danger mb-1">{{ $data->cuti_status }}</p>
+                                @elseif($data->cuti_status == "DITERIMA")
+                                    <p class="fw-regular font-size-12 text-success mb-1">{{ $data->cuti_status }}</p>
+                                @else
+                                    <p class="fw-regular font-size-12 text-primary mb-1">{{ $data->cuti_status }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </li>
+                    @if ($data->approved_date != null)
+                    <li class="list-group-item px-2">
+                        <div class="d-flex">
+                            <div class="col-4 px-1">
+                                <span class="fw-light font-size-12 text-muted">Diterima pada</span>
+                            </div>
+                            <div class="col-8 px-1">
+                                <span>{{ tanggalIndo($data->approved_date) }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-2">
+                        <div class="d-flex">
+                            <div class="col-4 px-1">
+                                <span class="fw-light font-size-12 text-muted">Diterima Oleh</span>
+                            </div>
+                            <div class="col-8 px-1">
+                                <span>{{ namaUser($data->approved_by) }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    @endif
+                    <li class="list-group-item px-2">
+                        <div class="d-flex">
+                            <div class="col-4 px-1">
+                                <span class="fw-light font-size-12 text-muted">Lampiran</span>
+                            </div>
+                            <div class="col-8 px-1">
+                                <span>{{ "-" }}</span>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
+            </div>
+        </div>
+        @if ($data->approved_date == null)
+        <div class="card mx-2 mt-0 mb-3">
+            <div class="d-flex">
+                <div class="col-12 pr-0">
+                    <form action="{{ route('leave.destroy', $data->id_cuti) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger text-white waves-effect btn-label waves-light fw-bold w-100">
+                            <i class="label-icon fa fa-ban"></i>
+                            &nbsp; Batalkan Pengajuan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endif
+        <div class="timeline">
+            <div class="timeline-container">
+                <div class="timeline-continue p-0">
+                    <div class="row timeline-right">
+                        <div class="col-md-6">
+                            <div class="timeline-box mt-0 p-3">
+                                <div class="timeline-date bg-primary text-center rounded">
+                                    <h3 class="text-white mb-0 font-size-16">{{ TanggalOnly($data->created_at) }}</h3>
+                                    <p class="mb-0 text-white-50">{{ BulanOnly($data->created_at) }}</p>
+                                </div>
+                                <div class="event-content">
+                                    <div class="timeline-text">
+                                        <h3 class="font-size-14 mb-0">Pengajuan Cuti</h3>
+                                        <p class="font-size-11 mb-0 mt-1 pt-0 text-muted">
+                                            Cuti diajukan oleh {{ $data->user->nama }} pada tanggal {{ tanggalIndo($data->created_at) }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if ($data->approved_date != null)
+                    <div class="row timeline-right">
+                        <div class="col-md-6">
+                            <div class="timeline-box mt-3 p-3">
+                                <div class="timeline-date bg-success text-center rounded">
+                                    <h3 class="text-white mb-0 font-size-16">{{ TanggalOnly($data->approved_date) }}</h3>
+                                    <p class="mb-0 text-white-50">{{ BulanOnly($data->approved_date) }}</p>
+                                </div>
+                                <div class="event-content">
+                                    <div class="timeline-text">
+                                        <h3 class="font-size-14 mb-0">Cuti Diterima</h3>
+                                        <p class="font-size-11 mb-0 mt-1 pt-0 text-muted">
+                                            Cuti diterima oleh {{ namaUser($data->approved_by) }} pada tanggal {{ tanggalIndo($data->approved_date) }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
     </section>

@@ -62,9 +62,11 @@
                 @csrf
                 <div class="d-flex">
                     <div class="col-12 pr-0 input-group">
-                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        <div class="input-group-text"><i class="font-size-18 bx bx-filter-alt"></i></div>
                         <select class="form-control" name="hari" id="example-month-input">
-                            <option value="{{ date("Y") }}">{{ date("Y") }}</option>
+                            @for($tahun = date("Y"); $tahun >= (date("Y")-2); $tahun--)
+                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                            @endfor
                         </select>
                     </div>
                 </div>
@@ -112,7 +114,7 @@
 @push('addon-script')
 <script>
     $('#example-month-input').change(function() {
-        var url = "";
+        var url = "{{ route('leave.riwayat') }}";
         var date = $(this).val();
         if (date != "") {
             $.ajaxSetup({
@@ -144,4 +146,18 @@
         }
     });
 </script>
+@if (Session::has('success'))
+    <script type="text/javascript">
+        alertify.set('notifier','position', 'top-right');
+        alertify.success('{{ \Session::get('success') }}');
+        // Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
+    </script>
+@endif
+@if (Session::has('error'))
+    <script type="text/javascript">
+        alertify.set('notifier','position', 'top-right');
+        alertify.error('{{ \Session::get('error') }}');
+        // Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
+    </script>
+@endif
 @endpush

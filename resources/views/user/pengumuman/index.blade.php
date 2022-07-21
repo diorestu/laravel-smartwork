@@ -55,7 +55,7 @@
                                 {{ Str::limit(strip_tags($item->desc_pengumuman), 300, ' ...') }}
                             </p>
                             <div class="mt-4">
-                                <a href="{{ route('pengumuman.show', $item->id) }}" class="text-primary fw-medium"> <u>Baca Lebih Detail </u> <i class="mdi mdi-arrow-right ms-1 align-middle"></i></a>
+                                <a href="{{ route('notifikasi.show', $item->id) }}" class="text-primary fw-medium"> <u>Baca Lebih Detail </u> <i class="mdi mdi-arrow-right ms-1 align-middle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 @push('addon-script')
     <script>
         $('#example-month-input').change(function() {
-            var url = "{{ route('pengumuman.riwayat') }}";
+            var url = "{{ route('notifikasi.riwayat') }}";
             var date = $(this).val();
             if (date != "") {
                 $.ajaxSetup({

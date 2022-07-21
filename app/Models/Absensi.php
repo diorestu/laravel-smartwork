@@ -17,4 +17,8 @@ class Absensi extends Model
     {
         return $this->hasOne(User::class, 'id', 'id_user');
     }
+    public function user_shift(): HasOne
+    {
+        return $this->hasOne(UserShift::class, 'id_shift', 'usershift_id');
+    }
 }

@@ -28,8 +28,8 @@
         </div>
     </section>
     <section>
-        <div class="card m-2 rounded-sm">
-            <form action="{{ route('leave.store') }}" method="post" id="myForm">
+        <form action="{{ route('leave.store') }}" method="post" id="myForm">
+            <div class="card m-2 rounded-sm">
                 @method('POST')
                 @csrf
                 <div class="card-body px-2 py-1">
@@ -44,11 +44,11 @@
                         </li>
                         <li class="list-group-item px-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Hari Cuti</span>
-                            <input id="my-input" class="form-control text-dark mt-1" type="date" name="cuti_awal" required>
+                            <input id="cuti_awal" class="form-control text-dark mt-1" type="date" name="cuti_awal" required>
                         </li>
                         <li class="list-group-item px-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Jumlah Hari Cuti</span>
-                            <select id="cuti_jenis" class="form-select text-dark mt-1" name="id_cuti_jenis">
+                            <select id="cuti_total" class="form-select text-dark mt-1" name="cuti_total">
                                 @for($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}">{{ $i }} hari</option>
                                 @endfor
@@ -60,17 +60,15 @@
                         </li>
                     </ul>
                 </div>
-            </form>
-        </div>
-    </section>
-    <section>
-        <div class="col=12">
-            <div class="fixed-bottom mb-0 card p-2">
-                <button type="submit" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
-                    <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
-                </button>
             </div>
-        </div>
+            <div class="col=12">
+                <div class="fixed-bottom mb-0 card p-2">
+                    <button type="submit" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
+                        <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
+                    </button>
+                </div>
+            </div>
+        </form>
     </section>
     <br>
     <br>

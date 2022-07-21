@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <a href="{{ route('pengumuman.index') }}" class="mb-2">
+                                        <a href="{{ route('notifikasi.index') }}" class="mb-2">
                                             <i class="bi bi-info-circle-fill circle font-size-20 px-3 text-white"
                                                 style="background-color: #588157"></i>
                                         </a>
