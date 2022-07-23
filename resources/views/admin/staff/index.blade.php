@@ -139,8 +139,8 @@
                     <tbody>
                         @foreach ($data as $i)
                             <tr>
-                                <td class='bg-white text-primary font-weight-bolder'>{{ $i->nip }}</td>
-                                <td class="bg-white" style="border-right: 1px solid #ccc; !important ">{{ $i->nama }}</td>
+                                <td class='bg-light text-primary font-weight-bolder'>{{ $i->nip }}</td>
+                                <td class="bg-light">{{ $i->nama }}</td>
                                 <td>{{ Carbon\Carbon::now()->diffInYears($i->tgl_lahir) }} th</td>
                                 <td>{{ $i->agama }}</td>
                                 <td><span class="font-weight-boldest">{{ $i->cabang->cabang_nama }}</span></td>

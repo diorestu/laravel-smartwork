@@ -127,33 +127,41 @@
     <div class="ms-3" style="margin-top:110px;" data-aos="fade-right" data-aos-duration="700">
         <div class="d-flex flex-row flex-nowrap overflow-auto example">
             <div class="card rounded-md me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
-                    <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
-                    <span class="text-black font-size-14">Hari Cuti</span>
-                    {{-- <span class="font-size-22 fw-black">{{ $cuti }}</span> --}}
-                </div>
+                <a href="{{ route('leave.create') }}">
+                    <div class="card-body py-2 px-3">
+                        <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
+                        <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
+                        <span class="text-black font-size-14">Hari Cuti</span>
+                        {{-- <span class="font-size-22 fw-black">{{ $cuti }}</span> --}}
+                    </div>
+                </a>
             </div>
             <div class="card rounded-md me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
-                    <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
-                    <span class="text-black font-size-14">Lembur</span>
-                </div>
+                <a href="{{ route('overtime.create') }}">
+                    <div class="card-body py-2 px-3">
+                        <i class="bi bi-clock font-size-20 px-0" style="color: #ccc"></i>
+                        <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
+                        <span class="text-black font-size-14">Lembur</span>
+                    </div>
+                </a>
             </div>
             <div class="card rounded-md me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
-                    <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
-                    <span class="text-black font-size-14">Presensi</span>
-                </div>
+                <a href="{{ route('leave.create') }}">
+                    <div class="card-body py-2 px-3">
+                        <i class="bi bi-geo font-size-20 px-0" style="color: #ccc;"></i>
+                        <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
+                        <span class="text-black font-size-14">Presensi</span>
+                    </div>
+                </a>
             </div>
             <div class="card rounded-md me-3" style="min-height: 70px; min-width:120px;">
-                <div class="card-body py-2 px-3">
-                    <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
-                    <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
-                    <span class="text-black font-size-14">Ubah Shift</span>
-                </div>
+                <a href="{{ route('leave.create') }}">
+                    <div class="card-body py-2 px-3">
+                        <i class="bi bi-calendar-week font-size-20 px-0" style="color: #ccc;"></i>
+                        <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
+                        <span class="text-black font-size-14">Ubah Shift</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

@@ -32,7 +32,8 @@
                 @method('POST')
                 @csrf
                 <div class="d-flex">
-                    <div class="col-12 pr-0">
+                    <div class="col-12 pr-0 input-group">
+                        <div class="input-group-text"><i class="font-size-18 bx bx-filter-alt"></i></div>
                         <input class="form-control" type="month" value="{{ date("Y-m") }}" name="hari" id="example-month-input">
                     </div>
                 </div>

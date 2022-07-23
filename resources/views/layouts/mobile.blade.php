@@ -6,6 +6,9 @@
     <style>
         .parent {
             position: relative;
+            display: block;
+            width: auto;
+            height: auto;
         }
         .child-float {
             position: absolute;

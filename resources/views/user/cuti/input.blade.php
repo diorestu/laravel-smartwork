@@ -5,12 +5,14 @@
 @push('addon-style')
 <style>
     .no-border { border: none !important; }
+    .main-content { overflow: inherit; }
+    .child_i { position: absolute; top:-120px; width: 100%; display: block; }
 </style>
 @endpush
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:200px;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
@@ -27,9 +29,9 @@
             </div>
         </div>
     </section>
-    <section>
-        <form action="{{ route('leave.store') }}" method="post" id="myForm">
-            <div class="card m-2 rounded-sm">
+    <section class="parent">
+        <form class="child_i" action="{{ route('leave.store') }}" method="post" id="myForm">
+            <div class="card m-2 rounded-sm rounded-lg-top">
                 @method('POST')
                 @csrf
                 <div class="card-body px-2 py-1">
@@ -62,8 +64,8 @@
                 </div>
             </div>
             <div class="col=12">
-                <div class="fixed-bottom mb-0 card p-2">
-                    <button type="submit" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
+                <div class="fixed-bottom mb-0 card px-1 pb-3 pt-2 rounded-lg-top">
+                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-lg">
                         <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
                     </button>
                 </div>
