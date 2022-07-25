@@ -25,7 +25,7 @@
     <section>
         <div class="col=12">
             <div class="card p-4">
-                <form action="{{ route('aktivitas.store') }}" method="post" id="myForm">
+                <form action="{{ route('kegiatan.store') }}" method="post" id="myForm">
                     @method('POST')
                     @csrf
                     <div class="mb-3">

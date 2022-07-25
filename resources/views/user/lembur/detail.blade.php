@@ -165,16 +165,6 @@
                         </div>
                     </li>
                     @endif
-                    <li class="list-group-item px-2">
-                        <div class="d-flex">
-                            <div class="col-4 px-1">
-                                <span class="fw-light font-size-12 text-muted">Lampiran</span>
-                            </div>
-                            <div class="col-8 px-1">
-                                <span>{{ "-" }}</span>
-                            </div>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>

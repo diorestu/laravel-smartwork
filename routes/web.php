@@ -238,15 +238,15 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('show-log',        [AbsenController::class, 'postRiwayat'])->name('user.absen.viewRiwayat');
     Route::resource('absen',        AbsenController::class);
     // Kegiatan
-    Route::post('aktivitas/riwayat', [AktivitasController::class, 'riwayat'])->name("aktivitas.riwayat");
-    Route::resource('aktivitas',    AktivitasController::class);
+    Route::post('kegiatan/riwayat', [AktivitasController::class, 'riwayat'])->name("kegiatan.riwayat");
+    Route::resource('kegiatan',     AktivitasController::class);
     // Slip Gaji
     Route::post('payslip/riwayat', [UserPaySlipController::class, 'riwayat'])->name("payslip.riwayat");
     Route::get('payslip/download/{id}', [UserPaySlipController::class, 'cetak_slipgaji_payroll'])->name('payslip.download');
     Route::resource('payslip',     UserPaySlipController::class);
     // Jadwal
-    Route::get('jadwal',           [MobileController::class, 'jadwal'])->name('user.jadwal');
-    Route::post('jadwal/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("jadwal.riwayat");
+    Route::get('schedule',           [MobileController::class, 'jadwal'])->name('schedule.index');
+    Route::post('schedule/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("schedule.riwayat");
     // Pengumuman
     Route::post('notifikasi/riwayat', [UserPengumumanController::class, 'riwayat'])->name("notifikasi.riwayat");
     Route::resource('notifikasi',   UserPengumumanController::class);

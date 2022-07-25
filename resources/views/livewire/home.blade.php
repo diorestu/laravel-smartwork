@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-3 mb-3">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <a href="{{ route('user.jadwal') }}" class="mb-2">
+                                        <a href="{{ route('schedule.index') }}" class="mb-2">
                                             <i class="bi bi-calendar-week-fill circle font-size-20 px-3 text-white"
                                                 style="background-color: #ea580c"></i>
                                         </a>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-3 mb-3">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <a href="{{ route('aktivitas.index') }}" class="mb-2">
+                                        <a href="{{ route('kegiatan.index') }}" class="mb-2">
                                             <i class="bi bi-star-fill circle font-size-20 px-3 text-white"
                                                 style="background-color: #0d9488"></i>
                                         </a>

@@ -60,7 +60,7 @@
 @push('addon-script')
     <script>
         $('#example-month-input').change(function() {
-            var url = "{{ route('jadwal.riwayat') }}";
+            var url = "{{ route('schedule.riwayat') }}";
             var date = $(this).val();
             if (date != "") {
                 $.ajaxSetup({
@@ -88,7 +88,7 @@
                     }
                 });
             } else {
-                Swal.fire('Maaf','Silahkan pilih tanggal absen terlebih dahulu.','error');
+                Swal.fire('Maaf','Silahkan pilih periode terlebih dahulu.','error');
             }
         });
     </script>

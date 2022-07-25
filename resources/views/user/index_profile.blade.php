@@ -66,7 +66,7 @@
                     <span><i class="fa fa-chevron-right"></i></span>
                 </div>
             </a>
-            <a href="{{ route('user.jadwal') }}" class="text-dark text-decoration-none w-100">
+            <a href="{{ route('schedule.index') }}" class="text-dark text-decoration-none w-100">
                 <div class="d-flex justify-content-between align-items-center py-1 mb-2">
                     <div class="d-flex justify-content-between">
                         <i class="bx bxs-calendar icon-profil text-success"></i>

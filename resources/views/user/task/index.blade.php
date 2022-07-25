@@ -42,7 +42,7 @@
         <div class="card mb-2">
             <div class="d-flex">
                 <div class="col-12 pr-0">
-                    <a href="{{ route('aktivitas.create') }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
+                    <a href="{{ route('kegiatan.create') }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                                 <tr class='no-border'>
                                     <td class='px-0 py-1'>Aksi</td>
                                     <td class='px-0 py-1'>:</td>
-                                    <td class='px-2 py-1'> <a href='{{ route('aktivitas.show', $item->id) }}'>Detail</a></td>
+                                    <td class='px-2 py-1'> <a href='{{ route('kegiatan.show', $item->id) }}'>Detail</a></td>
                                 </tr>
                                 ">
                                 <td class="fw-bold text-uppercase">{{ TanggalBulan($item->created_at) }}</td>
@@ -112,7 +112,7 @@
     }
     $(document).ready(function() {
         $('#example-month-input').change(function() {
-            var url = "{{ route('aktivitas.riwayat') }}";
+            var url = "{{ route('kegiatan.riwayat') }}";
             var date = $(this).val();
             if (date != "") {
                 $.ajaxSetup({
