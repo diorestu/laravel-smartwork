@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="col=12">
-                <div class="fixed-bottom mb-0 card px-1 pb-3 pt-2 rounded-lg-top">
+                <div class="fixed-bottom mb-0 card px-2 pb-4 pt-2 rounded-lg-top">
                     <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-lg">
                         <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
                     </button>

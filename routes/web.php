@@ -34,6 +34,7 @@ use App\Http\Controllers\User\PengumumanController as UserPengumumanController;
 use App\Http\Controllers\User\UserLemburController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\Admin\ViewAktivitasController;
+use App\Http\Controllers\user\UserPaySlipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -240,7 +241,9 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('aktivitas/riwayat', [AktivitasController::class, 'riwayat'])->name("aktivitas.riwayat");
     Route::resource('aktivitas',    AktivitasController::class);
     // Slip Gaji
-    Route::get('slip-gaji',        [MobileController::class, 'gaji'])->name('user.gaji');
+    Route::post('payslip/riwayat', [UserPaySlipController::class, 'riwayat'])->name("payslip.riwayat");
+    Route::get('payslip/download/{id}', [UserPaySlipController::class, 'cetak_slipgaji_payroll'])->name('payslip.download');
+    Route::resource('payslip',     UserPaySlipController::class);
     // Jadwal
     Route::get('jadwal',           [MobileController::class, 'jadwal'])->name('user.jadwal');
     Route::post('jadwal/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("jadwal.riwayat");

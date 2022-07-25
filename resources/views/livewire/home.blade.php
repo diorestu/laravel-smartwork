@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <a href="{{ route('user.gaji') }}" class="mb-2">
+                                        <a href="{{ route('payslip.index') }}" class="mb-2">
                                             <i class="bi bi-wallet-fill circle font-size-20 px-3 text-white"
                                                 style="background-color: #c026d3"></i>
                                         </a>
@@ -132,7 +132,6 @@
                         <i class="bi bi-calendar-x font-size-20 px-0" style="color: #ccc;"></i>
                         <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
                         <span class="text-black font-size-14">Hari Cuti</span>
-                        {{-- <span class="font-size-22 fw-black">{{ $cuti }}</span> --}}
                     </div>
                 </a>
             </div>
