@@ -6,6 +6,8 @@ use App\Models\Cuti;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cabang;
+use App\Models\CabangConfig;
 use App\Models\UserShift;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -40,7 +42,6 @@ class AbsenController extends Controller
                                 ->whereYear('jam_hadir', '=', $tahun)
                                 ->whereMonth('jam_hadir', '=', $bulan)
                                 ->orderBy('jam_hadir', 'DESC')->take(31)->get();
-
         // Set Utility
         $title      = null;
         $d          = false;
@@ -97,12 +98,31 @@ class AbsenController extends Controller
      */
     public function create()
     {
-        $id         = Auth::user();
-        $dataAbsen  = Absensi::where('id_user', $id->id)->whereDate('jam_hadir', date('Y-m-d'))->first();
+        $today          = Carbon::now();
+        $id             = Auth::user();
+        $shift          = UserShift::where('id_user', $id->id)->whereDate('tanggal_shift', $today)->first();
+        $dataAbsen      = Absensi::where('id_user', $id->id)->whereDate('jam_hadir', date('Y-m-d'))->first();
+        $id_admin       = Auth::user()->id_admin;
+        $id_cabang      = Auth::user()->id_cabang;
+        $cc             = CabangConfig::where('id_admin', $id_admin)->where('id_cabang', $id_cabang)->first();
+        $is_radius      = $cc->is_radius;
+        $radius         = $cc->radius_max;
+        $is_use_shift   = $cc->is_using_shift;
+        $is_photo_enabled = $cc->is_photo_enabled;
+        $cab            = Cabang::findOrFail($id_cabang)->first();
+        $lat            = $cab->cabang_lat;
+        $long           = $cab->cabang_long;
         if (!$dataAbsen || $dataAbsen == null) {
             return view('user.absen.hadir', [
-                'id' => $id,
-                'status' => $id->config->tipe_akun,
+                'id'            => $id,
+                'shift'         => $shift,
+                'is_radius'     => $is_radius,
+                'radius'        => $radius,
+                'is_use_shift'  => $is_use_shift,
+                'is_photo_enabled'  => $is_photo_enabled,
+                'cabang_lat'    => $lat,
+                'cabang_long'   => $long,
+                'status'        => $id->config->tipe_akun,
             ]);
         }else{
             return redirect()->route('absen.index')->withErrors('Anda telah absen hari ini');
@@ -117,15 +137,22 @@ class AbsenController extends Controller
      */
     public function store(Request $r)
     {
-        $hadir = $r->all();
-        // dd($hadir);
+        $hadir      = $r->all();
+        $id         = Auth::user();
+        $today      = Carbon::now();
+        $shift      = UserShift::where('id_user', $id->id)->whereDate('tanggal_shift', $today)->first();
+        if (!$shift || $shift == null) {
+            $u_shift = 0; }
+        else {
+            $u_shift = $shift->id_shift; }
         $hadir['hadir'] = date("Y-m-d H:i:s");
         $response = Absensi::create([
-            'id_user'    => Auth::user()->id,
-            'jam_hadir'  => $hadir['hadir'],
-            'lat_hadir'  => $hadir['lat_hadir'],
-            'long_hadir' => $hadir['long_hadir'],
-            'ket_hadir'  => '',
+            'id_user'       => Auth::user()->id,
+            'usershift_id'  => $u_shift,
+            'jam_hadir'     => $hadir['hadir'],
+            'lat_hadir'     => $hadir['lat_hadir'],
+            'long_hadir'    => $hadir['long_hadir'],
+            'ket_hadir'     => '',
         ]);
         try {
             $response->save();
@@ -143,9 +170,11 @@ class AbsenController extends Controller
      */
     public function show($id)
     {
-        $data   = Absensi::find($id);
+        $data           = Absensi::findOrFail($id);
+        $shift          = UserShift::where('id_shift', $data->usershift_id)->first();
         return view('user.absen.detail', [
-            'data' => $data
+            'data'          => $data,
+            'shift'         => $shift,
         ]);
     }
 
@@ -157,17 +186,40 @@ class AbsenController extends Controller
      */
     public function edit($id)
     {
+        $id_admin       = Auth::user()->id_admin;
+        $id_cabang      = Auth::user()->id_cabang;
         $data           = Absensi::findOrFail($id);
         $tanggalAbsen   = Carbon::parse($data->jam_hadir);
         $now            = Carbon::now();
         $selisih        = $now->diffInHours($tanggalAbsen);
+        $shift          = UserShift::where('id_shift', $data->usershift_id)->first();
+        $cc             = CabangConfig::where('id_admin', $id_admin)->where('id_cabang', $id_cabang)->first();
+        $is_radius      = $cc->is_radius;
+        $radius         = $cc->radius_max;
+        $is_use_shift   = $cc->is_using_shift;
+        $cab            = Cabang::findOrFail($id_cabang)->first();
+        $lat            = $cab->cabang_lat;
+        $long           = $cab->cabang_long;
+        // dd($shift);
         if ($selisih > 24) {
             return view('user.absen.lupa-pulang', [
-                'data' => $data,
+                'data'          => $data,
+                'shift'         => $shift,
+                'is_radius'     => $is_radius,
+                'radius'        => $radius,
+                'is_use_shift'  => $is_use_shift,
+                'cabang_lat'    => $lat,
+                'cabang_long'   => $long,
             ]);
         }else{
             return view('user.absen.pulang', [
-                'data' => $data,
+                'data'          => $data,
+                'shift'         => $shift,
+                'is_radius'     => $is_radius,
+                'radius'        => $radius,
+                'is_use_shift'  => $is_use_shift,
+                'cabang_lat'    => $lat,
+                'cabang_long'   => $long,
             ]);
         }
     }

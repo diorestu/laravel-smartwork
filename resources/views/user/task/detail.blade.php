@@ -7,8 +7,6 @@
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 <style>
     .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
-    .map { height: 200px; }
     .filepond--label-action { color: #cc2b4e !important; }
     .filepond--panel-root { background-color: #f2f2f2; }
     body[data-layout-mode=dark] .filepond--panel-root { background-color: #30373f !important }

@@ -3,11 +3,13 @@
 @section('title')Absen Pulang | Smartwork @endsection
 
 @push('addon-style')
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 @endpush
 
 @section('content')
-    @php $id = Auth::user(); $radius = 10000; @endphp
+    @php
+        $id = Auth::user();
+    @endphp
     <section class="">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:200px;">
             <div class="d-flex justify-content-between align-items-center">
@@ -35,8 +37,15 @@
         <div class="child card rounded-md mb-0 px-0">
             <div class="card-body p-2 pt-3">
                 <div class="text-center">
-                    <b class="fw-light font-size-14 text-muted">Tidak ada shift</b><br>
-                    <b class="fw-bold font-size-20">00:00 - 00:00</b><br>
+                    @if (!$shift || $shift == null)
+                        <b class="fw-light font-size-14 text-muted">Tidak ada shift</b><br>
+                        <b class="fw-bold font-size-20">00:00 - 00:00</b><br>
+                    @else
+                        <b class="fw-light font-size-14 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift ' . $shift->shift->ket_shift }}
+                            - {{ tanggalIndo($shift->tanggal_shift) }}</b><br>
+                        <b class="fw-bold font-size-20">{{ tampilJamMenit($shift->shift->hadir_shift) }} -
+                            {{ tampilJamMenit($shift->shift->pulang_shift) }}</b><br>
+                    @endif
                 </div>
                 {{-- <hr> --}}
                 <div class="row mt-4">
@@ -54,13 +63,14 @@
             </div>
         </div>
     </main>
-
+    @if ($is_radius != 0)
     <div class="mx-4" style="margin-top: -35px;" onclick="getLocation();">
         <div class="alert rounded-sm text-center" role="alert" id='demo'>
             <i class="fa fa-spinner fa-spin font-size-22 text-success mb-3"></i>
             <h4 class="alert-heading">Memverifikasi lokasi Anda...</h4>
         </div>
     </div>
+    @endif
     <br>
     <br>
     <br>
@@ -71,8 +81,8 @@
 
 @push('addon-script')
     <script>
+        // timer
         var span = document.getElementById('span');
-
         function time() {
             var d = new Date();
             var s = d.getSeconds();
@@ -81,17 +91,15 @@
             span.textContent =
                 ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         }
+        // geolocation
         $(document).ready(function() {
             getLocation();
             setInterval(time, 1000);
         });
-    </script>
-    <script>
-        var demo = document.getElementById("demo");
-        var btn = document.getElementById("btn");
+        var demo    = document.getElementById("demo");
+        var btn     = document.getElementById("btn");
         var lokasix = document.getElementById("lokasix");
         var lokasiy = document.getElementById("lokasiy");
-
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -100,34 +108,39 @@
                 $("#btn").addClass("d-none");
             }
         }
-
         function showPosition(position) {
             var latitude1  = position.coords.latitude.toFixed(7);
             var longitude1 = position.coords.longitude.toFixed(7);
-            var latitude2  = -8.617903;
-            var longitude2 = 115.192535;
-            var radius     = 10000;
-            var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,
-                    longitude1),
-                new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
-            if (distance >= radius) {
-                $("#keterangan").addClass("d-none");
-                $("#btn").addClass("d-none");
-                $("#demo").addClass("alert-danger");
-                demo.innerHTML = 'Maaf, Anda berada didalam radius <strong>' + distance.toFixed(1) +
-                    '</strong> meter. Mohon direfresh terlebih dulu';
-            } else {
-                $("#demo").addClass("alert-success");
-                $("#demo").removeClass("d-none");
-                $("#btn").removeClass("d-none");
+            var latitude2  = {{ $cabang_lat }};
+            var longitude2 = {{ $cabang_long }};
+            var radius     = {{ $radius }};
+            var distance   = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,longitude1),
+                            new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
+            @if ($is_radius != 0)
+                if (distance >= radius) {
+                    $("#keterangan").addClass("d-none");
+                    $("#btn").addClass("d-none");
+                    $("#demo").addClass("alert-danger");
+                    demo.innerHTML = 'Maaf, Anda berada didalam radius <strong>' + distance.toFixed(1) +
+                        '</strong> meter. Mohon direfresh terlebih dulu';
+                } else {
+                    $("#demo").addClass("alert-success");
+                    $("#demo").removeClass("d-none");
+                    $("#btn").removeClass("d-none");
+                    $("#keterangan").removeClass("d-none");
+                    demo.innerHTML = 'Anda berada didalam radius <strong>' + distance.toFixed(1) +
+                        '</strong> meter. </br>Silahkan klik tombol <strong>Clock Out</strong>';
+                    $("#lokasix").val(latitude1);
+                    $("#lokasiy").val(longitude1);
+                }
+            @else
+                $("#demo").addClass("d-none");
+                $('#btn').removeClass("d-none");
                 $("#keterangan").removeClass("d-none");
-                demo.innerHTML = 'Anda berada didalam radius <strong>' + distance.toFixed(1) +
-                    '</strong> meter. </br>Silahkan klik tombol <strong>Clock Out</strong>';
                 $("#lokasix").val(latitude1);
                 $("#lokasiy").val(longitude1);
-            }
+            @endif
         }
-
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:

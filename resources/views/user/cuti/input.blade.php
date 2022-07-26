@@ -6,13 +6,13 @@
 <style>
     .no-border { border: none !important; }
     .main-content { overflow: inherit; }
-    .child_i { position: absolute; top:-120px; width: 100%; display: block; }
+    .child_i { position: absolute; top:-150px; width: 100%; display: block; }
 </style>
 @endpush
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:200px;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:250px;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
@@ -31,7 +31,7 @@
     </section>
     <section class="parent">
         <form class="child_i" action="{{ route('leave.store') }}" method="post" id="myForm">
-            <div class="card m-2 rounded-sm rounded-lg-top">
+            <div class="card m-2 rounded-sm">
                 @method('POST')
                 @csrf
                 <div class="card-body px-2 py-1">

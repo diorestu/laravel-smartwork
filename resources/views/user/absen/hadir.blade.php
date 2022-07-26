@@ -7,7 +7,6 @@
 @endpush
 
 @section('content')
-    @php $radius = 10000; @endphp
     <section class="">
         <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:200px;">
             <div class="d-flex justify-content-between align-items-center">
@@ -34,19 +33,20 @@
         <div class="child card rounded-md mb-0 px-0">
             <div class="card-body p-2 pt-3">
                 <div class="text-center">
-                    <b class="fw-light font-size-14 text-muted">Tidak ada shift</b><br>
-                    <b class="fw-bold font-size-20">00:00 - 00:00</b><br>
+                    @if (!$shift || $shift == null)
+                        <b class="fw-light font-size-14 text-muted">Tidak ada shift</b><br>
+                        <b class="fw-bold font-size-20">00:00 - 00:00</b><br>
+                    @else
+                        <b class="fw-light font-size-14 text-muted">{{ $shift->shift->ket_shift == 'Libur' ? 'Libur' : 'Shift ' . $shift->shift->ket_shift }}
+                            - {{ tanggalIndo($shift->tanggal_shift) }}</b><br>
+                        <b class="fw-bold font-size-20">{{ tampilJamMenit($shift->shift->hadir_shift) }} -
+                            {{ tampilJamMenit($shift->shift->pulang_shift) }}</b><br>
+                    @endif
                 </div>
-                {{-- <hr> --}}
                 <div class="row mt-4">
                     <form method="post" action="{{ route('absen.store') }}" id="myForm" class="px-3 my-1">
                         @method('post')
                         @csrf
-                        {{-- <div class="text-center">
-                            <label for="my-textarea"> Keterangan Absensi:</label>
-                            <textarea onclick="getLocation()" id="my-textarea" class="form-control" name="deskripsi"
-                                rows="3"></textarea>
-                        </div> --}}
                         <input id="lokasix" class="form-control" type="hidden" name="lat_hadir">
                         <input id="lokasiy" class="form-control" type="hidden" name="long_hadir">
                         <button type="submit" id="btn" class="btn btn-primary waves-effect btn-label waves-light w-100 rounded-md d-none py-2"><i class="label-icon fa fa-clock"></i> Clock In</button>
@@ -55,12 +55,14 @@
             </div>
         </div>
     </main>
+    @if ($is_radius != 0)
     <div class="mx-4" style="margin-top: -35px;" onclick="getLocation();">
         <div class="alert rounded-sm text-center" role="alert" id='demo'>
             <i class="fa fa-spinner fa-spin font-size-22 text-success mb-3"></i>
             <h4 class="alert-heading">Memverifikasi lokasi Anda...</h4>
         </div>
     </div>
+    @endif
     <br>
     <br>
     <br>
@@ -70,15 +72,8 @@
 @endsection
 
 @push('addon-script')
-    {{-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.filepond--credits').addClass('d-none');
-        });
-    </script> --}}
-    <script>
+        // timer
         var span = document.getElementById('span');
         function time() {
             var d = new Date();
@@ -88,18 +83,16 @@
             span.textContent =
                 ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         }
+        // geolocation
         $(document).ready(function() {
             getLocation();
             setInterval(time, 1000);
         });
-    </script>
-    <script>
-        var demo = document.getElementById("demo");
-        var btn = document.getElementById("btn");
+        var demo    = document.getElementById("demo");
+        var btn     = document.getElementById("btn");
         var lokasix = document.getElementById("lokasix");
         var lokasiy = document.getElementById("lokasiy");
-        var form = document.getElementById("absenForm");
-
+        var form    = document.getElementById("absenForm");
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -112,28 +105,34 @@
             }
         }
         function showPosition(position) {
-            var latitude1 = position.coords.latitude.toFixed(7);
-            var longitude1 = position.coords.longitude.toFixed(7);
-            var latitude2 = -8.6179651;
-            var longitude2 = 115.1924219;
-            var radius = {!! $radius !!};
-            var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,
-                    longitude1),
-                new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
-            if (distance >= radius) {
-                $("#btn").addClass("d-none");
-                $("#demo").addClass("alert-danger");
-                demo.innerHTML = 'Maaf, Anda berada didalam radius <strong>' + distance.toFixed(1) +
-                    '</strong> meter. Mohon direfresh terlebih dulu';
-            } else {
-                $("#demo").addClass("alert-success");
-                $("#demo").removeClass("d-none");
-                $("#btn").removeClass("d-none");
-                demo.innerHTML = 'Anda berada didalam radius <strong>' + distance.toFixed(1) +
-                    '</strong> meter. </br>Silahkan klik tombol <strong>Clock In</strong>';
+            var latitude1   = position.coords.latitude.toFixed(7);
+            var longitude1  = position.coords.longitude.toFixed(7);
+            var latitude2   = {{ $cabang_lat }};
+            var longitude2  = {{ $cabang_long }};
+            var radius      = {{ $radius }};
+            var distance    = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1,longitude1),
+                            new google.maps.LatLng(latitude2.toFixed(6), longitude2.toFixed(7)));
+            @if ($is_radius != 0)
+                if (distance >= radius) {
+                    $("#btn").addClass("d-none");
+                    $("#demo").addClass("alert-danger");
+                    demo.innerHTML = 'Maaf, Anda berada didalam radius <strong>' + distance.toFixed(1) +
+                        '</strong> meter. Mohon direfresh terlebih dulu';
+                } else {
+                    $("#demo").addClass("alert-success");
+                    $("#demo").removeClass("d-none");
+                    $("#btn").removeClass("d-none");
+                    demo.innerHTML = 'Anda berada didalam radius <strong>' + distance.toFixed(1) +
+                        '</strong> meter. </br>Silahkan klik tombol <strong>Clock In</strong>';
+                    $("#lokasix").val(latitude1);
+                    $("#lokasiy").val(longitude1);
+                }
+            @else
+                $("#demo").addClass("d-none");
+                $('#btn').removeClass("d-none");
                 $("#lokasix").val(latitude1);
                 $("#lokasiy").val(longitude1);
-            }
+            @endif
         }
         function showError(error) {
             switch (error.code) {
@@ -165,28 +164,4 @@
             }
         }
     </script>
-
-    {{-- <script>
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        FilePond.registerPlugin(FilePondPluginFileValidateType);
-        // Get a reference to the file input element
-        const inputElement = document.querySelector('input[id="avatar"]');
-
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement, {
-            allowImagePreview: true,
-            imagePreviewMaxHeight: 300,
-        });
-
-        FilePond.setOptions({
-            server: {
-                url: "{{ route('upload-hadir') }}",
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            },
-            labelIdle: '<span class="filepond--label-action text-success text-decoration-none"><i class="fa fa-camera"></i> Upload Foto</span> ',
-            acceptedFileTypes: ['image/*'],
-        });
-    </script> --}}
 @endpush

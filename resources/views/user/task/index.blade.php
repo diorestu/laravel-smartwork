@@ -88,7 +88,7 @@
                                 <td class="fw-bold text-uppercase">{{ TanggalBulan($item->created_at) }}</td>
                                 <td class="fw-regular">{{ $item->judul_aktivitas }}</td>
                                 <td class="dt-control text-end">
-                                    <a class="btn-dark btn-sm btn-circle" href="javascript:void(0);"><i class="fa fa-plus"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="javascript:void(0);"><i class="bx bx-caret-down"></i></a>
                                 </td>
                             </tr>
                         @empty
@@ -140,7 +140,7 @@
                     }
                 });
             } else {
-                Swal.fire('Maaf','Silahkan pilih tanggal absen terlebih dahulu.','error');
+                Swal.fire('Maaf','Silahkan pilih periode terlebih dahulu.','error');
             }
         });
         $('#myTable').DataTable({

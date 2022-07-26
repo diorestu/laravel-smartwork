@@ -7,8 +7,10 @@
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 <style>
     .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
     .map { height: 200px; }
+    .filepond--label-action { color: #cc2b4e !important; }
+    .filepond--panel-root { background-color: #f2f2f2; }
+    body[data-layout-mode=dark] .filepond--panel-root { background-color: #30373f !important }
 </style>
 @endpush
 
@@ -50,7 +52,13 @@
                             <div class="col-6 px-1">
                                 <span class="text-muted">Waktu Cek</span>
                                 <br>
-                                <span>{{ TampilJamMenit($data->jam_hadir) }}</span>
+                                <span>
+                                    {{ TampilJamMenit($data->jam_hadir) }}
+                                </span>
+                                <span class="text-danger mx-2">
+                                    <i class="bx bx-timer"></i>
+                                    <span class="font-size-11">Terlambat {{ telat(TampilTanggal($data->jam_hadir)." ".$data->user_shift->shift->hadir_shift, $data->jam_hadir, $data->user_shift->shift->nama_shift) }}</span>
+                                </span>
                             </div>
                             <div class="col-6 px-1">
                                 <span class="text-muted">Tipe</span>
@@ -76,7 +84,7 @@
                     <li class="list-group-item px-2">
                         <span class="text-muted">Shift</span>
                         <br>
-                        <span>{{ tanggalIndo($data->jam_hadir) }}</span>
+                        <span>@if ($data->usershift_id != 0) {{ $data->user_shift->shift->ket_shift." (".$data->user_shift->shift->nama_shift.") ".Carbon\Carbon::parse($data->user_shift->shift->hadir_shift)->format('H:i')."-".Carbon\Carbon::parse($data->user_shift->shift->pulang_shift)->format('H:i') }} @else {{ "-" }} @endif</span>
                     </li>
                     <li class="list-group-item px-1">
                         <div class="d-flex">
@@ -97,12 +105,12 @@
                             <div class="col-6 px-1">
                                 <span class="text-muted">Kordinat Kehadiran</span>
                                 <br>
-                                <span>1234, 1234</span>
+                                <span>{{ $data->lat_hadir.", ".$data->long_hadir }}</span>
                             </div>
                             <div class="col-6 px-1">
                                 <span class="text-muted">Kordinat Kepulangan</span>
                                 <br>
-                                <span>1234, 1234</span>
+                                <span>{{ $data->lat_pulang.", ".$data->long_pulang }}</span>
                             </div>
                         </div>
                     </li>
@@ -110,11 +118,15 @@
                         <div class="d-flex">
                             <div class="col-6 px-1">
                                 <span class="text-start text-muted">Foto Kehadiran</span>
-                                <input id="hadir" name="hadir" class="mt-1 mb-0" type="file" />
+                                <div class="mt-2 rounded" style="border-style: dashed; border-width: 1px; border-color: red">
+                                    <input id="hadir" name="hadir" class="mb-0" type="file" />
+                                </div>
                             </div>
                             <div class="col-6 px-1">
                                 <span class="text-start text-muted">Foto Kepulangan</span>
-                                <input id="pulang" name="pulang" class="mt-1 mb-0" type="file" />
+                                <div class="mt-2 rounded" style="border-style: dashed; border-width: 1px; border-color: red">
+                                    <input id="pulang" name="pulang" class="mb-0" type="file" />
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -144,7 +156,6 @@
         // Get a reference to the file input element
         const inputElement = document.querySelector('input[id="hadir"]');
         const inputElement2 = document.querySelector('input[id="pulang"]');
-
         // Create a FilePond instance
         const pond = FilePond.create(inputElement, {
             allowImagePreview: true,
@@ -154,7 +165,6 @@
             allowImagePreview: true,
             imagePreviewMaxHeight: 300,
         });
-
         FilePond.setOptions({
             server: {
                 url: "{{ route('upload-hadir') }}",

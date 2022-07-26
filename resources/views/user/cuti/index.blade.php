@@ -3,10 +3,6 @@
 @section('title')Cuti | Smartwork @endsection
 
 @push('addon-style')
-<style>
-    .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
-</style>
 @endpush
 
 @section('content')
@@ -30,26 +26,26 @@
     </section>
     <section class="d-flex px-2 mb-2">
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-primary text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-primary">Jatah Cuti Tahunan</p>
-                    <h2 class="font-size-23 fw-bold text-primary">11 Hari</h2>
+                    <p class="fw-regular mb-1 text-white">Jatah Cuti Tahunan</p>
+                    <h2 class="font-size-23 fw-bold text-white">11 Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-danger text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-danger">Telah Digunakan</p>
-                    <h2 class="font-size-23 fw-bold text-danger">2 Hari</h2>
+                    <p class="fw-regular mb-1 text-white">Telah Digunakan</p>
+                    <h2 class="font-size-23 fw-bold text-white">2 Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-warning text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-success">Sisa Cuti</p>
-                    <h2 class="font-size-23 fw-bold text-success">9 Hari</h2>
+                    <p class="fw-regular mb-1 text-black">Sisa Cuti</p>
+                    <h2 class="font-size-23 fw-bold text-black">9 Hari</h2>
                 </blockquote>
             </div>
         </div>
