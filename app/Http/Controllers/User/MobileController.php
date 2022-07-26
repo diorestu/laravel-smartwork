@@ -139,16 +139,6 @@ class   MobileController extends Controller
         ]);
     }
 
-    public function gaji()
-    {
-        $id = Auth::user()->id;
-        $gaji = Payroll::where('id_user', $id)->orderBy('id_payroll', 'DESC')->get();
-        return view('user.gaji', [
-            'id'      => Auth::user(),
-            'gaji'  => $gaji,
-        ]);
-    }
-
     public function jadwal()
     {
         $id     = Auth::user()->id;

@@ -6730,6 +6730,10 @@ body[data-layout-mode=dark] .pricing-table-bg {
 .rounded-lg{
     border-radius: 20px;
 }
+.rounded-lg-top {
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important
+}
 .rounded-circle{
     border-radius: 50%;
 }

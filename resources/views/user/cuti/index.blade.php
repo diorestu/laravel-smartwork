@@ -3,10 +3,6 @@
 @section('title')Cuti | Smartwork @endsection
 
 @push('addon-style')
-<style>
-    .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
-</style>
 @endpush
 
 @section('content')
@@ -30,26 +26,26 @@
     </section>
     <section class="d-flex px-2 mb-2">
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-primary text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-primary">Jatah Cuti Tahunan</p>
-                    <h2 class="font-size-23 fw-bold text-primary">11 Hari</h2>
+                    <p class="fw-regular mb-1 text-white">Jatah Cuti Tahunan</p>
+                    <h2 class="font-size-23 fw-bold text-white">11 Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-danger text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-danger">Telah Digunakan</p>
-                    <h2 class="font-size-23 fw-bold text-danger">2 Hari</h2>
+                    <p class="fw-regular mb-1 text-white">Telah Digunakan</p>
+                    <h2 class="font-size-23 fw-bold text-white">2 Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-light text-center p-2 mx-1 mb-0">
+            <div class="card bg-warning text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-success">Sisa Cuti</p>
-                    <h2 class="font-size-23 fw-bold text-success">9 Hari</h2>
+                    <p class="fw-regular mb-1 text-black">Sisa Cuti</p>
+                    <h2 class="font-size-23 fw-bold text-black">9 Hari</h2>
                 </blockquote>
             </div>
         </div>
@@ -62,9 +58,11 @@
                 @csrf
                 <div class="d-flex">
                     <div class="col-12 pr-0 input-group">
-                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        <div class="input-group-text"><i class="font-size-18 bx bx-filter-alt"></i></div>
                         <select class="form-control" name="hari" id="example-month-input">
-                            <option value="{{ date("Y") }}">{{ date("Y") }}</option>
+                            @for($tahun = date("Y"); $tahun >= (date("Y")-2); $tahun--)
+                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                            @endfor
                         </select>
                     </div>
                 </div>
@@ -112,7 +110,7 @@
 @push('addon-script')
 <script>
     $('#example-month-input').change(function() {
-        var url = "";
+        var url = "{{ route('leave.riwayat') }}";
         var date = $(this).val();
         if (date != "") {
             $.ajaxSetup({
@@ -144,4 +142,18 @@
         }
     });
 </script>
+@if (Session::has('success'))
+    <script type="text/javascript">
+        alertify.set('notifier','position', 'top-right');
+        alertify.success('{{ \Session::get('success') }}');
+        // Swal.fire('Berhasil', '{{ \Session::get('success') }}', 'success')
+    </script>
+@endif
+@if (Session::has('error'))
+    <script type="text/javascript">
+        alertify.set('notifier','position', 'top-right');
+        alertify.error('{{ \Session::get('error') }}');
+        // Swal.fire('Gagal', '{{ \Session::get('error') }}', 'error')
+    </script>
+@endif
 @endpush

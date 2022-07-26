@@ -5,12 +5,14 @@
 @push('addon-style')
 <style>
     .no-border { border: none !important; }
+    .main-content { overflow: inherit; }
+    .child_i { position: absolute; top:-150px; width: 100%; display: block; }
 </style>
 @endpush
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:250px;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
@@ -27,9 +29,9 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="card m-2 rounded-sm">
-            <form action="{{ route('leave.store') }}" method="post" id="myForm">
+    <section class="parent">
+        <form class="child_i" action="{{ route('leave.store') }}" method="post" id="myForm">
+            <div class="card m-2 rounded-sm">
                 @method('POST')
                 @csrf
                 <div class="card-body px-2 py-1">
@@ -44,11 +46,11 @@
                         </li>
                         <li class="list-group-item px-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Hari Cuti</span>
-                            <input id="my-input" class="form-control text-dark mt-1" type="date" name="cuti_awal" required>
+                            <input id="cuti_awal" class="form-control text-dark mt-1" type="date" name="cuti_awal" required>
                         </li>
                         <li class="list-group-item px-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Jumlah Hari Cuti</span>
-                            <select id="cuti_jenis" class="form-select text-dark mt-1" name="id_cuti_jenis">
+                            <select id="cuti_total" class="form-select text-dark mt-1" name="cuti_total">
                                 @for($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}">{{ $i }} hari</option>
                                 @endfor
@@ -60,17 +62,15 @@
                         </li>
                     </ul>
                 </div>
-            </form>
-        </div>
-    </section>
-    <section>
-        <div class="col=12">
-            <div class="fixed-bottom mb-0 card p-2">
-                <button type="submit" class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white">
-                    <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
-                </button>
             </div>
-        </div>
+            <div class="col=12">
+                <div class="fixed-bottom mb-0 card px-2 pb-4 pt-2 rounded-lg-top">
+                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-lg">
+                        <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
+                    </button>
+                </div>
+            </div>
+        </form>
     </section>
     <br>
     <br>

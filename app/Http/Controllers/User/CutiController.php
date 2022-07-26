@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CutiController extends Controller
 {
+    public function riwayat(Request $request)
+    {
+        $tahun          = $request->hari;
+        $id_user        = Auth::user()->id;
+        $cuti           = Cuti::where('id_user', $id_user)
+                        ->whereYear('cuti_awal', $tahun)
+                        ->orderBy('cuti_awal', 'DESC')->get();
+        return view('user.cuti.data.view_data_riwayat', [
+            'id'      => Auth::user(),
+            'data'  => $cuti,
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +30,11 @@ class CutiController extends Controller
      */
     public function index()
     {
+        $tahun  = date("Y");
         $id     = Auth::user()->id;
-        $data   = Cuti::where('id_user', $id)->latest()->take(6)->get();
+        $data   = Cuti::where('id_user', $id)
+                ->whereYear('cuti_awal', $tahun)
+                ->latest()->take(6)->get();
         return view('user.cuti.index', [
             'data' => $data,
         ]);
@@ -47,21 +62,19 @@ class CutiController extends Controller
      */
     public function store(Request $request)
     {
-        $r  = $request->all();
-        $id = Auth::user()->id;
-        // hitung total hari
-        $mulai   = Carbon::parse($r['cuti_awal']);
-        $selesai = Carbon::parse($r['cuti_akhir']);
-        $diff    = $selesai->diffInDays($mulai);
-        // Prepare Data Cuti
-        $r['id_user'] = $id;
-        $r['cuti_status'] = 'PENGAJUAN';
-        $r['cuti_total'] = $diff + 1;
+        $r                  = $request->all();
+        $id                 = Auth::user()->id;
+        $mulai              = Carbon::parse($r['cuti_awal']);
+        $total_hari         = $r['cuti_total'];
+        $r['id_user']       = $id;
+        $r['cuti_status']   = 'PENGAJUAN';
+        $r['cuti_akhir']    = $mulai->addDays($total_hari-1);
         try {
             Cuti::create($r);
-            return redirect()->route('leave.index');
+            return redirect()->route('leave.index')->with('success', 'Berhasil mengajukan cuti');
         } catch (\Illuminate\Database\QueryException $e) {
-            abort(500, $e->getMessage());
+            // abort(500, $e->getMessage());
+            return redirect()->route('leave.index')->with('error', 'Gagal mengajukan cuti');
         }
     }
 
@@ -80,29 +93,6 @@ class CutiController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -110,6 +100,11 @@ class CutiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Cuti::findOrFail($id)->delete();
+            return redirect()->route('leave.index')->with('success', 'Berhasil membatalkan cuti');
+        } catch (\Throwable $th) {
+            return redirect()->route('leave.index')->with('error', 'Gagal membatalkan cuti');
+        }
     }
 }

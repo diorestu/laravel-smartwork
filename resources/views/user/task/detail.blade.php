@@ -7,8 +7,9 @@
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 <style>
     .no-border td { border: none; }
-    .damas { background-color: #f2f2f2; }
-    .map { height: 200px; }
+    .filepond--label-action { color: #cc2b4e !important; }
+    .filepond--panel-root { background-color: #f2f2f2; }
+    body[data-layout-mode=dark] .filepond--panel-root { background-color: #30373f !important }
 </style>
 @endpush
 
@@ -62,8 +63,8 @@
                     </li>
                     <li class="list-group-item px-1">
                         <span class="text-start text-muted">Foto Aktivitas</span>
-                        <div class="mt-2 rounded" style="border-style: dashed; border-width: 1px; border-color: green">
-                            <input id="avatar" type="file" name="avatar" class="filepond mb-0 mt-0" />
+                        <div class="mt-2 rounded" style="border-style: dashed; border-width: 1px; border-color: red">
+                            <input id="avatar" type="file" name="avatar" class="filepond bg-light text-danger mb-0 mt-0" />
                         </div>
                     </li>
                 </ul>
@@ -82,9 +83,7 @@
     });
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileValidateType);
-    // Get a reference to the file input element
     const inputElement = document.querySelector('input[id="avatar"]');
-    // Create a FilePond instance
     const pond = FilePond.create(inputElement, {
         allowImagePreview: true,
         imagePreviewMaxHeight: 300,

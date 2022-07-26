@@ -37,7 +37,8 @@
                 @method('POST')
                 @csrf
                 <div class="d-flex">
-                    <div class="col-12 pr-0">
+                    <div class="col-12 pr-0 input-group">
+                        <div class="input-group-text"><i class="font-size-18 bx bx-filter-alt"></i></div>
                         <input class="form-control" type="month" value="{{ date("Y-m") }}" name="hari" id="example-month-input">
                     </div>
                 </div>
@@ -69,19 +70,19 @@
                             <tr class='no-border'>
                                 <td class='px-0 py-1'>Shift</td>
                                 <td class='px-0 py-1'>:</td>
-                                <td class='px-0 py-1'></td>
+                                <td class='px-2 py-1'>@if ($item->usershift_id != 0) {{ $item->user_shift->shift->ket_shift }} @else {{ "-" }} @endif</td>
                             </tr>
                             <tr class='no-border'>
                                 <td class='px-0 py-1'>Aksi</td>
                                 <td class='px-0 py-1'>:</td>
-                                <td class='px-0 py-1'> &nbsp;&nbsp;<a href='{{ route('absen.show', $item->id) }}'>Detail</a></td>
+                                <td class='px-2 py-1'><a href='{{ route('absen.show', $item->id) }}'>Detail</a></td>
                             </tr>
                             ">
                             <td class="fw-bold text-uppercase">{{ TanggalBulan($item->jam_hadir) }}</td>
                             <td class="font-size-12">{{ TampilJamMenit($item->jam_hadir) }}</td>
-                            <td class="font-size-12">{{ $item->jam_pulang ? TampilJamMenit($item->jam_pulang) : 'Belum Absen' }}</td>
+                            <td class="font-size-12">{{ $item->jam_pulang ? TampilJamMenit($item->jam_pulang) : '-' }}</td>
                             <td class="dt-control text-end">
-                                <a class="btn-dark btn-sm btn-circle" href="javascript:void(0);"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-outline-danger btn-sm btn-circle" href="javascript:void(0);"><i class="bx bx-caret-down"></i></a>
                             </td>
                         </tr>
                     @empty
