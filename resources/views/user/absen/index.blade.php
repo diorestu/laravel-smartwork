@@ -30,7 +30,6 @@
             </div>
         </div>
     </section>
-
     <main class="px-4 parent pb-0">
         <div class="child card rounded-md mb-0 px-0">
             <div class="card-body">
@@ -47,40 +46,67 @@
                 </div>
                 {{-- <hr> --}}
                 <div class="row mt-4">
-                    @if ($absen)
-                        <div class="col-6">
-                            <a id="btn"
-                                class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $in ? 'disabled' : '' }}"
-                                href="{{ route('absen.create') }}">
-                                IN {{ $in ? '- ' . tampilJamMenit($absen->jam_hadir) : 'false' }}</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn"
-                                class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
-                                OUT {{ $out ? '- '.tampilJamMenit($absen->jam_pulang) : '' }}</a>
-                            {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
-                        </div>
-                    @elseif(!$shift || $shift == null)
-                        <div class="col-12 text-center">
-                            {{-- <p class="font-medium mb-2">Atur Shift Anda Terlebih Dahulu</p> --}}
-                            <a href="{{ route('user.get.shift') }}" class="btn btn-primary w-100 rounded-md">Pilih Shift</a>
-                        </div>
-                    @else
-                        <div class="col-6">
-                            <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100"
-                                href="{{ route('absen.create') }}">
-                                CLOCK IN</a>
-                        </div>
-                        <div class="col-6">
-                            <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100 disabled">
-                                CLOCK OUT</a>
-                        </div>
-                    @endif
+                        @if ($absen)
+                            <div class="col-6">
+                                <a id="btn"
+                                    class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $in ? 'disabled' : '' }}"
+                                    href="{{ route('absen.create') }}">
+                                    IN {{ $in ? '- ' . tampilJamMenit($absen->jam_hadir) : 'false' }}</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn"
+                                    class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
+                                    OUT {{ $out ? '- '.tampilJamMenit($absen->jam_pulang) : '' }}</a>
+                                {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
+                            </div>
+                        @elseif(!$shift || $shift == null)
+                            @if($cc->is_using_shift != 0)
+                            <div class="col-12 text-center">
+                                {{-- <p class="font-medium mb-2">Atur Shift Anda Terlebih Dahulu</p> --}}
+                                <a href="{{ route('user.get.shift') }}" class="btn btn-primary w-100 rounded-md">Pilih Shift</a>
+                            </div>
+                            @else
+                                @if ($absen)
+                                <div class="col-6">
+                                    <a id="btn"
+                                        class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $in ? 'disabled' : '' }}"
+                                        href="{{ route('absen.create') }}">
+                                        IN {{ $in ? '- ' . tampilJamMenit($absen->jam_hadir) : 'false' }}</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{{ $out ? '' : route('absen.edit', $absen->id) }}" id="btn"
+                                        class="rounded-md font-size-16 fw-medium btn btn-primary py-2 mt-2 w-100 {{ $out ? 'disabled' : '' }}">
+                                        OUT {{ $out ? '- '.tampilJamMenit($absen->jam_pulang) : '' }}</a>
+                                    {{-- href="{{ $out ? '' : route('absen.edit', $absen->id) }}" --}}
+                                </div>
+                                @else
+                                <div class="col-6">
+                                    <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100"
+                                        href="{{ route('absen.create') }}">
+                                        CLOCK IN</a>
+                                </div>
+                                <div class="col-6">
+                                    <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100 disabled">
+                                        CLOCK OUT</a>
+                                </div>
+                                @endif
+                            @endif
+                        @else
+                            <div class="col-6">
+                                <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100"
+                                    href="{{ route('absen.create') }}">
+                                    CLOCK IN</a>
+                            </div>
+                            <div class="col-6">
+                                <a id="btn" class="rounded-md font-size-16 fw-bold btn btn-primary py-2 mt-2 w-100 disabled">
+                                    CLOCK OUT</a>
+                            </div>
+                        @endif
                 </div>
             </div>
         </div>
     </main>
-
+    {{-- data absensi --}}
     <section>
         <div>
             <div class="px-4 d-flex justify-content-between align-items-baseline">

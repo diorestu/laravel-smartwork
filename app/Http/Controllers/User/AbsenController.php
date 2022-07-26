@@ -28,6 +28,8 @@ class AbsenController extends Controller
         $in         = false;
         $out        = false;
         $id         = Auth::user()->id;
+        $id_admin   = Auth::user()->id_admin;
+        $id_cabang  = Auth::user()->id_cabang;
         // Cek Shift
         $shift      = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
         // Cek Absensi Terakhir
@@ -43,23 +45,42 @@ class AbsenController extends Controller
                                 ->whereMonth('jam_hadir', '=', $bulan)
                                 ->orderBy('jam_hadir', 'DESC')->take(31)->get();
         // Set Utility
+        $cc         = CabangConfig::where('id_admin', $id_admin)->where('id_cabang', $id_cabang)->first();
         $title      = null;
         $d          = false;
-        if(!$shift){
-            if ($absenKemarin) {
-                $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
-                $absen = $absenKemarin;
-                $in    = true;
-                if ($absen->jam_pulang) {
-                    $out = true;
+        if ($cc->is_using_shift != 0) {
+            if (!$shift) {
+                if ($absenKemarin) {
+                    $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
+                    $absen = $absenKemarin;
+                    $in    = true;
+                    if ($absen->jam_pulang) {
+                        $out = true;
+                    }
+                }
+                $title  = 'Absen Tidak Tersedia';
+                $d      = true;
+            } elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
+                $title  = 'Tidak Ada Shift';
+                $d      = true;
+            } else {
+                if ($absenHariIni) {
+                    $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
+                    $absen = $absenHariIni;
+                    $in    = true;
+                    if ($absen->jam_pulang) {
+                        $out = true;
+                    }
+                } else {
+                    $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
+                    $absen = $absenKemarin;
+                    $in    = true;
+                    if ($absen->jam_pulang) {
+                        $out = true;
+                    }
                 }
             }
-            $title  = 'Absen Tidak Tersedia';
-            $d      = true;
-        }elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
-            $title  = 'Tidak Ada Shift';
-            $d      = true;
-        }else{
+        } else {
             if ($absenHariIni) {
                 $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $today)->first();
                 $absen = $absenHariIni;
@@ -74,8 +95,6 @@ class AbsenController extends Controller
                 if ($absen->jam_pulang) {
                     $out = true;
                 }
-            } else {
-                // do nothing
             }
         }
         // dd($rwt_shift);
@@ -88,6 +107,7 @@ class AbsenController extends Controller
             'title'      => $title,
             'in'         => $in,
             'out'        => $out,
+            'cc'         => $cc,
         ]);
     }
 
@@ -171,7 +191,7 @@ class AbsenController extends Controller
     public function show($id)
     {
         $id_admin       = Auth::user()->id_admin;
-        $id_cabang       = Auth::user()->id_cabang;
+        $id_cabang      = Auth::user()->id_cabang;
         $data           = Absensi::findOrFail($id);
         $shift          = UserShift::where('id_shift', $data->usershift_id)->first();
         $cc             = CabangConfig::where('id_admin', $id_admin)->where('id_cabang', $id_cabang)->first();
