@@ -9,6 +9,7 @@ use App\Models\Payroll;
 use App\Models\UserShift;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pengumuman;
 use App\Models\Shift;
 use App\Models\UserAsuransi;
 use App\Models\UserConfig;
@@ -104,67 +105,8 @@ class   MobileController extends Controller
 
     public function index()
     {
-        $id        = Auth::user()->id;
-        $shift     = UserShift::where('id_user', $id)->whereDate('tanggal_shift', date('Y-m-d'))->first();
-        $absen     = Absensi::whereDate('jam_hadir', date('Y-m-d'))->where('id_user', $id)->first();
-        $absenLast = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->first();
-        $riwayat   = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
-        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
-                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-                    })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
-                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-                    })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis','LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $title     = null;
-        $d         = false;
-        if (!$shift) {
-            $title = 'Absen Tidak Tersedia';
-            $d = true;
-        } elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
-            $title = 'Tidak Ada Shift';
-            $d = true;
-        }
-
-        // dd($cuti);
         return view('user.home', [
-            'absen'   => $absen,
-            'riwayat' => $riwayat,
-            'cuti'    => $cuti,
-            'sakit'   => $sakit,
-            'terbaru' => $absenLast,
-            'shift'   => $shift,
-            'id'      => Auth::user(),
-            'd'       => $d,
-            'title'   => $title
-        ]);
-    }
-
-    public function jadwal()
-    {
-        $id     = Auth::user()->id;
-        $jadwal = UserShift::where('id_user', $id)
-                ->whereYear('tanggal_shift', date('Y'))
-                ->whereMonth('tanggal_shift', date('m'))
-                ->orderBy('tanggal_shift', 'ASC')->get();
-        return view('user.jadwal.index', [
-            'id'      => Auth::user(),
-            'jadwal'  => $jadwal,
-        ]);
-    }
-    public function jadwal_riwayat(Request $request)
-    {
-        $hari       = $request->hari;
-        $temp       = explode("-", $hari);
-        $tahun      = $temp[0];
-        $bulan      = $temp[1];
-        $id         = Auth::user()->id;
-        $jadwal     = UserShift::where('id_user', $id)
-                    ->whereYear('tanggal_shift', $tahun)
-                    ->whereMonth('tanggal_shift', $bulan)
-                    ->orderBy('tanggal_shift', 'ASC')->get();
-        return view('user.jadwal.data.view_data_riwayat', [
-            'id'      => Auth::user(),
-            'jadwal'  => $jadwal,
+            'id' => Auth::user(),
         ]);
     }
 

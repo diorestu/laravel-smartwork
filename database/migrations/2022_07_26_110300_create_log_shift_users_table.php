@@ -19,6 +19,9 @@ class CreateLogShiftUsersTable extends Migration
             $table->date('tgl_shift');
             $table->integer('id_shift_lama');
             $table->integer('id_shift_baru');
+            $table->text('keterangan');
+            $table->date('approved_date')->nullable();
+            $table->integer('approved_by')->nullable();
             $table->enum('status', ['menunggu', 'ditolak', 'disetujui'])->default('menunggu');
             $table->timestamps();
         });

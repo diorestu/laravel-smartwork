@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Cuti;
 use App\Models\Absensi;
+use App\Models\Pengumuman;
 use Livewire\Component;
 use App\Models\UserShift;
 use Illuminate\Support\Facades\Auth;
@@ -14,37 +15,17 @@ class Home extends Component
 
     public function render()
     {
-        $id        = Auth::user()->id;
-        $shift     = UserShift::where('id_user', $id)->whereDate('tanggal_shift', date('Y-m-d'))->first();
-        $absen     = Absensi::whereDate('jam_hadir', date('Y-m-d'))->where('id_user', $id)->first();
-        $absenLast = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->first();
-        $riwayat   = Absensi::where('id_user', $id)->orderBy('jam_hadir', 'DESC')->take(5)->get();
-        $cuti      = Cuti::leftJoin('cuti_jenis', function ($join) {
-                        $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-                    })->where('cutis.id_user', $id)->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $sakit      = Cuti::leftJoin('cuti_jenis', function ($join) {
-            $join->on('cutis.id_cuti_jenis', '=', 'cuti_jenis.id');
-        })->where('cutis.id_user', $id)->where('cuti_jenis.cuti_nama_jenis', 'LIKE', '%' . 'Sakit' . '%')->where('cutis.cuti_status', 'DITERIMA')->sum('cuti_total');
-        $title     = null;
-        $d         = false;
-        if (!$shift) {
-            $title = 'Absen Tidak Tersedia';
-            $d = true;
-        } elseif ($shift->shift->ket_shift == 'Libur' || $shift->shift->hadir_shift == null) {
-            $title = 'Tidak Ada Shift';
-            $d = true;
-        }
-
+        $id_admin       = Auth::user()->id_admin;
+        $id_divisi      = Auth::user()->id_divisi;
+        $pengumuman     = Pengumuman::where('id_admin', $id_admin)
+                        ->where('id_divisi', $id_divisi)
+                        ->orWhere('id_divisi', '0')
+                        ->whereYear('created_at', date('Y'))
+                        ->whereMonth('created_at', date('m'))
+                        ->orderBy('created_at', 'DESC')->take(5)->get();
         return view('livewire.home', [
-            'absen'   => $absen,
-            'riwayat' => $riwayat,
-            'cuti'    => $cuti,
-            'sakit'   => $sakit,
-            'terbaru' => $absenLast,
-            'shift'   => $shift,
-            'id'      => Auth::user(),
-            'd'       => $d,
-            'title'   => $title
+            'id'                => Auth::user(),
+            'data_pengumuman'   => $pengumuman,
         ]);
     }
 

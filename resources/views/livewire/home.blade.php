@@ -154,7 +154,7 @@
                 </a>
             </div>
             <div class="card rounded-md me-3" style="min-height: 70px; min-width:120px;">
-                <a href="{{ route('leave.create') }}">
+                <a href="{{ route('schedule.create') }}">
                     <div class="card-body py-2 px-3">
                         <i class="bi bi-calendar-week font-size-20 px-0" style="color: #ccc;"></i>
                         <h3 class="fw-light text-black-50 font-size-12 mt-1 mb-0">Request</h3>
@@ -196,6 +196,50 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-3 mt-4">
+        <div class="mt-0">
+            <div class="card mb-2 rounded">
+                <div class="card-header p-3" style="background-color: #B0141C !important;">
+                    <h5 class="my-0 text-white">Pengumuman</h5>
+                </div>
+                @forelse($data_pengumuman as $item_ann)
+                <div class="card-body overflow-hidden position-relative p-2 mb-2">
+                    <div>
+                        <i class="bx bx-info-circle widget-box-1-icon text-primary"></i>
+                    </div>
+                    <div class="d-flex">
+                        <div class="faq-count">
+                            <div class="avatar-lg m-auto" style="height: 3rem;">
+                                <span class="avatar-title rounded bg-soft-danger text-danger font-size-13 fw-bold">
+                                    {{ TanggalBulan($item_ann->created_at) }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex-1 ms-3">
+                            <h5 class="mt-2">{{ $item_ann->judul_pengumuman }}</h5>
+                            <p class="mt-3 mb-0 fw-semibold"><i class="text-primary fa fa-bullhorn"></i>&nbsp; @if ($item_ann->id_divisi != 0) {{ $item_ann->divisi->div_title }} @else {{ "Semua Divisi" }} @endif</p>
+                            <p class="text-muted mt-1 mb-0">
+                                {{ Str::limit(strip_tags($item_ann->desc_pengumuman), 300, ' ...') }}
+                            </p>
+                            <div class="mt-4">
+                                <a href="{{ route('notifikasi.show', $item_ann->id) }}" class="text-primary fw-medium"> <u>Baca Lebih Detail </u> <i class="mdi mdi-arrow-right ms-1 align-middle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="card-body mb-2 py-4 rounded">
+                    <div class="text-center">
+                        <span class="font-size-16 fw-bold">Tidak ada pengumuman di bulan ini <br>
+                            <small class="fw-medium text-muted">Untuk saat ini belum ada pengumuman di perusahaan kamu.</small>
+                        </span>
+                    </div>
+                </div>
+                @endforelse
             </div>
         </div>
     </section>

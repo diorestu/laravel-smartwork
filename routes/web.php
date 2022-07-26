@@ -35,6 +35,7 @@ use App\Http\Controllers\User\UserLemburController;
 use App\Http\Controllers\Admin\UserConfigController;
 use App\Http\Controllers\Admin\ViewAktivitasController;
 use App\Http\Controllers\user\UserPaySlipController;
+use App\Http\Controllers\User\UserScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -245,13 +246,14 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('payslip/download/{id}', [UserPaySlipController::class, 'cetak_slipgaji_payroll'])->name('payslip.download');
     Route::resource('payslip',     UserPaySlipController::class);
     // Jadwal
-    Route::get('schedule',           [MobileController::class, 'jadwal'])->name('schedule.index');
-    Route::post('schedule/riwayat',  [MobileController::class, 'jadwal_riwayat'])->name("schedule.riwayat");
+    Route::post('schedule/riwayat',  [UserScheduleController::class, 'jadwal_riwayat'])->name("schedule.riwayat");
+    Route::post('schedule/cek',      [UserScheduleController::class, 'jadwalCek'])->name("schedule.cek");
+    Route::resource('schedule',      UserScheduleController::class);
     // Pengumuman
-    Route::post('notifikasi/riwayat', [UserPengumumanController::class, 'riwayat'])->name("notifikasi.riwayat");
-    Route::resource('notifikasi',   UserPengumumanController::class);
+    Route::post('notifikasi/riwayat',   [UserPengumumanController::class, 'riwayat'])->name("notifikasi.riwayat");
+    Route::resource('notifikasi',       UserPengumumanController::class);
     // Cuti
-    Route::post('leave/riwayat',   [CutiController::class, 'riwayat'])->name("leave.riwayat");
+    Route::post('leave/riwayat',    [CutiController::class, 'riwayat'])->name("leave.riwayat");
     route::resource('leave',        CutiController::class);
     // Lembur
     Route::post('overtime/riwayat', [UserLemburController::class, 'riwayat'])->name("overtime.riwayat");
