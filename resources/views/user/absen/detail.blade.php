@@ -114,6 +114,7 @@
                             </div>
                         </div>
                     </li>
+                    @if ($cc->is_photo_enabled != 0)
                     <li class="list-group-item px-1">
                         <div class="d-flex">
                             <div class="col-6 px-1">
@@ -130,6 +131,7 @@
                             </div>
                         </div>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

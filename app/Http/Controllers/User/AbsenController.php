@@ -170,11 +170,15 @@ class AbsenController extends Controller
      */
     public function show($id)
     {
+        $id_admin       = Auth::user()->id_admin;
+        $id_cabang       = Auth::user()->id_cabang;
         $data           = Absensi::findOrFail($id);
         $shift          = UserShift::where('id_shift', $data->usershift_id)->first();
+        $cc             = CabangConfig::where('id_admin', $id_admin)->where('id_cabang', $id_cabang)->first();
         return view('user.absen.detail', [
-            'data'          => $data,
-            'shift'         => $shift,
+            'data'     => $data,
+            'shift'    => $shift,
+            'cc'       => $cc,
         ]);
     }
 
