@@ -65,7 +65,6 @@ class   MobileController extends Controller
         }
     }
 
-
     public function changePassword()
     {
         $i  = Auth::user()->id;
@@ -105,6 +104,18 @@ class   MobileController extends Controller
             'id' => $i,
             'asuransi' => $asuransi,
         ]);
+    }
+
+    public function bantuan() {
+        return view('user.bantuan', []);
+    }
+
+    public function faq() {
+        return view('user.faq', []);
+    }
+
+    public function hubungiAdmin() {
+        return view('user.hubungiAdmin', []);
     }
 
     public function index()

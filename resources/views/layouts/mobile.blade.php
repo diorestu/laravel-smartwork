@@ -42,10 +42,6 @@
     </style>
     @include('includes.style')
     @stack('addon-style')
-    {{-- @livewireStyles
-    @livewireScripts
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script> --}}
 </head>
 <body data-layout="horizontal" data-key="body" data-layout-mode="light" data-topbar="dark">
     <div id="layout-wrapper">

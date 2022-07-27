@@ -1,5 +1,5 @@
 <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('backend-assets/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('backend-assets/images/favicon.png') }}">
 <!-- alertifyjs default themes  Css -->
 <link href="{{ asset('backend-assets/libs/alertifyjs/build/css/alertify.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend-assets/libs/alertifyjs/build/css/themes/default.min.css') }}" rel="stylesheet" type="text/css" />

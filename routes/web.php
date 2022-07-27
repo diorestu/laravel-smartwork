@@ -229,9 +229,9 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('info-payroll',     [MobileController::class, 'infoPayroll'])->name('user.infoPayroll');
     Route::get('change-password',  [MobileController::class, 'changePassword'])->name('user.pass');
     Route::post('change-password', [MobileController::class, 'postchangePassword'])->name('user.pass.save');
-    Route::get('bantuan',          [MobileController::class, 'infoPayroll'])->name('user.bantuan');
-    Route::get('faq',              [MobileController::class, 'infoPayroll'])->name('user.faq');
-    Route::get('hubungi-admin',    [MobileController::class, 'infoPayroll'])->name('user.hubungiAdmin');
+    Route::get('bantuan',          [MobileController::class, 'bantuan'])->name('user.bantuan');
+    Route::get('faq',              [MobileController::class, 'faq'])->name('user.faq');
+    Route::get('hubungi-admin',    [MobileController::class, 'hubungiAdmin'])->name('user.hubungiAdmin');
     // Absen
     Route::get('set-shift',        [MobileController::class, 'getShift'])->name('user.get.shift');
     Route::post('set-shift',       [MobileController::class, 'postShift'])->name('user.post.shift');
