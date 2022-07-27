@@ -29,7 +29,7 @@
             <div class="card bg-primary text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
                     <p class="fw-regular mb-1 text-white">Jatah Cuti Tahunan</p>
-                    <h2 class="font-size-23 fw-bold text-white">{{ $jc }} Hari</h2>
+                    <h2 id="jc" class="font-size-23 fw-bold text-white">{{ $jc }} Hari</h2>
                 </blockquote>
             </div>
         </div>
@@ -37,7 +37,7 @@
             <div class="card bg-danger text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
                     <p class="fw-regular mb-1 text-white">Telah Digunakan</p>
-                    <h2 class="font-size-23 fw-bold text-white">{{ $jumcuti }} Hari</h2>
+                    <h2 id="jumcuti" class="font-size-23 fw-bold text-white">{{ $jumcuti }} Hari</h2>
                 </blockquote>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="card bg-warning text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
                     <p class="fw-regular mb-1 text-black">Sisa Cuti</p>
-                    <h2 class="font-size-23 fw-bold text-black">{{ $sisacuti }} Hari</h2>
+                    <h2 id="sisacuti" class="font-size-23 fw-bold text-black">{{ $sisacuti }} Hari</h2>
                 </blockquote>
             </div>
         </div>
@@ -131,7 +131,11 @@
                     Swal.showLoading();
                 },
                 success: function(result) {
-                    $('#content').html(result);
+                    const jresult = JSON.parse(result);
+                    $('#content').html(jresult.content);
+                    $('#jc').html(jresult.jc);
+                    $('#jumcuti').html(jresult.jumcuti);
+                    $('#sisacuti').html(jresult.sisacuti);
                 },
                 complete: function(data) {
                     Swal.close();

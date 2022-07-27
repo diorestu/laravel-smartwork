@@ -16,12 +16,31 @@ class CutiController extends Controller
     {
         $tahun          = $request->hari;
         $id_user        = Auth::user()->id;
+        $id_cabang      = Auth::user()->id_cabang;
         $cuti           = Cuti::where('id_user', $id_user)
                         ->whereYear('cuti_awal', $tahun)
                         ->orderBy('cuti_awal', 'DESC')->get();
+
+        $cutiambil      = Cuti::where('id_user', $id_user)
+                        ->whereYear('cuti_awal', $tahun)
+                        ->where('cuti_status', 'DITERIMA')->get();
+        $jumcuti        = $cutiambil->sum('cuti_total');
+
+        $jatah          = CabangCuti::where('id_cabang', $id_cabang)->where('tahun_periode', $tahun)->first();
+        if ($jatah != null) {
+            $jc             = $jatah->jatah_cuti;
+            $sisacuti       = $jc - $jumcuti;
+        } else {
+            $jc             = 0;
+            $sisacuti       = $jumcuti;
+        }
+
         return view('user.cuti.data.view_data_riwayat', [
             'id'      => Auth::user(),
-            'data'  => $cuti,
+            'data'      => $cuti,
+            'jc'        => $jc,
+            'jumcuti'   => $jumcuti,
+            'sisacuti'  => $sisacuti,
         ]);
     }
     /**
@@ -44,7 +63,7 @@ class CutiController extends Controller
                         ->whereYear('cuti_awal', $tahun)
                         ->where('cuti_status', 'DITERIMA')
                         ->get();
-        $jumcuti        = $cutiambil->count();
+        $jumcuti        = $cutiambil->sum('cuti_total');
         $sisacuti       = $jc-$jumcuti;
 
         return view('user.cuti.index', [
