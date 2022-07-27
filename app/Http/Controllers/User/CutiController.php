@@ -36,11 +36,11 @@ class CutiController extends Controller
         }
 
         return view('user.cuti.data.view_data_riwayat', [
-            'id'      => Auth::user(),
+            'id'        => Auth::user(),
             'data'      => $cuti,
-            'jc'        => $jc,
-            'jumcuti'   => $jumcuti,
-            'sisacuti'  => $sisacuti,
+            'jc'        => $jc . " Hari",
+            'jumcuti'   => $jumcuti . " Hari",
+            'sisacuti'  => $sisacuti . " Hari",
         ]);
     }
     /**

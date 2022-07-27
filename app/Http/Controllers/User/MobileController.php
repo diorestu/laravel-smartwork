@@ -55,10 +55,14 @@ class   MobileController extends Controller
         $data->nama   = $i['nama'];
         $data->email  = $i['email'];
         $data->phone  = $i['phone'];
-        $data->no_rek = $i['no_rek'];
         $data->alamat = $i['alamat'];
-        $data->save();
-        return redirect()->route('user.profil');
+        $data->alamat_ktp = $i['alamat_ktp'];
+        try {
+            $data->save();
+            return redirect()->route('user.data')->with('success', 'Berhasil update profil');
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->route('user.data')->with('error', 'Gagal update profil');
+        }
     }
 
 

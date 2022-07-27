@@ -6,7 +6,7 @@
 <style>
     .no-border { border: none !important; }
     .main-content { overflow: inherit; }
-    .child_i { position: absolute; top:-150px; width: 100%; display: block; }
+    .child_i { position: absolute; top:-170px; width: 100%; display: block; }
 </style>
 @endpush
 
@@ -36,11 +36,14 @@
                 @csrf
                 <div class="card-body px-2 py-1">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Tanggal Tukar Shift</span>
-                            <input id="shift_awal" class="form-control text-dark mt-1" type="date" name="tgl_shift" required>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-calendar-alt"></i></div>
+                                <input id="shift_awal" class="form-control text-dark" type="date" name="tgl_shift" required>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border d-none" id="infoJadwal">
+                        <li class="list-group-item p-2 no-border d-none" id="infoJadwal">
                             <div class="d-flex">
                                 <div class="col-4 px-1">
                                     <span class="text-muted">Shift</span>
@@ -59,24 +62,30 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Shift Baru</span>
-                            <select id="id_shift_baru" class="form-select text-dark mt-1" name="id_shift_baru">
-                                @foreach($shift as $data)
-                                <option value="{{ $data->id }}">{{ $data->nama_shift." : ".$data->ket_shift." (". TampilJamMenit($data->hadir_shift)." - ". TampilJamMenit($data->pulang_shift) .")" }}</option>
-                                @endforeach
-                            </select>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-calendar"></i></div>
+                                <select id="id_shift_baru" class="form-select text-dark" name="id_shift_baru" required>
+                                    @foreach($shift as $data)
+                                    <option value="{{ $data->id }}">{{ $data->nama_shift." : ".$data->ket_shift." (". TampilJamMenit($data->hadir_shift)." - ". TampilJamMenit($data->pulang_shift) .")" }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Keterangan</span>
-                            <textarea id="keterangan" class="form-control text-dark mt-1" name="keterangan" cols="3" required></textarea>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-menu-alt-left"></i></div>
+                                <textarea id="keterangan" class="form-control text-dark" name="keterangan" cols="3" required></textarea>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col=12">
-                <div class="fixed-bottom mb-0 card px-2 pb-4 pt-2 rounded-lg-top">
-                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-lg">
+            <div class="col-12">
+                <div style="padding-bottom:1.5rem;" class="fixed-bottom mb-0 card px-2 pt-2 rounded-sm">
+                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-sm">
                         <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Perubahan Shift
                     </button>
                 </div>

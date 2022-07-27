@@ -42,7 +42,7 @@
         <div class="card mb-2">
             <div class="d-flex">
                 <div class="col-12 pr-0">
-                    <a href="{{ route('kegiatan.create') }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
+                    <a href="{{ route('kegiatan.create') }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100 rounded-sm"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Buat Aktivitas Baru</a>
                 </div>
             </div>
         </div>

@@ -26,26 +26,26 @@
     </section>
     <section class="d-flex px-2 mb-2">
         <div class="col-4">
-            <div class="card bg-primary text-center p-2 mx-1 mb-0">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-white">Jatah Cuti Tahunan</p>
-                    <h2 id="jc" class="font-size-23 fw-bold text-white">{{ $jc }} Hari</h2>
+                    <p class="badge bg-success fw-regular mb-1 text-white px-2 py-1">Cuti Tahunan</p>
+                    <h2 id="jc" class="font-size-23 fw-bold text-dark">{{ $jc }} Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-danger text-center p-2 mx-1 mb-0">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-white">Telah Digunakan</p>
-                    <h2 id="jumcuti" class="font-size-23 fw-bold text-white">{{ $jumcuti }} Hari</h2>
+                    <p class="badge bg-danger fw-regular mb-1 text-white px-2 py-1">Telah Digunakan</p>
+                    <h2 id="jumcuti" class="font-size-23 fw-bold text-dark">{{ $jumcuti }} Hari</h2>
                 </blockquote>
             </div>
         </div>
         <div class="col-4">
-            <div class="card bg-warning text-center p-2 mx-1 mb-0">
+            <div class="card bg-light text-center p-2 mx-1 mb-0">
                 <blockquote class="card-blockquote font-size-12 mb-0">
-                    <p class="fw-regular mb-1 text-black">Sisa Cuti</p>
-                    <h2 id="sisacuti" class="font-size-23 fw-bold text-black">{{ $sisacuti }} Hari</h2>
+                    <p class="badge bg-warning fw-regular mb-1 text-black px-2 py-1">Sisa Cuti</p>
+                    <h2 id="sisacuti" class="font-size-23 fw-bold text-dark">{{ $sisacuti }} Hari</h2>
                 </blockquote>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="card mb-2">
             <div class="d-flex">
                 <div class="col-12 pr-0">
-                    <a href="{{ route("leave.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Ajukan Cuti</a>
+                    <a href="{{ route("leave.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100 rounded-sm"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Ajukan Cuti</a>
                 </div>
             </div>
         </div>

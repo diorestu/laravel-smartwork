@@ -49,7 +49,7 @@
                         @csrf
                         <input id="lokasix" class="form-control" type="hidden" name="lat_hadir">
                         <input id="lokasiy" class="form-control" type="hidden" name="long_hadir">
-                        <button type="submit" id="btn" class="btn btn-primary waves-effect btn-label waves-light w-100 rounded-md d-none py-2"><i class="label-icon fa fa-clock"></i> Clock In</button>
+                        <button type="submit" id="btn" class="btn btn-primary waves-effect btn-label waves-light w-100 rounded-sm d-none py-2"><i class="label-icon fa fa-clock"></i> Clock In</button>
                     </form>
                 </div>
             </div>

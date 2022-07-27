@@ -5,12 +5,14 @@
 @push('addon-style')
 <style>
     .no-border { border: none !important; }
+    .main-content { overflow: inherit; }
+    .child_i { position: absolute; top:-170px; width: 100%; display: block; }
 </style>
 @endpush
 
 @section('content')
     <section class="p-0">
-        <div class="ps-5 pe-4" style="background-color: #B0141C !important;">
+        <div class="ps-5 pe-4" style="background-color: #B0141C !important; height:250px;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <a href="javascript:void(0);" onclick="history.back()" class="text-white"><i data-feather="chevron-left"></i></a>
@@ -27,53 +29,61 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="card m-2 rounded-sm">
-            <form action="{{ route('user.save') }}" method="post" id="myForm">
+    <section class="parent">
+        <form class="child_i" action="{{ route('user.save') }}" method="post" id="myForm">
+            <div class="card m-2 rounded-sm">
                 @method('POST')
                 @csrf
-                <div class="card-body px-2 py-1">
+                <div class="card-body px-2 py-2">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Nama Lengkap</span>
-                            <input id="nama" class="form-control text-dark mt-1" type="text" name="nama" value="{{ $id->nama }}">
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-user"></i></div>
+                                <input id="nama" class="form-control text-dark" type="text" name="nama" value="{{ $id->nama }}" required>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Email</span>
-                            <input id="email" class="form-control text-dark mt-1" type="email" name="email" value="{{ $id->email }}">
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-envelope"></i></div>
+                                <input id="email" class="form-control text-dark" type="email" name="email" value="{{ $id->email }}" required>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Nomor Telepon</span>
-                            <input id="phone" class="form-control text-dark mt-1" type="text" name="phone" value="{{ $id->phone }}">
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-phone"></i></div>
+                                <input id="phone" class="form-control text-dark" type="text" name="phone" value="{{ $id->phone }}" required>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Alamat KTP</span>
-                            <textarea class="form-control text-dark mt-1" id="alamat" name="alamat" id="" cols="10"
-                            rows="2">{{ $id->alamat }}</textarea>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-map"></i></div>
+                                <textarea class="form-control text-dark" id="alamat_ktp" name="alamat_ktp" id="" cols="10"
+                                rows="2" required>{{ $id->alamat_ktp }}</textarea>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item p-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Alamat Tempat Tinggal</span>
-                            <textarea class="form-control text-dark mt-1" id="alamat" name="alamat" id="" cols="10"
-                            rows="2">{{ $id->alamat }}</textarea>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-map"></i></div>
+                                <textarea class="form-control text-dark" id="alamat" name="alamat" id="" cols="10"
+                                rows="2" required>{{ $id->alamat }}</textarea>
+                            </div>
                         </li>
                     </ul>
                 </div>
-            </form>
-        </div>
-    </section>
-    <section>
-        <div class="col=12">
-            <div class="fixed-bottom mb-0 card p-2">
-                <a class="btn btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white" onclick="event.preventDefault();document.getElementById('myForm').submit();">
-                    <i class="label-icon fa fa-check-circle me-2"></i>Update Personal Info
-                </a>
             </div>
-        </div>
+            <div class="col-12">
+                <div style="padding-bottom:1.5rem;" class="fixed-bottom mb-0 card px-2 pt-2 rounded-sm">
+                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-16 text-white rounded-sm">
+                        <i class="label-icon fa fa-check-circle me-2"></i>Update Personal Info
+                    </button>
+                </div>
+            </div>
+        </form>
     </section>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 @endsection
-
-@push('addon-script')
-@endpush

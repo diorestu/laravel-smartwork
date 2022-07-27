@@ -71,13 +71,16 @@ class AbsenController extends Controller
                     if ($absen->jam_pulang) {
                         $out = true;
                     }
-                } else {
+                } elseif ($absenKemarin) {
                     $shift = UserShift::where('id_user', $id)->whereDate('tanggal_shift', $yesterday)->first();
                     $absen = $absenKemarin;
                     $in    = true;
                     if ($absen->jam_pulang) {
                         $out = true;
                     }
+                }
+                else {
+                    // do nothing
                 }
             }
         } else {
@@ -95,6 +98,8 @@ class AbsenController extends Controller
                 if ($absen->jam_pulang) {
                     $out = true;
                 }
+            } else {
+                // do nothing
             }
         }
         // dd($rwt_shift);

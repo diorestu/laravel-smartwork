@@ -37,7 +37,7 @@
         <div class="card mb-2">
             <div class="d-flex">
                 <div class="col-12 pr-0">
-                    <a href="{{ route("schedule.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Ajukan Perubahan Jadwal</a>
+                    <a href="{{ route("schedule.create") }}" class="btn btn-primary waves-effect btn-label waves-light fw-light w-100 rounded-sm"><i class="label-icon fa fa-plus-circle"></i>&nbsp; Ajukan Perubahan Jadwal</a>
                 </div>
             </div>
         </div>

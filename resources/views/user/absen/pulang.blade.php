@@ -52,12 +52,15 @@
                     <form method="post" action="{{ route('absen.update', $data->id) }}" id="myForm" class="px-3">
                         @method('PATCH')
                         @csrf
-                        <div class="form-group text-center">
-                            <textarea onclick="getLocation()" id="keterangan" class="form-control rounded-5 d-none" name="deskripsi" rows="1" placeholder="Tulis keterangan absen pulang Anda"></textarea>
+                        <div class="form-group">
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-menu-alt-left"></i></div>
+                                <textarea onclick="getLocation()" id="keterangan" class="form-control rounded-5 d-none" name="deskripsi" rows="1" placeholder="Tulis keterangan absen pulang Anda"></textarea>
+                            </div>
                         </div>
                         <input id="lokasix" class="form-control" type="hidden" name="lat_pulang">
                         <input id="lokasiy" class="form-control" type="hidden" name="long_pulang">
-                        <button type="submit" id="btn" class="mt-2 btn btn-primary waves-effect btn-label waves-light w-100 rounded-md d-none py-2"><i class="label-icon fa fa-clock"></i> Clock Out</button>
+                        <button type="submit" id="btn" class="mt-2 btn btn-primary waves-effect btn-label waves-light w-100 rounded-sm d-none py-2"><i class="label-icon fa fa-clock"></i> Clock Out</button>
                     </form>
                 </div>
             </div>

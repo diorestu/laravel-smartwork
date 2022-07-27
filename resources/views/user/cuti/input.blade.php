@@ -6,7 +6,7 @@
 <style>
     .no-border { border: none !important; }
     .main-content { overflow: inherit; }
-    .child_i { position: absolute; top:-150px; width: 100%; display: block; }
+    .child_i { position: absolute; top:-170px; width: 100%; display: block; }
 </style>
 @endpush
 
@@ -34,47 +34,60 @@
             <div class="card m-2 rounded-sm">
                 @method('POST')
                 @csrf
-                <div class="card-body px-2 py-1">
+                <div class="card-body px-2 py-3">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-2 no-border">
-                            <span class="fw-light font-size-12 text-muted">Jenis Cuti</span>
-                            <select id="cuti_jenis" class="form-select text-dark mt-1" name="id_cuti_jenis">
-                                @foreach ($jenis as $item)
-                                    <option value="{{ $item->id }}">{{ $item->cuti_nama_jenis }}</option>
-                                @endforeach
-                            </select>
+                        <li class="list-group-item px-2 py-2 no-border">
+                            <span class="fw-light font-size-12 text-muted">Jenis Cuti <span class="text-danger">*</span></span>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-briefcase-alt-2"></i></div>
+                                <select id="cuti_jenis" class="form-select text-dark" name="id_cuti_jenis" required>
+                                    @foreach ($jenis as $item)
+                                        <option value="{{ $item->id }}">{{ $item->cuti_nama_jenis }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
-                            <span class="fw-light font-size-12 text-muted">Hari Cuti</span>
-                            <input id="cuti_awal" class="form-control text-dark mt-1" type="date" name="cuti_awal" required>
+                        <li class="list-group-item px-2 py-2 no-border">
+                            <span class="fw-light font-size-12 text-muted">Hari Cuti <span class="text-danger">*</span></span>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-calendar-alt"></i></div>
+                                <input id="cuti_awal" class="form-control text-dark" type="date" name="cuti_awal" required>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
-                            <span class="fw-light font-size-12 text-muted">Jumlah Hari Cuti</span>
-                            <select id="cuti_total" class="form-select text-dark mt-1" name="cuti_total">
-                                @for($i = 1; $i < 10; $i++)
-                                <option value="{{ $i }}">{{ $i }} hari</option>
-                                @endfor
-                            </select>
+                        <li class="list-group-item px-2 py-2 no-border">
+                            <span class="fw-light font-size-12 text-muted">Jumlah Hari Cuti <span class="text-danger">*</span></span>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx bx-calendar-alt"></i></div>
+                                <select id="cuti_total" class="form-select text-dark" name="cuti_total" required>
+                                    @for($i = 1; $i < 10; $i++)
+                                    <option value="{{ $i }}">{{ $i }} hari</option>
+                                    @endfor
+                                </select>
+                            </div>
                         </li>
-                        <li class="list-group-item px-2 no-border">
+                        <li class="list-group-item px-2 py-2 no-border">
                             <span class="fw-light font-size-12 text-muted">Keterangan Cuti</span>
-                            <textarea id="cuti_deskripsi" class="form-control text-dark mt-1" name="cuti_deskripsi" cols="3" required></textarea>
+                            <div class="col-12 pr-0 input-group mt-1">
+                                <div class="input-group-text"><i class="font-size-18 bx bx-menu-alt-left"></i></div>
+                                <textarea id="cuti_deskripsi" class="form-control text-dark" name="cuti_deskripsi" cols="3" required></textarea>
+                            </div>
+                        </li>
+                        <li class="list-group-item p-2 no-border">
+                            <span class="font-size-11 text-danger">* merupakan field yang tidak boleh kosong</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col=12">
-                <div class="fixed-bottom mb-0 card px-2 pb-4 pt-2 rounded-lg-top">
-                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-14 text-white rounded-lg">
+            <div class="col-12">
+                <div style="padding-bottom:1.5rem;" class="fixed-bottom mb-0 card px-2 pt-2 rounded-sm">
+                    <button type="submit" class="btn btn-lg btn-primary waves-effect btn-label waves-light fw-regular font-size-16 text-white rounded-sm">
                         <i class="label-icon fa fa-check-circle me-2"></i>Ajukan Cuti
                     </button>
                 </div>
             </div>
         </form>
     </section>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 @endsection
 
 @push('addon-script')

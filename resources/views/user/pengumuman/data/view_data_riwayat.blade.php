@@ -20,8 +20,8 @@
             @empty
             <li class="list-group-item px-2 py-3 mb-2">
                 <div class="text-center">
-                    <p class="fw-bold font-size-14 mb-1">Belum ada lembur terinput</p>
-                    <p class="fw-regular font-size-12 text-muted mb-1">Semua lembur yang kamu ajukan akan tampil disini</p>
+                    <p class="fw-bold font-size-14 mb-1">Belum ada pengumuman tersedia</p>
+                    <p class="fw-regular font-size-12 text-muted mb-1">Semua pengumuman dari perusahaan Anda akan tampil disini</p>
                 </div>
             </li>
             @endforelse
