@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CabangCuti;
 use App\Models\CutiJenis;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,13 +31,28 @@ class CutiController extends Controller
      */
     public function index()
     {
-        $tahun  = date("Y");
-        $id     = Auth::user()->id;
-        $data   = Cuti::where('id_user', $id)
-                ->whereYear('cuti_awal', $tahun)
-                ->latest()->take(6)->get();
+        $tahun          = date("Y");
+        $id             = Auth::user()->id;
+        $id_cabang      = Auth::user()->id_cabang;
+        $data           = Cuti::where('id_user', $id)
+                        ->whereYear('cuti_awal', $tahun)
+                        ->latest()->take(6)->get();
+
+        $jatah          = CabangCuti::where('id_cabang', $id_cabang)->where('tahun_periode', $tahun)->first();
+        $jc             = $jatah->jatah_cuti;
+        $cutiambil      = Cuti::where('id_user', $id)
+                        ->whereYear('cuti_awal', $tahun)
+                        ->where('cuti_status', 'DITERIMA')
+                        ->get();
+        $jumcuti        = $cutiambil->count();
+        $sisacuti       = $jc-$jumcuti;
+
         return view('user.cuti.index', [
-            'data' => $data,
+            'data'      => $data,
+            'jatah'     => $jatah,
+            'jc'        => $jc,
+            'jumcuti'   => $jumcuti,
+            'sisacuti'  => $sisacuti,
         ]);
     }
 
