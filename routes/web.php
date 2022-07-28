@@ -237,10 +237,13 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('set-shift',       [MobileController::class, 'postShift'])->name('user.post.shift');
     Route::get('show-log',         [AbsenController::class, 'viewRiwayat'])->name('user.absen.riwayat');
     Route::post('show-log',        [AbsenController::class, 'postRiwayat'])->name('user.absen.viewRiwayat');
+    Route::post('upload-hadir/{id}',  [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
+    Route::post('upload-pulang/{id}', [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
     Route::resource('absen',        AbsenController::class);
     // Kegiatan
-    Route::post('kegiatan/riwayat', [AktivitasController::class, 'riwayat'])->name("kegiatan.riwayat");
-    Route::resource('kegiatan',     AktivitasController::class);
+    Route::post('kegiatan/riwayat',      [AktivitasController::class, 'riwayat'])->name("kegiatan.riwayat");
+    Route::post('upload-kegiatan/{id}',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
+    Route::resource('kegiatan',          AktivitasController::class);
     // Slip Gaji
     Route::post('payslip/riwayat', [UserPaySlipController::class, 'riwayat'])->name("payslip.riwayat");
     Route::get('payslip/download/{id}', [UserPaySlipController::class, 'cetak_slipgaji_payroll'])->name('payslip.download');
@@ -254,13 +257,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::resource('notifikasi',       UserPengumumanController::class);
     // Cuti
     Route::post('leave/riwayat',    [CutiController::class, 'riwayat'])->name("leave.riwayat");
-    route::resource('leave',        CutiController::class);
+    Route::resource('leave',        CutiController::class);
     // Lembur
     Route::post('overtime/riwayat', [UserLemburController::class, 'riwayat'])->name("overtime.riwayat");
-    route::resource('overtime',     UserLemburController::class);
-
-    // Upload Foto
-    Route::post('upload-kegiatan',  [AktivitasController::class, 'postKegiatan'])->name('upload-kegiatan');
-    Route::post('upload-hadir',     [AbsenGalleryController::class, 'postHadir'])->name('upload-hadir');
-    Route::post('upload-pulang',    [AbsenGalleryController::class, 'postPulang'])->name('upload-pulang');
+    Route::resource('overtime',     UserLemburController::class);
 });

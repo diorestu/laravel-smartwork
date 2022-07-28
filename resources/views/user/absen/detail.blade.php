@@ -155,21 +155,29 @@
         });
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
-        // Get a reference to the file input element
         const inputElement = document.querySelector('input[id="hadir"]');
         const inputElement2 = document.querySelector('input[id="pulang"]');
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement, {
+        let pond = FilePond.create(inputElement, {
             allowImagePreview: true,
             imagePreviewMaxHeight: 300,
         });
-        const pond2 = FilePond.create(inputElement2, {
+        let pond2 = FilePond.create(inputElement2, {
             allowImagePreview: true,
             imagePreviewMaxHeight: 300,
         });
-        FilePond.setOptions({
+        pond.setOptions({
             server: {
-                url: "{{ route('upload-hadir') }}",
+                url: "{{ route('upload-hadir', ".$data->id.") }}",
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            },
+            labelIdle: '<span class="filepond--label-action text-success text-decoration-none"><i class="fa fa-camera"></i> Upload Foto</span> ',
+            acceptedFileTypes: ['image/*'],
+        });
+        pond2.setOptions({
+            server: {
+                url: "{{ route('upload-pulang', ".$data->id.") }}",
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }

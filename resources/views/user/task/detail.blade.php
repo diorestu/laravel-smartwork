@@ -3,6 +3,7 @@
 @section('title')Detail Aktivitas | Smartwork @endsection
 
 @push('addon-style')
+<link href="{{ asset("backend-assets/libs/glightbox/css/glightbox.min.css") }}" rel="stylesheet">
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 <style>
@@ -63,6 +64,22 @@
                     </li>
                     <li class="list-group-item px-1">
                         <span class="text-start text-muted">Foto Aktivitas</span>
+                        <div class="row">
+                            @forelse($data_image as $item_image)
+                            <div class="col-4">
+                                <div class="mt-1">
+                                    <a href="{{ asset('storage/kegiatan/'.$item_image->images) }}" class="image-popup-desc" data-title="Project 01" data-description="Lorem ipsum dolor sit amet, consectetuer adipiscing elit">
+                                        <img src="{{ asset('storage/kegiatan/'.$item_image->images) }}" class="img-fluid rounded-sm" alt="work-thumbnail">
+                                    </a>
+                                </div>
+                            </div>
+                            @empty
+                            {{ "-" }}
+                            @endforelse
+                        </div>
+                    </li>
+                    <li class="list-group-item px-1">
+                        <span class="text-start text-muted">Upload Foto Aktivitas</span>
                         <div class="mt-2 rounded" style="border-style: dashed; border-width: 1px; border-color: red">
                             <input id="avatar" type="file" name="avatar" class="filepond bg-light text-danger mb-0 mt-0" />
                         </div>
@@ -74,12 +91,17 @@
 @endsection
 
 @push('addon-script')
+<script src="{{ asset('backend-assets/libs/glightbox/js/glightbox.min.js') }}"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 <script>
     $(document).ready(function() {
         $('.filepond--credits').addClass('d-none');
+
+        var lightbox = GLightbox({ selector: ".image-popup", title: !1 }),
+        lightboxDesc = GLightbox({ selector: ".image-popup-desc" });
+
     });
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -90,7 +112,7 @@
     });
     FilePond.setOptions({
         server: {
-            url: "{{ route('upload-kegiatan') }}",
+            url: "{{ route('upload-kegiatan', ".$data->id.") }}",
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }

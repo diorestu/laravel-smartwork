@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AbsensiImage;
 use App\Models\User;
 use App\Models\UserGallery;
 use Illuminate\Http\Request;
@@ -12,62 +13,40 @@ use Illuminate\Support\Facades\Storage;
 
 class AbsenGalleryController extends Controller
 {
-    public function postHadir(Request $request)
-    {
-        $id= Auth::user();
-        // Get file from request
-        $file = $request->file('avatar');
-        // Get the original image extension
-        $extension = $file->getClientOriginalExtension();
-        // Create unique file name
-        $fileNameToStore = $id->nama.'_hadir_' . time() . '.' . $extension;
-        // Refer image to method resizeImage
-        $save = $this->resizeImage($file, $fileNameToStore);
-        // Initiate Save to DB
-        $input['id_user'] = $id->id;
-        $input['photo_url'] = $fileNameToStore;
-        $input['photo_roles'] = 'HADIR';
-        UserGallery::create($input);
-        return true;
-    }
-    public function postPulang(Request $request)
-    {
-        $id = Auth::user();
-        // Get file from request
-        $file = $request->file('avatar');
-        // Get the original image extension
-        $extension = $file->getClientOriginalExtension();
-        // Create unique file name
-        $fileNameToStore = $id->nama.'_pulang_' . time() . '.' . $extension;
-        // Refer image to method resizeImage
-        $save = $this->resizeImage($file, $fileNameToStore);
-        // Initiate Save to DB
-        $input['id_user'] = $id->id;
-        $input['photo_url'] = $fileNameToStore;
-        $input['photo_roles'] = 'PULANG';
-        UserGallery::create($input);
-        return true;
-    }
-
     public function resizeImage($file, $fileNameToStore)
     {
-        // Resize image
-        $resize = Image::make($file)->resize(600, null, function ($constraint) {
-            $constraint->aspectRatio();
-        })->encode('jpg');
+        $resize = Image::make($file)->resize(600, null, function ($constraint) { $constraint->aspectRatio(); })->encode('jpg');
+        $save   = Storage::put("public/absensi/{$fileNameToStore}", $resize->__toString());
+        if ($save) { return true; } else { return false; }
+    }
 
-        // Create hash value
-        $hash = md5($resize->__toString());
+    public function postHadir(Request $request, $id_absen)
+    {
+        $id              = Auth::user();
+        $file            = $request->file('hadir');
+        $extension       = $file->getClientOriginalExtension();
+        $fileNameToStore = $id->nama . '_hadir_' . time() . '.' . $extension;
+        $save            = $this->resizeImage($file, $fileNameToStore);
+        $create          = AbsensiImage::create([
+                                'absensi_id' => $id_absen,
+                                'absen_tipe' => 'datang',
+                                'images'     => $fileNameToStore,
+                           ]);
+        if ($create) { return true; } else { return false; }
+    }
 
-        // Prepare qualified image name
-        $image = $hash . "jpg";
-
-        // Put image to storage
-        $save = Storage::put("storage/images/{$fileNameToStore}", $resize->__toString());
-
-        if ($save) {
-            return true;
-        }
-        return false;
+    public function postPulang(Request $request, $id_absen)
+    {
+        $id              = Auth::user();
+        $file            = $request->file('pulang');
+        $extension       = $file->getClientOriginalExtension();
+        $fileNameToStore = $id->nama . '_pulang_' . time() . '.' . $extension;
+        $save            = $this->resizeImage($file, $fileNameToStore);
+        $create          = AbsensiImage::create([
+                            'absensi_id' => $id_absen,
+                            'absen_tipe' => 'pulang',
+                            'images'     => $fileNameToStore,
+        ]);
+        if ($create) { return true; } else { return false; }
     }
 }

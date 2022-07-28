@@ -5,40 +5,32 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aktivitas;
-use App\Models\KpiMaster;
+use App\Models\AktivitasImage;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AktivitasController extends Controller
 {
     public function resizeImage($file, $fileNameToStore)
     {
-        // Resize image
-        $resize = Image::make($file)->resize(600, null, function ($constraint) {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-        // Create hash value
-        $hash = md5($resize->__toString());
-        // Prepare qualified image name
-        $image = $hash . "jpg";
-        // Put image to storage
-        $save = Storage::put("public/kegiatan/{$fileNameToStore}", $resize->__toString());
-        if ($save) {
-            return true;
-        }
-        return false;
+        $resize = Image::make($file)->resize(600, null, function ($constraint) { $constraint->aspectRatio(); })->encode('jpg');
+        $save   = Storage::put("public/kegiatan/{$fileNameToStore}", $resize->__toString());
+        if ($save) { return true; } else { return false; }
     }
 
-    public function postKegiatan(Request $request)
+    public function postKegiatan(Request $request, $id_aktivitas)
     {
-        // Get file from request
-        $file = $request->file('avatar');
-        // Get the original image extension
-        $extension = $file->getClientOriginalExtension();
-        // Create unique file name
-        $fileNameToStore = 'kegiatan_' . time() . '.' . $extension;
-        // Refer image to method resizeImage
-        $save = $this->resizeImage($file, $fileNameToStore);
-        return true;
+        $id              = Auth::user();
+        $file            = $request->file('avatar');
+        $extension       = $file->getClientOriginalExtension();
+        $fileNameToStore = $id->nama . '_aktivitas__' . time() . '.' . $extension;
+        $save            = $this->resizeImage($file, $fileNameToStore);
+        $create          = AktivitasImage::create([
+                                'aktivitas_id' => $id_aktivitas,
+                                'images'       => $fileNameToStore,
+                            ]);
+        if ($create) { return true; } else { return false; }
     }
 
     public function riwayat(Request $request)
@@ -74,11 +66,7 @@ class AktivitasController extends Controller
      */
     public function create()
     {
-        $id = Auth::user()->id_admin;
-        $kat =  KpiMaster::where('id_admin', $id)->get();
-        return view('user.task.input', [
-            'data' => $kat
-        ]);
+        return view('user.task.input', []);
     }
 
     /**
@@ -108,7 +96,11 @@ class AktivitasController extends Controller
      */
     public function show($id)
     {
-        $data = Aktivitas::find($id);
-        return view('user.task.detail', ['data' => $data ]);
+        $data       = Aktivitas::find($id);
+        $data_image = AktivitasImage::where('aktivitas_id', $id)->get();
+        return view('user.task.detail', [
+            'data' => $data,
+            'data_image' => $data_image,
+        ]);
     }
 }
